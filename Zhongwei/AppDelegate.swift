@@ -23,11 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     var globalData:GlobalData?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        Bugly.start(withAppId:"98d4c1d3a8")
         print("application didFinsishLaunch")
-//        var tabStoryBoard = UIStoryboard(name:"TabViewController",bundle:nil)
-//        var tabViewController = tabStoryBoard.instantiateViewController(withIdentifier: "TabViewController")
         globalData = GlobalData()
+        globalData?.unionid = getCacheUnionid()
+        globalData?.headImgUrl = getCacheImgUrl()
+        globalData?.nickName = getCacheName()
         WXApi.registerApp(wechatAppID)
         return true
     }
@@ -118,6 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
                 Log("获取授权信息异常")
                 return
             }
+            print("dic:\(dic)")
             let unionid:String! = String(describing:dic!["unionid"] as! String)
             let headImgUrl:String! = String(describing:dic!["headimgurl"] as! String)
             let nickName:String! = String(describing:dic!["nickname"] as! String)
@@ -133,9 +135,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
                     print("child:\(self.tabViewController!.childViewControllers[index])")
                 }
                 var nav = self.tabViewController!.childViewControllers[3]
-                var logView = nav.childViewControllers[0]
-                logView.performSegue(withIdentifier: "showMe", sender: nil)
-    
+                var logView = nav.childViewControllers[1] as! WeiChatLogin
+                //logView.dismiss(animated: true, completion: nil)
+                logView.refresh()
+                //logView.removeFromParentViewController()
+                
             }
         } catch {
             Log("获取授权信息异常")

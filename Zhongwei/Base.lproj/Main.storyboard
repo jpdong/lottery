@@ -17,7 +17,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YIv-sz-STr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.18163758520000001" green="0.43211257460000002" blue="0.33301669360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
                         </userDefinedRuntimeAttributes>
@@ -63,10 +63,10 @@
             </objects>
             <point key="canvasLocation" x="-3115" y="620"/>
         </scene>
-        <!--Shop-->
+        <!--Business-->
         <scene sceneID="TgD-AN-OWc">
             <objects>
-                <viewControllerPlaceholder storyboardName="Shop" id="AkX-A7-YL3" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Business" id="AkX-A7-YL3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="S2a-0U-AIv"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eIb-Fy-NBx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -74,4 +74,5 @@
             <point key="canvasLocation" x="-3022" y="224"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.18163758516311646" green="0.43211257457733154" blue="0.33301669359207153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

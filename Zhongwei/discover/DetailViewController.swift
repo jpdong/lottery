@@ -10,13 +10,18 @@ import Foundation
 
 class DetailViewController:WebViewController{
     
-    var detailUrl:String?
-    var type:Int?
+    var closeButton:UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if (type == 1){
-        loadUrl(url: detailUrl!)
-        }
+        closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
+        closeButton.image = UIImage(named:"closeButton")
+        webNavigationItem.setRightBarButton(closeButton, animated: true)
+        loadUrl(url: "http://yan.eeseetech.cn/mobile/wechat/caipiao/")
+    }
+    
+    @objc func close(_ sender:UIBarButtonItem){
+        self.dismiss(animated: true, completion: nil)
+        
     }
 }

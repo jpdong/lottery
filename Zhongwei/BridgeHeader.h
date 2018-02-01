@@ -10,5 +10,6 @@
 #define BridgeHeader_h
 
 #import "WXApi.h"
+#import <Bugly/Bugly.h>
 
 #endif /* BridgeHeader_h */

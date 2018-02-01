@@ -18,10 +18,15 @@
 		8E060817201C66B000033488 /* me.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E060810201C66B000033488 /* me.png */; };
 		8E060818201C66B000033488 /* me_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E060811201C66B000033488 /* me_selected.png */; };
 		8E060819201C66B000033488 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E060812201C66B000033488 /* logo.png */; };
+		8E20A3E32021A40900B15AB2 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20A3E22021A40900B15AB2 /* MessageView.swift */; };
+		8E20A3E52021B48C00B15AB2 /* MessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20A3E42021B48C00B15AB2 /* MessageList.swift */; };
+		8E20A3E72021B50000B15AB2 /* MessageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20A3E62021B50000B15AB2 /* MessageDetailView.swift */; };
+		8E20A3EB2021B73200B15AB2 /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20A3EA2021B73200B15AB2 /* MessageItem.swift */; };
+		8E2F6A0E2022C62B000704F6 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2F6A0D2022C62B000704F6 /* UserViewController.swift */; };
 		8E3E2F19201B1E28006E2206 /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3E2F18201B1E28006E2206 /* MeViewController.swift */; };
 		8E55000520182B57009E2AB0 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E55000320182B57009E2AB0 /* Discover.storyboard */; };
 		8E55000820182B75009E2AB0 /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E55000620182B75009E2AB0 /* News.storyboard */; };
-		8E55000B20182CAE009E2AB0 /* Shop.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E55000920182CAE009E2AB0 /* Shop.storyboard */; };
+		8E55000B20182CAE009E2AB0 /* Business.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E55000920182CAE009E2AB0 /* Business.storyboard */; };
 		8E55001320183122009E2AB0 /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E55001220183122009E2AB0 /* ShopViewController.swift */; };
 		8E550015201835A8009E2AB0 /* Me.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E550014201835A8009E2AB0 /* Me.storyboard */; };
 		8E55001820187DA8009E2AB0 /* DiscoverItemTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E55001720187DA8009E2AB0 /* DiscoverItemTemp.swift */; };
@@ -45,6 +50,10 @@
 		8EC2B5352019D08000C3181D /* DiscoverItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5342019D08000C3181D /* DiscoverItemView.swift */; };
 		8EC2B5372019E0BB00C3181D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5362019E0BB00C3181D /* DetailViewController.swift */; };
 		8EC2B5392019EE7B00C3181D /* ScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5382019EE7B00C3181D /* ScanViewController.swift */; };
+		8EC3C2322020680C001567E9 /* BusinessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3C2312020680C001567E9 /* BusinessViewController.swift */; };
+		8EC3C234202069BD001567E9 /* BusinessItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3C233202069BD001567E9 /* BusinessItemView.swift */; };
+		8EC3C236202069D1001567E9 /* BusinessItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3C235202069D1001567E9 /* BusinessItem.swift */; };
+		8EC3C2382020705C001567E9 /* BusinessDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3C2372020705C001567E9 /* BusinessDetailView.swift */; };
 		8EFA2D3A1FE8B37D005C890E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA2D391FE8B37D005C890E /* AppDelegate.swift */; };
 		8EFA2D3C1FE8B37D005C890E /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA2D3B1FE8B37D005C890E /* WebViewController.swift */; };
 		8EFA2D411FE8B37D005C890E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EFA2D401FE8B37D005C890E /* Assets.xcassets */; };
@@ -87,10 +96,15 @@
 		8E060810201C66B000033488 /* me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = me.png; sourceTree = "<group>"; };
 		8E060811201C66B000033488 /* me_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = me_selected.png; sourceTree = "<group>"; };
 		8E060812201C66B000033488 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		8E20A3E22021A40900B15AB2 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		8E20A3E42021B48C00B15AB2 /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
+		8E20A3E62021B50000B15AB2 /* MessageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailView.swift; sourceTree = "<group>"; };
+		8E20A3EA2021B73200B15AB2 /* MessageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageItem.swift; sourceTree = "<group>"; };
+		8E2F6A0D2022C62B000704F6 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		8E3E2F18201B1E28006E2206 /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
 		8E55000420182B57009E2AB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Discover.storyboard; sourceTree = "<group>"; };
 		8E55000720182B75009E2AB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/News.storyboard; sourceTree = "<group>"; };
-		8E55000A20182CAE009E2AB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Shop.storyboard; sourceTree = "<group>"; };
+		8E55000A20182CAE009E2AB0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Business.storyboard; sourceTree = "<group>"; };
 		8E55001220183122009E2AB0 /* ShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
 		8E550014201835A8009E2AB0 /* Me.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Me.storyboard; path = Zhongwei/me/Me.storyboard; sourceTree = SOURCE_ROOT; };
 		8E55001720187DA8009E2AB0 /* DiscoverItemTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverItemTemp.swift; sourceTree = "<group>"; };
@@ -115,6 +129,10 @@
 		8EC2B5342019D08000C3181D /* DiscoverItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverItemView.swift; sourceTree = "<group>"; };
 		8EC2B5362019E0BB00C3181D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8EC2B5382019EE7B00C3181D /* ScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanViewController.swift; sourceTree = "<group>"; };
+		8EC3C2312020680C001567E9 /* BusinessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessViewController.swift; sourceTree = "<group>"; };
+		8EC3C233202069BD001567E9 /* BusinessItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessItemView.swift; sourceTree = "<group>"; };
+		8EC3C235202069D1001567E9 /* BusinessItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessItem.swift; sourceTree = "<group>"; };
+		8EC3C2372020705C001567E9 /* BusinessDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailView.swift; sourceTree = "<group>"; };
 		8EFA2D361FE8B37D005C890E /* Zhongwei.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zhongwei.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EFA2D391FE8B37D005C890E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EFA2D3B1FE8B37D005C890E /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -204,6 +222,11 @@
 				8E550014201835A8009E2AB0 /* Me.storyboard */,
 				8E61FB6C1FF341F400680E19 /* WeiChatLogin.swift */,
 				8E3E2F18201B1E28006E2206 /* MeViewController.swift */,
+				8E20A3E22021A40900B15AB2 /* MessageView.swift */,
+				8E20A3E42021B48C00B15AB2 /* MessageList.swift */,
+				8E20A3E62021B50000B15AB2 /* MessageDetailView.swift */,
+				8E20A3EA2021B73200B15AB2 /* MessageItem.swift */,
+				8E2F6A0D2022C62B000704F6 /* UserViewController.swift */,
 			);
 			path = me;
 			sourceTree = "<group>";
@@ -221,13 +244,17 @@
 			path = discover;
 			sourceTree = "<group>";
 		};
-		8E55000F20182F22009E2AB0 /* shop */ = {
+		8E55000F20182F22009E2AB0 /* business */ = {
 			isa = PBXGroup;
 			children = (
-				8E55000920182CAE009E2AB0 /* Shop.storyboard */,
+				8E55000920182CAE009E2AB0 /* Business.storyboard */,
 				8E55001220183122009E2AB0 /* ShopViewController.swift */,
+				8EC3C2312020680C001567E9 /* BusinessViewController.swift */,
+				8EC3C233202069BD001567E9 /* BusinessItemView.swift */,
+				8EC3C235202069D1001567E9 /* BusinessItem.swift */,
+				8EC3C2372020705C001567E9 /* BusinessDetailView.swift */,
 			);
-			path = shop;
+			path = business;
 			sourceTree = "<group>";
 		};
 		8E55001620187D91009E2AB0 /* view */ = {
@@ -306,7 +333,7 @@
 			isa = PBXGroup;
 			children = (
 				8E55001620187D91009E2AB0 /* view */,
-				8E55000F20182F22009E2AB0 /* shop */,
+				8E55000F20182F22009E2AB0 /* business */,
 				8E55000E20182F0D009E2AB0 /* discover */,
 				8E55000D20182D2F009E2AB0 /* me */,
 				8E55000C20182D21009E2AB0 /* news */,
@@ -460,7 +487,7 @@
 				8E060817201C66B000033488 /* me.png in Resources */,
 				8E01C7771FEA58250012E2CE /* Main.storyboard in Resources */,
 				8E6374CC201088DF00B0B33D /* back.png in Resources */,
-				8E55000B20182CAE009E2AB0 /* Shop.storyboard in Resources */,
+				8E55000B20182CAE009E2AB0 /* Business.storyboard in Resources */,
 				8E060813201C66B000033488 /* shop_selected.png in Resources */,
 				8E55000820182B75009E2AB0 /* News.storyboard in Resources */,
 				8E060814201C66B000033488 /* discover_selected.png in Resources */,
@@ -562,14 +589,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EC3C2322020680C001567E9 /* BusinessViewController.swift in Sources */,
+				8E2F6A0E2022C62B000704F6 /* UserViewController.swift in Sources */,
 				8E3E2F19201B1E28006E2206 /* MeViewController.swift in Sources */,
+				8E20A3EB2021B73200B15AB2 /* MessageItem.swift in Sources */,
+				8EC3C236202069D1001567E9 /* BusinessItem.swift in Sources */,
 				8E55001820187DA8009E2AB0 /* DiscoverItemTemp.swift in Sources */,
 				8E92BF18200EFC9B0090C646 /* ResponseEntity.swift in Sources */,
+				8E20A3E52021B48C00B15AB2 /* MessageList.swift in Sources */,
 				8E55FFFE20182592009E2AB0 /* DiscoverViewController.swift in Sources */,
 				8E92BF1A200EFDD90090C646 /* SidEntity.swift in Sources */,
 				8E92BF1E200F46C80090C646 /* Presenter.swift in Sources */,
+				8E20A3E72021B50000B15AB2 /* MessageDetailView.swift in Sources */,
+				8EC3C234202069BD001567E9 /* BusinessItemView.swift in Sources */,
 				8E55FFFC20182539009E2AB0 /* NewsViewController.swift in Sources */,
 				8E5DC161201745F900D421FE /* TabBarController.swift in Sources */,
+				8EC3C2382020705C001567E9 /* BusinessDetailView.swift in Sources */,
 				8EC2B5392019EE7B00C3181D /* ScanViewController.swift in Sources */,
 				8EC2B5372019E0BB00C3181D /* DetailViewController.swift in Sources */,
 				8E92BF1C200F1F5C0090C646 /* Data1.swift in Sources */,
@@ -578,6 +613,7 @@
 				8E61FB6D1FF341F400680E19 /* WeiChatLogin.swift in Sources */,
 				8EC2B5352019D08000C3181D /* DiscoverItemView.swift in Sources */,
 				8EC2B5312019C4FD00C3181D /* DiscoverItem.swift in Sources */,
+				8E20A3E32021A40900B15AB2 /* MessageView.swift in Sources */,
 				8EFA2D3A1FE8B37D005C890E /* AppDelegate.swift in Sources */,
 				8E61FB7B1FF34C8900680E19 /* Utils.swift in Sources */,
 			);
@@ -639,12 +675,12 @@
 			name = News.storyboard;
 			sourceTree = "<group>";
 		};
-		8E55000920182CAE009E2AB0 /* Shop.storyboard */ = {
+		8E55000920182CAE009E2AB0 /* Business.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				8E55000A20182CAE009E2AB0 /* Base */,
 			);
-			name = Shop.storyboard;
+			name = Business.storyboard;
 			sourceTree = "<group>";
 		};
 		8EFA2D421FE8B37D005C890E /* LaunchScreen.storyboard */ = {

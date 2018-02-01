@@ -31,9 +31,8 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         print("viewDidLoad")
         navigationBar = UINavigationBar(frame:CGRect( x:0,y:20, width:self.view.frame.width, height:44))
         webNavigationItem = UINavigationItem()
-        backButton = UIBarButtonItem(title:"后退",style:.plain, target:self, action:#selector(goBack))
-        //backButton.image = UIImage(named:"back")
-        backButton.title = "后退"
+        backButton = UIBarButtonItem(title:"",style:.plain, target:self, action:#selector(goBack))
+        backButton.image = UIImage(named:"backButton")
         webNavigationItem.setLeftBarButton(backButton, animated: true)
         navigationBar?.pushItem(webNavigationItem, animated: true)
         self.view.addSubview(navigationBar!)
@@ -44,7 +43,7 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         webView.uiDelegate = self
         webView.navigationDelegate = self
         self.view.addSubview(webView)
-        backButton.isEnabled = false
+        //backButton.isEnabled = false
         webView.addObserver(self, forKeyPath: "loading", options: .new, context: nil)
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         webView.addObserver(self, forKeyPath:"title", options:.new, context:nil)
@@ -71,8 +70,13 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         //print("key:\(keyPath)")
         if (keyPath == "loading") {
             //print("keyPath loading")
-            backButton.isEnabled = webView.canGoBack
+            //backButton.isEnabled = webView.canGoBack
             //forwardButton.isEnabled = webView.canGoForward
+            if (webView.canGoBack) {
+                backButton.image = UIImage(named:"backButton")
+            } else {
+                backButton.image = nil
+            }
         }
         if (keyPath == "estimatedProgress") {
 //            print("progressView:\(progressView)")

@@ -13,6 +13,13 @@ import Kingfisher
 
 class WeiChatLogin:UIViewController {
     
+    @IBOutlet weak var headImageView: UIImageView!
+    
+    @IBOutlet weak var nickNameLabel: UILabel!
+    @IBOutlet weak var loginButon: UIButton!
+    
+    @IBOutlet weak var logoutButton: UIButton!
+    
     var isLogin:Bool = false
     var unionid:String?
     var app:AppDelegate?
@@ -20,14 +27,18 @@ class WeiChatLogin:UIViewController {
     override func viewDidLoad() {
         app = UIApplication.shared.delegate as! AppDelegate
         var unionid:String? = getCacheUnionid()
+        self.tabBarController?.childViewControllers[3].tabBarItem.badgeValue = nil
         app!.globalData!.unionid = unionid
-        if (unionid != nil && unionid! != ""){
-            self.performSegue(withIdentifier: "showMe", sender: nil)
-        }
+        logoutButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(logout)))
+    }
+    
+    @objc func close(){
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         Log("viewDidAppear")
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -36,6 +47,20 @@ class WeiChatLogin:UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
        Log("viewWillAppear")
+        if (isLogin) {
+            let imgUrl = app?.globalData?.headImgUrl
+            let nickName = app?.globalData?.nickName
+            let url = URL(string:imgUrl!)
+            headImageView.kf.setImage(with: url)
+            nickNameLabel.text = nickName
+            loginButon.isHidden = true
+            logoutButton.isHidden = false
+        } else {
+            headImageView.image = UIImage(named:"noUser")
+            nickNameLabel.text = "未登录"
+            loginButon.isHidden = false
+            logoutButton.isHidden = true
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,7 +95,21 @@ class WeiChatLogin:UIViewController {
         
     }
     
+    @objc func logout(_ sender: Any) {
+        app?.globalData?.unionid = ""
+        let userDefaults = UserDefaults.standard
+        userDefaults.set("", forKey: "unionid")
+        userDefaults.synchronize()
+        isLogin = false
+        clearUserInfo()
+    }
     
+    func clearUserInfo(){
+        headImageView.image = UIImage(named:"noUser")
+        nickNameLabel.text = "未登录"
+        var userInfoView = self.navigationController?.childViewControllers[0] as! UserViewController
+        userInfoView.clearUserInfo()
+    }
     
     @IBAction func changeUser(_ sender: Any) {
         let userDefaults = UserDefaults.standard
@@ -91,6 +130,7 @@ class WeiChatLogin:UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        Log("segue:\(segue)")
         super.prepare(for: segue, sender: sender)
         switch segue.identifier ?? "" {
         case "shopPage":
@@ -100,8 +140,12 @@ class WeiChatLogin:UIViewController {
         }
     }
     
-    @IBAction func unwindToLogin(sender:UIStoryboardSegue) {
-        Log("unwind")
+    public func refresh(){
+        Log("refresh")
+        self.navigationController?.popViewController(animated: true)
+        if (app?.globalData?.unionid != nil && app?.globalData?.unionid != "") {
+            dismiss(animated: true, completion: nil)
+        }
     }
     
 }
