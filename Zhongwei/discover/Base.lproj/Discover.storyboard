@@ -127,10 +127,10 @@
             </objects>
             <point key="canvasLocation" x="-806" y="1223"/>
         </scene>
-        <!--View Controller-->
+        <!--Scan View Controller-->
         <scene sceneID="uWb-UU-kNm">
             <objects>
-                <viewController id="Usr-AN-Bh2" sceneMemberID="viewController">
+                <viewController id="Usr-AN-Bh2" customClass="ScanViewController" customModule="Zhongwei" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4Vj-qg-kC0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -162,8 +162,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="scan" width="79" height="78"/>
-        <image name="welfare" width="79" height="78"/>
+        <image name="scan" width="87" height="87"/>
+        <image name="welfare" width="87" height="87"/>
     </resources>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

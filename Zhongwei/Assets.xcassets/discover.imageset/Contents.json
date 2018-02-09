@@ -2,17 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "dicover.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "dicover-1.png",
+      "filename" : "discover@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "dicover-2.png",
+      "filename" : "discover@3x.png",
       "scale" : "3x"
     }
   ],

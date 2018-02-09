@@ -25,7 +25,7 @@ func storeUnionid(_ unionid:String){
 func getCacheUnionid() -> String?{
     let userDefaults = UserDefaults.standard
     let unionid:String? = userDefaults.string(forKey: "unionid")
-    return unionid
+    return unionid ?? ""
 }
 
 func storeHeadImgUrl(_ imgUrl:String){
@@ -43,11 +43,11 @@ func storeNickName(_ nickName:String){
 func getCacheImgUrl() -> String?{
     let userDefaults = UserDefaults.standard
     let imgUrl:String? = userDefaults.string(forKey: "headimgurl")
-    return imgUrl
+    return imgUrl ?? ""
 }
 
 func getCacheName() -> String?{
     let userDefaults = UserDefaults.standard
     let nickName:String? = userDefaults.string(forKey: "nickname")
-    return nickName
+    return nickName ?? ""
 }

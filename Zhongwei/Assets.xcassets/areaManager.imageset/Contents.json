@@ -2,17 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "areaManager.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "areaManager-1.png",
+      "filename" : "identity-4@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "areaManager-2.png",
+      "filename" : "identity-4@3x.png",
       "scale" : "3x"
     }
   ],

@@ -28,8 +28,9 @@ class WeiChatLogin:UIViewController {
         app = UIApplication.shared.delegate as! AppDelegate
         var unionid:String? = getCacheUnionid()
         self.tabBarController?.childViewControllers[3].tabBarItem.badgeValue = nil
-        app!.globalData!.unionid = unionid
+        app!.globalData!.unionid = unionid!
         logoutButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(logout)))
+        logoutButton.isHidden = true
     }
     
     @objc func close(){
@@ -53,13 +54,13 @@ class WeiChatLogin:UIViewController {
             let url = URL(string:imgUrl!)
             headImageView.kf.setImage(with: url)
             nickNameLabel.text = nickName
-            loginButon.isHidden = true
-            logoutButton.isHidden = false
+            //loginButon.isHidden = true
+            //logoutButton.isHidden = false
         } else {
             headImageView.image = UIImage(named:"noUser")
             nickNameLabel.text = "未登录"
-            loginButon.isHidden = false
-            logoutButton.isHidden = true
+            //loginButon.isHidden = false
+            //logoutButton.isHidden = true
         }
     }
     
@@ -79,20 +80,12 @@ class WeiChatLogin:UIViewController {
                 print(WXApi.send(req))
             }else {
                 print("未安装微信")
+                let alertView = UIAlertController(title:"提示", message:"未安装微信", preferredStyle:.alert)
+                let cancel = UIAlertAction(title:"确定", style:.cancel)
+                alertView.addAction(cancel)
+                present(alertView,animated: true,completion: nil)
             }
-            //self.performSegue(withIdentifier: "showMe", sender: nil)
-        } else {
-            print("unionid not nil : \(unionid)")
-            self.performSegue(withIdentifier: "showMe", sender: nil)
-//            Presenter.getUrl(unionid:unionid!)
-//                .observeOn(MainScheduler.instance)
-//                .subscribe(onNext:{url in
-//                    print("url: \(url)")
-//                    self.shopUrl = url
-//                    self.performSegue(withIdentifier: "shopPage", sender: nil)
-//                })
         }
-        
     }
     
     @objc func logout(_ sender: Any) {
@@ -107,6 +100,8 @@ class WeiChatLogin:UIViewController {
     func clearUserInfo(){
         headImageView.image = UIImage(named:"noUser")
         nickNameLabel.text = "未登录"
+        loginButon.isHidden = false
+        logoutButton.isHidden = true
         var userInfoView = self.navigationController?.childViewControllers[0] as! UserViewController
         userInfoView.clearUserInfo()
     }

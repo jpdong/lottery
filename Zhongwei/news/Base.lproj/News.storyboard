@@ -18,18 +18,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="news" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1T-lV-7KD">
-                                <rect key="frame" x="151" y="272" width="40" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击重新加载" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1T-lV-7KD">
+                                <rect key="frame" x="135" y="323" width="104" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="x1T-lV-7KD" firstAttribute="centerX" secondItem="mkl-a5-of6" secondAttribute="centerX" id="2eo-OQ-Nds"/>
+                            <constraint firstItem="x1T-lV-7KD" firstAttribute="centerY" secondItem="mkl-a5-of6" secondAttribute="centerY" id="Dtt-2y-fzt"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Hbs-hD-lfH"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="hUi-L0-C7i"/>
+                    <connections>
+                        <outlet property="reLoadButton" destination="x1T-lV-7KD" id="41c-p7-3gD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ktr-zJ-WZS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

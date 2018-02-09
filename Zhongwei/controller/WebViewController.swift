@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import Reachability
 
 class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
     
@@ -63,15 +64,10 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        //print("key:\(keyPath)")
         if (keyPath == "loading") {
-            //print("keyPath loading")
-            //backButton.isEnabled = webView.canGoBack
-            //forwardButton.isEnabled = webView.canGoForward
             if (webView.canGoBack) {
                 backButton.image = UIImage(named:"backButton")
             } else {
@@ -79,14 +75,8 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
             }
         }
         if (keyPath == "estimatedProgress") {
-//            print("progressView:\(progressView)")
-//            print("webView:\(webView)")
-            //print(webView.estimatedProgress)
-            //progressView.isHidden = webView.estimatedProgress == 1
-            //progressView.setProgress(Float(webView.estimatedProgress), animated: true)
         }
         if (keyPath == "title") {
-            //print("title:\(((WKWebView)object).title)")
             print("title:\(webView.title)")
             webNavigationItem.title = webView.title
         }
@@ -96,13 +86,31 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         print("webView did finish navigation")
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        Log("viewWillDisappear")
+    func startLoad(url:String) {
+        if(hasNetwork()) {
+            Log("should load url")
+            loadUrl(url: shopUrl!)
+        } else {
+            Log("should alert")
+            let alertView = UIAlertController(title:"无网络连接", message:"请检查网络", preferredStyle:.alert)
+            let cancel = UIAlertAction(title:"取消", style:.cancel)
+            let confirm = UIAlertAction(title:"重试", style:.default){
+                action in
+                self.startLoad(url:url)
+            }
+            alertView.addAction(cancel)
+            alertView.addAction(confirm)
+            present(alertView,animated: true,completion: nil)
+        }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        Log("viewWillAppear")
-        webView.reload()
+    func hasNetwork() -> Bool{
+        let reachability = Reachability()
+        if (reachability?.connection != .none) {
+            return true
+        } else {
+            return false
+        }
     }
 }
 

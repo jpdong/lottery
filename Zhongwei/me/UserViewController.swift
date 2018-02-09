@@ -12,22 +12,28 @@ class UserViewController:UITableViewController{
     
     @IBOutlet var userInfoCell: UserInfoCell!
     @IBOutlet var messageInfoCell: MessageView!
-    //@IBOutlet var logoutCell: UITableViewCell!
+    @IBOutlet var logoutCell: UITableViewCell!
     
+    @IBOutlet weak var aboutInfoCell: UITableViewCell!
+    
+    @IBOutlet weak var messageNumLabel: UILabel!
+
     var unionid:String?
     var app:AppDelegate?
     var hasLogin:Bool = false
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        messageNumLabel.layer.cornerRadius = messageNumLabel.bounds.size.width / 2
         app = UIApplication.shared.delegate as! AppDelegate
-        app?.globalData?.unionid = getCacheUnionid()
-        app?.globalData?.headImgUrl = getCacheImgUrl()
-        app?.globalData?.nickName = getCacheName()
+        app?.globalData?.unionid = getCacheUnionid()!
+        app?.globalData?.headImgUrl = getCacheImgUrl()!
+        app?.globalData?.nickName = getCacheName()!
         self.tableView.tableFooterView = UIView(frame:.zero)
-        userInfoCell.accessoryType = .disclosureIndicator
+        //userInfoCell.accessoryType = .disclosureIndicator
         messageInfoCell.accessoryType = .disclosureIndicator
-        //logoutCell.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(logout)))
-        //logoutCell.isHidden = true
+        aboutInfoCell.accessoryType = .disclosureIndicator
+        logoutCell.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(logout)))
         setupUserInfo()
     }
     
@@ -41,9 +47,12 @@ class UserViewController:UITableViewController{
             userInfoCell.headImageView.kf.setImage(with: url)
             //userInfoCell.headImageView.isHidden = false
             userInfoCell.nickNameLabel.text = nickName
-            userInfoCell.accessoryType = .disclosureIndicator
+            logoutCell.isHidden = false
+            userInfoCell.accessoryType = .none
             return true
         } else {
+            userInfoCell.accessoryType = .disclosureIndicator
+            logoutCell.isHidden = true
             return false
         }
     }
@@ -59,11 +68,29 @@ class UserViewController:UITableViewController{
     
     func clearUserInfo(){
         hasLogin = false
+        userInfoCell.accessoryType = .disclosureIndicator
         userInfoCell.headImageView.image = UIImage(named:"noUser")
         userInfoCell.nickNameLabel.text = "点击登录"
-        messageInfoCell.number.isHidden = true
-        
+        //messageInfoCell.number.isHidden = true
     }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 20.0
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if (indexPath.section == 0 && hasLogin){
+            return nil
+        } else {
+            return indexPath
+        }
+    }
+    
+//    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        var view = UIView(frame:CGRect(x:0,y:0,width:UIScreen.main.bounds.width, height:20))
+//        view.backgroundColor = UIColor.
+//        return view
+//    }
     
     override func viewDidAppear(_ animated: Bool) {
         setupUserInfo()
@@ -79,6 +106,7 @@ class UserViewController:UITableViewController{
             break
         }
     }
+    
 }
 
 class UserInfoCell:UITableViewCell {

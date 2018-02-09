@@ -112,6 +112,15 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
                     self.loadUrl(url: url)
                 })
             break
+        case BusinessItem.marketManager:
+            //Presenter.getAreaManagerUrl(unionid: "o6mWl1a58jqGX_TAT6tpd2zpJ2lI")
+            Presenter.getMarketManagerUrl(unionid: unionid!,headimgurl: headImgUrl!, nickname:nickName!)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext:{
+                    url in
+                    self.loadUrl(url: url)
+                })
+            break
         default:
             break
         }
@@ -175,17 +184,6 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
             alertView.addAction(cancel)
             alertView.addAction(confirm)
             present(alertView,animated: true,completion: nil)
-        } else {
-            //loadUrl(url: "http://yan.eeseetech.cn/mobile/wechat/shop?sid=a4b2b3d03a082353954a2d3db28c4d05")
-            showViews()
-            //Presenter.getShopUrl(unionid: "o6mWl1a58jqGX_TAT6tpd2zpJ2lI")
-            Presenter.getShopUrl(unionid: unionid!,headimgurl: headImgUrl!, nickname:nickName!)
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext:{
-                    url in
-                    self.loadUrl(url: url)
-                })
-            self.tabBarController?.tabBar.isHidden = true
         }
     }
     

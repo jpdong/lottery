@@ -13,7 +13,6 @@ class TabBarController:UITabBarController{
     override func viewDidLoad() {
         var  delegate = UIApplication.shared.delegate as! AppDelegate
         delegate.tabViewController = self
-        
         setUpTabs()
     }
     

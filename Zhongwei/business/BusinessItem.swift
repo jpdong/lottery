@@ -13,6 +13,7 @@ class BusinessItem {
     public static let shop = 1
     public static let manager = 2
     public static let areaManager = 3
+    public static let marketManager = 4
     
     var title:String?
     var detailUrl:String?

@@ -39,9 +39,9 @@ class MeViewController:UIViewController{
         self.navigationItem.hidesBackButton = true
         self.navigationItem.title = "我"
         app = UIApplication.shared.delegate as! AppDelegate
-        app?.globalData?.unionid = getCacheUnionid()
-        app?.globalData?.headImgUrl = getCacheImgUrl()
-        app?.globalData?.nickName = getCacheName()
+        app?.globalData?.unionid = getCacheUnionid()!
+        app?.globalData?.headImgUrl = getCacheImgUrl()!
+        app?.globalData?.nickName = getCacheName()!
         featureTableView.tableFooterView = UIView(frame:.zero)
 //        featureTableView.delegate = self
 //        featureTableView.dataSource = self

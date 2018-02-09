@@ -28,11 +28,15 @@ class BusinessViewController:UITableViewController {
         shopOwner.icon = UIImage(named:"shopOwner")
         var manager = BusinessItem(title:"客户经理",type:BusinessItem.manager)
         manager.icon = UIImage(named:"manager")
+        var marketManager = BusinessItem(title:"市场经理",type:BusinessItem.marketManager)
+        marketManager.icon = UIImage(named:"marketManager")
         var areaManager = BusinessItem(title:"区域经理",type:BusinessItem.areaManager)
         areaManager.icon = UIImage(named:"areaManager")
         businessItems.append(shopOwner)
         businessItems.append(manager)
+        businessItems.append(marketManager)
         businessItems.append(areaManager)
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
