@@ -89,7 +89,7 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
     func startLoad(url:String) {
         if(hasNetwork()) {
             Log("should load url")
-            loadUrl(url: shopUrl!)
+            loadUrl(url: url)
         } else {
             Log("should alert")
             let alertView = UIAlertController(title:"无网络连接", message:"请检查网络", preferredStyle:.alert)

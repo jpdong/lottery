@@ -127,20 +127,121 @@
             </objects>
             <point key="canvasLocation" x="-806" y="1223"/>
         </scene>
-        <!--Scan View Controller-->
+        <!--开票兑奖-->
         <scene sceneID="uWb-UU-kNm">
             <objects>
-                <viewController id="Usr-AN-Bh2" customClass="ScanViewController" customModule="Zhongwei" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="开票兑奖" id="Usr-AN-Bh2" customClass="PrizeViewController" customModule="Zhongwei" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4Vj-qg-kC0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="prize_background" translatesAutoresizingMaskIntoConstraints="NO" id="hCv-AB-jZU">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. 单日兑奖总金额不能超过10000元" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INe-Xs-eAY">
+                                <rect key="frame" x="37" y="142" width="273" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MmS-Xv-mn1">
+                                <rect key="frame" x="37" y="334" width="112" height="37"/>
+                                <color key="backgroundColor" red="0.18163758520000001" green="0.43211257460000002" blue="0.33301669360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="MjD-P7-qBc"/>
+                                    <constraint firstAttribute="width" constant="112" id="aNj-LY-oKP"/>
+                                </constraints>
+                                <state key="normal" title="扫码兑奖">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="w58-bY-p4g" kind="show" id="VqA-Tm-iM2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Ng-Hj-1wY">
+                                <rect key="frame" x="175" y="334" width="112" height="37"/>
+                                <color key="backgroundColor" red="0.18163758520000001" green="0.43211257460000002" blue="0.33301669360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="6eM-Ta-NeH"/>
+                                    <constraint firstAttribute="width" constant="112" id="KaP-pX-pt0"/>
+                                </constraints>
+                                <state key="normal" title="兑奖记录">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="1to-jJ-MYw" kind="presentation" id="dFH-ZL-Bc1"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3. 每日提现次数不能超过十次" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Er-nJ-ONH">
+                                <rect key="frame" x="37" y="238" width="227" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2. 微信需要绑定银行卡进行实名认证" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1I-oZ-OKu">
+                                <rect key="frame" x="37" y="192" width="279" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hCv-AB-jZU" firstAttribute="top" secondItem="JX4-oL-j9u" secondAttribute="top" id="4ru-CK-vRk"/>
+                            <constraint firstItem="g1I-oZ-OKu" firstAttribute="top" secondItem="INe-Xs-eAY" secondAttribute="bottom" constant="29" id="936-uQ-cNM"/>
+                            <constraint firstItem="INe-Xs-eAY" firstAttribute="top" secondItem="JX4-oL-j9u" secondAttribute="top" constant="78" id="D9u-uj-vhh"/>
+                            <constraint firstItem="hCv-AB-jZU" firstAttribute="leading" secondItem="JX4-oL-j9u" secondAttribute="leading" id="EQk-QL-YdR"/>
+                            <constraint firstItem="2Er-nJ-ONH" firstAttribute="leading" secondItem="JX4-oL-j9u" secondAttribute="leading" constant="37" id="Fny-k8-Mtj"/>
+                            <constraint firstItem="2Er-nJ-ONH" firstAttribute="top" secondItem="g1I-oZ-OKu" secondAttribute="bottom" constant="25.5" id="IYI-UI-r8e"/>
+                            <constraint firstItem="INe-Xs-eAY" firstAttribute="leading" secondItem="JX4-oL-j9u" secondAttribute="leading" constant="37" id="Lx4-BW-3l0"/>
+                            <constraint firstItem="hCv-AB-jZU" firstAttribute="trailing" secondItem="JX4-oL-j9u" secondAttribute="trailing" id="aW4-3C-QIV"/>
+                            <constraint firstItem="g1I-oZ-OKu" firstAttribute="leading" secondItem="JX4-oL-j9u" secondAttribute="leading" constant="37" id="gPS-zs-H2y"/>
+                            <constraint firstItem="JX4-oL-j9u" firstAttribute="bottom" secondItem="MmS-Xv-mn1" secondAttribute="bottom" constant="197" id="nx0-Hg-AGj"/>
+                            <constraint firstItem="JX4-oL-j9u" firstAttribute="bottom" secondItem="6Ng-Hj-1wY" secondAttribute="bottom" constant="197" id="rzW-w1-fXy"/>
+                            <constraint firstItem="MmS-Xv-mn1" firstAttribute="leading" secondItem="JX4-oL-j9u" secondAttribute="leading" constant="37" id="upN-QM-ClM"/>
+                            <constraint firstItem="JX4-oL-j9u" firstAttribute="trailing" secondItem="6Ng-Hj-1wY" secondAttribute="trailing" constant="33" id="xL5-RM-g2G"/>
+                            <constraint firstItem="hCv-AB-jZU" firstAttribute="bottom" secondItem="JX4-oL-j9u" secondAttribute="bottom" id="yFU-of-CiZ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="JX4-oL-j9u"/>
                     </view>
+                    <connections>
+                        <outlet property="prizeButton" destination="6Ng-Hj-1wY" id="ci2-5U-bgC"/>
+                        <outlet property="scanButton" destination="MmS-Xv-mn1" id="WRW-JC-gmm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kKJ-ie-v4J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-821" y="531"/>
+            <point key="canvasLocation" x="-924.375" y="462.67605633802816"/>
+        </scene>
+        <!--Prize Record Controller-->
+        <scene sceneID="7vA-eV-Vsx">
+            <objects>
+                <viewController id="1to-jJ-MYw" customClass="PrizeRecordController" customModule="Zhongwei" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5T4-hv-JYH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="xem-gG-e9m"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b2u-Xk-jhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="375" y="656"/>
+        </scene>
+        <!--二维码/条码-->
+        <scene sceneID="zSh-fU-rhq">
+            <objects>
+                <viewController title="二维码/条码" id="w58-bY-p4g" customClass="ScanViewController" customModule="Zhongwei" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lyV-xU-c0l">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="1lA-3C-bxC"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="blV-dz-W8f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-279" y="161"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hTw-dz-7YD">
@@ -162,6 +263,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="prize_background" width="375" height="603"/>
         <image name="scan" width="87" height="87"/>
         <image name="welfare" width="87" height="87"/>
     </resources>
