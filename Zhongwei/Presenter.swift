@@ -24,7 +24,7 @@ class Presenter{
         return Observable<String>.create {
             (observer) -> Disposable in
             let parameters:Dictionary = ["unionid":unionid,"headimgurl":headimgurl, "nickname":nickname]
-            Alamofire.request("\(BASE_URL)mobile/wechat/getSid",method:.post,parameters:parameters).responseString{response in
+            Alamofire.request("\(BASE_URL)mobile/app/getSid",method:.post,parameters:parameters).responseString{response in
                 print("value \(response.result.value)")
                 if (response.result.value == nil) {
                     observer.onError(ApiError.NoResponseError)
@@ -73,19 +73,19 @@ class Presenter{
     }
     
     static func getShopUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
-        return getUrl(unionid:unionid,headimgurl: headimgurl, nickname: nickname, urlHead:"\(BASE_URL)mobile/wechat/shop?sid=")
+        return getUrl(unionid:unionid,headimgurl: headimgurl, nickname: nickname, urlHead:"\(BASE_URL)mobile/app/shop?sid=")
     }
     
     static func getManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
-        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/wechat/manager?sid=")
+        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/app/manager?sid=")
     }
     
     static func getAreaManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
-        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/wechat/bazaar_manager?sid=")
+        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/app/bazaar_manager?sid=")
     }
     
     static func getMarketManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
-        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/wechat/area_manager?sid=")
+        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/app/area_manager?sid=")
     }
     
     static func getPrizeRecordUrl() -> Observable<String>{
@@ -97,7 +97,7 @@ class Presenter{
                 let now = Date()
                 let timeInterval:TimeInterval = now.timeIntervalSince1970 * 1000
                 let timeStamp = Int(timeInterval)
-                return "\(BASE_URL)resources/wechat/scan-qr-code/redeem-record.html?\(timeStamp)=&sid=\(sid)"
+                return "\(BASE_URL)resources/app/scan-qr-code/redeem-record.html?\(timeStamp)=&sid=\(sid)"
                 }
     }
     
@@ -169,4 +169,126 @@ class Presenter{
             let startIndex = str.startIndex
             return String(str[str.index(startIndex, offsetBy: start)...str.index(startIndex, offsetBy: end)])
         }
+    
+    static func sendVerificationCode(phone:String) -> Observable<Result>{
+        return Observable<Result>.create({ (observer) -> Disposable in
+            let parameters:Dictionary = ["mobile":phone]
+            print("parameters:\(parameters)")
+            Alamofire.request("\(BASE_URL)mobile/wechat/ajaxSend",method:.post,parameters:parameters).responseString{response in
+                print("response:\(response)")
+                print("result:\(response.result)")
+                print("value: \(response.result.value)")
+                if (response.result.value == nil) {
+                    return
+                }
+                let codeEntity:CodeEntity = CodeEntity.deserialize(from: response.result.value as! String) as! CodeEntity
+                var result:Result = Result()
+                if (codeEntity.success!) {
+                    result.code = 1
+                    result.message = "验证码发送成功"
+                }else {
+                    result.code = 0
+                    result.message = codeEntity.error
+                }
+                observer.onNext(result)
+            }
+            return Disposables.create()
+        })
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
+    
+    static func phoneNumRegister(phone:String, password:String, code:String) -> Observable<Result> {
+        return Observable<Result>.create({ (observer) -> Disposable in
+            let parameters:Dictionary = ["phone":phone, "password":password, "password2":password, "code":code]
+            print("parameters:\(parameters)")
+            Alamofire.request("\(BASE_URL)mobile/Register/appUserRegister/",method:.post,parameters:parameters).responseString{
+                response in
+                print("response:\(response)")
+                print("value \(response.result.value)")
+                if (response.result.value == nil) {
+                    return
+                }
+                var sidEntity = SidEntity.deserialize(from:response.result.value as! String)
+                var result:Result = Result()
+                if (sidEntity != nil) {
+                    if (sidEntity?.code == 0) {
+                        result.code = 0
+                        result.message = sidEntity?.msg
+                        app.globalData?.sid = sidEntity!.data!.sid!
+                        storeSid(sidEntity!.data!.sid!)
+                    } else {
+                        result.code = 1
+                        result.message = sidEntity?.msg
+                    }
+                }
+                observer.onNext(result)
+            }
+            return Disposables.create()
+        })
+        .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
+    
+    static func passwordLogin(phone:String, password:String) -> Observable<Result> {
+        return Observable<Result>.create({ (observer) -> Disposable in
+            let parameters:Dictionary = ["phone":phone, "password":password]
+            print("parameters:\(parameters)")
+            Alamofire.request("\(BASE_URL)mobile/Login/doLogin",method:.post,parameters:parameters).responseString{
+                response in
+                print("response:\(response)")
+                print("value \(response.result.value)")
+                if (response.result.value == nil) {
+                    return
+                }
+                var sidEntity = SidEntity.deserialize(from:response.result.value as! String)
+                var result:Result = Result()
+                if (sidEntity != nil) {
+                    if (sidEntity?.code == 0) {
+                        result.code = 0
+                        result.message = sidEntity?.msg
+                        app.globalData?.sid = sidEntity!.data!.sid!
+                        storeSid(sidEntity!.data!.sid!)
+                    } else {
+                        result.code = 1
+                        result.message = sidEntity?.msg
+                    }
+                }
+                observer.onNext(result)
+            }
+            return Disposables.create()
+        })
+        .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
+    
+    static func codeLogin(phone:String, code:String) -> Observable<Result> {
+        return Observable<Result>.create({ (observer) -> Disposable in
+            
+            let parameters:Dictionary = ["phone":phone, "code":code]
+            print("parameters:\(parameters)")
+            Alamofire.request("\(BASE_URL)mobile/Login/doLoginByCode",method:.post,parameters:parameters).responseString{
+                response in
+                print("response:\(response)")
+                print("value \(response.result.value)")
+                if (response.result.value == nil) {
+                    return
+                }
+                var sidEntity = SidEntity.deserialize(from:response.result.value as! String)
+                var result:Result = Result()
+                if (sidEntity != nil) {
+                    if (sidEntity?.code == 0) {
+                        result.code = 0
+                        result.message = sidEntity?.msg
+                        app.globalData?.sid = sidEntity!.data!.sid!
+                        storeSid(sidEntity!.data!.sid!)
+                    } else {
+                        result.code = 1
+                        result.message = sidEntity?.msg
+                    }
+                }
+                observer.onNext(result)
+            }
+            return Disposables.create()
+        })
+        .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+        
+    }
 }

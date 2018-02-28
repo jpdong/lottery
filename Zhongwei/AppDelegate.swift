@@ -26,11 +26,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         Bugly.start(withAppId:"98d4c1d3a8")
         print("application didFinsishLaunch")
         globalData = GlobalData()
-        //globalData?.baseUrl = "http://yan.eeseetech.cn/"
-        globalData?.baseUrl = "https://yan.bjzwhz.cn/"
+        globalData?.baseUrl = "http://yan.eeseetech.cn/"
+        //globalData?.baseUrl = "https://yan.bjzwhz.cn/"
         globalData?.unionid = getCacheUnionid()!
         globalData?.headImgUrl = getCacheImgUrl()!
         globalData?.nickName = getCacheName()!
+        globalData?.sid = getCacheSid()!
         WXApi.registerApp(wechatAppID)
         return true
     }
@@ -153,6 +154,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         var headImgUrl = ""
         var nickName = ""
         var baseUrl = ""
+        var sid = ""
     }
 }
 

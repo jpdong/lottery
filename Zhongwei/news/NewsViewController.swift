@@ -62,6 +62,6 @@ class NewsViewController:WebViewController{
     }
     
     @objc func reload() {
-        loadUrl(url: "http://yan.eeseetech.cn/mobile/wechat/news/")
+        loadUrl(url: "http://yan.eeseetech.cn/mobile/app/news/")
     }
 }

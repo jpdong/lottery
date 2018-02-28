@@ -96,16 +96,16 @@ class UserViewController:UITableViewController{
         setupUserInfo()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier! {
-        case "login":
-            var loginView = segue.destination as! WeiChatLogin
-            loginView.isLogin = hasLogin
-            break
-        default:
-            break
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        switch segue.identifier! {
+//        case "login":
+//            var loginView = segue.destination as! WeiChatLogin
+//            loginView.isLogin = hasLogin
+//            break
+//        default:
+//            break
+//        }
+//    }
     
 }
 

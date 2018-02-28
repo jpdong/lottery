@@ -27,7 +27,7 @@ class DiscoverViewController:UITableViewController{
     func setupItems(){
         var scanTicket = DiscoverItem(title:"扫码兑奖",operation:DiscoverItem.scan)
         scanTicket.icon = UIImage(named:"scan")
-        var welfareTicket = DiscoverItem(title:"公益票活动",detailUrl:"http://yan.eeseetech.cn/mobile/wechat/caipiao/",operation:DiscoverItem.show)
+        var welfareTicket = DiscoverItem(title:"公益票活动",detailUrl:"http://yan.eeseetech.cn/mobile/app/caipiao/",operation:DiscoverItem.show)
         welfareTicket.icon = UIImage(named:"welfare")
 //        var winningInfo = DiscoverItem(title:"中奖信息公布",detailUrl:"http://yan.eeseetech.cn/resources/wechat/building.html",operation:DiscoverItem.show)
         discoverItems.append(scanTicket)

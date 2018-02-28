@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8E01C7771FEA58250012E2CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E01C7751FEA58250012E2CE /* Main.storyboard */; };
+		8E1A112A20450A5300A0B6BC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A112920450A5300A0B6BC /* LoginViewController.swift */; };
+		8E1A112C20450A6D00A0B6BC /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A112B20450A6D00A0B6BC /* RegisterViewController.swift */; };
+		8E1A112E20453C2C00A0B6BC /* LoginViewControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A112D20453C2C00A0B6BC /* LoginViewControllerCode.swift */; };
 		8E20A3E32021A40900B15AB2 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20A3E22021A40900B15AB2 /* MessageView.swift */; };
 		8E20A3E52021B48C00B15AB2 /* MessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20A3E42021B48C00B15AB2 /* MessageList.swift */; };
 		8E20A3E72021B50000B15AB2 /* MessageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20A3E62021B50000B15AB2 /* MessageDetailView.swift */; };
@@ -42,6 +45,8 @@
 		8EC3C234202069BD001567E9 /* BusinessItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3C233202069BD001567E9 /* BusinessItemView.swift */; };
 		8EC3C236202069D1001567E9 /* BusinessItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3C235202069D1001567E9 /* BusinessItem.swift */; };
 		8EC3C2382020705C001567E9 /* BusinessDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3C2372020705C001567E9 /* BusinessDetailView.swift */; };
+		8EC9439720464CA000EB2B05 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC9439620464CA000EB2B05 /* Result.swift */; };
+		8EC9439920464DB700EB2B05 /* CodeEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC9439820464DB700EB2B05 /* CodeEntity.swift */; };
 		8ED2425F202417CA00303DB4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED2425E202417CA00303DB4 /* AboutViewController.swift */; };
 		8EF0BFD2202854A200401540 /* PrizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0BFD1202854A200401540 /* PrizeViewController.swift */; };
 		8EF0BFD42028557300401540 /* PrizeRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0BFD32028557300401540 /* PrizeRecordController.swift */; };
@@ -77,6 +82,9 @@
 		6A84856AEDD70A279EC1E75F /* Pods_Zhongwei.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zhongwei.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		878A4334FDF403A899AFB54E /* Pods-Zhongwei.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zhongwei.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Zhongwei/Pods-Zhongwei.debug.xcconfig"; sourceTree = "<group>"; };
 		8E01C7761FEA58250012E2CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8E1A112920450A5300A0B6BC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8E1A112B20450A6D00A0B6BC /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		8E1A112D20453C2C00A0B6BC /* LoginViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerCode.swift; sourceTree = "<group>"; };
 		8E20A3E22021A40900B15AB2 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		8E20A3E42021B48C00B15AB2 /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
 		8E20A3E62021B50000B15AB2 /* MessageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailView.swift; sourceTree = "<group>"; };
@@ -112,6 +120,8 @@
 		8EC3C233202069BD001567E9 /* BusinessItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessItemView.swift; sourceTree = "<group>"; };
 		8EC3C235202069D1001567E9 /* BusinessItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessItem.swift; sourceTree = "<group>"; };
 		8EC3C2372020705C001567E9 /* BusinessDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailView.swift; sourceTree = "<group>"; };
+		8EC9439620464CA000EB2B05 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		8EC9439820464DB700EB2B05 /* CodeEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntity.swift; sourceTree = "<group>"; };
 		8ED2425E202417CA00303DB4 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		8EF0BFD1202854A200401540 /* PrizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrizeViewController.swift; sourceTree = "<group>"; };
 		8EF0BFD32028557300401540 /* PrizeRecordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrizeRecordController.swift; sourceTree = "<group>"; };
@@ -210,6 +220,9 @@
 				8E20A3EA2021B73200B15AB2 /* MessageItem.swift */,
 				8E2F6A0D2022C62B000704F6 /* UserViewController.swift */,
 				8ED2425E202417CA00303DB4 /* AboutViewController.swift */,
+				8E1A112920450A5300A0B6BC /* LoginViewController.swift */,
+				8E1A112B20450A6D00A0B6BC /* RegisterViewController.swift */,
+				8E1A112D20453C2C00A0B6BC /* LoginViewControllerCode.swift */,
 			);
 			path = me;
 			sourceTree = "<group>";
@@ -265,6 +278,8 @@
 				8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */,
 				8E92BF19200EFDD90090C646 /* SidEntity.swift */,
 				8E4D9FB4202AB2D900C4BF21 /* PrizeEntity.swift */,
+				8EC9439620464CA000EB2B05 /* Result.swift */,
+				8EC9439820464DB700EB2B05 /* CodeEntity.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -557,8 +572,12 @@
 				8EF0BFD42028557300401540 /* PrizeRecordController.swift in Sources */,
 				8E55FFFE20182592009E2AB0 /* DiscoverViewController.swift in Sources */,
 				8E92BF1A200EFDD90090C646 /* SidEntity.swift in Sources */,
+				8EC9439920464DB700EB2B05 /* CodeEntity.swift in Sources */,
 				8ED2425F202417CA00303DB4 /* AboutViewController.swift in Sources */,
+				8E1A112E20453C2C00A0B6BC /* LoginViewControllerCode.swift in Sources */,
 				8E92BF1E200F46C80090C646 /* Presenter.swift in Sources */,
+				8EC9439720464CA000EB2B05 /* Result.swift in Sources */,
+				8E1A112A20450A5300A0B6BC /* LoginViewController.swift in Sources */,
 				8E20A3E72021B50000B15AB2 /* MessageDetailView.swift in Sources */,
 				8EF0BFD2202854A200401540 /* PrizeViewController.swift in Sources */,
 				8E4D9FB5202AB2D900C4BF21 /* PrizeEntity.swift in Sources */,
@@ -572,6 +591,7 @@
 				8E55001320183122009E2AB0 /* ShopViewController.swift in Sources */,
 				8E61FB6D1FF341F400680E19 /* WeiChatLogin.swift in Sources */,
 				8EC2B5352019D08000C3181D /* DiscoverItemView.swift in Sources */,
+				8E1A112C20450A6D00A0B6BC /* RegisterViewController.swift in Sources */,
 				8EC2B5312019C4FD00C3181D /* DiscoverItem.swift in Sources */,
 				8E20A3E32021A40900B15AB2 /* MessageView.swift in Sources */,
 				8EFA2D3A1FE8B37D005C890E /* AppDelegate.swift in Sources */,

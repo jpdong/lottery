@@ -16,6 +16,18 @@ func Log<T>(_ message:T, file:String = #file, funcName:String = #function,lineNu
     #endif
 }
 
+func storeSid(_ sid:String) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(sid, forKey:"sid")
+    userDefaults.synchronize()
+}
+
+func getCacheSid () -> String? {
+    let userDefaults = UserDefaults.standard
+    let sid:String? = userDefaults.string(forKey: "sid")
+    return sid ?? ""
+}
+
 func storeUnionid(_ unionid:String){
     let userDefaults = UserDefaults.standard
     userDefaults.set(unionid, forKey: "unionid")
@@ -50,4 +62,11 @@ func getCacheName() -> String?{
     let userDefaults = UserDefaults.standard
     let nickName:String? = userDefaults.string(forKey: "nickname")
     return nickName ?? ""
+}
+
+func alert(viewController:UIViewController,title:String, message:String) {
+    let alertView = UIAlertController(title:title, message:message, preferredStyle:.alert)
+    let cancel = UIAlertAction(title:"确定", style:.cancel)
+    alertView.addAction(cancel)
+    viewController.present(alertView,animated: true,completion: nil)
 }
