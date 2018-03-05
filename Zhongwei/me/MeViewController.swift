@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class MeViewController:UIViewController{
     
@@ -17,6 +18,7 @@ class MeViewController:UIViewController{
     @IBOutlet weak var userInfoCell: UserInfoCell!
     
     var unionid:String?
+    var sid:String?
     var app:AppDelegate?
     
 //    var userInfoItem:FeatureItem? = FeatureItem(title:"点击登录", type:FeatureItem.userInfo)
@@ -24,18 +26,18 @@ class MeViewController:UIViewController{
 //    var featureItems:Dictionary<Int,FeatureItem>?
     
     @IBAction func logout(_ sender: Any) {
-        app?.globalData?.unionid = ""
+        app?.globalData?.sid = ""
         let userDefaults = UserDefaults.standard
-        userDefaults.set("", forKey: "unionid")
+        userDefaults.set("", forKey: "sid")
         userDefaults.synchronize()
     }
     
     override func loadView() {
-        //featureItems = [0:userInfoItem!,1:messageInfoItem!]
         super.loadView()
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         self.navigationItem.title = "我"
         app = UIApplication.shared.delegate as! AppDelegate
@@ -43,18 +45,28 @@ class MeViewController:UIViewController{
         app?.globalData?.headImgUrl = getCacheImgUrl()!
         app?.globalData?.nickName = getCacheName()!
         featureTableView.tableFooterView = UIView(frame:.zero)
-//        featureTableView.delegate = self
-//        featureTableView.dataSource = self
-        //userInfoItem = FeatureItem(title:"点击登录", type:FeatureItem.userInfo)
-        //messageInfoItem = FeatureItem(title:"消息", type:FeatureItem.messageInfo)
-        //featureItems = [0:userInfoItem!,1:messageInfoItem!]
-//        messageTableView.layer.borderWidth = 1
-//        messageTableView.layer.borderColor = UIColor.red.cgColor
-        //messageTableView.register(MessageView.self, forCellReuseIdentifier: "MessageCell")
-        if (setupUserInfo()) {
+        if (checkUser()) {
             logoutButton.isHidden = false
         } else {
             logoutButton.isHidden = true
+        }
+    }
+    
+    func checkUser() -> Bool {
+        Log("")
+        sid = app?.globalData?.sid
+        if (sid != nil && sid! != "" && userInfoCell != nil){
+            Log("sid:\(sid!)")
+            Presenter.checkSid(sid:sid!)
+            .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { (result) in
+                    
+                })
+            let phoneNum = app?.globalData?.phoneNum
+            userInfoCell.nickNameLabel.text = phoneNum
+            return true
+        } else {
+            return false
         }
     }
     
@@ -74,7 +86,7 @@ class MeViewController:UIViewController{
     
     override func viewDidAppear(_ animated: Bool) {
         Log("viewDidAppear")
-        setupUserInfo()
+        checkUser()
     }
     
     override func viewDidDisappear(_ animated: Bool) {

@@ -6,6 +6,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -73,6 +75,114 @@
             </objects>
             <point key="canvasLocation" x="-3022" y="224"/>
         </scene>
+        <!--Card View Controller-->
+        <scene sceneID="hOM-bg-Nrn">
+            <objects>
+                <viewController storyboardIdentifier="IDCardViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dZz-eS-1Wr" customClass="IDCardViewController" customModule="Zhongwei" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7Te-XY-5cx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="v7I-E0-rfJ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ytw-ur-c7F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2529.375" y="334.85915492957747"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="s2Y-tV-0Ds">
+            <objects>
+                <viewController id="Ccu-6n-srS" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OHF-g5-sTI">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0HQ-Hi-t65">
+                                <rect key="frame" x="0.0" y="20" width="320" height="635"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="idcard_front" translatesAutoresizingMaskIntoConstraints="NO" id="SLE-xO-53Z">
+                                        <rect key="frame" x="45" y="116" width="231" height="144"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="SLE-xO-53Z" secondAttribute="height" multiplier="231:144" id="JdJ-hS-td1"/>
+                                            <constraint firstAttribute="width" constant="231" id="x3O-O7-Zvj"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="idcard_back" translatesAutoresizingMaskIntoConstraints="NO" id="oOg-tK-7xX">
+                                        <rect key="frame" x="45" y="268" width="231" height="144"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="oOg-tK-7xX" secondAttribute="height" multiplier="231:144" id="DfX-Xm-6Jk"/>
+                                            <constraint firstAttribute="width" constant="231" id="KZQ-uk-S5L"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="idcard_second" translatesAutoresizingMaskIntoConstraints="NO" id="LxO-T1-L1d">
+                                        <rect key="frame" x="79" y="451" width="162" height="43"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="LxO-T1-L1d" secondAttribute="height" multiplier="162:43" id="1f4-X3-pFE"/>
+                                            <constraint firstAttribute="width" constant="162" id="TfP-xL-TZP"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VAS-5A-dhY">
+                                        <rect key="frame" x="40" y="510" width="240" height="36"/>
+                                        <color key="backgroundColor" red="0.18163758520000001" green="0.43211257460000002" blue="0.33301669360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="fvH-VW-O6r"/>
+                                        </constraints>
+                                        <state key="normal" title="去填写">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="idcard_first" translatesAutoresizingMaskIntoConstraints="NO" id="QuM-yb-I6p">
+                                        <rect key="frame" x="100" y="56" width="120" height="44.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="Kmm-Yx-IpU"/>
+                                            <constraint firstAttribute="width" secondItem="QuM-yb-I6p" secondAttribute="height" multiplier="119:44" id="LEv-0H-9ut"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="VAS-5A-dhY" firstAttribute="top" secondItem="LxO-T1-L1d" secondAttribute="bottom" constant="16" id="1Hc-VE-7s6"/>
+                                    <constraint firstItem="LxO-T1-L1d" firstAttribute="top" secondItem="oOg-tK-7xX" secondAttribute="bottom" constant="39" id="7qD-Af-x8a"/>
+                                    <constraint firstItem="VAS-5A-dhY" firstAttribute="leading" secondItem="0HQ-Hi-t65" secondAttribute="leading" constant="40" id="FWh-en-qEy"/>
+                                    <constraint firstItem="oOg-tK-7xX" firstAttribute="top" secondItem="SLE-xO-53Z" secondAttribute="bottom" constant="8" id="Iv1-6s-17T"/>
+                                    <constraint firstItem="SLE-xO-53Z" firstAttribute="top" secondItem="QuM-yb-I6p" secondAttribute="bottom" constant="15.5" id="KJe-6Y-rWz"/>
+                                    <constraint firstItem="oOg-tK-7xX" firstAttribute="centerX" secondItem="0HQ-Hi-t65" secondAttribute="centerX" id="Qqx-QT-n1S"/>
+                                    <constraint firstItem="LxO-T1-L1d" firstAttribute="centerX" secondItem="0HQ-Hi-t65" secondAttribute="centerX" id="SOI-hb-wz8"/>
+                                    <constraint firstItem="SLE-xO-53Z" firstAttribute="centerX" secondItem="0HQ-Hi-t65" secondAttribute="centerX" id="Uwy-s9-qQV"/>
+                                    <constraint firstItem="QuM-yb-I6p" firstAttribute="centerX" secondItem="0HQ-Hi-t65" secondAttribute="centerX" id="VUR-tm-deW"/>
+                                    <constraint firstAttribute="trailing" secondItem="VAS-5A-dhY" secondAttribute="trailing" constant="40" id="ph1-8E-4lq"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="VKW-RY-TtH"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YIS-fg-DoI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1768.125" y="334.85915492957747"/>
+        </scene>
+        <!--Business Detail View-->
+        <scene sceneID="G2Z-19-4Zn">
+            <objects>
+                <viewController storyboardIdentifier="BusinessDetailView" id="Of4-xa-dmz" customClass="BusinessDetailView" customModule="Zhongwei" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LfA-KE-CSt">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="f1o-ow-yjc"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rij-Pn-y6y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-879" y="335"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="idcard_back" width="230" height="143"/>
+        <image name="idcard_first" width="115" height="42"/>
+        <image name="idcard_front" width="230" height="143"/>
+        <image name="idcard_second" width="159" height="42"/>
+    </resources>
     <color key="tintColor" red="0.18163758516311646" green="0.43211257457733154" blue="0.33301669359207153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

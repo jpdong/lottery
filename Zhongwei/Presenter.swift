@@ -45,6 +45,14 @@ class Presenter{
         }
     }
     
+    static func getSid() -> Observable<String> {
+        return Observable<String>.create({ (observer) -> Disposable in
+            let sid = app.globalData?.sid
+            observer.onNext(sid ?? "")
+            return Disposables.create()
+        })
+    }
+    
     static func getUrl(unionid:String,headimgurl:String, nickname:String,urlHead:String) -> Observable<String>{
         print("urlHead:\(urlHead)")
 //        return Observable<String>.create {
@@ -63,7 +71,8 @@ class Presenter{
 //            }
 //            return Disposables.create ()
 //            }
-            return getSid(unionid: unionid, headimgurl: headimgurl, nickname: nickname)
+            //return getSid(unionid: unionid, headimgurl: headimgurl, nickname: nickname)
+            return getSid()
             .map{
                 sid in
                 Log("url:\(urlHead)\(sid)")
@@ -92,7 +101,8 @@ class Presenter{
         var unionid = app.globalData!.unionid
         var headImgUrl = app.globalData!.headImgUrl
         var nickName = app.globalData!.nickName
-        return getSid(unionid: unionid, headimgurl: headImgUrl, nickname: nickName)
+        //return getSid(unionid: unionid, headimgurl: headImgUrl, nickname: nickName)
+            return getSid()
             .map{ sid in
                 let now = Date()
                 let timeInterval:TimeInterval = now.timeIntervalSince1970 * 1000
@@ -106,7 +116,8 @@ class Presenter{
         var unionid = app.globalData!.unionid
         var headImgUrl = app.globalData!.headImgUrl
         var nickName = app.globalData!.nickName
-        return getSid(unionid: unionid, headimgurl: headImgUrl, nickname: nickName)
+        //return getSid(unionid: unionid, headimgurl: headImgUrl, nickname: nickName)
+            return getSid()
             .flatMap{
                 sid in
                 return Observable<AlertData>.create {
@@ -214,8 +225,8 @@ class Presenter{
                     if (sidEntity?.code == 0) {
                         result.code = 0
                         result.message = sidEntity?.msg
-                        app.globalData?.sid = sidEntity!.data!.sid!
-                        storeSid(sidEntity!.data!.sid!)
+//                        app.globalData?.sid = sidEntity!.data!.sid!
+//                        storeSid(sidEntity!.data!.sid!)
                     } else {
                         result.code = 1
                         result.message = sidEntity?.msg
@@ -291,4 +302,34 @@ class Presenter{
         .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
         
     }
+    
+    static func checkSid(sid:String) -> Observable<Result> {
+        return Observable<Result>.create({ (observer) -> Disposable in
+            let parameters:Dictionary = ["sid":sid]
+            print("parameters:\(parameters)")
+            Alamofire.request("\(BASE_URL)mobile/Login/checkSidExpire",method:.post,parameters:parameters).responseString{
+                response in
+                print("response:\(response)")
+                print("value \(response.result.value)")
+                if (response.result.value == nil) {
+                    return
+                }
+                var result:Result = Result()
+                var responseEntity = ResponseEntity.deserialize(from: response.result.value as! String)
+                if (responseEntity != nil) {
+                    if (responseEntity?.code == 0) {
+                        result.code = 0
+                        result.message = responseEntity?.msg
+                    } else {
+                        result.code = 1
+                        result.message = responseEntity?.msg
+                    }
+                }
+                observer.onNext(result)
+            }
+            return Disposables.create()
+        })
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
+    
 }

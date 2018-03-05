@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RxSwift
 
 class UserViewController:UITableViewController{
     
@@ -21,6 +22,7 @@ class UserViewController:UITableViewController{
     var unionid:String?
     var app:AppDelegate?
     var hasLogin:Bool = false
+    var sid:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +31,41 @@ class UserViewController:UITableViewController{
         app?.globalData?.unionid = getCacheUnionid()!
         app?.globalData?.headImgUrl = getCacheImgUrl()!
         app?.globalData?.nickName = getCacheName()!
+        app?.globalData?.sid = getCacheSid()!
         self.tableView.tableFooterView = UIView(frame:.zero)
         //userInfoCell.accessoryType = .disclosureIndicator
         messageInfoCell.accessoryType = .disclosureIndicator
         aboutInfoCell.accessoryType = .disclosureIndicator
         logoutCell.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(logout)))
-        setupUserInfo()
+        //setupUserInfo()
+        //checkUser()
+    }
+    
+    func checkUser() -> Bool {
+        Log("")
+        sid = app?.globalData?.sid
+        var result:Bool = false
+        if (sid != nil && sid! != "" && userInfoCell != nil){
+            Log("sid:\(sid!)")
+            Presenter.checkSid(sid:sid!)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { (result) in
+                    if (result.code == 0) {
+                        let phoneNum = self.app?.globalData?.phoneNum
+                        self.userInfoCell.nickNameLabel.text = phoneNum
+                    } else {
+                        self.logout()
+                    }
+                })
+            hasLogin = true
+            logoutCell.isHidden = false
+            userInfoCell.accessoryType = .none
+            return true
+        } else {
+            userInfoCell.accessoryType = .disclosureIndicator
+            logoutCell.isHidden = true
+            return false
+        }
     }
     
     func setupUserInfo() -> Bool{
@@ -57,10 +88,10 @@ class UserViewController:UITableViewController{
         }
     }
     
-    @objc func logout(_ sender: Any) {
-        app?.globalData?.unionid = ""
+    @objc func logout() {
+        app?.globalData?.sid = ""
         let userDefaults = UserDefaults.standard
-        userDefaults.set("", forKey: "unionid")
+        userDefaults.set("", forKey: "sid")
         userDefaults.synchronize()
         hasLogin = false
         clearUserInfo()
@@ -70,7 +101,7 @@ class UserViewController:UITableViewController{
         hasLogin = false
         userInfoCell.accessoryType = .disclosureIndicator
         userInfoCell.headImageView.image = UIImage(named:"noUser")
-        userInfoCell.nickNameLabel.text = "点击登录"
+        userInfoCell.nickNameLabel.text = "点击登录账号"
         //messageInfoCell.number.isHidden = true
     }
     
@@ -93,7 +124,8 @@ class UserViewController:UITableViewController{
 //    }
     
     override func viewDidAppear(_ animated: Bool) {
-        setupUserInfo()
+        //setupUserInfo()
+        checkUser()
     }
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         globalData?.headImgUrl = getCacheImgUrl()!
         globalData?.nickName = getCacheName()!
         globalData?.sid = getCacheSid()!
+        globalData?.phoneNum = getCachePhoneNum()!
         WXApi.registerApp(wechatAppID)
         return true
     }
@@ -155,6 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         var nickName = ""
         var baseUrl = ""
         var sid = ""
+        var phoneNum = ""
     }
 }
 

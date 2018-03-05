@@ -16,6 +16,18 @@ func Log<T>(_ message:T, file:String = #file, funcName:String = #function,lineNu
     #endif
 }
 
+func storePhoneNum(_ phoneNum:String) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(phoneNum, forKey: "phoneNum")
+    userDefaults.synchronize()
+}
+
+func getCachePhoneNum ()-> String? {
+    let userDefaults = UserDefaults.standard
+    let phoneNum:String? = userDefaults.string(forKey: "phoneNum")
+    return phoneNum ?? ""
+}
+
 func storeSid(_ sid:String) {
     let userDefaults = UserDefaults.standard
     userDefaults.set(sid, forKey:"sid")

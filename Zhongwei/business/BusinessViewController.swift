@@ -13,14 +13,13 @@ class BusinessViewController:UITableViewController {
     
     var businessItems = [BusinessItem]()
     var unionid:String?
+    var sid:String?
+    var isShopRegistered:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //var navigationBar = UINavigationBar(frame:CGRect( x:0,y:20, width:self.view.frame.width, height:44))
-        //self.view.addSubview(navigationBar)
         setupItems()
         self.tableView.tableFooterView = UIView(frame:.zero)
-        //self.navigationItem.title = "业务"
     }
     
     func setupItems(){
@@ -36,6 +35,7 @@ class BusinessViewController:UITableViewController {
         businessItems.append(manager)
         businessItems.append(marketManager)
         businessItems.append(areaManager)
+        checkRegisterBusinessState()
         
     }
     
@@ -57,11 +57,30 @@ class BusinessViewController:UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if (hasUnionid()){
+        if (hasSid()){
+            if (isShopRegistered) {
             return indexPath
+            }else {
+                let sb = UIStoryboard(name:"Main",bundle:nil)
+                let vc = sb.instantiateViewController(withIdentifier: "IDCardViewController") as! IDCardViewController
+                self.present(vc, animated: true, completion: nil)
+                return nil
+            }
         } else {
             return nil
         }
+    }
+    
+    func checkRegisterBusinessState() {
+        BusinessPresenter.checkBusinessRegisterState()
+        .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (result) in
+                if (result.code == 0) {
+                    self.isShopRegistered = true
+                } else {
+                    self.isShopRegistered = false
+                }
+            })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -74,8 +93,10 @@ class BusinessViewController:UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        unionid = getCacheUnionid()
-        if (unionid == nil || unionid! == ""){
+//        unionid = getCacheUnionid()
+//        if (unionid == nil || unionid! == ""){
+            sid = getCacheSid()
+            if (sid == nil || sid! == ""){
             //hideViews()
             let alertView = UIAlertController(title:"未登录", message:"前往登录", preferredStyle:.alert)
             let cancel = UIAlertAction(title:"取消", style:.cancel)
@@ -91,6 +112,31 @@ class BusinessViewController:UITableViewController {
         } else {
             //showViews()
         }
+    }
+    
+    func hasSid() -> Bool{
+        sid = getCacheSid()
+        if (sid == nil || sid! == ""){
+            //hideViews()
+            let alertView = UIAlertController(title:"未登录", message:"前往登录", preferredStyle:.alert)
+            let cancel = UIAlertAction(title:"取消", style:.cancel) {
+                action in
+                //var idCardViewController = IDCardViewController()
+                //self.navigationController?.pushViewController(idCardViewController, animated: true)
+                
+            }
+            let confirm = UIAlertAction(title:"确定", style:.default){
+                action in
+                //self.performSegue(withIdentifier: "showMe", sender: self)
+                self.tabBarController?.tabBar.isHidden = false
+                self.tabBarController?.selectedIndex = 3
+            }
+            alertView.addAction(cancel)
+            alertView.addAction(confirm)
+            present(alertView,animated: true,completion: nil)
+            return false
+        }
+        return true
     }
     
     func hasUnionid() -> Bool{

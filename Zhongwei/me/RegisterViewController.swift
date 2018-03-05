@@ -63,8 +63,15 @@ class RegisterViewController:UIViewController{
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
-                    alert(viewController: self, title: "提示", message: result.message ?? "")
-                    self.dismiss(animated: true, completion: nil)
+                    //alert(viewController: self, title: "提示", message: result.message ?? "")
+                    let alertView = UIAlertController(title:"提示", message:result.message ?? "", preferredStyle:.alert)
+                    let confirm = UIAlertAction(title:"去登录", style:.default) {
+                        action -> Void in
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    alertView.addAction(confirm)
+                    self.present(alertView,animated: true,completion: nil)
+                    //self.dismiss(animated: true, completion: nil)
                 } else {
                     alert(viewController: self, title: "提示", message: result.message ?? "")
                 }

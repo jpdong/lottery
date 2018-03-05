@@ -170,21 +170,21 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         Log("viewWillAppear")
-        unionid = getCacheUnionid()
-        if (unionid == nil || unionid! == ""){
-            hideViews()
-            let alertView = UIAlertController(title:"未登录", message:"前往登录", preferredStyle:.alert)
-            let cancel = UIAlertAction(title:"取消", style:.cancel)
-            let confirm = UIAlertAction(title:"确定", style:.default){
-                action in
-                //self.performSegue(withIdentifier: "showMe", sender: self)
-                self.tabBarController?.tabBar.isHidden = false
-                self.tabBarController?.selectedIndex = 3
-            }
-            alertView.addAction(cancel)
-            alertView.addAction(confirm)
-            present(alertView,animated: true,completion: nil)
-        }
+//        unionid = getCacheUnionid()
+//        if (unionid == nil || unionid! == ""){
+//            hideViews()
+//            let alertView = UIAlertController(title:"未登录", message:"前往登录", preferredStyle:.alert)
+//            let cancel = UIAlertAction(title:"取消", style:.cancel)
+//            let confirm = UIAlertAction(title:"确定", style:.default){
+//                action in
+//                //self.performSegue(withIdentifier: "showMe", sender: self)
+//                self.tabBarController?.tabBar.isHidden = false
+//                self.tabBarController?.selectedIndex = 3
+//            }
+//            alertView.addAction(cancel)
+//            alertView.addAction(confirm)
+//            present(alertView,animated: true,completion: nil)
+//        }
     }
     
     func hideViews(){
