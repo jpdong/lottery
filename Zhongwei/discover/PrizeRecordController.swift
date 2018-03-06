@@ -23,7 +23,7 @@ class PrizeRecordController:WebViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        Presenter.getPrizeRecordUrl()
+        DiscoverPresenter.getPrizeRecordUrl()
         .observeOn(MainScheduler.instance)
         .subscribe(
             onNext:{

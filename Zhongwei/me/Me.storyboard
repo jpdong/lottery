@@ -510,7 +510,7 @@
         <scene sceneID="8DH-ZM-dhF">
             <objects>
                 <tableViewController title="消息" id="m7b-24-RvG" customClass="MessageList" customModule="Zhongwei" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dMF-f8-wsJ">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="84" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="dMF-f8-wsJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -522,20 +522,23 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="83.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="swift UIView加边框" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZyU-G9-BQJ">
-                                            <rect key="frame" x="106" y="31" width="146.5" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="swift UIView加边框" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZyU-G9-BQJ">
+                                            <rect key="frame" x="92" y="33.5" width="166" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="14:13" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffx-47-7lH">
-                                            <rect key="frame" x="269.5" y="33" width="34.5" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22/44" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffx-47-7lH">
+                                            <rect key="frame" x="258" y="33.5" width="46" height="17"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="46" id="HlH-le-Fvb"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="message_from_customer" translatesAutoresizingMaskIntoConstraints="NO" id="KkY-3U-Cjk">
-                                            <rect key="frame" x="16" y="13.5" width="55" height="55"/>
+                                            <rect key="frame" x="16" y="14.5" width="55" height="55"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="KkY-3U-Cjk" secondAttribute="height" multiplier="1:1" id="fKA-kD-1Bk"/>
                                             </constraints>
@@ -546,7 +549,7 @@
                                         <constraint firstItem="KkY-3U-Cjk" firstAttribute="centerY" secondItem="7Wa-qs-v6l" secondAttribute="centerY" id="2gE-3h-bJ1"/>
                                         <constraint firstItem="ffx-47-7lH" firstAttribute="centerY" secondItem="7Wa-qs-v6l" secondAttribute="centerY" id="bzw-Wb-TbH"/>
                                         <constraint firstItem="ZyU-G9-BQJ" firstAttribute="centerY" secondItem="7Wa-qs-v6l" secondAttribute="centerY" id="eLL-ta-jjo"/>
-                                        <constraint firstItem="ffx-47-7lH" firstAttribute="leading" secondItem="ZyU-G9-BQJ" secondAttribute="trailing" constant="17" id="fbo-M1-FT4"/>
+                                        <constraint firstItem="ffx-47-7lH" firstAttribute="leading" secondItem="ZyU-G9-BQJ" secondAttribute="trailing" id="fOz-YU-1fb"/>
                                         <constraint firstItem="KkY-3U-Cjk" firstAttribute="leading" secondItem="7Wa-qs-v6l" secondAttribute="leadingMargin" id="yqU-Yc-Add"/>
                                         <constraint firstItem="ffx-47-7lH" firstAttribute="trailing" secondItem="7Wa-qs-v6l" secondAttribute="trailingMargin" id="zlr-aP-fRI"/>
                                     </constraints>
@@ -554,7 +557,7 @@
                                 <connections>
                                     <outlet property="date" destination="ffx-47-7lH" id="cV5-yU-B7Z"/>
                                     <outlet property="title" destination="ZyU-G9-BQJ" id="INg-t5-aJe"/>
-                                    <segue destination="bJE-XT-lGs" kind="show" id="r09-LY-hD1"/>
+                                    <segue destination="bJE-XT-lGs" kind="presentation" id="r09-LY-hD1"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -568,16 +571,17 @@
             </objects>
             <point key="canvasLocation" x="746.25" y="616.90140845070425"/>
         </scene>
-        <!--View Controller-->
+        <!--Message Detail View-->
         <scene sceneID="3iY-sU-20I">
             <objects>
-                <viewController id="bJE-XT-lGs" sceneMemberID="viewController">
+                <viewController id="bJE-XT-lGs" customClass="MessageDetailView" customModule="Zhongwei" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0PM-eN-vXX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="hc4-L3-AnX"/>
                     </view>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H1a-wZ-ioh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

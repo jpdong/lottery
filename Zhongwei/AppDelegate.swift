@@ -157,6 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         var baseUrl = ""
         var sid = ""
         var phoneNum = ""
+        var messageNum = 0
     }
 }
 

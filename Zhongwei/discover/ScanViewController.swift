@@ -119,7 +119,7 @@ class ScanViewController:UIViewController,AVCaptureMetadataOutputObjectsDelegate
             if metadataObj.stringValue != nil {
                 let code = metadataObj.stringValue as! String
                 session.stopRunning()
-                Presenter.getPrizeData(code:code)
+                DiscoverPresenter.getPrizeData(code:code)
                 .observeOn(MainScheduler.instance)
                     .subscribe(onNext:{
                         result in

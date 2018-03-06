@@ -35,6 +35,7 @@ class UserViewController:UITableViewController{
         self.tableView.tableFooterView = UIView(frame:.zero)
         //userInfoCell.accessoryType = .disclosureIndicator
         messageInfoCell.accessoryType = .disclosureIndicator
+        messageNumLabel.isHidden = true
         aboutInfoCell.accessoryType = .disclosureIndicator
         logoutCell.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(logout)))
         //setupUserInfo()
@@ -102,6 +103,7 @@ class UserViewController:UITableViewController{
         userInfoCell.accessoryType = .disclosureIndicator
         userInfoCell.headImageView.image = UIImage(named:"noUser")
         userInfoCell.nickNameLabel.text = "点击登录账号"
+        logoutCell.isHidden = true
         //messageInfoCell.number.isHidden = true
     }
     
@@ -111,6 +113,8 @@ class UserViewController:UITableViewController{
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if (indexPath.section == 0 && hasLogin){
+            return nil
+        } else if(indexPath.section == 1 && indexPath.row == 0 && !hasLogin){
             return nil
         } else {
             return indexPath
@@ -126,6 +130,26 @@ class UserViewController:UITableViewController{
     override func viewDidAppear(_ animated: Bool) {
         //setupUserInfo()
         checkUser()
+        Log("user view")
+        self.tabBarItem.badgeValue = "4"
+        self.tabBarController?.childViewControllers[3].tabBarItem.badgeValue = "5"
+        UserPresenter.updateMessages()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (messageResult) in
+                if (messageResult.code == 0) {
+                    var num = messageResult.messageList?.count
+                    if (num! > 0) {
+                    self.messageNumLabel.text = String(describing:messageResult.messageList!.count)
+                        self.messageNumLabel.isHidden = false
+                    } else {
+                        self.messageNumLabel.isHidden = true
+                    }
+                }
+            })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        segue.destination.hidesBottomBarWhenPushed = true
     }
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

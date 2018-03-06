@@ -83,6 +83,10 @@ class DiscoverViewController:UITableViewController{
         return true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        segue.destination.hidesBottomBarWhenPushed = true
+    }
+    
 //    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return discoverItems.count
 //    }

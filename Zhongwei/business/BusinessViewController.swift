@@ -35,8 +35,6 @@ class BusinessViewController:UITableViewController {
         businessItems.append(manager)
         businessItems.append(marketManager)
         businessItems.append(areaManager)
-        checkRegisterBusinessState()
-        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,13 +56,13 @@ class BusinessViewController:UITableViewController {
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if (hasSid()){
-            if (isShopRegistered) {
-            return indexPath
-            }else {
+            if (indexPath.row == 0 && !isShopRegistered){
                 let sb = UIStoryboard(name:"Main",bundle:nil)
                 let vc = sb.instantiateViewController(withIdentifier: "IDCardViewController") as! IDCardViewController
                 self.present(vc, animated: true, completion: nil)
                 return nil
+            } else {
+                return indexPath
             }
         } else {
             return nil
@@ -110,7 +108,7 @@ class BusinessViewController:UITableViewController {
             alertView.addAction(confirm)
             present(alertView,animated: true,completion: nil)
         } else {
-            //showViews()
+            checkRegisterBusinessState()
         }
     }
     

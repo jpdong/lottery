@@ -23,6 +23,8 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
     var app:AppDelegate?
     var headImgUrl:String?
     var nickName:String?
+    var navigationBarHeight:CGFloat?
+    var statusBarHeight:CGFloat?
     
     @objc func goBack(_ sender: UIBarButtonItem) {
         webView.goBack()
@@ -37,8 +39,14 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
     }
     
     @objc func close(_ sender:UIBarButtonItem){
-        self.dismiss(animated: true, completion: nil)
-        
+        //self.dismiss(animated: true, completion: nil)
+        var parentVC:UIViewController? = self.presentingViewController
+        var bottomVC:UIViewController?
+        while(parentVC != nil) {
+            bottomVC = parentVC
+            parentVC = parentVC!.presentingViewController
+        }
+        bottomVC?.dismiss(animated: true, completion: nil)
     }
     
     func goForward(_ sender: UIBarButtonItem) {
@@ -56,7 +64,9 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
     }
     
     func setupViews(){
-        navigationBar = UINavigationBar(frame:CGRect( x:0,y:20, width:self.view.frame.width, height:44))
+        navigationBarHeight = Size.instance.navigationBarHeight
+        statusBarHeight = Size.instance.statusBarHeight
+        navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight!, width:self.view.frame.width, height:navigationBarHeight!))
         webNavigationItem = UINavigationItem()
         backButton = UIBarButtonItem(title:"",style:.plain, target:self, action:#selector(goBack))
         //backButton.image = UIImage(named:"backButton")
@@ -72,7 +82,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
         //progressView = UIProgressView(frame: CGRect(x:0, y:0, width:self.view.frame.width, height:4))
         //self.view.addSubview(progressView)
         let webConfiguration = WKWebViewConfiguration()
-        webView = WKWebView(frame: CGRect(x:0,y:64, width:UIScreen.main.bounds.width,height:UIScreen.main.bounds.height - 64), configuration: webConfiguration)
+        webView = WKWebView(frame: CGRect(x:0,y:navigationBarHeight! + statusBarHeight!, width:UIScreen.main.bounds.width,height:UIScreen.main.bounds.height - (navigationBarHeight! + statusBarHeight!)), configuration: webConfiguration)
         webView.uiDelegate = self
         webView.navigationDelegate = self
         self.view.addSubview(webView)
@@ -87,7 +97,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
         switch type! {
         case BusinessItem.shop:
             //Presenter.getShopUrl(unionid: "o6mWl1a58jqGX_TAT6tpd2zpJ2lI")
-            Presenter.getShopUrl(unionid: unionid!,headimgurl: headImgUrl!, nickname:nickName!)
+            BusinessPresenter.getShopUrl(unionid: unionid!,headimgurl: headImgUrl!, nickname:nickName!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext:{
                     url in
@@ -96,7 +106,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
             break
         case BusinessItem.manager:
             //Presenter.getManagerUrl(unionid: "o6mWl1a58jqGX_TAT6tpd2zpJ2lI")
-            Presenter.getManagerUrl(unionid: unionid!,headimgurl: headImgUrl!, nickname:nickName!)
+            BusinessPresenter.getManagerUrl(unionid: unionid!,headimgurl: headImgUrl!, nickname:nickName!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext:{
                     url in
@@ -105,7 +115,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
             break
         case BusinessItem.areaManager:
             //Presenter.getAreaManagerUrl(unionid: "o6mWl1a58jqGX_TAT6tpd2zpJ2lI")
-            Presenter.getAreaManagerUrl(unionid: unionid!,headimgurl: headImgUrl!, nickname:nickName!)
+            BusinessPresenter.getAreaManagerUrl(unionid: unionid!,headimgurl: headImgUrl!, nickname:nickName!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext:{
                     url in
@@ -114,7 +124,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
             break
         case BusinessItem.marketManager:
             //Presenter.getAreaManagerUrl(unionid: "o6mWl1a58jqGX_TAT6tpd2zpJ2lI")
-            Presenter.getMarketManagerUrl(unionid: unionid!,headimgurl: headImgUrl!, nickname:nickName!)
+            BusinessPresenter.getMarketManagerUrl(unionid: unionid!,headimgurl: headImgUrl!, nickname:nickName!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext:{
                     url in

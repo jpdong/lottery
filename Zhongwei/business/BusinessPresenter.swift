@@ -30,16 +30,16 @@ class BusinessPresenter {
                         if (response.result.value == nil) {
                             return
                         }
-//                        let codeEntity:CodeEntity = CodeEntity.deserialize(from: response.result.value as! String) as! CodeEntity
-//                        var result:Result = Result()
-//                        if (codeEntity.success!) {
-//                            result.code = 1
-//                            result.message = "验证码发送成功"
-//                        }else {
-//                            result.code = 0
-//                            result.message = codeEntity.error
-//                        }
-//                        observer.onNext(result)
+                        let businessStateEntity:BusinessStateEntity = BusinessStateEntity.deserialize(from: response.result.value as! String) as! BusinessStateEntity
+                        var result:Result = Result()
+                        if (businessStateEntity.code == 200) {
+                            if (businessStateEntity.data!.club!){
+                                result.code = 0
+                            }else {
+                                result.code = 1
+                            }
+                            observer.onNext(result)
+                        }
                     }
                     return Disposables.create()
                 }
@@ -124,5 +124,49 @@ class BusinessPresenter {
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
         
+    }
+    
+    static func getUrl(unionid:String,headimgurl:String, nickname:String,urlHead:String) -> Observable<String>{
+        print("urlHead:\(urlHead)")
+        //        return Observable<String>.create {
+        //            (observer) -> Disposable in
+        //            let parameters:Dictionary = ["unionid":unionid,"headimgurl":headimgurl, "nickname":nickname]
+        //            Alamofire.request("\(BASE_URL)mobile/wechat/getSid",method:.post,parameters:parameters).responseString{response in
+        //                print("value \(response.result.value)")
+        //                if (response.result.value == nil) {
+        //                    return
+        //                }
+        //                if let sidEntity = SidEntity.deserialize(from:response.result.value!){
+        //                    print("sid \(sidEntity.data!.sid!)")
+        //                    observer.onNext(sidEntity.data!.sid!)
+        //                }
+        //
+        //            }
+        //            return Disposables.create ()
+        //            }
+        //return getSid(unionid: unionid, headimgurl: headimgurl, nickname: nickname)
+        return Presenter.getSid()
+            .map{
+                sid in
+                Log("url:\(urlHead)\(sid)")
+                return "\(urlHead)\(sid)"
+            }
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
+    
+    static func getShopUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
+        return getUrl(unionid:unionid,headimgurl: headimgurl, nickname: nickname, urlHead:"\(BASE_URL)mobile/app/shop?sid=")
+    }
+    
+    static func getManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
+        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/app/manager?sid=")
+    }
+    
+    static func getAreaManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
+        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/app/bazaar_manager?sid=")
+    }
+    
+    static func getMarketManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
+        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/app/area_manager?sid=")
     }
 }

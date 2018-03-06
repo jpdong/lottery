@@ -9,6 +9,24 @@
 import Foundation
 import UIKit
 
+class Size {
+    static let instance = Size()
+   var windowWidth:CGFloat
+    var windowHeight:CGFloat
+    var isiPhoneX:Bool
+     var navigationBarHeight:CGFloat
+    var statusBarHeight:CGFloat
+    
+    private init(){
+        windowWidth = UIScreen.main.bounds.size.width
+        windowHeight = UIScreen.main.bounds.size.height
+        isiPhoneX = windowHeight == 812 ? true : false
+        navigationBarHeight = isiPhoneX ? 44 : 44
+        statusBarHeight = isiPhoneX ? 44 : 20 
+    }
+    
+}
+
 func Log<T>(_ message:T, file:String = #file, funcName:String = #function,lineNum:Int = #line){
     #if DEBUG
     let fileName = (file as NSString).lastPathComponent

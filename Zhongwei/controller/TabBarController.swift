@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import RxSwift
 
 class TabBarController:UITabBarController{
+    
+    var meTab:UIViewController!
     
     override func viewDidLoad() {
         var  delegate = UIApplication.shared.delegate as! AppDelegate
@@ -16,11 +19,15 @@ class TabBarController:UITabBarController{
         setUpTabs()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        //checkMessage()
+    }
+    
     func setUpTabs(){
         let newsTab:UIViewController = self.viewControllers![0]
         let shopTab:UIViewController = self.viewControllers![1]
         let discoverTab:UIViewController = self.viewControllers![2]
-        let meTab:UIViewController = self.viewControllers![3]
+        meTab = self.viewControllers![3] as! UIViewController
         newsTab.tabBarItem.setTitleTextAttributes([NSAttributedStringKey.foregroundColor:UIColor(red:0x2e/255,green:0x6e/255,blue:0x55/255,alpha:1)], for: .selected)
         newsTab.tabBarItem.title = "资讯"
         newsTab.tabBarItem.image = UIImage(named:"news")
@@ -36,10 +43,27 @@ class TabBarController:UITabBarController{
         meTab.tabBarItem.title = "我"
         meTab.tabBarItem.image = UIImage(named:"me")
         meTab.tabBarItem.selectedImage = UIImage(named:"me_selected")
-        meTab.tabBarItem.badgeValue = "4"
+        //meTab.tabBarItem.badgeValue = "4"
         meTab.tabBarItem.setTitleTextAttributes([NSAttributedStringKey.foregroundColor:UIColor(red:0x2e/255,green:0x6e/255,blue:0x55/255,alpha:1)], for: .selected)
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        Log("tab bar selected")
+        checkMessage()
+    }
+    
+    func checkMessage() {
+        UserPresenter.updateMessages()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (messageResult) in
+                if (messageResult.code == 0) {
+                    var num = messageResult.messageList?.count
+                    if (num! > 0) {
+                        self.meTab.tabBarItem.badgeValue = String(describing:messageResult.messageList!.count)
+                    } else {
+                        self.meTab.tabBarItem.badgeValue = nil
+                    }
+                }
+            })
     }
 }

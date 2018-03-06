@@ -59,7 +59,7 @@ class RegisterViewController:UIViewController{
         let phoneNum:String = phoneTextField.text as! String
         let password:String = passwordTextField.text as! String
         let code:String = codeTextField.text as! String
-        Presenter.phoneNumRegister(phone:phoneNum, password:password, code:code)
+        UserPresenter.phoneNumRegister(phone:phoneNum, password:password, code:code)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -139,7 +139,7 @@ class RegisterViewController:UIViewController{
             let cancel = UIAlertAction(title:"取消", style:.cancel)
             let confirm = UIAlertAction(title:"确定", style:.default){
                 action in
-                Presenter.sendVerificationCode(phone:phoneNum!)
+                UserPresenter.sendVerificationCode(phone:phoneNum!)
                 .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         if (result.code == 0) {
@@ -162,5 +162,7 @@ class RegisterViewController:UIViewController{
     
     override func viewDidLoad() {
         sendCodeButton.setTitle("获取验证码", for: .normal)
+        passwordTextField.isSecureTextEntry = true
+        confirmPasswordText.isSecureTextEntry = true
     }
 }

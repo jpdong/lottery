@@ -18,6 +18,8 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
     var webView:WKWebView!
     var webNavigationItem:UINavigationItem!
     var shopUrl:String?
+    var navigationBarHeight:CGFloat?
+    var statusBarHeight:CGFloat?
     
     @objc func goBack(_ sender: UIBarButtonItem) {
         webView.goBack()
@@ -30,7 +32,9 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewDidLoad")
-        navigationBar = UINavigationBar(frame:CGRect( x:0,y:20, width:self.view.frame.width, height:44))
+        navigationBarHeight = Size.instance.navigationBarHeight
+        statusBarHeight = Size.instance.statusBarHeight
+        navigationBar = UINavigationBar(frame:CGRect( x:0,y:Size.instance.statusBarHeight, width:self.view.frame.width, height:Size.instance.navigationBarHeight))
         webNavigationItem = UINavigationItem()
         backButton = UIBarButtonItem(title:"",style:.plain, target:self, action:#selector(goBack))
         backButton.image = UIImage(named:"backButton")
@@ -40,7 +44,7 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         //progressView = UIProgressView(frame: CGRect(x:0, y:0, width:self.view.frame.width, height:4))
         //self.view.addSubview(progressView)
         let webConfiguration = WKWebViewConfiguration()
-        webView = WKWebView(frame: CGRect(x:0,y:64, width:UIScreen.main.bounds.width,height:UIScreen.main.bounds.height - 64), configuration: webConfiguration)
+        webView = WKWebView(frame: CGRect(x:0,y:navigationBarHeight! + statusBarHeight!, width:UIScreen.main.bounds.width,height:UIScreen.main.bounds.height - navigationBarHeight! - statusBarHeight!), configuration: webConfiguration)
         webView.uiDelegate = self
         webView.navigationDelegate = self
         self.view.addSubview(webView)

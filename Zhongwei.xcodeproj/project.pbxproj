@@ -43,6 +43,9 @@
 		8E92BF18200EFC9B0090C646 /* ResponseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */; };
 		8E92BF1A200EFDD90090C646 /* SidEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92BF19200EFDD90090C646 /* SidEntity.swift */; };
 		8E92BF1E200F46C80090C646 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92BF1D200F46C80090C646 /* Presenter.swift */; };
+		8E96F01C204E75E20060B612 /* BusinessStateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E96F01B204E75E20060B612 /* BusinessStateEntity.swift */; };
+		8E96F01E204E815A0060B612 /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E96F01D204E815A0060B612 /* GuideViewController.swift */; };
+		8E96F020204E9B0A0060B612 /* DiscoverPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E96F01F204E9B0A0060B612 /* DiscoverPresenter.swift */; };
 		8EC2B5312019C4FD00C3181D /* DiscoverItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5302019C4FD00C3181D /* DiscoverItem.swift */; };
 		8EC2B5352019D08000C3181D /* DiscoverItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5342019D08000C3181D /* DiscoverItemView.swift */; };
 		8EC2B5372019E0BB00C3181D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5362019E0BB00C3181D /* DetailViewController.swift */; };
@@ -124,6 +127,9 @@
 		8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseEntity.swift; sourceTree = "<group>"; };
 		8E92BF19200EFDD90090C646 /* SidEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidEntity.swift; sourceTree = "<group>"; };
 		8E92BF1D200F46C80090C646 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
+		8E96F01B204E75E20060B612 /* BusinessStateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessStateEntity.swift; sourceTree = "<group>"; };
+		8E96F01D204E815A0060B612 /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
+		8E96F01F204E9B0A0060B612 /* DiscoverPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPresenter.swift; sourceTree = "<group>"; };
 		8EC2B5302019C4FD00C3181D /* DiscoverItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverItem.swift; sourceTree = "<group>"; };
 		8EC2B5342019D08000C3181D /* DiscoverItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverItemView.swift; sourceTree = "<group>"; };
 		8EC2B5362019E0BB00C3181D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -251,6 +257,8 @@
 				8EC2B5382019EE7B00C3181D /* ScanViewController.swift */,
 				8EF0BFD1202854A200401540 /* PrizeViewController.swift */,
 				8EF0BFD32028557300401540 /* PrizeRecordController.swift */,
+				8E96F01D204E815A0060B612 /* GuideViewController.swift */,
+				8E96F01F204E9B0A0060B612 /* DiscoverPresenter.swift */,
 			);
 			path = discover;
 			sourceTree = "<group>";
@@ -298,6 +306,7 @@
 				8E121FF2204D504700C5CCD8 /* ImageUrlEntity.swift */,
 				8E121FF6204D5F1300C5CCD8 /* MessageEntity.swift */,
 				8E121FF8204D64A800C5CCD8 /* MessageResult.swift */,
+				8E96F01B204E75E20060B612 /* BusinessStateEntity.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -581,6 +590,7 @@
 			files = (
 				8EC3C2322020680C001567E9 /* BusinessViewController.swift in Sources */,
 				8E2F6A0E2022C62B000704F6 /* UserViewController.swift in Sources */,
+				8E96F01C204E75E20060B612 /* BusinessStateEntity.swift in Sources */,
 				8E3E2F19201B1E28006E2206 /* MeViewController.swift in Sources */,
 				8E20A3EB2021B73200B15AB2 /* MessageItem.swift in Sources */,
 				8EC3C236202069D1001567E9 /* BusinessItem.swift in Sources */,
@@ -603,7 +613,9 @@
 				8E121FF3204D504700C5CCD8 /* ImageUrlEntity.swift in Sources */,
 				8EF0BFD2202854A200401540 /* PrizeViewController.swift in Sources */,
 				8E4D9FB5202AB2D900C4BF21 /* PrizeEntity.swift in Sources */,
+				8E96F020204E9B0A0060B612 /* DiscoverPresenter.swift in Sources */,
 				8E121FF9204D64A800C5CCD8 /* MessageResult.swift in Sources */,
+				8E96F01E204E815A0060B612 /* GuideViewController.swift in Sources */,
 				8EC3C234202069BD001567E9 /* BusinessItemView.swift in Sources */,
 				8E55FFFC20182539009E2AB0 /* NewsViewController.swift in Sources */,
 				8E5DC161201745F900D421FE /* TabBarController.swift in Sources */,

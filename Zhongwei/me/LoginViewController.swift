@@ -108,7 +108,7 @@ class LoginViewController:UIViewController{
             alert(title:"提示", message:"请输入完整信息")
         } else {
             if (isPasswordLogin) {
-                Presenter.passwordLogin(phone:phoneNum!, password:password!)
+                UserPresenter.passwordLogin(phone:phoneNum!, password:password!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         if (result.code == 0) {
@@ -121,7 +121,7 @@ class LoginViewController:UIViewController{
                         }
                     })
             } else {
-                Presenter.codeLogin(phone:phoneNum!, code:password!)
+                UserPresenter.codeLogin(phone:phoneNum!, code:password!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         if (result.code == 0) {
@@ -149,6 +149,7 @@ class LoginViewController:UIViewController{
         app = UIApplication.shared.delegate as! AppDelegate
         Log("width:\(phoneInputBox.frame.width)")
         sendCodeButton.isHidden = true
+        passwordTextField.isSecureTextEntry = true
         var tap = UITapGestureRecognizer(target:self,action:#selector(sendCode))
         sendCodeButton.addGestureRecognizer(tap)
     }
@@ -168,7 +169,7 @@ class LoginViewController:UIViewController{
             let cancel = UIAlertAction(title:"取消", style:.cancel)
             let confirm = UIAlertAction(title:"确定", style:.default){
                 action in
-                Presenter.sendVerificationCode(phone:phoneNum!)
+                UserPresenter.sendVerificationCode(phone:phoneNum!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         if (result.code == 0) {
