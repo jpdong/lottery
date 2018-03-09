@@ -61,7 +61,7 @@ class LoginViewControllerCode:UIViewController{
         }
         
         phoneInputBox!.snp.makeConstraints { (maker) in
-            maker.left.right.equalTo(self.view).offset(10)
+            maker.left.equalTo(self.view).offset(10)
             maker.right.equalTo(self.view).offset(-10)
             maker.height.equalTo(40)
             maker.top.equalTo(logoImageView!.snp.bottom).offset(50)

@@ -200,7 +200,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
-                    let sb = UIStoryboard(name:"Main",bundle:nil)
+                    let sb = UIStoryboard(name:"Business",bundle:nil)
                     let vc = sb.instantiateViewController(withIdentifier: "BusinessDetailView") as! BusinessDetailView
                     vc.type = BusinessItem.shop
                     self.present(vc, animated: true, completion: nil)

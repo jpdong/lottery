@@ -131,8 +131,7 @@ class UserViewController:UITableViewController{
         //setupUserInfo()
         checkUser()
         Log("user view")
-        self.tabBarItem.badgeValue = "4"
-        self.tabBarController?.childViewControllers[3].tabBarItem.badgeValue = "5"
+        //self.tabBarController?.childViewControllers[3].tabBarItem.badgeValue = "5"
         UserPresenter.updateMessages()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (messageResult) in
@@ -140,9 +139,11 @@ class UserViewController:UITableViewController{
                     var num = messageResult.messageList?.count
                     if (num! > 0) {
                     self.messageNumLabel.text = String(describing:messageResult.messageList!.count)
+                        self.tabBarController?.childViewControllers[3].tabBarItem.badgeValue = String(describing:messageResult.messageList!.count)
                         self.messageNumLabel.isHidden = false
                     } else {
                         self.messageNumLabel.isHidden = true
+                        self.tabBarController?.childViewControllers[3].tabBarItem.badgeValue = nil
                     }
                 }
             })

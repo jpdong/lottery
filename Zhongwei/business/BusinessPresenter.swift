@@ -169,4 +169,13 @@ class BusinessPresenter {
     static func getMarketManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
         return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/app/area_manager?sid=")
     }
+    
+    static func getPointMallUrl() -> Observable<String> {
+        return Presenter.getSid()
+            .map{
+                sid in
+                return "\(BASE_URL)mobile/wechat/credits_shop?sid=\(sid)"
+            }
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
 }

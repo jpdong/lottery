@@ -39,14 +39,21 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
     }
     
     @objc func close(_ sender:UIBarButtonItem){
-        //self.dismiss(animated: true, completion: nil)
-        var parentVC:UIViewController? = self.presentingViewController
-        var bottomVC:UIViewController?
-        while(parentVC != nil) {
-            bottomVC = parentVC
-            parentVC = parentVC!.presentingViewController
+        if (type == BusinessItem.shop && !(self.presentingViewController is BusinessDetailView)) {
+            var grandParentVC = self.presentingViewController?.presentingViewController
+            grandParentVC?.dismiss(animated: true, completion: nil)
+//            var parentVC:UIViewController? = self.presentingViewController
+//            var bottomVC:UIViewController?
+//            while(parentVC != nil) {
+//                bottomVC = parentVC
+//                parentVC = parentVC!.presentingViewController
+//            }
+//            bottomVC?.dismiss(animated: true, completion: nil)
+        } else {
+            self.dismiss(animated: true, completion: nil)
         }
-        bottomVC?.dismiss(animated: true, completion: nil)
+        //
+        
     }
     
     func goForward(_ sender: UIBarButtonItem) {

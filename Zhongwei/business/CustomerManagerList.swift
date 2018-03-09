@@ -1,8 +1,8 @@
 //
-//  BusinessViewController.swift
+//  CustomerManagerList.swift
 //  Zhongwei
 //
-//  Created by eesee on 2018/1/30.
+//  Created by eesee on 2018/3/9.
 //  Copyright © 2018年 zhongwei. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import SnapKit
 
-class BusinessViewController:UITableViewController {
+class CustomerManagerList:UIViewController , UITableViewDelegate, UITableViewDataSource{
     
     var businessItems = [BusinessItem]()
     var unionid:String?
@@ -20,16 +20,18 @@ class BusinessViewController:UITableViewController {
     var statusBarHeight:CGFloat?
     var navigationBar:UINavigationBar!
     var businessNavigationItem:UINavigationItem!
+    var tableView:UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupConstrains()
         setupItems()
-        self.tableView.tableFooterView = UIView(frame:.zero)
+        tableView.tableFooterView = UIView(frame:.zero)
     }
     
     func setupViews() {
+        self.view.backgroundColor = UIColor.white
         navigationBarHeight = Size.instance.navigationBarHeight
         statusBarHeight = Size.instance.statusBarHeight
         navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight!, width:self.view.frame.width, height:navigationBarHeight!))
@@ -39,10 +41,15 @@ class BusinessViewController:UITableViewController {
         businessNavigationItem.setRightBarButton(closeButton, animated: true)
         navigationBar?.pushItem(businessNavigationItem, animated: true)
         self.view.addSubview(navigationBar!)
+        tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(BusinessItemCell.self, forCellReuseIdentifier: "BusinessItemCell")
+        self.view.addSubview(tableView)
     }
     
     func setupConstrains() {
-        self.tableView.snp.makeConstraints { (maker) in
+        tableView.snp.makeConstraints { (maker) in
             maker.top.equalTo(navigationBar.snp.bottom)
             maker.width.height.equalTo(self.view)
         }
@@ -57,47 +64,57 @@ class BusinessViewController:UITableViewController {
         marketManager.icon = UIImage(named:"marketManager")
         var areaManager = BusinessItem(title:"区域经理",type:BusinessItem.areaManager)
         areaManager.icon = UIImage(named:"areaManager")
-        businessItems.append(shopOwner)
+        //businessItems.append(shopOwner)
         businessItems.append(manager)
         businessItems.append(marketManager)
         businessItems.append(areaManager)
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return businessItems.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "BusinessItemCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,for: indexPath) as! BusinessItemView
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,for: indexPath) as! BusinessItemCell
         let item = businessItems[indexPath.row]
+        print("cell:\(cell)")
+        //print("cell:\(cell.title)")
+        cell.title = UILabel()
         cell.title.text = item.title
+        cell.icon = UIImageView()
         cell.icon.image = item.icon
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if (hasSid()){
-            if (indexPath.row == 0 && !isShopRegistered){
-                let sb = UIStoryboard(name:"Business",bundle:nil)
-                let vc = sb.instantiateViewController(withIdentifier: "IDCardViewController") as! IDCardViewController
-                self.present(vc, animated: true, completion: nil)
-                return nil
-            } else {
-                return indexPath
-            }
-        } else {
-            return nil
-        }
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+//        if (hasSid()){
+//            if (indexPath.row == 0 && !isShopRegistered){
+//                let sb = UIStoryboard(name:"Business",bundle:nil)
+//                let vc = sb.instantiateViewController(withIdentifier: "IDCardViewController") as! IDCardViewController
+//                self.present(vc, animated: true, completion: nil)
+//                return nil
+//            } else {
+//                return indexPath
+//            }
+//        } else {
+//            return nil
+//        }
+        let sb = UIStoryboard(name:"Business",bundle:nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BusinessDetailView") as! BusinessDetailView
+        var item:BusinessItem = businessItems[indexPath.row] as! BusinessItem
+        vc.type = item.type
+        self.present(vc, animated: true, completion: nil)
+        return indexPath
     }
     
     func checkRegisterBusinessState() {
         BusinessPresenter.checkBusinessRegisterState()
-        .observeOn(MainScheduler.instance)
+            .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
                     self.isShopRegistered = true
@@ -117,10 +134,10 @@ class BusinessViewController:UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        unionid = getCacheUnionid()
-//        if (unionid == nil || unionid! == ""){
-            sid = getCacheSid()
-            if (sid == nil || sid! == ""){
+        //        unionid = getCacheUnionid()
+        //        if (unionid == nil || unionid! == ""){
+        sid = getCacheSid()
+        if (sid == nil || sid! == ""){
             //hideViews()
             let alertView = UIAlertController(title:"未登录", message:"前往登录", preferredStyle:.alert)
             let cancel = UIAlertAction(title:"取消", style:.cancel)
