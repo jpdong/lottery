@@ -1,10 +1,3 @@
-//
-//  SliderGalleryController.swift
-//  hangge_1314
-//
-//  Created by hangge on 2018/2/5.
-//  Copyright © 2018年 hangge. All rights reserved.
-//
 
 import UIKit
 
@@ -68,7 +61,7 @@ class SliderGalleryController: UIViewController,UIScrollViewDelegate{
         //设置页控制器
         self.configurePageController()
         //设置自动滚动计时器
-        //self.configureAutoScrollTimer()
+        self.configureAutoScrollTimer()
         
         self.view.backgroundColor = UIColor.black
     }
@@ -96,7 +89,7 @@ class SliderGalleryController: UIViewController,UIScrollViewDelegate{
         //这里我使用ImageHelper将文字转换成图片，作为加载指示符
         let font = UIFont.systemFont(ofSize: 17.0, weight: UIFont.Weight.medium)
         let size = CGSize(width: self.scrollerViewWidth!, height: self.scrollerViewHeight!)
-        placeholderImage = UIImage()
+        placeholderImage = UIImage(named:"banner_local")
     }
     
     //设置imageView

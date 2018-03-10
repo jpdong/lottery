@@ -94,6 +94,26 @@ func getCacheName() -> String?{
     return nickName ?? ""
 }
 
+func getCacheFrontIDCardImageUrl() ->String {
+    let userDefaults = UserDefaults.standard
+    let frontUrl:String? = userDefaults.string(forKey: "front_idcard_url")
+    return frontUrl ?? ""
+}
+
+func getCacheBackIDCardImageUrl() -> String {
+    let userDefaults = UserDefaults.standard
+    let backUrl:String? = userDefaults.string(forKey: "back_idcard_url")
+    return backUrl ?? ""
+}
+
+func storeIDCardImageUrl(front:String, back:String) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(front, forKey: "front_idcard_url")
+    userDefaults.set(back, forKey:"back_idcard_url")
+    userDefaults.synchronize()
+}
+
+
 func alert(viewController:UIViewController,title:String, message:String) {
     let alertView = UIAlertController(title:title, message:message, preferredStyle:.alert)
     let cancel = UIAlertAction(title:"确定", style:.cancel)

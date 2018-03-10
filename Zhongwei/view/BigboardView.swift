@@ -8,11 +8,11 @@
 
 import Foundation
 
-class BigboardView:UIView{
+class BigboardView:BoardView{
     
-    var contentImage:UIImageView!
-    var contentTitle:UILabel!
-    var contentMessage:UILabel!
+//    var contentImage:UIImageView!
+//    var contentTitle:UILabel!
+//    var contentMessage:UILabel!
     
     override init(frame: CGRect) {
         super.init(frame:frame)
@@ -34,6 +34,8 @@ class BigboardView:UIView{
         contentTitle.textAlignment = .center
         contentMessage = UILabel()
         contentMessage.font = UIFont.systemFont(ofSize:13)
+        contentMessage.lineBreakMode = .byWordWrapping
+        contentMessage.numberOfLines = 0
         addSubview(contentImage)
         addSubview(contentTitle)
         addSubview(contentMessage)
@@ -41,15 +43,16 @@ class BigboardView:UIView{
     
     func setupConstrains() {
         contentImage.snp.makeConstraints { (maker) in
-            maker.width.equalTo(self)
-            maker.top.equalTo(contentMessage.snp.bottom)
-            maker.height.equalTo(50)
-            maker.left.right.equalTo(self)
+            //maker.width.equalTo(self)
+            maker.top.equalTo(contentMessage.snp.bottom).offset(10)
+            maker.left.equalTo(self).offset(10)
+            maker.right.equalTo(self).offset(-10)
         }
         
         contentMessage.snp.makeConstraints { (maker) in
             maker.top.equalTo(contentTitle.snp.bottom).offset(10)
             maker.left.equalTo(self).offset(10)
+            maker.right.equalTo(self).offset(-10)
         }
         contentTitle.snp.makeConstraints { (maker) in
             maker.top.equalTo(self).offset(10)

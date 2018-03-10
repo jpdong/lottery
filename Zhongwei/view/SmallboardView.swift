@@ -8,11 +8,11 @@
 
 import Foundation
 
-class SmallboardView:UIView{
+class SmallboardView:BoardView{
     
-    var contentImage:UIImageView!
-    var contentTitle:UILabel!
-    var contentMessage:UILabel!
+//    var contentImage:UIImageView!
+//    var contentTitle:UILabel!
+//    var contentMessage:UILabel!
     
     override init(frame: CGRect) {
         super.init(frame:frame)
@@ -33,7 +33,9 @@ class SmallboardView:UIView{
         contentTitle.font = UIFont.systemFont(ofSize:17)
         contentTitle.textAlignment = .center
         contentMessage = UILabel()
-        contentMessage.font = UIFont.systemFont(ofSize:13)
+        contentMessage.font = UIFont.systemFont(ofSize:10)
+        contentMessage.lineBreakMode = .byWordWrapping
+        contentMessage.numberOfLines = 0
         addSubview(contentImage)
         addSubview(contentTitle)
         addSubview(contentMessage)
@@ -49,6 +51,7 @@ class SmallboardView:UIView{
         contentMessage.snp.makeConstraints { (maker) in
             maker.top.equalTo(contentTitle.snp.bottom).offset(10)
             maker.left.equalTo(self).offset(10)
+            maker.right.equalTo(contentImage.snp.left)
         }
         contentTitle.snp.makeConstraints { (maker) in
             maker.top.equalTo(self).offset(10)

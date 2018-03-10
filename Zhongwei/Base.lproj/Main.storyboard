@@ -20,20 +20,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" red="0.18163758520000001" green="0.43211257460000002" blue="0.33301669360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.18163758520000001" green="0.43211257460000002" blue="0.33301669360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
-                        <segue destination="bTb-NF-aWp" kind="relationship" relationship="viewControllers" id="U1R-Jh-91j"/>
-                        <segue destination="AkX-A7-YL3" kind="relationship" relationship="viewControllers" id="2s4-cC-5mp"/>
-                        <segue destination="2Kl-jk-fZk" kind="relationship" relationship="viewControllers" id="4MS-du-KWb"/>
-                        <segue destination="qHc-ao-Id4" kind="relationship" relationship="viewControllers" id="3M3-10-pou"/>
+                        <segue destination="AVt-OA-zxC" kind="relationship" relationship="viewControllers" id="6vE-CZ-DV0"/>
+                        <segue destination="bTb-NF-aWp" kind="relationship" relationship="viewControllers" id="PUm-gH-bZV"/>
+                        <segue destination="2Kl-jk-fZk" kind="relationship" relationship="viewControllers" id="je0-ce-fYI"/>
+                        <segue destination="qHc-ao-Id4" kind="relationship" relationship="viewControllers" id="xKE-aY-WFP"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jAR-ck-dyN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3761" y="335"/>
+        </scene>
+        <!--Page-->
+        <scene sceneID="vIV-GC-9kM">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Page" id="AVt-OA-zxC" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="LVX-Lx-pUt"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZOw-Pd-7Pq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3133" y="-17"/>
         </scene>
         <!--News-->
         <scene sceneID="P2h-Sm-MHO">

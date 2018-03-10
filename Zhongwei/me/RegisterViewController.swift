@@ -17,6 +17,10 @@ class RegisterViewController:UIViewController{
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordText: UITextField!
     
+    @IBAction func backToLogin(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
     var remainingTime:Int = 60 {
         willSet {
             DispatchQueue.main.async {
@@ -67,7 +71,8 @@ class RegisterViewController:UIViewController{
                     let alertView = UIAlertController(title:"提示", message:result.message ?? "", preferredStyle:.alert)
                     let confirm = UIAlertAction(title:"去登录", style:.default) {
                         action -> Void in
-                        self.navigationController?.popViewController(animated: true)
+                        //self.navigationController?.popViewController(animated: true)
+                        self.dismiss(animated: true, completion: nil)
                     }
                     alertView.addAction(confirm)
                     self.present(alertView,animated: true,completion: nil)

@@ -21,24 +21,25 @@ class TabBarController:UITabBarController{
     
     override func viewDidAppear(_ animated: Bool) {
         //checkMessage()
+        checkUserState()
     }
     
     func setUpTabs(){
-        let newsTab:UIViewController = self.viewControllers![0]
-        let shopTab:UIViewController = self.viewControllers![1]
+        let mainPageTab:UIViewController = self.viewControllers![0]
+        let newsTab:UIViewController = self.viewControllers![1]
         let discoverTab:UIViewController = self.viewControllers![2]
         meTab = self.viewControllers![3] as! UIViewController
         newsTab.tabBarItem.setTitleTextAttributes([NSAttributedStringKey.foregroundColor:UIColor(red:0x2e/255,green:0x6e/255,blue:0x55/255,alpha:1)], for: .selected)
         newsTab.tabBarItem.title = "资讯"
         newsTab.tabBarItem.image = UIImage(named:"news")
         newsTab.tabBarItem.selectedImage = UIImage(named:"news_selected")
-        shopTab.tabBarItem.title = "业务"
-        shopTab.tabBarItem.image = UIImage(named:"shop")
-        shopTab.tabBarItem.selectedImage = UIImage(named:"shop_selected")
-        shopTab.tabBarItem.setTitleTextAttributes([NSAttributedStringKey.foregroundColor:UIColor(red:0x2e/255,green:0x6e/255,blue:0x55/255,alpha:1)], for: .selected)
-        discoverTab.tabBarItem.title = "发现"
-        discoverTab.tabBarItem.image = UIImage(named:"discover")
-        discoverTab.tabBarItem.selectedImage = UIImage(named:"discover_selected")
+        mainPageTab.tabBarItem.title = "首页"
+        mainPageTab.tabBarItem.image = UIImage(named:"tab_home")
+        mainPageTab.tabBarItem.selectedImage = UIImage(named:"tab_home_selected")
+        mainPageTab.tabBarItem.setTitleTextAttributes([NSAttributedStringKey.foregroundColor:UIColor(red:0x2e/255,green:0x6e/255,blue:0x55/255,alpha:1)], for: .selected)
+        discoverTab.tabBarItem.title = "客服"
+        discoverTab.tabBarItem.image = UIImage(named:"tab_service")
+        discoverTab.tabBarItem.selectedImage = UIImage(named:"tab_service_selected")
         discoverTab.tabBarItem.setTitleTextAttributes([NSAttributedStringKey.foregroundColor:UIColor(red:0x2e/255,green:0x6e/255,blue:0x55/255,alpha:1)], for: .selected)
         meTab.tabBarItem.title = "我"
         meTab.tabBarItem.image = UIImage(named:"me")
@@ -65,5 +66,33 @@ class TabBarController:UITabBarController{
                     }
                 }
             })
+    }
+    
+    func checkUserState() {
+        let app:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        let sid = app.globalData?.sid
+        var result:Bool = false
+        if (sid != nil && sid! != ""){
+            Log("sid:\(sid!)")
+            Presenter.checkSid(sid:sid!)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { (result) in
+                    if (result.code == 0) {
+                    } else {
+                        self.showLoginView()
+                    }
+                })
+            
+        } else {
+            showLoginView()
+        }
+    }
+    
+    func showLoginView() {
+        let sb = UIStoryboard(name:"Me",bundle:nil)
+        let vc = sb.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        self.present(vc, animated: true, completion: nil)
+        //        let vc = LoginViewControllerCode()
+        //        self.present(vc, animated: true, completion: nil)
     }
 }

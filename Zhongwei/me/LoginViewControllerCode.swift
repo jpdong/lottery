@@ -26,6 +26,7 @@ class LoginViewControllerCode:UIViewController{
     }
     
     func setupViews() {
+        self.view.backgroundColor = UIColor.white
         logoImageView = UIImageView()
         logoImageView!.image = UIImage(named:"logo")
         phoneLabel = UILabel()

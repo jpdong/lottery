@@ -104,7 +104,17 @@ class UserViewController:UITableViewController{
         userInfoCell.headImageView.image = UIImage(named:"noUser")
         userInfoCell.nickNameLabel.text = "点击登录账号"
         logoutCell.isHidden = true
+        storeIDCardImageUrl(front: "", back: "")
+        showLoginView()
         //messageInfoCell.number.isHidden = true
+    }
+    
+    func showLoginView() {
+        let sb = UIStoryboard(name:"Me",bundle:nil)
+        let vc = sb.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        self.present(vc, animated: true, completion: nil)
+        //        let vc = LoginViewControllerCode()
+        //        self.present(vc, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -129,16 +139,21 @@ class UserViewController:UITableViewController{
     
     override func viewDidAppear(_ animated: Bool) {
         //setupUserInfo()
-        checkUser()
+        //checkUser()
         Log("user view")
         //self.tabBarController?.childViewControllers[3].tabBarItem.badgeValue = "5"
+        //checkMessage()
+        
+    }
+    
+    func checkMessage() {
         UserPresenter.updateMessages()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (messageResult) in
                 if (messageResult.code == 0) {
                     var num = messageResult.messageList?.count
                     if (num! > 0) {
-                    self.messageNumLabel.text = String(describing:messageResult.messageList!.count)
+                        self.messageNumLabel.text = String(describing:messageResult.messageList!.count)
                         self.tabBarController?.childViewControllers[3].tabBarItem.badgeValue = String(describing:messageResult.messageList!.count)
                         self.messageNumLabel.isHidden = false
                     } else {
@@ -147,6 +162,16 @@ class UserViewController:UITableViewController{
                     }
                 }
             })
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        Log("")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        Log("")
+        checkUser()
+        checkMessage()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

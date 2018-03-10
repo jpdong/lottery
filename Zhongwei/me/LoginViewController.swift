@@ -20,13 +20,12 @@ extension UIView {
     }
     
     public func buttomBorder(width:CGFloat,borderColor:UIColor){
-        Log("width:\(self.frame.width)")
         let rect = CGRect(x: 0, y: self.frame.size.height, width: self.frame.width, height: width)
         drawBorder(rect: rect, color: borderColor)
     }
 }
 
-class LoginViewController:UIViewController{
+class LoginViewController:UIViewController,UITextFieldDelegate{
     
     var isPasswordLogin:Bool = true
     var app:AppDelegate!
@@ -115,7 +114,8 @@ class LoginViewController:UIViewController{
                             //Zhongwei.alert(viewController: self, title: "提示", message: result.message ?? "")
                             self.app.globalData?.phoneNum = phoneNum!
                             storePhoneNum(phoneNum!)
-                            self.navigationController?.popViewController(animated: true)
+                            //self.navigationController?.popViewController(animated: true)
+                            self.dismiss(animated: true, completion: nil)
                         } else {
                             Zhongwei.alert(viewController: self, title: "提示", message: result.message ?? "")
                         }
@@ -128,7 +128,8 @@ class LoginViewController:UIViewController{
                             //Zhongwei.alert(viewController: self, title: "提示", message: result.message ?? "")
                             self.app.globalData?.phoneNum = phoneNum!
                             storePhoneNum(phoneNum!)
-                            self.navigationController?.popViewController(animated: true)
+                            //self.navigationController?.popViewController(animated: true)
+                            self.dismiss(animated: true, completion: nil)
                         } else {
                             Zhongwei.alert(viewController: self, title: "提示", message: result.message ?? "")
                         }
@@ -149,6 +150,8 @@ class LoginViewController:UIViewController{
         app = UIApplication.shared.delegate as! AppDelegate
         Log("width:\(phoneInputBox.frame.width)")
         sendCodeButton.isHidden = true
+        phoneTextField.delegate = self
+        passwordTextField.delegate = self
         passwordTextField.isSecureTextEntry = true
         var tap = UITapGestureRecognizer(target:self,action:#selector(sendCode))
         sendCodeButton.addGestureRecognizer(tap)
@@ -184,6 +187,11 @@ class LoginViewController:UIViewController{
             alertView.addAction(confirm)
             present(alertView,animated: true,completion: nil)
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 

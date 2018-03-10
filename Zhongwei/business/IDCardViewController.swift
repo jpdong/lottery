@@ -30,6 +30,10 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     var backImageSetup:Bool = false
     var frontImageUrl:String?
     var backImageUrl:String?
+    var frontImageIndicator:UIActivityIndicatorView!
+    var backImageIndicator:UIActivityIndicatorView!
+    var navigationBarHeight:CGFloat?
+    var statusBarHeight:CGFloat?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +46,8 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     }
     
     func setupViews() {
+        navigationBarHeight = Size.instance.navigationBarHeight
+        statusBarHeight = Size.instance.statusBarHeight
         picker = UIImagePickerController()
         picker.delegate = self
         scrollView = UIScrollView()
@@ -52,7 +58,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         nextStepButton.layer.cornerRadius = 5
         nextStepButton.addTarget(self, action: #selector(nextStep), for: UIControlEvents.touchUpInside)
         
-        navigationBar = UINavigationBar(frame:CGRect( x:0,y:20, width:self.view.frame.width, height:44))
+        navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight!, width:self.view.frame.width, height:navigationBarHeight!))
         closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
         closeButton.image = UIImage(named:"closeButton")
         navigationItem.setRightBarButton(closeButton, animated: true)
@@ -82,6 +88,10 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         idcardFrontImage.isUserInteractionEnabled = true
         var frontImageTap = UITapGestureRecognizer(target: self, action: #selector(getFrontIDCardPicture))
         idcardFrontImage.addGestureRecognizer(frontImageTap)
+        let localFrontUrl = getCacheFrontIDCardImageUrl()
+        if (localFrontUrl != "") {
+            idcardFrontImage.kf.setImage(with: URL(string:localFrontUrl))
+        }
         scrollView.addSubview(idcardFrontImage)
         
         idcardBackImage = UIImageView()
@@ -90,16 +100,25 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         idcardBackImage.isUserInteractionEnabled = true
         var backImageTap = UITapGestureRecognizer(target: self, action: #selector(getBackIDCardPicture))
         idcardBackImage.addGestureRecognizer(backImageTap)
+        let localBackUrl = getCacheBackIDCardImageUrl()
+        if (localBackUrl != "") {
+            idcardBackImage.kf.setImage(with: URL(string:localBackUrl))
+        }
         
         scrollView.addSubview(idcardBackImage)
         scrollView.addSubview(nextStepButton)
+        
+        frontImageIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.whiteLarge)
+        backImageIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.whiteLarge)
+        self.view.addSubview(frontImageIndicator)
+        self.view.addSubview(backImageIndicator)
     }
     
     func setupConstrains() {
         idcardFirstStepImage.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(scrollView)
             maker.width.equalTo(119)
-            maker.top.equalTo(scrollView).offset(20)
+            maker.top.equalTo(navigationBar).offset(20)
         }
         
         idcardFrontImage.snp.makeConstraints { (maker) in
@@ -141,6 +160,14 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             maker.width.height.equalTo(self.view)
         }
         
+        frontImageIndicator.snp.makeConstraints { (maker) in
+            maker.center.equalTo(idcardFrontImage)
+        }
+        
+        backImageIndicator.snp.makeConstraints { (maker) in
+            maker.center.equalTo(idcardBackImage)
+        }
+        
     }
     
     @objc func getFrontIDCardPicture() {
@@ -164,27 +191,31 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         image = info[UIImagePickerControllerOriginalImage] as! UIImage
         if (currentImage == IDCardViewController.front) {
             idcardFrontImage.image = image
+            frontImageIndicator.startAnimating()
             BusinessPresenter.uploadImage(image:image)
             .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
+                    self.frontImageIndicator.stopAnimating()
                     if(result.code == 0) {
                         self.frontImageUrl = result.message
                         self.frontImageSetup = true
                     } else {
-                        
+                        Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
                     }
                 })
             
         } else {
             idcardBackImage.image = image
+            backImageIndicator.startAnimating()
             BusinessPresenter.uploadImage(image:image)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
+                    self.backImageIndicator.stopAnimating()
                     if(result.code == 0) {
                         self.backImageUrl = result.message
                         self.backImageSetup = true
                     } else {
-                        
+                        Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
                     }
                 })
         }
@@ -196,6 +227,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             Zhongwei.alert(viewController: self, title: "提示", message: "请先拍摄身份证")
             return
         }
+        storeIDCardImageUrl(front:frontImageUrl!, back:backImageUrl!)
         BusinessPresenter.uploadImageUrls(front:frontImageUrl!, back:backImageUrl!)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
@@ -221,4 +253,6 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     @objc func close(_ sender:UIBarButtonItem){
         self.dismiss(animated: true, completion: nil)
     }
+    
+    
 }

@@ -29,10 +29,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     var shopOwnerButton,customerManagerButton,pointMallButton,saleManagerButton,customerButton, scanPrizeButton:ImageClickView!
     //var imageClickButtons:[ImageClickView] = [shopOwner,customerManager,pointMall,saleManager,customer, scanPrize]
     
-    var images = ["http://img4q.duitang.com/uploads/item/201503/18/20150318230437_Pxnk3.jpeg",
-                  "http://img4.duitang.com/uploads/item/201501/31/20150131234424_WRJGa.jpeg",
-                  "http://img5.duitang.com/uploads/item/201502/11/20150211095858_nmRV8.jpeg",
-                  "http://cdnq.duitang.com/uploads/item/201506/11/20150611213132_HPecm.jpeg"]
+    var images:[String]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +37,11 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         setupViews()
         setupConstrains()
         setupClickEvents()
+        updateBoardView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        mainScrollView.contentSize = CGSize(width:self.view.frame.width,height:self.view.frame.height + 150)
     }
     
     func setupViews() {
@@ -53,24 +55,27 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         mainNavigationItem.title = "首页"
         self.view.addSubview(navigationBar!)
         mainScrollView = UIScrollView(frame:self.view.bounds)
+        images = [String]()
+        images?.append("http://yan.eeseetech.cn/upload/image/20171125/1511590754.jpg")
         slideGallery = SliderGalleryController()
         slideGallery.delegate = self
-        slideGallery.view.backgroundColor = UIColor.red
+        //slideGallery.view.backgroundColor = UIColor.red
+        
         //slideGallery.view.frame = CGRect(x:0, y:88, width:screenWidth, height:334)
         addChildViewController(slideGallery)
         mainScrollView.addSubview(slideGallery.view)
         
         shopOwnerButton = ImageClickView()
         shopOwnerButton.contentTitle.text = "零售店主"
-        shopOwnerButton.contentImage.image = UIImage(named:"shopOwner")
+        shopOwnerButton.contentImage.image = UIImage(named:"main_shopowner")
         
         customerManagerButton = ImageClickView()
         customerManagerButton.contentTitle.text = "客户经理"
-        customerManagerButton.contentImage.image = UIImage(named:"shopOwner")
+        customerManagerButton.contentImage.image = UIImage(named:"main_customerManager")
         
         pointMallButton = ImageClickView()
         pointMallButton.contentTitle.text = "积分商城"
-        pointMallButton.contentImage.image = UIImage(named:"shopOwner")
+        pointMallButton.contentImage.image = UIImage(named:"main_pointMall")
         
         firstRowView = UIView()
         //firstRowView.backgroundColor = UIColor.green
@@ -81,15 +86,15 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         
         saleManagerButton = ImageClickView()
         saleManagerButton.contentTitle.text = "访销经理"
-        saleManagerButton.contentImage.image = UIImage(named:"shopOwner")
+        saleManagerButton.contentImage.image = UIImage(named:"main_saleManager")
         
         customerButton = ImageClickView()
         customerButton.contentTitle.text = "消费者"
-        customerButton.contentImage.image = UIImage(named:"shopOwner")
+        customerButton.contentImage.image = UIImage(named:"main_customer")
         
         scanPrizeButton = ImageClickView()
         scanPrizeButton.contentTitle.text = "扫码兑奖"
-        scanPrizeButton.contentImage.image = UIImage(named:"shopOwner")
+        scanPrizeButton.contentImage.image = UIImage(named:"main_scan")
         
         secondRowView = UIView()
         //secondRowView.backgroundColor = UIColor.green
@@ -101,17 +106,17 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         recentNewsView = BigboardView()
         recentNewsView.contentTitle.text = "最新资讯"
         recentNewsView.contentMessage.text = "test"
-        recentNewsView.contentImage.backgroundColor = UIColor.green
+        //recentNewsView.contentImage.backgroundColor = UIColor.green
         
         welfareActivity = SmallboardView()
         welfareActivity.contentTitle.text = "公益活动"
         welfareActivity.contentMessage.text = "test"
-        welfareActivity.contentImage.backgroundColor = UIColor.green
+        //welfareActivity.contentImage.backgroundColor = UIColor.green
         
         hotNewsView = SmallboardView()
         hotNewsView.contentTitle.text = "热点新闻"
         hotNewsView.contentMessage.text = "test"
-        hotNewsView.contentImage.backgroundColor = UIColor.green
+        //hotNewsView.contentImage.backgroundColor = UIColor.green
         
         mainScrollView.addSubview(recentNewsView)
         mainScrollView.addSubview(welfareActivity)
@@ -130,7 +135,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         slideGallery.view.snp.makeConstraints { (maker) in
             maker.top.equalTo(mainScrollView)
             maker.width.equalTo(mainScrollView)
-            maker.height.equalTo(200)
+            maker.height.equalTo(180)
         }
         
         firstRowView.snp.makeConstraints { (maker) in
@@ -231,19 +236,57 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        mainScrollView.contentSize = CGSize(width:self.view.frame.width,height:self.view.frame.height + 100)
+        Log("viewDidAppear")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        Log("")
+        updateBannerView()
+        updateBoardView()
+    }
+    
+    func updateBannerView() {
+        Log("")
+        MainPresenter.updateBannerContent()
+        .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (result) in
+                if (result.code == 0) {
+                    self.images = result.imageUrls
+                    self.slideGallery.reloadData()
+                }
+            })
+    }
+    
+    func updateBoardView() {
+        MainPresenter.updateBoardContent()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (result) in
+                if (result.code == 0) {
+                    var boardViews = [BoardView]()
+                    boardViews.append(self.recentNewsView)
+                    boardViews.append(self.welfareActivity)
+                    boardViews.append(self.hotNewsView)
+                    for index in 0...2 {
+                        boardViews[index].contentMessage.text = result.articles![index].title
+                        boardViews[index].contentImage.kf.setImage(with: URL(string:result.articles![index].thumb!))
+                    }
+                } else {
+                    Log(result.message)
+                }
+            })
+        
+    }
+    
     func galleryDataSource() -> [String] {
-        return images
+        return images!
     }
     
     func galleryScrollerViewSize() -> CGSize {
-        return CGSize(width:screenWidth, height: 200)
+        return CGSize(width:screenWidth, height: 180)
     }
     
     @objc func onOwnerClick() {
@@ -282,11 +325,6 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     @objc func onSaleManagerButton() {
         print("onSaleManagerButton")
-        MainPresenter.getRecentNews()
-        .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (result) in
-                
-            })
     }
     
     @objc func onCustomerButton() {

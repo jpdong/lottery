@@ -39,7 +39,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
     }
     
     @objc func close(_ sender:UIBarButtonItem){
-        if (type == BusinessItem.shop && !(self.presentingViewController is BusinessDetailView)) {
+        if (type == BusinessItem.shop && (self.presentingViewController is IDCardViewController)) {
             var grandParentVC = self.presentingViewController?.presentingViewController
             grandParentVC?.dismiss(animated: true, completion: nil)
 //            var parentVC:UIViewController? = self.presentingViewController

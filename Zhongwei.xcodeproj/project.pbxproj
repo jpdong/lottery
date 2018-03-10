@@ -15,6 +15,13 @@
 		8E1A112A20450A5300A0B6BC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A112920450A5300A0B6BC /* LoginViewController.swift */; };
 		8E1A112C20450A6D00A0B6BC /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A112B20450A6D00A0B6BC /* RegisterViewController.swift */; };
 		8E1A112E20453C2C00A0B6BC /* LoginViewControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A112D20453C2C00A0B6BC /* LoginViewControllerCode.swift */; };
+		8E1A93E6205391DB001D02D7 /* ContentResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A93E5205391DB001D02D7 /* ContentResult.swift */; };
+		8E1A93E820539353001D02D7 /* MainNewsEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A93E720539353001D02D7 /* MainNewsEntity.swift */; };
+		8E1A93EA205393E6001D02D7 /* ArticleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A93E9205393E6001D02D7 /* ArticleData.swift */; };
+		8E1A93EC205395E3001D02D7 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A93EB205395E3001D02D7 /* BoardView.swift */; };
+		8E1A93EE2053B229001D02D7 /* Page.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A93ED2053B229001D02D7 /* Page.storyboard */; };
+		8E1A93F02053D596001D02D7 /* ImageDataEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A93EF2053D596001D02D7 /* ImageDataEntity.swift */; };
+		8E1A93F22053D62B001D02D7 /* ImageResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A93F12053D62B001D02D7 /* ImageResult.swift */; };
 		8E20A3E32021A40900B15AB2 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20A3E22021A40900B15AB2 /* MessageView.swift */; };
 		8E20A3E52021B48C00B15AB2 /* MessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20A3E42021B48C00B15AB2 /* MessageList.swift */; };
 		8E20A3E72021B50000B15AB2 /* MessageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20A3E62021B50000B15AB2 /* MessageDetailView.swift */; };
@@ -109,6 +116,13 @@
 		8E1A112920450A5300A0B6BC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8E1A112B20450A6D00A0B6BC /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		8E1A112D20453C2C00A0B6BC /* LoginViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerCode.swift; sourceTree = "<group>"; };
+		8E1A93E5205391DB001D02D7 /* ContentResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentResult.swift; sourceTree = "<group>"; };
+		8E1A93E720539353001D02D7 /* MainNewsEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNewsEntity.swift; sourceTree = "<group>"; };
+		8E1A93E9205393E6001D02D7 /* ArticleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleData.swift; sourceTree = "<group>"; };
+		8E1A93EB205395E3001D02D7 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		8E1A93ED2053B229001D02D7 /* Page.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Page.storyboard; sourceTree = "<group>"; };
+		8E1A93EF2053D596001D02D7 /* ImageDataEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataEntity.swift; sourceTree = "<group>"; };
+		8E1A93F12053D62B001D02D7 /* ImageResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResult.swift; sourceTree = "<group>"; };
 		8E20A3E22021A40900B15AB2 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		8E20A3E42021B48C00B15AB2 /* MessageList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageList.swift; sourceTree = "<group>"; };
 		8E20A3E62021B50000B15AB2 /* MessageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailView.swift; sourceTree = "<group>"; };
@@ -239,12 +253,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8E441B212050D5CE001D90C1 /* main */ = {
+		8E441B212050D5CE001D90C1 /* home */ = {
 			isa = PBXGroup;
 			children = (
 				8ECF7C2A20529AF500738D0B /* MainPresenter.swift */,
+				8E1A93ED2053B229001D02D7 /* Page.storyboard */,
+				8E441B26205123FB001D90C1 /* MainPageViewController.swift */,
 			);
-			path = main;
+			path = home;
 			sourceTree = "<group>";
 		};
 		8E55000C20182D21009E2AB0 /* news */ = {
@@ -252,7 +268,6 @@
 			children = (
 				8E55000620182B75009E2AB0 /* News.storyboard */,
 				8E55FFFB20182539009E2AB0 /* NewsViewController.swift */,
-				8E441B26205123FB001D90C1 /* MainPageViewController.swift */,
 			);
 			path = news;
 			sourceTree = "<group>";
@@ -321,6 +336,7 @@
 				8E441B2C20513BF6001D90C1 /* ImageClickView.swift */,
 				8ECF7C202052618400738D0B /* BigboardView.swift */,
 				8ECF7C22205261BD00738D0B /* SmallboardView.swift */,
+				8E1A93EB205395E3001D02D7 /* BoardView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -347,6 +363,11 @@
 				8E121FF6204D5F1300C5CCD8 /* MessageEntity.swift */,
 				8E121FF8204D64A800C5CCD8 /* MessageResult.swift */,
 				8E96F01B204E75E20060B612 /* BusinessStateEntity.swift */,
+				8E1A93E5205391DB001D02D7 /* ContentResult.swift */,
+				8E1A93E720539353001D02D7 /* MainNewsEntity.swift */,
+				8E1A93E9205393E6001D02D7 /* ArticleData.swift */,
+				8E1A93EF2053D596001D02D7 /* ImageDataEntity.swift */,
+				8E1A93F12053D62B001D02D7 /* ImageResult.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -381,7 +402,7 @@
 		8EFA2D381FE8B37D005C890E /* Zhongwei */ = {
 			isa = PBXGroup;
 			children = (
-				8E441B212050D5CE001D90C1 /* main */,
+				8E441B212050D5CE001D90C1 /* home */,
 				8E55001620187D91009E2AB0 /* view */,
 				8E55000F20182F22009E2AB0 /* business */,
 				8E55000E20182F0D009E2AB0 /* discover */,
@@ -534,6 +555,7 @@
 				8E55000B20182CAE009E2AB0 /* Business.storyboard in Resources */,
 				8E55000820182B75009E2AB0 /* News.storyboard in Resources */,
 				8E550015201835A8009E2AB0 /* Me.storyboard in Resources */,
+				8E1A93EE2053B229001D02D7 /* Page.storyboard in Resources */,
 				8EFA2D411FE8B37D005C890E /* Assets.xcassets in Resources */,
 				8EFA2D681FE8BE41005C890E /* Podfile in Resources */,
 				8E55000520182B57009E2AB0 /* Discover.storyboard in Resources */,
@@ -653,6 +675,8 @@
 				8E1A112E20453C2C00A0B6BC /* LoginViewControllerCode.swift in Sources */,
 				8E121FF7204D5F1300C5CCD8 /* MessageEntity.swift in Sources */,
 				8E92BF1E200F46C80090C646 /* Presenter.swift in Sources */,
+				8E1A93E6205391DB001D02D7 /* ContentResult.swift in Sources */,
+				8E1A93E820539353001D02D7 /* MainNewsEntity.swift in Sources */,
 				8EC9439720464CA000EB2B05 /* Result.swift in Sources */,
 				8E1A112A20450A5300A0B6BC /* LoginViewController.swift in Sources */,
 				8E20A3E72021B50000B15AB2 /* MessageDetailView.swift in Sources */,
@@ -661,6 +685,7 @@
 				8E4D9FB5202AB2D900C4BF21 /* PrizeEntity.swift in Sources */,
 				8ECF7C2B20529AF500738D0B /* MainPresenter.swift in Sources */,
 				8E441B2D20513BF6001D90C1 /* ImageClickView.swift in Sources */,
+				8E1A93F02053D596001D02D7 /* ImageDataEntity.swift in Sources */,
 				8E96F020204E9B0A0060B612 /* DiscoverPresenter.swift in Sources */,
 				8E121FF9204D64A800C5CCD8 /* MessageResult.swift in Sources */,
 				8ECF7C2720528A0A00738D0B /* BusinessItemCell.swift in Sources */,
@@ -668,6 +693,7 @@
 				8E96F01E204E815A0060B612 /* GuideViewController.swift in Sources */,
 				8EC3C234202069BD001567E9 /* BusinessItemView.swift in Sources */,
 				8E55FFFC20182539009E2AB0 /* NewsViewController.swift in Sources */,
+				8E1A93F22053D62B001D02D7 /* ImageResult.swift in Sources */,
 				8E5DC161201745F900D421FE /* TabBarController.swift in Sources */,
 				8EC3C2382020705C001567E9 /* BusinessDetailView.swift in Sources */,
 				8ECF7C29205294F100738D0B /* ClosableWebView.swift in Sources */,
@@ -679,6 +705,8 @@
 				8ECF7C212052618400738D0B /* BigboardView.swift in Sources */,
 				8EC2B5352019D08000C3181D /* DiscoverItemView.swift in Sources */,
 				8E1A112C20450A6D00A0B6BC /* RegisterViewController.swift in Sources */,
+				8E1A93EA205393E6001D02D7 /* ArticleData.swift in Sources */,
+				8E1A93EC205395E3001D02D7 /* BoardView.swift in Sources */,
 				8EC2B5312019C4FD00C3181D /* DiscoverItem.swift in Sources */,
 				8E20A3E32021A40900B15AB2 /* MessageView.swift in Sources */,
 				8E121FF5204D5C3B00C5CCD8 /* UserPresenter.swift in Sources */,
