@@ -85,4 +85,45 @@ class Presenter{
         })
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
+    
+    static func checkAppUpdate() -> Observable<AppUpdateResult> {
+        return Observable<AppUpdateResult>.create({ (observer) -> Disposable in
+            let infoDictionary = Bundle.main.infoDictionary!
+            let majorVersion = infoDictionary["CFBundleShortVersionString"]
+            let version = majorVersion as! String
+            let parameters:Dictionary = ["version":version]
+            print("parameters:\(parameters)")
+            Alamofire.request("\(BASE_URL)mobile/App/checkVersion",method:.post,parameters:parameters).responseString{
+                response in
+                print("update")
+                print("response:\(response)")
+                print("value \(response.result.value)")
+                if (response.result.value == nil) {
+                    return
+                }
+                var appUpdateResult:AppUpdateResult = AppUpdateResult()
+                var appUpdateEntity = AppUpdateEntity.deserialize(from: response.result.value as! String) as! AppUpdateEntity
+                if (appUpdateEntity != nil) {
+                    if (appUpdateEntity.code == 0) {
+                        appUpdateResult.code = 0
+                        appUpdateResult.message = appUpdateEntity.msg
+                        appUpdateResult.version = appUpdateEntity.data?.version
+                        appUpdateResult.forceUpdate = appUpdateEntity.data?.compel
+                        if (version == appUpdateResult.version) {
+                            appUpdateResult.update = false
+                        } else {
+                            appUpdateResult.update = true
+                        }
+                        
+                    } else {
+                        appUpdateResult.code = 1
+                        appUpdateResult.message = appUpdateEntity.msg
+                    }
+                }
+                observer.onNext(appUpdateResult)
+            }
+            return Disposables.create()
+        })
+        .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
 }

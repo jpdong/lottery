@@ -14,6 +14,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     
     static let front:Int = 0
     static let back:Int = 1
+    static let tobacco:Int = 2
     
     var closeButton:UIBarButtonItem!
     var navigationBar:UINavigationBar!
@@ -21,6 +22,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     var idcardSecondStepImage:UIImageView!
     var idcardFrontImage:UIImageView!
     var idcardBackImage:UIImageView!
+    var tobaccoCardImage:UIImageView!
     var scrollView:UIScrollView!
     var nextStepButton:UIButton!
     var guideBackground:UIImageView!
@@ -28,10 +30,13 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     var currentImage:Int = front
     var frontImageSetup:Bool = false
     var backImageSetup:Bool = false
+    var tobaccoImageSetup:Bool = false
     var frontImageUrl:String?
     var backImageUrl:String?
+    var tobaccoImageUrl:String?
     var frontImageIndicator:UIActivityIndicatorView!
     var backImageIndicator:UIActivityIndicatorView!
+    var tobaccoImageIndicator:UIActivityIndicatorView!
     var navigationBarHeight:CGFloat?
     var statusBarHeight:CGFloat?
     
@@ -93,7 +98,9 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         idcardFrontImage.addGestureRecognizer(frontImageTap)
         let localFrontUrl = getCacheFrontIDCardImageUrl()
         if (localFrontUrl != "") {
+            frontImageUrl = localFrontUrl
             idcardFrontImage.kf.setImage(with: URL(string:localFrontUrl))
+            frontImageSetup = true
         }
         scrollView.addSubview(idcardFrontImage)
         
@@ -105,16 +112,33 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         idcardBackImage.addGestureRecognizer(backImageTap)
         let localBackUrl = getCacheBackIDCardImageUrl()
         if (localBackUrl != "") {
+            backImageUrl = localBackUrl
             idcardBackImage.kf.setImage(with: URL(string:localBackUrl))
+            backImageSetup = true
         }
         
+        tobaccoCardImage = UIImageView()
+        tobaccoCardImage.image = UIImage(named:"tobacco_card")
+        tobaccoCardImage.contentMode = .scaleAspectFit
+        tobaccoCardImage.isUserInteractionEnabled = true
+        var tobaccoCardTap = UITapGestureRecognizer(target: self, action: #selector(getTobaccoCardPicture))
+        tobaccoCardImage.addGestureRecognizer(tobaccoCardTap)
+        let localTobaccoCardUrl = getCacheTobaccoCardImageUrl()
+        if (localTobaccoCardUrl != "") {
+            tobaccoImageUrl = localTobaccoCardUrl
+            tobaccoCardImage.kf.setImage(with: URL(string:localTobaccoCardUrl))
+            tobaccoImageSetup = true
+        }
+        scrollView.addSubview(tobaccoCardImage)
         scrollView.addSubview(idcardBackImage)
         scrollView.addSubview(nextStepButton)
         
         frontImageIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.whiteLarge)
         backImageIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.whiteLarge)
+        tobaccoImageIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.whiteLarge)
         self.view.addSubview(frontImageIndicator)
         self.view.addSubview(backImageIndicator)
+        self.view.addSubview(tobaccoImageIndicator)
     }
     
     func setupConstrains() {
@@ -138,10 +162,17 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             maker.top.equalTo(idcardFrontImage.snp.bottom).offset(8)
         }
         
+        tobaccoCardImage.snp.makeConstraints { (maker) in
+            maker.centerX.equalTo(scrollView)
+            maker.width.equalTo(231)
+            maker.height.equalTo(144)
+            maker.top.equalTo(idcardBackImage.snp.bottom).offset(8)
+        }
+        
         idcardSecondStepImage.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(scrollView)
             maker.width.equalTo(162)
-            maker.top.equalTo(idcardBackImage.snp.bottom).offset(40)
+            maker.top.equalTo(tobaccoCardImage.snp.bottom).offset(40)
         }
         
         nextStepButton.snp.makeConstraints { (maker) in
@@ -172,6 +203,10 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             maker.center.equalTo(idcardBackImage)
         }
         
+        tobaccoImageIndicator.snp.makeConstraints { (maker) in
+            maker.center.equalTo(tobaccoCardImage)
+        }
+        
     }
     
     @objc func getFrontIDCardPicture() {
@@ -188,6 +223,12 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         self.present(picker, animated: true, completion: nil)
     }
     
+    @objc func getTobaccoCardPicture() {
+        currentImage = IDCardViewController.tobacco
+        picker.sourceType = UIImagePickerControllerSourceType.camera
+        //picker.allowsEditing = true
+        self.present(picker, animated: true, completion: nil)
+    }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print(info)
         var image:UIImage!
@@ -208,7 +249,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
                     }
                 })
             
-        } else {
+        } else if (currentImage == IDCardViewController.back) {
             idcardBackImage.image = image
             backImageIndicator.startAnimating()
             BusinessPresenter.uploadImage(image:image)
@@ -218,6 +259,20 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
                     if(result.code == 0) {
                         self.backImageUrl = result.message
                         self.backImageSetup = true
+                    } else {
+                        Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
+                    }
+                })
+        } else if (currentImage == IDCardViewController.tobacco) {
+            tobaccoCardImage.image = image
+            tobaccoImageIndicator.startAnimating()
+            BusinessPresenter.uploadImage(image:image)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { (result) in
+                    self.tobaccoImageIndicator.stopAnimating()
+                    if(result.code == 0) {
+                        self.tobaccoImageUrl = result.message
+                        self.tobaccoImageSetup = true
                     } else {
                         Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
                     }
@@ -232,7 +287,8 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             return
         }
         storeIDCardImageUrl(front:frontImageUrl!, back:backImageUrl!)
-        BusinessPresenter.uploadImageUrls(front:frontImageUrl!, back:backImageUrl!)
+        storeTobaccoCardImageUrl(cardUrl: tobaccoImageUrl!)
+        BusinessPresenter.uploadImageUrls(front:frontImageUrl!, back:backImageUrl!,tobacco: tobaccoImageUrl!)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -247,7 +303,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     }
     
     func checkPictures() -> Bool {
-        if (frontImageSetup && backImageSetup && frontImageUrl != nil && backImageUrl != nil) {
+        if (frontImageSetup && backImageSetup && frontImageUrl != nil && backImageUrl != nil && tobaccoImageSetup && tobaccoImageUrl != nil) {
             return true
         } else {
             return false

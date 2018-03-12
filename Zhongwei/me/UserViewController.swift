@@ -106,6 +106,7 @@ class UserViewController:UITableViewController{
         userInfoCell.nickNameLabel.text = "点击登录账号"
         logoutCell.isHidden = true
         storeIDCardImageUrl(front: "", back: "")
+        storeTobaccoCardImageUrl(cardUrl: "")
         showLoginView()
         //messageInfoCell.number.isHidden = true
     }

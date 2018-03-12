@@ -108,6 +108,18 @@ func getCacheBackIDCardImageUrl() -> String {
     return backUrl ?? ""
 }
 
+func getCacheTobaccoCardImageUrl() -> String {
+    let userDefaults = UserDefaults.standard
+    let tobaccoUrl:String? = userDefaults.string(forKey: "tobacco_idcard_url")
+    return tobaccoUrl ?? ""
+}
+
+func storeTobaccoCardImageUrl(cardUrl:String) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(cardUrl, forKey: "tobacco_idcard_url")
+    userDefaults.synchronize()
+}
+
 func storeIDCardImageUrl(front:String, back:String) {
     let userDefaults = UserDefaults.standard
     userDefaults.set(front, forKey: "front_idcard_url")

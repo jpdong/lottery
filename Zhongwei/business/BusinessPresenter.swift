@@ -93,14 +93,14 @@ class BusinessPresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func uploadImageUrls(front:String, back:String) -> Observable<Result> {
+    static func uploadImageUrls(front:String, back:String, tobacco:String) -> Observable<Result> {
         //return Observable<Result>.create({ (observer) -> Disposable in
         return Presenter.getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
-                    let parameters:Dictionary = ["front":front, "back":back, "sid":sid]
+                    let parameters:Dictionary = ["front":front, "back":back, "sid":sid, "yan_code":tobacco]
                     print("parameters:\(parameters)")
                     Alamofire.request("\(BASE_URL)mobile/Register/uploadClubImage",method:.post,parameters:parameters).responseString{response in
                         print("response:\(response)")
