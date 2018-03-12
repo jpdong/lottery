@@ -174,7 +174,6 @@ class SliderGalleryController: UIViewController,UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //获取当前偏移量
         let offset = scrollView.contentOffset.x
-        print("offset:\(offset)")
         if(self.dataSource?.count != 0){
             
             //如果向左滑动（显示下一张）

@@ -50,6 +50,8 @@
 		8E61FB761FF3474200680E19 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E61FB751FF3474200680E19 /* libz.tbd */; };
 		8E61FB781FF3475100680E19 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E61FB771FF3475100680E19 /* SystemConfiguration.framework */; };
 		8E61FB7B1FF34C8900680E19 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E61FB7A1FF34C8900680E19 /* Utils.swift */; };
+		8E62AA9F20562349000847E3 /* ArticleUrlEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E62AA9E20562348000847E3 /* ArticleUrlEntity.swift */; };
+		8E62AAA120562388000847E3 /* ArticleUrlResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E62AAA020562388000847E3 /* ArticleUrlResult.swift */; };
 		8E66CF1F2049406C00FC9E59 /* IDCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E66CF1E2049406C00FC9E59 /* IDCardViewController.swift */; };
 		8E66CF2120494C3900FC9E59 /* BusinessPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E66CF2020494C3900FC9E59 /* BusinessPresenter.swift */; };
 		8E92BF18200EFC9B0090C646 /* ResponseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */; };
@@ -152,6 +154,8 @@
 		8E61FB751FF3474200680E19 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		8E61FB771FF3475100680E19 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		8E61FB7A1FF34C8900680E19 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		8E62AA9E20562348000847E3 /* ArticleUrlEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleUrlEntity.swift; sourceTree = "<group>"; };
+		8E62AAA020562388000847E3 /* ArticleUrlResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleUrlResult.swift; sourceTree = "<group>"; };
 		8E66CF1E2049406C00FC9E59 /* IDCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDCardViewController.swift; sourceTree = "<group>"; };
 		8E66CF2020494C3900FC9E59 /* BusinessPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessPresenter.swift; sourceTree = "<group>"; };
 		8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseEntity.swift; sourceTree = "<group>"; };
@@ -368,6 +372,8 @@
 				8E1A93E9205393E6001D02D7 /* ArticleData.swift */,
 				8E1A93EF2053D596001D02D7 /* ImageDataEntity.swift */,
 				8E1A93F12053D62B001D02D7 /* ImageResult.swift */,
+				8E62AA9E20562348000847E3 /* ArticleUrlEntity.swift */,
+				8E62AAA020562388000847E3 /* ArticleUrlResult.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -668,6 +674,7 @@
 				8EF0BFD42028557300401540 /* PrizeRecordController.swift in Sources */,
 				8E55FFFE20182592009E2AB0 /* DiscoverViewController.swift in Sources */,
 				8E441B2B205137FF001D90C1 /* GridLayoutView.swift in Sources */,
+				8E62AA9F20562349000847E3 /* ArticleUrlEntity.swift in Sources */,
 				8E92BF1A200EFDD90090C646 /* SidEntity.swift in Sources */,
 				8E66CF1F2049406C00FC9E59 /* IDCardViewController.swift in Sources */,
 				8EC9439920464DB700EB2B05 /* CodeEntity.swift in Sources */,
@@ -700,6 +707,7 @@
 				8EC2B5392019EE7B00C3181D /* ScanViewController.swift in Sources */,
 				8EC2B5372019E0BB00C3181D /* DetailViewController.swift in Sources */,
 				8EFA2D3C1FE8B37D005C890E /* WebViewController.swift in Sources */,
+				8E62AAA120562388000847E3 /* ArticleUrlResult.swift in Sources */,
 				8E55001320183122009E2AB0 /* ShopViewController.swift in Sources */,
 				8E61FB6D1FF341F400680E19 /* WeiChatLogin.swift in Sources */,
 				8ECF7C212052618400738D0B /* BigboardView.swift in Sources */,

@@ -29,20 +29,15 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
     
     var isPasswordLogin:Bool = true
     var app:AppDelegate!
+    var loginIndicator:UIActivityIndicatorView!
     
     @IBOutlet weak var phoneInputBox: UIView!
-    
     @IBOutlet weak var passwordInputBox: UIView!
     @IBOutlet weak var phoneTextField: UITextField!
-    
     @IBOutlet weak var passwordLabel: UILabel!
-    
     @IBOutlet weak var passwordTextField: UITextField!
-    
     @IBOutlet weak var sendCodeButton: UILabel!
-    
     @IBOutlet weak var changeButton: UIButton!
-    
     @IBOutlet weak var loginButton: UIButton!
     
     var remainingTime:Int = 60 {
@@ -88,6 +83,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
         if (isPasswordLogin) {
             passwordLabel.text = "验证码"
             passwordTextField.placeholder = "请填写验证码"
+            passwordTextField.isSecureTextEntry = false
             changeButton.setTitle("用密码登录", for: .normal)
             sendCodeButton.isHidden = false
             isPasswordLogin = false
@@ -101,15 +97,21 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
     }
     
     @IBAction func login(_ sender: Any) {
-        let phoneNum = phoneTextField.text
-        let password = passwordTextField.text
+        var phoneNum = phoneTextField.text
+        var password = passwordTextField.text
         if (phoneNum == nil || phoneNum == "" || password == nil || password == "") {
             alert(title:"提示", message:"请输入完整信息")
         } else {
+            loginIndicator.startAnimating()
+            loginButton.isEnabled = false
+            phoneNum = phoneNum?.trimmingCharacters(in: .whitespaces)
+            password = password?.trimmingCharacters(in: .whitespaces)
             if (isPasswordLogin) {
                 UserPresenter.passwordLogin(phone:phoneNum!, password:password!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
+                        self.loginIndicator.stopAnimating()
+                        self.loginButton.isEnabled = true
                         if (result.code == 0) {
                             //Zhongwei.alert(viewController: self, title: "提示", message: result.message ?? "")
                             self.app.globalData?.phoneNum = phoneNum!
@@ -124,6 +126,8 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
                 UserPresenter.codeLogin(phone:phoneNum!, code:password!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
+                        self.loginIndicator.stopAnimating()
+                        self.loginButton.isEnabled = true
                         if (result.code == 0) {
                             //Zhongwei.alert(viewController: self, title: "提示", message: result.message ?? "")
                             self.app.globalData?.phoneNum = phoneNum!
@@ -148,13 +152,25 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         app = UIApplication.shared.delegate as! AppDelegate
-        Log("width:\(phoneInputBox.frame.width)")
+        setupViews()
+        setupConstrains()
+    }
+    
+    func setupViews() {
         sendCodeButton.isHidden = true
         phoneTextField.delegate = self
         passwordTextField.delegate = self
         passwordTextField.isSecureTextEntry = true
         var tap = UITapGestureRecognizer(target:self,action:#selector(sendCode))
         sendCodeButton.addGestureRecognizer(tap)
+        loginIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.gray)
+        self.view.addSubview(loginIndicator)
+    }
+    
+    func setupConstrains() {
+        loginIndicator.snp.makeConstraints { (maker) in
+            maker.center.equalTo(loginButton)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -164,7 +180,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
     }
     
     @objc func sendCode(_ sender: Any) {
-        let phoneNum = phoneTextField.text
+        var phoneNum = phoneTextField.text
         if (phoneNum == nil || phoneNum! == "") {
             Zhongwei.alert(viewController: self, title: "提示", message: "请输入手机号")
         } else {
@@ -172,6 +188,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
             let cancel = UIAlertAction(title:"取消", style:.cancel)
             let confirm = UIAlertAction(title:"确定", style:.default){
                 action in
+                phoneNum = phoneNum?.trimmingCharacters(in: .whitespaces)
                 UserPresenter.sendVerificationCode(phone:phoneNum!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in

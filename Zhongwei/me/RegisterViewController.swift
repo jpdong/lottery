@@ -60,9 +60,11 @@ class RegisterViewController:UIViewController{
         if (!checkInput()) {
             return
         }
-        let phoneNum:String = phoneTextField.text as! String
-        let password:String = passwordTextField.text as! String
-        let code:String = codeTextField.text as! String
+        var phoneNum:String = phoneTextField.text as! String
+        var password:String = passwordTextField.text as! String
+        var code:String = codeTextField.text as! String
+        phoneNum = phoneNum.trimmingCharacters(in: .whitespaces)
+        password = password.trimmingCharacters(in: .whitespaces)
         UserPresenter.phoneNumRegister(phone:phoneNum, password:password, code:code)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
@@ -81,8 +83,6 @@ class RegisterViewController:UIViewController{
                     alert(viewController: self, title: "提示", message: result.message ?? "")
                 }
             })
-        
-        
     }
     
     func checkInput() -> Bool {
@@ -119,12 +119,14 @@ class RegisterViewController:UIViewController{
     }
     
     func checkPasswordContent() -> Bool {
-        let password = passwordTextField.text
-        let confirmPassword = confirmPasswordText.text
+        var password = passwordTextField.text
+        var confirmPassword = confirmPasswordText.text
         if (password == nil || password! == "" || confirmPassword == nil || confirmPassword! == "") {
             alert(viewController: self, title: "提示", message: "请输入密码")
             return false
         } else {
+            password = password?.trimmingCharacters(in: .whitespaces)
+            confirmPassword = confirmPassword?.trimmingCharacters(in: .whitespaces)
             if (password! != confirmPassword!) {
                 alert(viewController: self, title: "提示", message: "两次输入密码不一致")
                 return false

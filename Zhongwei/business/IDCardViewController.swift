@@ -42,7 +42,10 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        scrollView.contentSize = CGSize(width:self.view.frame.width,height:self.view.frame.height + 100)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        scrollView.contentSize = CGSize(width:self.view.frame.width,height:nextStepButton.frame.maxY + 2 * Size.instance.tabBarHeight)
     }
     
     func setupViews() {
@@ -118,7 +121,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         idcardFirstStepImage.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(scrollView)
             maker.width.equalTo(119)
-            maker.top.equalTo(navigationBar).offset(20)
+            maker.top.equalTo(scrollView).offset(20)
         }
         
         idcardFrontImage.snp.makeConstraints { (maker) in
@@ -154,6 +157,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             maker.width.equalTo(self.view)
             maker.height.greaterThanOrEqualTo(self.view)
             maker.top.equalTo(navigationBar.snp.bottom)
+            maker.bottom.equalTo(nextStepButton)
         }
         
         guideBackground.snp.makeConstraints { (maker) in

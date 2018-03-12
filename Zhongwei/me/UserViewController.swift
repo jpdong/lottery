@@ -35,6 +35,7 @@ class UserViewController:UITableViewController{
         self.tableView.tableFooterView = UIView(frame:.zero)
         //userInfoCell.accessoryType = .disclosureIndicator
         messageInfoCell.accessoryType = .disclosureIndicator
+        messageInfoCell.selectionStyle = UITableViewCellSelectionStyle.none
         messageNumLabel.isHidden = true
         aboutInfoCell.accessoryType = .disclosureIndicator
         logoutCell.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(logout)))

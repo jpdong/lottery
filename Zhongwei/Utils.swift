@@ -16,13 +16,15 @@ class Size {
     var isiPhoneX:Bool
      var navigationBarHeight:CGFloat
     var statusBarHeight:CGFloat
+    var tabBarHeight:CGFloat
     
     private init(){
         windowWidth = UIScreen.main.bounds.size.width
         windowHeight = UIScreen.main.bounds.size.height
         isiPhoneX = windowHeight == 812 ? true : false
         navigationBarHeight = isiPhoneX ? 44 : 44
-        statusBarHeight = isiPhoneX ? 44 : 20 
+        statusBarHeight = isiPhoneX ? 44 : 20
+        tabBarHeight = isiPhoneX ? 83 : 49
     }
     
 }

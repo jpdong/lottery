@@ -14,6 +14,7 @@ class ArticleData:HandyJSON{
     var title:String?
     var image:String?
     var thumb:String?
+    var id:String?
     
     required init() {
         

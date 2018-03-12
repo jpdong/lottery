@@ -12,6 +12,7 @@ class BoardView:UIView {
     var contentImage:UIImageView!
     var contentTitle:UILabel!
     var contentMessage:UILabel!
+    var contentId:String?
     
     override init(frame: CGRect) {
         super.init(frame:frame)

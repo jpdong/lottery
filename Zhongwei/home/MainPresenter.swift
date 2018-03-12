@@ -20,6 +20,13 @@ class MainPresenter {
         return Observable<ContentResult>.create{
             observer -> Disposable in
             Alamofire.request("\(BASE_URL)mobile/Contents/getContent").responseString{response in
+                print("board")
+                print("response:\(response)")
+                print("result:\(response.result)")
+                print("value: \(response.result.value)")
+                if (response.result.value == nil) {
+                    return
+                }
                 let contentResult:ContentResult = ContentResult()
                 let mainNewsEntity:MainNewsEntity = MainNewsEntity.deserialize(from: response.result.value as! String) as! MainNewsEntity
                 if (mainNewsEntity.code == 0) {
@@ -51,6 +58,9 @@ class MainPresenter {
                 print("response:\(response)")
                 print("result:\(response.result)")
                 print("value: \(response.result.value)")
+                if (response.result.value == nil) {
+                    return
+                }
                 var imageResult = ImageResult()
                 var imageDataEntity = ImageDataEntity.deserialize(from: response.result.value as! String) as! ImageDataEntity
                 if (imageDataEntity.code == 0) {
@@ -64,6 +74,33 @@ class MainPresenter {
             }
             return Disposables.create()
             }
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
+    
+    static func getArticleWithId(_ id:String) ->Observable<ArticleUrlResult> {
+        return Observable<ArticleUrlResult>.create({ (observer) -> Disposable in
+            let parameters:Dictionary = ["id":id]
+            print("parameters:\(parameters)")
+            Alamofire.request("\(BASE_URL)mobile/Contents/getArticle",method:.post,parameters:parameters).responseString{
+                response in
+                print("response:\(response)")
+                print("value \(response.result.value)")
+                if (response.result.value == nil) {
+                    return
+                }
+                var articleUrlResult:ArticleUrlResult = ArticleUrlResult()
+                var articleUrlEntity:ArticleUrlEntity = ArticleUrlEntity.deserialize(from: response.result.value as! String) as! ArticleUrlEntity
+                if (articleUrlEntity.code == 0) {
+                    articleUrlResult.code = 0
+                    articleUrlResult.data = articleUrlEntity.data
+                } else {
+                    articleUrlResult.code = 1
+                    articleUrlResult.message = articleUrlEntity.msg
+                }
+                observer.onNext(articleUrlResult)
+            }
+            return Disposables.create()
+        })
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
 }

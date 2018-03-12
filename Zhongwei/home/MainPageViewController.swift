@@ -25,6 +25,11 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     var navigationBar:UINavigationBar!
     var mainNavigationItem:UINavigationItem!
     var mainNavigationController:UINavigationController!
+    var recentNewsId:String?
+    var welfareActivityId:String?
+    var hotNewsId:String?
+    var tabBarHeight:CGFloat?
+    var buttonWidth:CGFloat?
     
     var shopOwnerButton,customerManagerButton,pointMallButton,saleManagerButton,customerButton, scanPrizeButton:ImageClickView!
     //var imageClickButtons:[ImageClickView] = [shopOwner,customerManager,pointMall,saleManager,customer, scanPrize]
@@ -41,10 +46,12 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     }
     
     override func viewDidLayoutSubviews() {
-        mainScrollView.contentSize = CGSize(width:self.view.frame.width,height:self.view.frame.height + 150)
+        mainScrollView.contentSize = CGSize(width:self.view.frame.width,height:recentNewsView.frame.maxY + 2 * tabBarHeight!)
     }
     
     func setupViews() {
+        buttonWidth = self.view.frame.width / 6
+        tabBarHeight = Size.instance.tabBarHeight
         mainNavigationController = UINavigationController()
         self.addChildViewController(mainNavigationController)
         navigationBarHeight = Size.instance.navigationBarHeight
@@ -106,16 +113,19 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         recentNewsView = BigboardView()
         recentNewsView.contentTitle.text = "最新资讯"
         recentNewsView.contentMessage.text = "test"
+        
         //recentNewsView.contentImage.backgroundColor = UIColor.green
         
         welfareActivity = SmallboardView()
         welfareActivity.contentTitle.text = "公益活动"
         welfareActivity.contentMessage.text = "test"
+        
         //welfareActivity.contentImage.backgroundColor = UIColor.green
         
         hotNewsView = SmallboardView()
         hotNewsView.contentTitle.text = "热点新闻"
         hotNewsView.contentMessage.text = "test"
+        
         //hotNewsView.contentImage.backgroundColor = UIColor.green
         
         mainScrollView.addSubview(recentNewsView)
@@ -131,23 +141,24 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
             maker.top.equalTo(navigationBar.snp.bottom)
             maker.width.equalTo(self.view)
             maker.height.greaterThanOrEqualTo(self.view)
+            maker.bottom.equalTo(recentNewsView).offset(tabBarHeight!)
         }
         slideGallery.view.snp.makeConstraints { (maker) in
             maker.top.equalTo(mainScrollView)
             maker.width.equalTo(mainScrollView)
-            maker.height.equalTo(180)
+            maker.height.equalTo(self.view.frame.width * 0.5)
         }
         
         firstRowView.snp.makeConstraints { (maker) in
             maker.width.equalTo(mainScrollView)
-            maker.height.equalTo(100)
+            maker.height.equalTo(buttonWidth! * 1.5)
             maker.top.equalTo(slideGallery.view.snp.bottom).offset(20)
             maker.left.right.equalTo(mainScrollView)
         }
         
         shopOwnerButton.snp.makeConstraints { (maker) in
             maker.left.equalTo(firstRowView.snp.left).offset(40)
-            maker.width.equalTo(50)
+            maker.width.equalTo(buttonWidth!)
             maker.bottom.equalTo(firstRowView)
             maker.centerY.equalTo(firstRowView)
             //maker.right.equalTo(customerManagerButton.snp.left).offset(40)
@@ -155,7 +166,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         
         customerManagerButton.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(firstRowView)
-            maker.width.equalTo(50)
+            maker.width.equalTo(buttonWidth!)
             maker.bottom.equalTo(firstRowView)
             maker.centerY.equalTo(firstRowView.snp.centerY)
         }
@@ -163,21 +174,21 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         pointMallButton.snp.makeConstraints { (maker) in
             maker.right.equalTo(firstRowView.snp.right).offset(-40)
             //maker.left.equalTo(customerManagerButton.snp.right).offset(40)
-            maker.width.equalTo(50)
+            maker.width.equalTo(buttonWidth!)
             maker.bottom.equalTo(firstRowView)
             maker.centerY.equalTo(firstRowView)
         }
         
         secondRowView.snp.makeConstraints { (maker) in
             maker.width.equalTo(mainScrollView)
-            maker.height.equalTo(100)
+            maker.height.equalTo(buttonWidth! * 1.5)
             maker.top.equalTo(firstRowView.snp.bottom)
             maker.left.right.equalTo(mainScrollView)
         }
         
         saleManagerButton.snp.makeConstraints { (maker) in
             maker.left.equalTo(secondRowView.snp.left).offset(40)
-            maker.width.equalTo(50)
+            maker.width.equalTo(buttonWidth!)
             maker.bottom.equalTo(secondRowView)
             maker.centerY.equalTo(secondRowView)
             //maker.right.equalTo(customerManagerButton.snp.left).offset(40)
@@ -185,7 +196,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         
         customerButton.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(secondRowView)
-            maker.width.equalTo(50)
+            maker.width.equalTo(buttonWidth!)
             maker.bottom.equalTo(secondRowView)
             maker.centerY.equalTo(secondRowView.snp.centerY)
         }
@@ -193,27 +204,27 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         scanPrizeButton.snp.makeConstraints { (maker) in
             maker.right.equalTo(secondRowView.snp.right).offset(-40)
             //maker.left.equalTo(customerManagerButton.snp.right).offset(40)
-            maker.width.equalTo(50)
+            maker.width.equalTo(buttonWidth!)
             maker.bottom.equalTo(secondRowView)
             maker.centerY.equalTo(secondRowView)
         }
         
         recentNewsView.snp.makeConstraints { (maker) in
-            maker.width.height.equalTo(180)
+            maker.width.height.equalTo(self.view.frame.width * 0.5)
             maker.left.equalTo(mainScrollView)
             maker.top.equalTo(secondRowView.snp.bottom)
         }
         
         welfareActivity.snp.makeConstraints { (maker) in
-            maker.width.equalTo(180)
-            maker.height.equalTo(90)
+            maker.width.equalTo(self.view.frame.width * 0.5)
+            maker.height.equalTo(self.view.frame.width * 0.25)
             maker.top.equalTo(secondRowView.snp.bottom)
             maker.left.equalTo(recentNewsView.snp.right)
         }
         
         hotNewsView.snp.makeConstraints { (maker) in
-            maker.width.equalTo(180)
-            maker.height.equalTo(90)
+            maker.width.equalTo(self.view.frame.width * 0.5)
+            maker.height.equalTo(self.view.frame.width * 0.25)
             maker.top.equalTo(welfareActivity.snp.bottom)
             maker.left.equalTo(recentNewsView.snp.right)
         }
@@ -233,6 +244,40 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         customerButton.addGestureRecognizer(customerClick)
         let scanPrizeClick = UITapGestureRecognizer(target: self, action: #selector(onScanPrizeButton))
         scanPrizeButton.addGestureRecognizer(scanPrizeClick)
+        let recentNewsTap  = UITapGestureRecognizer(target: self, action: #selector(showRecentNews))
+        recentNewsView.addGestureRecognizer(recentNewsTap)
+        recentNewsView.isUserInteractionEnabled = true
+        let welfareActivityTap  = UITapGestureRecognizer(target: self, action: #selector(showWelfareActivity))
+        welfareActivity.addGestureRecognizer(welfareActivityTap)
+        welfareActivity.isUserInteractionEnabled = true
+        let hotNewsTap  = UITapGestureRecognizer(target: self, action: #selector(showHotNews))
+        hotNewsView.addGestureRecognizer(hotNewsTap)
+        hotNewsView.isUserInteractionEnabled = true
+    }
+    
+    @objc func showRecentNews() {
+        showDetailArticle(id: recentNewsView.contentId!)
+    }
+    
+    @objc func showWelfareActivity() {
+        showDetailArticle(id: welfareActivity.contentId!)
+    }
+    
+    @objc func showHotNews() {
+        showDetailArticle(id: hotNewsView.contentId!)
+    }
+    
+    func showDetailArticle(id:String) {
+        Log("")
+        MainPresenter.getArticleWithId(id)
+        .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (result) in
+                if (result.code == 0) {
+                    let vc = ClosableWebView()
+                    vc.url = result.data
+                    self.present(vc, animated: true, completion: nil)
+                }
+            })
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -273,6 +318,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                     for index in 0...2 {
                         boardViews[index].contentMessage.text = result.articles![index].title
                         boardViews[index].contentImage.kf.setImage(with: URL(string:result.articles![index].thumb!))
+                        boardViews[index].contentId = result.articles![index].id
                     }
                 } else {
                     Log(result.message)
@@ -286,7 +332,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     }
     
     func galleryScrollerViewSize() -> CGSize {
-        return CGSize(width:screenWidth, height: 180)
+        return CGSize(width:screenWidth, height: self.view.frame.width * 0.5)
     }
     
     @objc func onOwnerClick() {

@@ -36,6 +36,7 @@ class CustomerManagerList:UIViewController , UITableViewDelegate, UITableViewDat
         statusBarHeight = Size.instance.statusBarHeight
         navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight!, width:self.view.frame.width, height:navigationBarHeight!))
         businessNavigationItem = UINavigationItem()
+        businessNavigationItem.title = "业务"
         let closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
         closeButton.image = UIImage(named:"closeButton")
         businessNavigationItem.setRightBarButton(closeButton, animated: true)
@@ -44,6 +45,7 @@ class CustomerManagerList:UIViewController , UITableViewDelegate, UITableViewDat
         tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.rowHeight = 96
         tableView.register(BusinessItemCell.self, forCellReuseIdentifier: "BusinessItemCell")
         self.view.addSubview(tableView)
     }
@@ -83,7 +85,14 @@ class CustomerManagerList:UIViewController , UITableViewDelegate, UITableViewDat
         cell.title = UILabel()
         cell.title.text = item.title
         cell.icon = UIImageView()
+        cell.icon.contentMode = .scaleAspectFit
         cell.icon.image = item.icon
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        if (indexPath.row % 2 == 0) {
+            cell.type = BusinessItemCell.titleLeft
+        } else {
+            cell.type = BusinessItemCell.titleRight
+        }
         return cell
     }
     
