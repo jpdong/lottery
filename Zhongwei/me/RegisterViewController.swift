@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class RegisterViewController:UIViewController{
+class RegisterViewController:UIViewController,UITextFieldDelegate{
     
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var sendCodeButton: UIButton!
@@ -181,8 +181,12 @@ class RegisterViewController:UIViewController{
     
     func setupViews() {
         sendCodeButton.setTitle("获取验证码", for: .normal)
+        phoneTextField.delegate = self
+        codeTextField.delegate = self
         passwordTextField.isSecureTextEntry = true
+        passwordTextField.delegate = self
         confirmPasswordText.isSecureTextEntry = true
+        confirmPasswordText.delegate = self
         registerIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.gray)
         self.view.addSubview(registerIndicator)
     }
@@ -191,5 +195,10 @@ class RegisterViewController:UIViewController{
         registerIndicator.snp.makeConstraints { (maker) in
             maker.center.equalTo(registerButton)
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

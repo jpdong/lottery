@@ -9,27 +9,14 @@
 import Foundation
 import RxSwift
 
-extension UIView {
-    
-    private func drawBorder(rect:CGRect,color:UIColor){
-        let line = UIBezierPath(rect: rect)
-        let lineShape = CAShapeLayer()
-        lineShape.path = line.cgPath
-        lineShape.fillColor = color.cgColor
-        self.layer.addSublayer(lineShape)
-    }
-    
-    public func buttomBorder(width:CGFloat,borderColor:UIColor){
-        let rect = CGRect(x: 0, y: self.frame.size.height, width: self.frame.width, height: width)
-        drawBorder(rect: rect, color: borderColor)
-    }
-}
+
 
 class LoginViewController:UIViewController,UITextFieldDelegate{
     
     var isPasswordLogin:Bool = true
     var app:AppDelegate!
     var loginIndicator:UIActivityIndicatorView!
+    var keyboardHeight:CGFloat?
     
     @IBOutlet weak var phoneInputBox: UIView!
     @IBOutlet weak var passwordInputBox: UIView!
@@ -165,6 +152,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
         sendCodeButton.addGestureRecognizer(tap)
         loginIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.gray)
         self.view.addSubview(loginIndicator)
+        
     }
     
     func setupConstrains() {
@@ -173,10 +161,15 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow(note:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden(note:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
     override func viewDidLayoutSubviews() {
         Log("width:\(phoneInputBox.frame.width)")
-        phoneInputBox.buttomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        passwordInputBox.buttomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        phoneInputBox.bottomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        passwordInputBox.bottomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
     }
     
     @objc func sendCode(_ sender: Any) {
@@ -204,6 +197,36 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
             alertView.addAction(confirm)
             present(alertView,animated: true,completion: nil)
         }
+    }
+    
+    @objc func keyboardShow(note:Notification) {
+        guard let userInfo = note.userInfo else {
+            return
+        }
+        guard let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        keyboardHeight = keyboardRect.height
+        UIView.animate(withDuration:0.5) {
+            self.view.transform = CGAffineTransform.init(translationX: 0, y: -keyboardRect.height * 0.5)
+        }
+    }
+    
+    @objc func keyboardHidden(note:Notification) {
+//        guard let userInfo = note.userInfo else {
+//            return
+//        }
+//        guard let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+//            return
+//        }
+        UIView.animate(withDuration:0.5) {
+            self.view.transform = CGAffineTransform.init(translationX: 0, y: 0)
+        }
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

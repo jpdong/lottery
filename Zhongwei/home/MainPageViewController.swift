@@ -62,6 +62,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         mainNavigationItem.title = "首页"
         self.view.addSubview(navigationBar!)
         mainScrollView = UIScrollView(frame:self.view.bounds)
+        //mainScrollView.backgroundColor = UIColor.gray
         images = [String]()
         images?.append("http://yan.eeseetech.cn/upload/image/20171125/1511590754.jpg")
         slideGallery = SliderGalleryController()
@@ -85,6 +86,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         pointMallButton.contentImage.image = UIImage(named:"main_pointMall")
         
         firstRowView = UIView()
+        //firstRowView.backgroundColor = UIColor.white
         //firstRowView.backgroundColor = UIColor.green
         firstRowView.addSubview(shopOwnerButton)
         firstRowView.addSubview(customerManagerButton)
@@ -104,7 +106,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         scanPrizeButton.contentImage.image = UIImage(named:"main_scan")
         
         secondRowView = UIView()
-        //secondRowView.backgroundColor = UIColor.green
+        //secondRowView.backgroundColor = UIColor.white
         secondRowView.addSubview(saleManagerButton)
         secondRowView.addSubview(customerButton)
         secondRowView.addSubview(scanPrizeButton)
@@ -113,12 +115,14 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         recentNewsView = BigboardView()
         recentNewsView.contentTitle.text = "最新资讯"
         recentNewsView.contentMessage.text = "test"
+        recentNewsView.rightBorder(width: 1, borderColor: UIColor.black)
         
         //recentNewsView.contentImage.backgroundColor = UIColor.green
         
         welfareActivity = SmallboardView()
         welfareActivity.contentTitle.text = "公益活动"
         welfareActivity.contentMessage.text = "test"
+        welfareActivity.bottomBorder(width: 1, borderColor: UIColor.black)
         
         //welfareActivity.contentImage.backgroundColor = UIColor.green
         

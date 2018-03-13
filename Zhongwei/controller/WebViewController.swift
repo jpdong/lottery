@@ -9,6 +9,7 @@
 import UIKit
 import WebKit
 import Reachability
+import Toaster
 
 class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
     
@@ -115,6 +116,22 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         } else {
             return false
         }
+    }
+    
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        Toast(text:message).show()
+        completionHandler()
+    }
+    
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        let alert = UIAlertController(title: webView.title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) -> Void in
+            completionHandler(true)
+        }))
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) -> Void in
+            completionHandler(false)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

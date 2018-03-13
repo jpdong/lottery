@@ -29,6 +29,38 @@ class Size {
     
 }
 
+extension UIView {
+    
+    private func drawBorder(rect:CGRect,color:UIColor){
+        let line = UIBezierPath(rect: rect)
+        let lineShape = CAShapeLayer()
+        lineShape.path = line.cgPath
+        lineShape.fillColor = color.cgColor
+        self.layer.addSublayer(lineShape)
+    }
+    
+    public func bottomBorder(width:CGFloat,borderColor:UIColor){
+        let rect = CGRect(x: 0, y: self.frame.size.height, width: self.frame.width, height: width)
+        drawBorder(rect: rect, color: borderColor)
+    }
+    
+    public func topBorder(width:CGFloat,borderColor:UIColor){
+        let rect = CGRect(x: 0, y: 0, width: self.frame.width, height: width)
+        drawBorder(rect: rect, color: borderColor)
+    }
+    
+    
+    public func leftBorder(width:CGFloat,borderColor:UIColor){
+        let rect = CGRect(x: 0, y: 0, width: width, height: self.frame.height)
+        drawBorder(rect: rect, color: borderColor)
+    }
+    
+    public func rightBorder(width:CGFloat,borderColor:UIColor){
+        let rect = CGRect(x: self.frame.width, y: 0, width: width, height: self.frame.height)
+        drawBorder(rect: rect, color: borderColor)
+    }
+}
+
 func Log<T>(_ message:T, file:String = #file, funcName:String = #function,lineNum:Int = #line){
     #if DEBUG
     let fileName = (file as NSString).lastPathComponent

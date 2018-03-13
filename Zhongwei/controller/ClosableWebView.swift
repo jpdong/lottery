@@ -19,6 +19,7 @@ class ClosableWebView:WebViewController{
         app = UIApplication.shared.delegate as! AppDelegate
         closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
         closeButton.image = UIImage(named:"closeButton")
+        closeButton.tintColor = UIColor.black
         webNavigationItem.setRightBarButton(closeButton, animated: true)
         //loadUrl(url: "http://yan.eeseetech.cn/mobile/wechat/caipiao/")
         //app.globalData?.baseUrl

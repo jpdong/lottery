@@ -43,8 +43,10 @@ class SmallboardView:BoardView{
     
     func setupConstrains() {
         contentImage.snp.makeConstraints { (maker) in
-            maker.centerY.equalTo(self)
-            maker.width.height.equalTo(self.snp.height)
+            //maker.centerY.equalTo(self)
+            maker.width.equalTo(self.snp.height)
+            maker.top.equalTo(contentTitle.snp.bottom).offset(10)
+            maker.bottom.equalTo(self)
             maker.right.equalTo(self)
         }
         

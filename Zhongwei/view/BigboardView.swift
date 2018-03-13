@@ -47,6 +47,7 @@ class BigboardView:BoardView{
             maker.top.equalTo(contentMessage.snp.bottom).offset(10)
             maker.left.equalTo(self).offset(10)
             maker.right.equalTo(self).offset(-10)
+            maker.bottom.equalTo(self)
         }
         
         contentMessage.snp.makeConstraints { (maker) in

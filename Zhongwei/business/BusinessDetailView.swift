@@ -9,6 +9,7 @@
 import Foundation
 import WebKit
 import RxSwift
+import Toaster
 
 class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
     
@@ -79,6 +80,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
         //backButton.image = UIImage(named:"backButton")
         closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
         closeButton.image = UIImage(named:"closeButton")
+        closeButton.tintColor = UIColor.black
         //backButton.image = UIImage(named:"back")
         webNavigationItem.setLeftBarButton(backButton, animated: true)
         webNavigationItem.setRightBarButton(closeButton, animated: true)
@@ -179,6 +181,22 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("webView did finish navigation")
+    }
+    
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        Toast(text:message).show()
+        completionHandler()
+    }
+    
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        let alert = UIAlertController(title: webView.title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) -> Void in
+            completionHandler(true)
+        }))
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) -> Void in
+            completionHandler(false)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

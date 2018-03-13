@@ -39,6 +39,7 @@ class CustomerManagerList:UIViewController , UITableViewDelegate, UITableViewDat
         businessNavigationItem.title = "业务"
         let closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
         closeButton.image = UIImage(named:"closeButton")
+        closeButton.tintColor = UIColor.black
         businessNavigationItem.setRightBarButton(closeButton, animated: true)
         navigationBar?.pushItem(businessNavigationItem, animated: true)
         self.view.addSubview(navigationBar!)

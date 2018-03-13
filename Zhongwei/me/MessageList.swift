@@ -38,6 +38,7 @@ class MessageList:UITableViewController {
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
                     self.messageItems = result.messageList!
+                    print("messageItems:\(self.messageItems)")
                     self.tableView.reloadData()
                     if (self.messageItems.count == 0) {
                         self.noMessageView.isHidden = false

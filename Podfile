@@ -13,4 +13,5 @@ pod 'SwiftyJSON'
 pod 'HandyJSON', '~> 4.0.0-beta.1'
 pod 'ReachabilitySwift'
 pod 'SnapKit', '~> 4.0.0'
+pod 'Toaster'
 end
