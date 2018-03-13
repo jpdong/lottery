@@ -302,7 +302,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlW-kD-HfL">
-                                <rect key="frame" x="145" y="476" width="31" height="30"/>
+                                <rect key="frame" x="144.5" y="476" width="31" height="30"/>
                                 <state key="normal" title="注册">
                                     <color key="titleColor" red="0.18163758520000001" green="0.43211257460000002" blue="0.33301669360000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -533,6 +533,7 @@
                         <outlet property="confirmPasswordText" destination="0yC-cn-yqe" id="Opt-3t-PoU"/>
                         <outlet property="passwordTextField" destination="ueQ-W4-HuN" id="Glr-VD-lff"/>
                         <outlet property="phoneTextField" destination="ojl-wZ-pVE" id="AAr-AX-CpB"/>
+                        <outlet property="registerButton" destination="vnh-DO-v7J" id="Nkd-W1-jFh"/>
                         <outlet property="sendCodeButton" destination="8Xc-eN-bNG" id="Hm9-Jp-Anb"/>
                     </connections>
                 </viewController>

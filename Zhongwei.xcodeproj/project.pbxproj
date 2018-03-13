@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8E01C7771FEA58250012E2CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E01C7751FEA58250012E2CE /* Main.storyboard */; };
+		8E093FA72057803900AC0A8A /* WeixinSDK in Resources */ = {isa = PBXBuildFile; fileRef = 8E093FA62057803900AC0A8A /* WeixinSDK */; };
 		8E121FF3204D504700C5CCD8 /* ImageUrlEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF2204D504700C5CCD8 /* ImageUrlEntity.swift */; };
 		8E121FF5204D5C3B00C5CCD8 /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF4204D5C3B00C5CCD8 /* UserPresenter.swift */; };
 		8E121FF7204D5F1300C5CCD8 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF6204D5F1300C5CCD8 /* MessageEntity.swift */; };
@@ -88,7 +89,6 @@
 		8EFA2D4F1FE8B37D005C890E /* ZhongweiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA2D4E1FE8B37D005C890E /* ZhongweiTests.swift */; };
 		8EFA2D5A1FE8B37E005C890E /* ZhongweiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA2D591FE8B37E005C890E /* ZhongweiUITests.swift */; };
 		8EFA2D681FE8BE41005C890E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8EFA2D671FE8BE41005C890E /* Podfile */; };
-		8EFA2D6D1FE8C212005C890E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFA2D6C1FE8C212005C890E /* libWeChatSDK.a */; };
 		A5B785BA2F3CA812EFC80FD2 /* Pods_Zhongwei.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A84856AEDD70A279EC1E75F /* Pods_Zhongwei.framework */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +113,7 @@
 		6A84856AEDD70A279EC1E75F /* Pods_Zhongwei.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zhongwei.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		878A4334FDF403A899AFB54E /* Pods-Zhongwei.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zhongwei.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Zhongwei/Pods-Zhongwei.debug.xcconfig"; sourceTree = "<group>"; };
 		8E01C7761FEA58250012E2CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8E093FA62057803900AC0A8A /* WeixinSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WeixinSDK; sourceTree = "<group>"; };
 		8E121FF2204D504700C5CCD8 /* ImageUrlEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUrlEntity.swift; sourceTree = "<group>"; };
 		8E121FF4204D5C3B00C5CCD8 /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
 		8E121FF6204D5F1300C5CCD8 /* MessageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
@@ -200,10 +201,6 @@
 		8EFA2D591FE8B37E005C890E /* ZhongweiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZhongweiUITests.swift; sourceTree = "<group>"; };
 		8EFA2D5B1FE8B37E005C890E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8EFA2D671FE8BE41005C890E /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		8EFA2D691FE8C201005C890E /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = ../../../../../Downloads/software/OpenSDK1.8.1/WXApi.h; sourceTree = "<group>"; };
-		8EFA2D6A1FE8C201005C890E /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = ../../../../../Downloads/software/OpenSDK1.8.1/WechatAuthSDK.h; sourceTree = "<group>"; };
-		8EFA2D6B1FE8C201005C890E /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = ../../../../../Downloads/software/OpenSDK1.8.1/WXApiObject.h; sourceTree = "<group>"; };
-		8EFA2D6C1FE8C212005C890E /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = ../../../../../Downloads/software/OpenSDK1.8.1/libWeChatSDK.a; sourceTree = "<group>"; };
 		E6A748996A2BADEEFFAE03E7 /* Pods-Zhongwei.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zhongwei.release.xcconfig"; path = "Pods/Target Support Files/Pods-Zhongwei/Pods-Zhongwei.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -217,7 +214,6 @@
 				8E61FB741FF3472F00680E19 /* CoreTelephony.framework in Frameworks */,
 				8E61FB721FF3472100680E19 /* libsqlite3.tbd in Frameworks */,
 				8E61FB701FF3470300680E19 /* libc++.tbd in Frameworks */,
-				8EFA2D6D1FE8C212005C890E /* libWeChatSDK.a in Frameworks */,
 				A5B785BA2F3CA812EFC80FD2 /* Pods_Zhongwei.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -387,10 +383,7 @@
 		8EFA2D2D1FE8B37D005C890E = {
 			isa = PBXGroup;
 			children = (
-				8EFA2D6C1FE8C212005C890E /* libWeChatSDK.a */,
-				8EFA2D6A1FE8C201005C890E /* WechatAuthSDK.h */,
-				8EFA2D691FE8C201005C890E /* WXApi.h */,
-				8EFA2D6B1FE8C201005C890E /* WXApiObject.h */,
+				8E093FA62057803900AC0A8A /* WeixinSDK */,
 				8EFA2D671FE8BE41005C890E /* Podfile */,
 				8EFA2D381FE8B37D005C890E /* Zhongwei */,
 				8EFA2D4D1FE8B37D005C890E /* ZhongweiTests */,
@@ -563,6 +556,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EFA2D441FE8B37D005C890E /* LaunchScreen.storyboard in Resources */,
+				8E093FA72057803900AC0A8A /* WeixinSDK in Resources */,
 				8E01C7771FEA58250012E2CE /* Main.storyboard in Resources */,
 				8E55000B20182CAE009E2AB0 /* Business.storyboard in Resources */,
 				8E55000820182B75009E2AB0 /* News.storyboard in Resources */,

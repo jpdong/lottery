@@ -16,6 +16,9 @@ class RegisterViewController:UIViewController{
     @IBOutlet weak var codeTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordText: UITextField!
+    @IBOutlet weak var registerButton: UIButton!
+    
+    var registerIndicator:UIActivityIndicatorView!
     
     @IBAction func backToLogin(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -65,9 +68,13 @@ class RegisterViewController:UIViewController{
         var code:String = codeTextField.text as! String
         phoneNum = phoneNum.trimmingCharacters(in: .whitespaces)
         password = password.trimmingCharacters(in: .whitespaces)
+        registerIndicator.startAnimating()
+        registerButton.isEnabled = false
         UserPresenter.phoneNumRegister(phone:phoneNum, password:password, code:code)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
+                self.registerIndicator.stopAnimating()
+                self.registerButton.isEnabled = true
                 if (result.code == 0) {
                     //alert(viewController: self, title: "提示", message: result.message ?? "")
                     let alertView = UIAlertController(title:"提示", message:result.message ?? "", preferredStyle:.alert)
@@ -168,8 +175,21 @@ class RegisterViewController:UIViewController{
     }
     
     override func viewDidLoad() {
+        setupViews()
+        setupConstrains()
+    }
+    
+    func setupViews() {
         sendCodeButton.setTitle("获取验证码", for: .normal)
         passwordTextField.isSecureTextEntry = true
         confirmPasswordText.isSecureTextEntry = true
+        registerIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.gray)
+        self.view.addSubview(registerIndicator)
+    }
+    
+    func setupConstrains() {
+        registerIndicator.snp.makeConstraints { (maker) in
+            maker.center.equalTo(registerButton)
+        }
     }
 }

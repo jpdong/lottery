@@ -32,7 +32,7 @@ class MessageList:UITableViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         UserPresenter.updateMessages()
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in

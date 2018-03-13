@@ -17,12 +17,18 @@ class TabBarController:UITabBarController{
         var  delegate = UIApplication.shared.delegate as! AppDelegate
         delegate.tabViewController = self
         setUpTabs()
+        Timer.scheduledTimer(timeInterval: 5, target: self,
+                             selector: #selector(checkAppUpdate),
+                             userInfo: nil, repeats: false)
+        //checkAppUpdate()
     }
+    
+    
     
     override func viewDidAppear(_ animated: Bool) {
         //checkMessage()
         checkUserState()
-        checkAppUpdate()
+        
     }
     
     func setUpTabs(){
@@ -89,7 +95,7 @@ class TabBarController:UITabBarController{
         }
     }
     
-    func checkAppUpdate() {
+    @objc func checkAppUpdate() {
         Presenter.checkAppUpdate()
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
