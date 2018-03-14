@@ -36,20 +36,20 @@ class GuideViewController:UIViewController {
         navigationBar?.pushItem(guideNavigationItem, animated: true)
         self.view.addSubview(navigationBar!)
         //scrollView = UIScrollView(frame:self.view.bounds)
-        scrollView = UIScrollView(frame:CGRect(x:0,y:statusBarHeight! + navigationBarHeight! + 20,width:self.view.frame.width,height:self.view.frame.height))
+        scrollView = UIScrollView(frame:CGRect(x:0,y:statusBarHeight! + navigationBarHeight!,width:self.view.frame.width,height:self.view.frame.height))
         //scrollView.frame = self.view.bounds
         imageView = UIImageView(image:UIImage(named:"guide"))
-        scrollView.contentSize = imageView!.bounds.size
+        scrollView.contentSize = CGSize(width:imageView!.frame.width, height:imageView!.frame.height + 100)
         self.view.addSubview(scrollView)
         scrollView.addSubview(imageView!)
     }
     
     func setupConstrains() {
-//        scrollView.snp.makeConstraints { (maker) in
-//            maker.top.equalTo(navigationBar.snp.bottom)
-//            maker.width.equalTo(self.view)
-//            maker.left.right.equalTo(self.view)
-//        }
+        scrollView.snp.makeConstraints { (maker) in
+            maker.top.equalTo(navigationBar.snp.bottom).offset(20)
+            maker.width.equalTo(self.view)
+            maker.height.greaterThanOrEqualTo(self.view)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

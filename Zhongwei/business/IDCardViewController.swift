@@ -210,24 +210,81 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     }
     
     @objc func getFrontIDCardPicture() {
-        currentImage = IDCardViewController.front
-        picker.sourceType = UIImagePickerControllerSourceType.camera
-        //picker.allowsEditing = true
-        self.present(picker, animated: true, completion: nil)
+//        currentImage = IDCardViewController.front
+//        picker.sourceType = UIImagePickerControllerSourceType.camera
+//        self.present(picker, animated: true, completion: nil)
+        
+        var vc = AipCaptureCardVC.viewController(with: CardType.idCardFont) { (image) in
+            DispatchQueue.main.async {
+                self.idcardFrontImage.image = image
+                self.frontImageIndicator.startAnimating()
+                BusinessPresenter.uploadImage(image:image!)
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { (result) in
+                        self.frontImageIndicator.stopAnimating()
+                        if(result.code == 0) {
+                            self.frontImageUrl = result.message
+                            self.frontImageSetup = true
+                        } else {
+                            Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
+                        }
+                    })
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        self.present(vc!, animated: true, completion: nil)
     }
     
     @objc func getBackIDCardPicture() {
-        currentImage = IDCardViewController.back
-        picker.sourceType = UIImagePickerControllerSourceType.camera
-        //picker.allowsEditing = true
-        self.present(picker, animated: true, completion: nil)
+//        currentImage = IDCardViewController.back
+//        picker.sourceType = UIImagePickerControllerSourceType.camera
+//        self.present(picker, animated: true, completion: nil)
+        
+        var vc = AipCaptureCardVC.viewController(with: CardType.idCardBack) { (image) in
+            DispatchQueue.main.async {
+                self.idcardBackImage.image = image
+                self.backImageIndicator.startAnimating()
+                BusinessPresenter.uploadImage(image:image!)
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { (result) in
+                        self.backImageIndicator.stopAnimating()
+                        if(result.code == 0) {
+                            self.backImageUrl = result.message
+                            self.backImageSetup = true
+                        } else {
+                            Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
+                        }
+                    })
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        self.present(vc!, animated: true, completion: nil)
     }
     
     @objc func getTobaccoCardPicture() {
-        currentImage = IDCardViewController.tobacco
-        picker.sourceType = UIImagePickerControllerSourceType.camera
-        //picker.allowsEditing = true
-        self.present(picker, animated: true, completion: nil)
+//        currentImage = IDCardViewController.tobacco
+//        picker.sourceType = UIImagePickerControllerSourceType.camera
+//        self.present(picker, animated: true, completion: nil)
+        
+        var vc = AipGeneralVC.viewController { (image) in
+            DispatchQueue.main.async {
+                self.tobaccoCardImage.image = image
+                self.tobaccoImageIndicator.startAnimating()
+                BusinessPresenter.uploadImage(image:image!)
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { (result) in
+                        self.tobaccoImageIndicator.stopAnimating()
+                        if(result.code == 0) {
+                            self.tobaccoImageUrl = result.message
+                            self.tobaccoImageSetup = true
+                        } else {
+                            Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
+                        }
+                    })
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        self.present(vc!, animated: true, completion: nil)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print(info)

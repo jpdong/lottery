@@ -9,8 +9,6 @@
 import Foundation
 import RxSwift
 
-
-
 class LoginViewController:UIViewController,UITextFieldDelegate{
     
     var isPasswordLogin:Bool = true
@@ -50,7 +48,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
                 self.timer = nil
             }
             DispatchQueue.main.async {
-                self.sendCodeButton.isEnabled = !newValue
+                self.sendCodeButton.isUserInteractionEnabled = !newValue
             }
         }
     }
@@ -164,6 +162,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow(note:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden(note:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onPhoneTextfieldChanged(note:)), name: NSNotification.Name.UITextFieldTextDidChange, object: self.phoneTextField)
     }
     
     override func viewDidLayoutSubviews() {
@@ -199,6 +198,22 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
         }
     }
     
+    @objc func onPhoneTextfieldChanged(note:Notification) {
+        guard let _: UITextRange = phoneTextField.markedTextRange else{
+            let cursorPostion = phoneTextField.offset(from: phoneTextField.endOfDocument,
+                                                 to: phoneTextField.selectedTextRange!.end)
+            let pattern = "[^0-9]"
+            var str = phoneTextField.text!.pregReplace(pattern: pattern, with: "")
+            if str.count > 11 {
+                str = String(str.prefix(11))
+            }
+            phoneTextField.text = str
+            let targetPostion = phoneTextField.position(from: phoneTextField.endOfDocument,offset: cursorPostion)!
+            phoneTextField.selectedTextRange = phoneTextField.textRange(from: targetPostion,to: targetPostion)
+            return
+        }
+    }
+    
     @objc func keyboardShow(note:Notification) {
         guard let userInfo = note.userInfo else {
             return
@@ -207,8 +222,10 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
             return
         }
         keyboardHeight = keyboardRect.height
-        UIView.animate(withDuration:0.5) {
-            self.view.transform = CGAffineTransform.init(translationX: 0, y: -keyboardRect.height * 0.5)
+        if (!Size.instance.isiPhoneX) {
+            UIView.animate(withDuration:0.5) {
+                self.view.transform = CGAffineTransform.init(translationX: 0, y: -keyboardRect.height * 0.5)
+            }
         }
     }
     
@@ -219,8 +236,10 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
 //        guard let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
 //            return
 //        }
-        UIView.animate(withDuration:0.5) {
-            self.view.transform = CGAffineTransform.init(translationX: 0, y: 0)
+        if (!Size.instance.isiPhoneX) {
+            UIView.animate(withDuration:0.5) {
+                self.view.transform = CGAffineTransform.init(translationX: 0, y: 0)
+            }
         }
         
     }
@@ -233,6 +252,10 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
         textField.resignFirstResponder()
         return true
     }
+    
+    
 }
+
+
 
 

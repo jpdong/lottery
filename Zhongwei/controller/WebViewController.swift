@@ -39,6 +39,7 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         webNavigationItem = UINavigationItem()
         backButton = UIBarButtonItem(title:"",style:.plain, target:self, action:#selector(goBack))
         backButton.image = UIImage(named:"backButton")
+        backButton.tintColor = UIColor.black
         webNavigationItem.setLeftBarButton(backButton, animated: true)
         navigationBar?.pushItem(webNavigationItem, animated: true)
         self.view.addSubview(navigationBar!)

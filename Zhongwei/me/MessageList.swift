@@ -27,8 +27,9 @@ class MessageList:UITableViewController {
         self.view.addSubview(noMessageView)
         self.tableView.tableFooterView = UIView(frame:.zero)
         noMessageView.snp.makeConstraints { (maker) in
-            maker.width.equalTo(150)
-            maker.center.equalTo(self.view)
+            maker.width.equalTo(100)
+            maker.centerX.equalTo(self.view)
+            maker.top.equalTo(self.view).offset(self.view.frame.height * 0.2)
         }
     }
     

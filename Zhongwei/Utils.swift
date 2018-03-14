@@ -29,6 +29,16 @@ class Size {
     
 }
 
+extension String {
+    func pregReplace(pattern: String, with: String,
+                     options: NSRegularExpression.Options = []) -> String {
+        let regex = try! NSRegularExpression(pattern: pattern, options: options)
+        return regex.stringByReplacingMatches(in: self, options: [],
+                                              range: NSMakeRange(0, self.count),
+                                              withTemplate: with)
+    }
+}
+
 extension UIView {
     
     private func drawBorder(rect:CGRect,color:UIColor){

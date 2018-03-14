@@ -17,8 +17,13 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPasswordText: UITextField!
     @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var phoneInputBox: UIView!
+    @IBOutlet weak var codeInputBox: UIView!
+    @IBOutlet weak var passwordInputBox: UIView!
+    @IBOutlet weak var confirmInputBox: UIView!
     
     var registerIndicator:UIActivityIndicatorView!
+    var keyboardHeight:CGFloat?
     
     @IBAction func backToLogin(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -200,5 +205,67 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        phoneInputBox.bottomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        codeInputBox.bottomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        passwordInputBox.bottomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        confirmInputBox.bottomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow(note:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden(note:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onPhoneTextfieldChanged(note:)), name: NSNotification.Name.UITextFieldTextDidChange, object: self.phoneTextField)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func keyboardShow(note:Notification) {
+        guard let userInfo = note.userInfo else {
+            return
+        }
+        guard let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        keyboardHeight = keyboardRect.height
+        if (!Size.instance.isiPhoneX) {
+            UIView.animate(withDuration:0.5) {
+                self.view.transform = CGAffineTransform.init(translationX: 0, y: -keyboardRect.height * 0.5)
+            }
+        }
+    }
+    
+    @objc func keyboardHidden(note:Notification) {
+        //        guard let userInfo = note.userInfo else {
+        //            return
+        //        }
+        //        guard let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+        //            return
+        //        }
+        if (!Size.instance.isiPhoneX) {
+            UIView.animate(withDuration:0.5) {
+                self.view.transform = CGAffineTransform.init(translationX: 0, y: 0)
+            }
+        }
+    }
+    
+    @objc func onPhoneTextfieldChanged(note:Notification) {
+        guard let _: UITextRange = phoneTextField.markedTextRange else{
+            let cursorPostion = phoneTextField.offset(from: phoneTextField.endOfDocument,
+                                                      to: phoneTextField.selectedTextRange!.end)
+            let pattern = "[^0-9]"
+            var str = phoneTextField.text!.pregReplace(pattern: pattern, with: "")
+            if str.count > 11 {
+                str = String(str.prefix(11))
+            }
+            phoneTextField.text = str
+            let targetPostion = phoneTextField.position(from: phoneTextField.endOfDocument,offset: cursorPostion)!
+            phoneTextField.selectedTextRange = phoneTextField.textRange(from: targetPostion,to: targetPostion)
+            return
+        }
     }
 }

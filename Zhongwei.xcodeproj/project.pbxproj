@@ -89,6 +89,12 @@
 		8EFA2D4F1FE8B37D005C890E /* ZhongweiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA2D4E1FE8B37D005C890E /* ZhongweiTests.swift */; };
 		8EFA2D5A1FE8B37E005C890E /* ZhongweiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA2D591FE8B37E005C890E /* ZhongweiUITests.swift */; };
 		8EFA2D681FE8BE41005C890E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8EFA2D671FE8BE41005C890E /* Podfile */; };
+		8EFE4CCF2058CFAE00C0B6E9 /* AipOcrSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCC2058CFAD00C0B6E9 /* AipOcrSdk.framework */; };
+		8EFE4CD02058CFAE00C0B6E9 /* AipOcrSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCC2058CFAD00C0B6E9 /* AipOcrSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8EFE4CD12058CFAE00C0B6E9 /* AipBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCD2058CFAD00C0B6E9 /* AipBase.framework */; };
+		8EFE4CD22058CFAE00C0B6E9 /* AipBase.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCD2058CFAD00C0B6E9 /* AipBase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8EFE4CD32058CFAE00C0B6E9 /* IdcardQuality.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCE2058CFAE00C0B6E9 /* IdcardQuality.framework */; };
+		8EFE4CD42058CFAE00C0B6E9 /* IdcardQuality.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCE2058CFAE00C0B6E9 /* IdcardQuality.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A5B785BA2F3CA812EFC80FD2 /* Pods_Zhongwei.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A84856AEDD70A279EC1E75F /* Pods_Zhongwei.framework */; };
 /* End PBXBuildFile section */
 
@@ -108,6 +114,22 @@
 			remoteInfo = Zhongwei;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8EFE4CD52058CFAE00C0B6E9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8EFE4CD22058CFAE00C0B6E9 /* AipBase.framework in Embed Frameworks */,
+				8EFE4CD02058CFAE00C0B6E9 /* AipOcrSdk.framework in Embed Frameworks */,
+				8EFE4CD42058CFAE00C0B6E9 /* IdcardQuality.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6A84856AEDD70A279EC1E75F /* Pods_Zhongwei.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zhongwei.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +223,9 @@
 		8EFA2D591FE8B37E005C890E /* ZhongweiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZhongweiUITests.swift; sourceTree = "<group>"; };
 		8EFA2D5B1FE8B37E005C890E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8EFA2D671FE8BE41005C890E /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		8EFE4CCC2058CFAD00C0B6E9 /* AipOcrSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AipOcrSdk.framework; sourceTree = "<group>"; };
+		8EFE4CCD2058CFAD00C0B6E9 /* AipBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AipBase.framework; sourceTree = "<group>"; };
+		8EFE4CCE2058CFAE00C0B6E9 /* IdcardQuality.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IdcardQuality.framework; sourceTree = "<group>"; };
 		E6A748996A2BADEEFFAE03E7 /* Pods-Zhongwei.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zhongwei.release.xcconfig"; path = "Pods/Target Support Files/Pods-Zhongwei/Pods-Zhongwei.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -211,10 +236,13 @@
 			files = (
 				8E61FB781FF3475100680E19 /* SystemConfiguration.framework in Frameworks */,
 				8E61FB761FF3474200680E19 /* libz.tbd in Frameworks */,
+				8EFE4CD12058CFAE00C0B6E9 /* AipBase.framework in Frameworks */,
 				8E61FB741FF3472F00680E19 /* CoreTelephony.framework in Frameworks */,
 				8E61FB721FF3472100680E19 /* libsqlite3.tbd in Frameworks */,
+				8EFE4CCF2058CFAE00C0B6E9 /* AipOcrSdk.framework in Frameworks */,
 				8E61FB701FF3470300680E19 /* libc++.tbd in Frameworks */,
 				A5B785BA2F3CA812EFC80FD2 /* Pods_Zhongwei.framework in Frameworks */,
+				8EFE4CD32058CFAE00C0B6E9 /* IdcardQuality.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,6 +411,9 @@
 		8EFA2D2D1FE8B37D005C890E = {
 			isa = PBXGroup;
 			children = (
+				8EFE4CCD2058CFAD00C0B6E9 /* AipBase.framework */,
+				8EFE4CCC2058CFAD00C0B6E9 /* AipOcrSdk.framework */,
+				8EFE4CCE2058CFAE00C0B6E9 /* IdcardQuality.framework */,
 				8E093FA62057803900AC0A8A /* WeixinSDK */,
 				8EFA2D671FE8BE41005C890E /* Podfile */,
 				8EFA2D381FE8B37D005C890E /* Zhongwei */,
@@ -458,6 +489,7 @@
 				8EFA2D341FE8B37D005C890E /* Resources */,
 				95B9AFC8525D3B66783E8F00 /* [CP] Embed Pods Frameworks */,
 				45AD80B4D7305AD6EAEEE601 /* [CP] Copy Pods Resources */,
+				8EFE4CD52058CFAE00C0B6E9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -916,7 +948,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C3V8JUYRD6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Zhongwei/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -933,7 +970,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C3V8JUYRD6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Zhongwei/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;
 				PRODUCT_NAME = "$(TARGET_NAME)";

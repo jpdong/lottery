@@ -11,5 +11,6 @@
 
 #import "WXApi.h"
 #import <Bugly/Bugly.h>
+#import <AipOcrSdk/AipOcrSdk.h>
 
 #endif /* BridgeHeader_h */

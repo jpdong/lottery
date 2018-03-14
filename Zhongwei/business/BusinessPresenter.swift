@@ -24,6 +24,7 @@ class BusinessPresenter {
                 return Observable<Result>.create {
                     observer -> Disposable in
                     Alamofire.request("\(BASE_URL)mobile/app/judeIdent?sid=\(sid)").responseString{response in
+                        print("business state")
                         print("response:\(response)")
                         print("result:\(response.result)")
                         print("value: \(response.result.value)")

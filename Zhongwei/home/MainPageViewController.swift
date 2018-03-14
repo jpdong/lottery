@@ -294,6 +294,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         Log("")
+        checkRegisterBusinessState()
         updateBannerView()
         updateBoardView()
     }
