@@ -20,6 +20,7 @@ class BusinessItemCell:UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupViews()
+        setupConstrains()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -50,7 +50,8 @@ extension UIView {
     }
     
     public func bottomBorder(width:CGFloat,borderColor:UIColor){
-        let rect = CGRect(x: 0, y: self.frame.size.height, width: self.frame.width, height: width)
+        Log("------x:0,y:\(self.frame.size.height - width),width:\(self.frame.width),height:\(width)")
+        let rect = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.width, height: width)
         drawBorder(rect: rect, color: borderColor)
     }
     

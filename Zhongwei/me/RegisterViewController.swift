@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import Toaster
 
 class RegisterViewController:UIViewController,UITextFieldDelegate{
     
@@ -92,7 +93,7 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
                     self.present(alertView,animated: true,completion: nil)
                     //self.dismiss(animated: true, completion: nil)
                 } else {
-                    alert(viewController: self, title: "提示", message: result.message ?? "")
+                    Toast(text: "注册失败：\(result.message)").show()
                 }
             })
     }

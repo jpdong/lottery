@@ -45,11 +45,9 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         updateBoardView()
     }
     
-    override func viewDidLayoutSubviews() {
-        mainScrollView.contentSize = CGSize(width:self.view.frame.width,height:recentNewsView.frame.maxY + 2 * tabBarHeight!)
-    }
-    
     func setupViews() {
+        //hidesBottomBarWhenPushed = true
+        self.view.backgroundColor = UIColor.white
         buttonWidth = self.view.frame.width / 6
         tabBarHeight = Size.instance.tabBarHeight
         mainNavigationController = UINavigationController()
@@ -60,6 +58,9 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         mainNavigationItem = UINavigationItem()
         navigationBar.pushItem(mainNavigationItem, animated: false)
         mainNavigationItem.title = "首页"
+        //self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationItem.title = "首页"
+        self.navigationBar.tintColor = UIColor.black
         self.view.addSubview(navigationBar!)
         mainScrollView = UIScrollView(frame:self.view.bounds)
         //mainScrollView.backgroundColor = UIColor.gray
@@ -82,7 +83,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         customerManagerButton.contentImage.image = UIImage(named:"main_customerManager")
         
         pointMallButton = ImageClickView()
-        pointMallButton.contentTitle.text = "积分商城"
+        pointMallButton.contentTitle.text = "公益分商城"
         pointMallButton.contentImage.image = UIImage(named:"main_pointMall")
         
         firstRowView = UIView()
@@ -115,14 +116,14 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         recentNewsView = BigboardView()
         recentNewsView.contentTitle.text = "最新资讯"
         recentNewsView.contentMessage.text = "test"
-        recentNewsView.rightBorder(width: 1, borderColor: UIColor.black)
+        
         
         //recentNewsView.contentImage.backgroundColor = UIColor.green
         
         welfareActivity = SmallboardView()
         welfareActivity.contentTitle.text = "公益活动"
         welfareActivity.contentMessage.text = "test"
-        welfareActivity.bottomBorder(width: 1, borderColor: UIColor.black)
+        
         
         //welfareActivity.contentImage.backgroundColor = UIColor.green
         
@@ -284,6 +285,12 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
             })
     }
     
+    override func viewDidLayoutSubviews() {
+        mainScrollView.contentSize = CGSize(width:self.view.frame.width,height:recentNewsView.frame.maxY + 2 * tabBarHeight!)
+        welfareActivity.bottomBorder(width: 1, borderColor: UIColor.black)
+        recentNewsView.rightBorder(width: 1, borderColor: UIColor.black)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         Log("viewDidAppear")
     }
@@ -359,7 +366,9 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
 //        let sb = UIStoryboard(name:"Business",bundle:nil)
 //        let vc = sb.instantiateViewController(withIdentifier: "BusinessViewController") as! BusinessViewController
         let vc = CustomerManagerList()
-        self.present(vc, animated: true, completion: nil)
+        vc.hidesBottomBarWhenPushed = true
+        //self.present(vc, animated: true, completion: nil)
+        self.navigationController?.pushViewController(vc, animated: true)
         print("onCustomerManagerButton finish")
     }
     
@@ -376,6 +385,9 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     @objc func onSaleManagerButton() {
         print("onSaleManagerButton")
+        let vc = CertificateListController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func onCustomerButton() {
@@ -398,6 +410,10 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                     self.isShopRegistered = false
                 }
             })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        segue.destination.hidesBottomBarWhenPushed = true
     }
     
 }

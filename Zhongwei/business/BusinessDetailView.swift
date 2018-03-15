@@ -29,6 +29,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
     
     @objc func goBack(_ sender: UIBarButtonItem) {
         webView.goBack()
+        webView.reload()
     }
     
     @objc func switchFullScreen(_ sender:UIBarButtonItem){
