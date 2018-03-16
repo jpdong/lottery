@@ -38,6 +38,8 @@
 		8E219E48205A7906002F0DAC /* CertificateListResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E219E47205A7906002F0DAC /* CertificateListResult.swift */; };
 		8E219E4A205A8B22002F0DAC /* CertificateDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E219E49205A8B22002F0DAC /* CertificateDetailController.swift */; };
 		8E219E4C205A8C79002F0DAC /* TextInfoBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E219E4B205A8C79002F0DAC /* TextInfoBoxView.swift */; };
+		8E2C378A205BAAA50095B026 /* CertificateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2C3789205BAAA50095B026 /* CertificateEntity.swift */; };
+		8E2C378C205BAADB0095B026 /* CertificateResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2C378B205BAADB0095B026 /* CertificateResult.swift */; };
 		8E2F6A0E2022C62B000704F6 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2F6A0D2022C62B000704F6 /* UserViewController.swift */; };
 		8E395C38205695250026B2A1 /* AppUpdateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E395C37205695250026B2A1 /* AppUpdateEntity.swift */; };
 		8E395C3A205695D20026B2A1 /* AppUpdateResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E395C39205695D20026B2A1 /* AppUpdateResult.swift */; };
@@ -177,6 +179,8 @@
 		8E219E47205A7906002F0DAC /* CertificateListResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateListResult.swift; sourceTree = "<group>"; };
 		8E219E49205A8B22002F0DAC /* CertificateDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateDetailController.swift; sourceTree = "<group>"; };
 		8E219E4B205A8C79002F0DAC /* TextInfoBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInfoBoxView.swift; sourceTree = "<group>"; };
+		8E2C3789205BAAA50095B026 /* CertificateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateEntity.swift; sourceTree = "<group>"; };
+		8E2C378B205BAADB0095B026 /* CertificateResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateResult.swift; sourceTree = "<group>"; };
 		8E2F6A0D2022C62B000704F6 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		8E395C37205695250026B2A1 /* AppUpdateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateEntity.swift; sourceTree = "<group>"; };
 		8E395C39205695D20026B2A1 /* AppUpdateResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateResult.swift; sourceTree = "<group>"; };
@@ -309,7 +313,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		8E219E36205A1431002F0DAC /* Sale */ = {
+		8E219E36205A1431002F0DAC /* sale */ = {
 			isa = PBXGroup;
 			children = (
 				8E219E37205A14AD002F0DAC /* CertificateListController.swift */,
@@ -319,7 +323,7 @@
 				8E219E3F205A24E4002F0DAC /* AddCertificateController.swift */,
 				8E219E49205A8B22002F0DAC /* CertificateDetailController.swift */,
 			);
-			path = Sale;
+			path = sale;
 			sourceTree = "<group>";
 		};
 		8E441B212050D5CE001D90C1 /* home */ = {
@@ -447,6 +451,8 @@
 				8E395C39205695D20026B2A1 /* AppUpdateResult.swift */,
 				8E219E45205A776A002F0DAC /* CertificateListEntity.swift */,
 				8E219E47205A7906002F0DAC /* CertificateListResult.swift */,
+				8E2C3789205BAAA50095B026 /* CertificateEntity.swift */,
+				8E2C378B205BAADB0095B026 /* CertificateResult.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -481,7 +487,7 @@
 		8EFA2D381FE8B37D005C890E /* Zhongwei */ = {
 			isa = PBXGroup;
 			children = (
-				8E219E36205A1431002F0DAC /* Sale */,
+				8E219E36205A1431002F0DAC /* sale */,
 				8E441B212050D5CE001D90C1 /* home */,
 				8E55001620187D91009E2AB0 /* view */,
 				8E55000F20182F22009E2AB0 /* business */,
@@ -735,6 +741,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E2C378A205BAAA50095B026 /* CertificateEntity.swift in Sources */,
 				8E219E3E205A1E5D002F0DAC /* CertificateItem.swift in Sources */,
 				8E219E40205A24E4002F0DAC /* AddCertificateController.swift in Sources */,
 				8E395C3A205695D20026B2A1 /* AppUpdateResult.swift in Sources */,
@@ -751,6 +758,7 @@
 				8E55001820187DA8009E2AB0 /* DiscoverItemTemp.swift in Sources */,
 				8E92BF18200EFC9B0090C646 /* ResponseEntity.swift in Sources */,
 				8E20A3E52021B48C00B15AB2 /* MessageList.swift in Sources */,
+				8E2C378C205BAADB0095B026 /* CertificateResult.swift in Sources */,
 				8E66CF2120494C3900FC9E59 /* BusinessPresenter.swift in Sources */,
 				8E441B2920513252001D90C1 /* SliderGalleryController.swift in Sources */,
 				8EF0BFD42028557300401540 /* PrizeRecordController.swift in Sources */,
@@ -1036,6 +1044,7 @@
 				INFOPLIST_FILE = Zhongwei/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -29,13 +29,32 @@ class CertificateItemCell:UITableViewCell {
         setupConstrains()
     }
     
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        //setupViews()
+        //setupConstrains()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupViews()
+        setupConstrains()
+    }
+    
     func setupViews() {
-        nameTitle = UILabel()
-        nameTitle.text = "店主姓名："
-        phoneTitle = UILabel()
-        phoneTitle.text = "手机号码："
-        idTitle = UILabel()
-        idTitle.text = "代销证号："
+//        nameTitle = UILabel()
+//        //nameTitle.text = "店主姓名："
+//        phoneTitle = UILabel()
+//        //phoneTitle.text = "手机号码："
+//        idTitle = UILabel()
+//        //idTitle.text = "代销证号："
+//        pictureView = UIImageView()
+//        nameLabel = UILabel()
+//        nameLabel.text = ""
+//        phoneLabel = UILabel()
+//        phoneLabel.text = ""
+//        idLabel = UILabel()
+//        idLabel.text = ""
         
         addSubview(nameTitle)
         addSubview(phoneTitle)

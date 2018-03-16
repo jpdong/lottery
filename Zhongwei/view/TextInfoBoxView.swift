@@ -33,7 +33,7 @@ class TextInfoBoxView:UIView {
     }
     
     func setupConstrains() {
-        titleLable.snp.makeConstraints { (maker) in
+        titleLabel.snp.makeConstraints { (maker) in
             maker.centerY.equalTo(self)
             maker.left.equalTo(self)
             maker.width.equalTo(70)
@@ -41,7 +41,7 @@ class TextInfoBoxView:UIView {
         
         messageLabel.snp.makeConstraints { (maker) in
             maker.centerY.equalTo(self)
-            maker.left.equalTo(titleLable.snp.right).offset(10)
+            maker.left.equalTo(titleLabel.snp.right).offset(10)
             maker.right.equalTo(self)
         }
     }

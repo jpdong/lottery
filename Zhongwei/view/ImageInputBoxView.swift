@@ -10,7 +10,7 @@ import Foundation
 
 class ImageInputBoxView:UIView{
     
-    var titleLable:UILabel!
+    var titleLabel:UILabel!
     var imageView:UIImageView!
     
     override init(frame: CGRect) {
@@ -26,22 +26,22 @@ class ImageInputBoxView:UIView{
     }
     
     func setupViews() {
-        titleLable = UILabel()
+        titleLabel = UILabel()
         imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        addSubview(titleLable)
+        addSubview(titleLabel)
         addSubview(imageView)
     }
     
     func setupConstrains() {
-        titleLable.snp.makeConstraints { (maker) in
+        titleLabel.snp.makeConstraints { (maker) in
             maker.top.equalTo(self).offset(16)
             maker.left.equalTo(self)
         }
         
         imageView.snp.makeConstraints { (maker) in
-            maker.top.equalTo(titleLable.snp.bottom).offset(16)
-            maker.right.equalTo(self).offset(-16)
+            maker.top.equalTo(titleLabel.snp.bottom).offset(16)
+            maker.left.equalTo(titleLabel.snp.right)
             maker.width.equalTo(231)
             maker.height.equalTo(144)
         }

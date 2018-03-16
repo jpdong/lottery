@@ -10,6 +10,10 @@ import Foundation
 import HandyJSON
 
 class CertificateItem :HandyJSON{
+    
+    static let edit = 1
+    static let add = 2
+    
     var id:String?
     var lottery_papers:String?
     var lottery_papers_image:String?

@@ -20,6 +20,13 @@ class AddCertificateController:UIViewController {
     var submitIndicator:UIActivityIndicatorView!
     var imageIndicator:UIActivityIndicatorView!
     var imageUrl:String?
+    var type:Int = 2
+    var editableItem:CertificateItem?
+    var navigationBarHeight:CGFloat?
+    var statusBarHeight:CGFloat?
+    var closeButton:UIBarButtonItem!
+    var navigationBar:UINavigationBar!
+    var editNavigationItem:UINavigationItem!
     
     override func viewDidLoad() {
         setupViews()
@@ -28,12 +35,24 @@ class AddCertificateController:UIViewController {
     }
     
     func setupViews() {
+        navigationBarHeight = Size.instance.navigationBarHeight
+        statusBarHeight = Size.instance.statusBarHeight
+        navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight!, width:self.view.frame.width, height:navigationBarHeight!))
+        editNavigationItem = UINavigationItem()
+        closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
+        closeButton.image = UIImage(named:"closeButton")
+        closeButton.tintColor = UIColor.black
+      
+        editNavigationItem.setRightBarButton(closeButton, animated: true)
+        
+        navigationBar?.pushItem(editNavigationItem, animated: true)
+        self.view.addSubview(navigationBar!)
+        
         self.view.backgroundColor = UIColor.white
         
         nameInputBox = TextInputBoxView()
         nameInputBox.titleLable.text = "店主姓名"
         nameInputBox.textField.placeholder = "请输入店主姓名"
-        //nameInputBox.backgroundColor = UIColor.green
         
         phoneInputBox = TextInputBoxView()
         phoneInputBox.titleLable.text = "手机号码"
@@ -45,7 +64,7 @@ class AddCertificateController:UIViewController {
         idInputBox.textField.placeholder = "请输入证件号"
         
         imageInputBox = ImageInputBoxView()
-        imageInputBox.titleLable.text = "代销证照片"
+        imageInputBox.titleLabel.text = "代销证照片"
         imageInputBox.imageView.image = UIImage(named:"tobacco_card")
         imageInputBox.isUserInteractionEnabled = true
         
@@ -65,6 +84,14 @@ class AddCertificateController:UIViewController {
         self.view.addSubview(submitButton)
         self.view.addSubview(submitIndicator)
         self.view.addSubview(imageIndicator)
+        
+        if (type == CertificateItem.edit) {
+            nameInputBox.textField.text = editableItem?.name
+            phoneInputBox.textField.text = editableItem?.phone
+            idInputBox.textField.text = editableItem?.lottery_papers
+            imageUrl = editableItem?.lottery_papers_image
+            imageInputBox.imageView.kf.setImage(with: URL(string:imageUrl!))
+        }
     }
     
     func setupConstrains() {
@@ -119,9 +146,9 @@ class AddCertificateController:UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        phoneInputBox.bottomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        nameInputBox.bottomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        idInputBox.bottomBorder(width: 1, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        phoneInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        nameInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        idInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
     }
     
     @objc func getCertificatePicture() {
@@ -160,19 +187,45 @@ class AddCertificateController:UIViewController {
             Toast(text: "请输入完整信息").show()
             return
         }
-        submitIndicator.startAnimating()
-        submitButton.isEnabled = false
-        CertificatePresenter.submitCertificate(name!, phone!, id!, imageUrl!)
-        .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (result) in
-                self.submitIndicator.stopAnimating()
-                self.submitButton.isEnabled = true
-                if(result.code == 0) {
-                    Toast(text: "添加成功").show()
-                } else {
-                    Toast(text: result.message).show()
-                }
-            })
+        if (type == CertificateItem.add) {
+            submitIndicator.startAnimating()
+            submitButton.isEnabled = false
+            CertificatePresenter.submitCertificate(name!, phone!, id!, imageUrl!)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { (result) in
+                    self.submitIndicator.stopAnimating()
+                    self.submitButton.isEnabled = true
+                    if(result.code == 0) {
+                        Toast(text: "添加成功").show()
+                    } else {
+                        Toast(text: result.message).show()
+                    }
+                })
+        } else if(type == CertificateItem.edit) {
+            if (name! == editableItem?.name! && phone! == editableItem?.phone! && id! == editableItem?.lottery_papers! && imageUrl! == editableItem?.lottery_papers_image!) {
+                Toast(text: "未做任何修改").show()
+                dismiss(animated: true, completion: nil)
+            } else {
+                submitIndicator.startAnimating()
+                submitButton.isEnabled = false
+                CertificatePresenter.editCertificate(name!, phone!, id!, imageUrl!, editableItem!.id!)
+                .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { (result) in
+                        self.submitIndicator.stopAnimating()
+                        self.submitButton.isEnabled = true
+                        if(result.code == 0) {
+                            Toast(text: "修改成功").show()
+                            self.dismiss(animated: true, completion: nil)
+                        } else {
+                            Toast(text: result.message).show()
+                        }
+                    })
+            }
+        }
+    }
+    
+    @objc func close(_ sender:UIBarButtonItem){
+        self.dismiss(animated: true, completion: nil)
     }
     
     func checkNotNil(input:String?...) -> Bool{
