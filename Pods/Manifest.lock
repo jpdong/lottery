@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.6.0)
   - Bugly (2.5.0)
+  - ESPullToRefresh (2.7)
   - HandyJSON (4.0.0-beta.1)
   - Kingfisher (4.5.0)
   - ReachabilitySwift (4.1.0)
@@ -10,11 +11,13 @@ PODS:
   - SnapKit (4.0.0)
   - SwiftyJSON (4.0.0)
   - Toaster (2.1.1)
+  - TZImagePickerController (2.0.0.9)
   - WechatOpenSDK (1.8.1)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - Bugly
+  - ESPullToRefresh
   - HandyJSON (~> 4.0.0-beta.1)
   - Kingfisher (~> 4.0)
   - ReachabilitySwift
@@ -23,11 +26,13 @@ DEPENDENCIES:
   - SnapKit (~> 4.0.0)
   - SwiftyJSON
   - Toaster
+  - TZImagePickerController
   - WechatOpenSDK
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
+  ESPullToRefresh: 119e2710b82b75536aab2bbe4883ba119fca35c8
   HandyJSON: 428bb18e2c34c2a77361accebf90cf64e4f74118
   Kingfisher: 26ae0473102b77b575da51960c932431e3745407
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
@@ -36,8 +41,9 @@ SPEC CHECKSUMS:
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
   Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
+  TZImagePickerController: 9bf89512bb6de53e87897f2e17e607c126a199d6
   WechatOpenSDK: 491d965d79335070328571d3e79f714549e79a5e
 
-PODFILE CHECKSUM: a1cd18cbf95f651d7eaa992e6f8d88532ef5fe02
+PODFILE CHECKSUM: 4c0b598ceb208ddb31c0ac7a17ce40359774ac10
 
 COCOAPODS: 1.4.0

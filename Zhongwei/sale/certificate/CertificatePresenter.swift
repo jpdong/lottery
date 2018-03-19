@@ -154,4 +154,38 @@ class CertificatePresenter {
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
+    
+    static func deleteCertificate(id:String) ->Observable<Result> {
+        return Presenter.getSid()
+            .flatMap{
+                sid in
+                return Observable<Result>.create {
+                    observer -> Disposable in
+                    let parameters:Dictionary = ["sid":sid,"id":id]
+                    print("parameters:\(parameters)")
+                    Alamofire.request("\(BASE_URL)app/Lottery_manager/delLottery",method:.post,parameters:parameters).responseString{response in
+                        print("delete id ")
+                        print("value: \(response.result.value)")
+                        if (response.result.value == nil) {
+                            return
+                        }
+                        guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                            Toast(text: "服务器错误").show()
+                            return
+                        }
+                        var result:Result = Result()
+                        if (responseEntity.code == 0) {
+                            result.code = 0
+                            result.message = responseEntity.msg
+                        }else {
+                            result.code = 1
+                            result.message = responseEntity.msg
+                        }
+                        observer.onNext(result)
+                    }
+                    return Disposables.create()
+                }
+            }
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
 }

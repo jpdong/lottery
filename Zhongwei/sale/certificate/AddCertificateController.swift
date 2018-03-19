@@ -197,6 +197,7 @@ class AddCertificateController:UIViewController {
                     self.submitButton.isEnabled = true
                     if(result.code == 0) {
                         Toast(text: "添加成功").show()
+                        self.navigationController?.popViewController(animated: true)
                     } else {
                         Toast(text: result.message).show()
                     }

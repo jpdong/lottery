@@ -137,7 +137,17 @@ class CertificateDetailController:UIViewController {
             self.present(vc, animated: true, completion: nil)
         }
         let deleteAction = UIAlertAction(title: "删除", style: .default) { (action) in
-            
+            CertificatePresenter.deleteCertificate(id:self.certificateItem!.id!)
+            .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { (result) in
+                    if (result.code == 0) {
+                        Toast(text: "删除成功").show()
+                        self.preViewController?.deleleItem(row:self.rowInParent!)
+                        self.navigationController?.popViewController(animated: true)
+                    } else {
+                        Toast(text:"删除失败：\(result.message)")
+                    }
+                })
         }
         let cacelAction = UIAlertAction(title: "取消", style:.cancel) { (action) in
             

@@ -8,6 +8,8 @@
 
 import Foundation
 import RxSwift
+import Toaster
+import ESPullToRefresh
 
 class CertificateListController:UIViewController ,UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
     
@@ -40,21 +42,32 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
         tableView.rowHeight = 120
         tableView.register(CertificateItemCell.self, forCellReuseIdentifier: "CertificateItemCell")
         setupLoadMoreView()
-        tableView.tableFooterView = loadMoreView
-        refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string:"下拉刷新数据")
-        tableView.addSubview(refreshControl)
+        //tableView.tableFooterView = loadMoreView
+        //refreshControl = UIRefreshControl()
+        //refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        //refreshControl.attributedTitle = NSAttributedString(string:"下拉刷新数据")
+        //tableView.addSubview(refreshControl)
         self.view.addSubview(searchBar)
         self.view.addSubview(tableView)
+        
+        tableView.es.addPullToRefresh {
+            self.refreshData()
+        }
+        tableView.es.addInfiniteScrolling {
+            self.loadMore()
+        }
     }
     
     func setupLoadMoreView() {
         loadMoreView = UIView(frame:CGRect(x:0, y:tableView.contentSize.height, width:tableView.bounds.size.width, height:60))
         loadMoreView.autoresizingMask = UIViewAutoresizing.flexibleWidth
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle:.white)
+        loadMoreView.backgroundColor = UIColor.green
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle:.gray)
         indicator.startAnimating()
         loadMoreView.addSubview(indicator)
+        indicator.snp.makeConstraints { (maker) in
+            maker.center.equalTo(loadMoreView)
+        }
         
     }
     
@@ -72,10 +85,12 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
     }
     
     @objc func refreshData() {
-        CertificatePresenter.getCertificateList(pageIndex: 1, num: 5)
+        currentPage = 1
+        CertificatePresenter.getCertificateList(pageIndex: currentPage, num: 10)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
-                self.refreshControl.endRefreshing()
+                self.tableView.es.stopPullToRefresh()
+                //self.refreshControl.endRefreshing()
                 if (result.code == 0) {
                     self.certificateItems.removeAll()
                     self.certificateItems = self.certificateItems + result.list!
@@ -103,6 +118,7 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         Log(searchText)
     }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return certificateItems.count
@@ -142,10 +158,7 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
         cell!.pictureView.contentMode = .scaleAspectFit
         cell!.pictureView.kf.setImage(with: URL(string:item.lottery_papers_image!))
         cell!.selectionStyle = UITableViewCellSelectionStyle.none
-        print("--------")
-        if (loadMoreEnable && indexPath.row == certificateItems.count) {
-            loadMore()
-        }
+        print("------ row:\(indexPath.row), count:\(certificateItems.count)")
         return cell!
     }
     
@@ -161,16 +174,28 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
         print("load more")
         currentPage = currentPage + 1
         loadMoreEnable = false
-        CertificatePresenter.getCertificateList(pageIndex: currentPage, num: 5)
+        CertificatePresenter.getCertificateList(pageIndex: currentPage, num: 10)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
+                    guard let list = result.list as? [CertificateItem] else {
+                        Toast(text: "无更多数据").show()
+                        self.loadMoreEnable = true
+                        self.tableView.es.stopLoadingMore()
+                        self.currentPage = self.currentPage - 1
+                        return
+                    }
                     if (result.list!.count > 0) {
-                    self.certificateItems = self.certificateItems + result.list!
-                    self.tableView.reloadData()
-                    self.loadMoreEnable = true
+                        self.certificateItems = self.certificateItems + result.list!
+                        self.tableView.reloadData()
+                        self.loadMoreEnable = true
+                        self.tableView.es.stopLoadingMore()
                     } else {
-                        self.tableView.scrollToRow(at: IndexPath(), at:UITableViewScrollPosition.middle, animated: true)
+                        Toast(text: "无更多数据").show()
+                        self.tableView.es.stopLoadingMore()
+                        self.loadMoreEnable = true
+                        self.currentPage = self.currentPage - 1
+                        //self.tableView.scrollToRow(at: IndexPath(), at:UITableViewScrollPosition.middle, animated: true)
                     }
                 }
             })
@@ -185,5 +210,10 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
         let vc = AddCertificateController()
         vc.type = CertificateItem.add
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func deleleItem(row:Int) {
+        certificateItems.remove(at: row)
+        tableView.reloadData()
     }
 }
