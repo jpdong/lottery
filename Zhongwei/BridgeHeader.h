@@ -12,5 +12,6 @@
 #import "WXApi.h"
 #import <Bugly/Bugly.h>
 #import <AipOcrSdk/AipOcrSdk.h>
+#import "TZImagePickerController.h"
 
 #endif /* BridgeHeader_h */

@@ -392,6 +392,8 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     @objc func onCustomerButton() {
         print("onCustomerButton")
+        let vc = ReceiptListController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func onScanPrizeButton() {

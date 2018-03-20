@@ -11,7 +11,7 @@ import RxSwift
 import Toaster
 import ESPullToRefresh
 
-class ReceiptListController:UIViewController ,UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
+class ReceiptListController:UIViewController ,UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, TZImagePickerControllerDelegate {
     
     var searchBar:UISearchBar!
     var tableView:UITableView!
@@ -181,10 +181,18 @@ class ReceiptListController:UIViewController ,UISearchBarDelegate, UITableViewDa
     }
     
     @objc func addReceipt() {
-//        let vc = AddReceiptController()
-//        vc.type = ReceiptItem.add
-//        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc:TZImagePickerController = TZImagePickerController.init(maxImagesCount: 6, delegate: self)
+//        self.present(vc, animated: true, completion: nil)
+        
+        let vc = AddReceiptController()
+        vc.type = ReceiptItem.add
+        self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    
+    
+    
+    
     
     func deleleItem(row:Int) {
         receiptItems.remove(at: row)

@@ -25,7 +25,7 @@ class ReceiptPresenter {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num)]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/lotteryList",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(BASE_URL)app/Lottery_manager/receiptList",method:.post,parameters:parameters).responseString{response in
                         print("Receipt list")
                         print("value: \(response.result.value)")
                         if (response.result.value == nil) {

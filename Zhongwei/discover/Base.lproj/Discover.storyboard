@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4yc-Wj-shK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JwE-iM-rj4">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -107,7 +107,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51t-4K-y86" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1888" y="843"/>
+            <point key="canvasLocation" x="-1490.625" y="842.95774647887322"/>
         </scene>
         <!--Guide View Controller-->
         <scene sceneID="ghN-XD-pSw">
@@ -128,7 +128,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gI4-XW-tbN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-806.25" y="544.0140845070423"/>
+            <point key="canvasLocation" x="-408.75" y="544.0140845070423"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="4hw-1a-LJM">
@@ -143,7 +143,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KFR-5Q-Y9m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-806" y="1223"/>
+            <point key="canvasLocation" x="-408.75" y="1222.1830985915492"/>
         </scene>
         <!--开票兑奖-->
         <scene sceneID="uWb-UU-kNm">
@@ -229,7 +229,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kKJ-ie-v4J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="433" y="472"/>
+            <point key="canvasLocation" x="828.75" y="471.12676056338029"/>
         </scene>
         <!--Prize Record Controller-->
         <scene sceneID="7vA-eV-Vsx">
@@ -244,7 +244,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b2u-Xk-jhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1971" y="473"/>
+            <point key="canvasLocation" x="2368.125" y="472.18309859154931"/>
         </scene>
         <!--二维码/条码-->
         <scene sceneID="zSh-fU-rhq">
@@ -261,7 +261,7 @@
             </objects>
             <point key="canvasLocation" x="1260" y="145"/>
         </scene>
-        <!--View Controller-->
+        <!--客服-->
         <scene sceneID="gNm-Op-G5E">
             <objects>
                 <viewController id="4yc-Wj-shK" sceneMemberID="viewController">
@@ -269,15 +269,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="111111111111" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfy-Sj-eya">
-                                <rect key="frame" x="139" y="274" width="91" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="021-54566661" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfy-Sj-eya">
+                                <rect key="frame" x="150" y="87" width="116" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="联系电话：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mdw-EL-eMb">
-                                <rect key="frame" x="44" y="274" width="87" height="21"/>
+                                <rect key="frame" x="55" y="87" width="87" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -287,10 +287,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="yHF-uK-zj7"/>
                     </view>
+                    <navigationItem key="navigationItem" title="客服" id="h6y-Op-2UW"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IAU-Fj-bnu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3874" y="851"/>
+            <point key="canvasLocation" x="-3478.125" y="850.35211267605632"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hTw-dz-7YD">
@@ -308,7 +309,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dff-rS-kce" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2833" y="843"/>
+            <point key="canvasLocation" x="-2435.625" y="842.95774647887322"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Xrf-fi-ufg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JwE-iM-rj4" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Yru-QD-h8W">
+                        <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="4yc-Wj-shK" kind="relationship" relationship="rootViewController" id="PTV-cn-BuZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="blw-tp-IIc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4146" y="850"/>
         </scene>
     </scenes>
     <resources>
