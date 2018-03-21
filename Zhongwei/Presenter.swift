@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import Alamofire
+import Toaster
 
 enum ApiError:Error {
     case NoSidError
@@ -26,20 +27,21 @@ class Presenter{
             let parameters:Dictionary = ["unionid":unionid,"headimgurl":headimgurl, "nickname":nickname]
             Alamofire.request("\(BASE_URL)mobile/app/getSid",method:.post,parameters:parameters).responseString{response in
                 print("value \(response.result.value)")
-                if (response.result.value == nil) {
-                    observer.onError(ApiError.NoResponseError)
-                    return
-                }
-                if let sidEntity = SidEntity.deserialize(from:response.result.value!){
-                    if (sidEntity != nil && sidEntity.data?.sid != nil) {
-                        print("sid \(sidEntity.data!.sid!)")
-                        observer.onNext(sidEntity.data!.sid!)
-                    }else {
-                        observer.onError(ApiError.NoSidError)
+                var result = ""
+                switch response.result {
+                case .success:
+                    if let sidEntity = SidEntity.deserialize(from:response.result.value!) as? SidEntity {
+                        if (sidEntity.data?.sid != nil) {
+                            result = sidEntity.data!.sid!
+                        }
+                    } else {
+                        result = ""
+                        return
                     }
-                    
+                case .failure(let error):
+                    result = ""
                 }
-                
+                observer.onNext(result)
             }
             return Disposables.create ()
         }
@@ -69,15 +71,24 @@ class Presenter{
                     return
                 }
                 var result:Result = Result()
-                var responseEntity = ResponseEntity.deserialize(from: response.result.value as! String)
-                if (responseEntity != nil) {
-                    if (responseEntity?.code == 0) {
+                switch response.result {
+                case .success:
+                    guard let responseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
+                        observer.onNext(result)
+                        return
+                    }
+                    if (responseEntity.code == 0) {
                         result.code = 0
-                        result.message = responseEntity?.msg
+                        result.message = responseEntity.msg
                     } else {
                         result.code = 1
-                        result.message = responseEntity?.msg
+                        result.message = responseEntity.msg
                     }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
                 observer.onNext(result)
             }
@@ -98,29 +109,39 @@ class Presenter{
                 print("update")
                 print("response:\(response)")
                 print("value \(response.result.value)")
-                if (response.result.value == nil) {
-                    return
-                }
-                var appUpdateResult:AppUpdateResult = AppUpdateResult()
-                var appUpdateEntity = AppUpdateEntity.deserialize(from: response.result.value as! String) as! AppUpdateEntity
-                if (appUpdateEntity != nil) {
+                var result:AppUpdateResult = AppUpdateResult()
+                switch response.result {
+                case .success:
+                    guard let appUpdateEntity = AppUpdateEntity.deserialize(from: response.result.value as! String) as? AppUpdateEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
+                        observer.onNext(result)
+                        return
+                    }
+                    
                     if (appUpdateEntity.code == 0) {
-                        appUpdateResult.code = 0
-                        appUpdateResult.message = appUpdateEntity.msg
-                        appUpdateResult.version = appUpdateEntity.data?.version
-                        appUpdateResult.forceUpdate = appUpdateEntity.data?.compel
-                        if (version == appUpdateResult.version) {
-                            appUpdateResult.update = false
+                        result.code = 0
+                        result.message = appUpdateEntity.msg
+                        result.version = appUpdateEntity.data?.version
+                        result.forceUpdate = appUpdateEntity.data?.compel
+                        if (version == result.version) {
+                            result.update = false
                         } else {
-                            appUpdateResult.update = true
+                            result.update = true
                         }
                         
                     } else {
-                        appUpdateResult.code = 1
-                        appUpdateResult.message = appUpdateEntity.msg
+                        result.code = 1
+                        result.message = appUpdateEntity.msg
                     }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
-                observer.onNext(appUpdateResult)
+            
+                
+                
+                observer.onNext(result)
             }
             return Disposables.create()
         })

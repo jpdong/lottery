@@ -136,7 +136,4 @@ class ScanViewController:UIViewController,AVCaptureMetadataOutputObjectsDelegate
     }
 }
 
-class AlertData{
-    var title:String?
-    var message:String?
-}
+

@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import HandyJSON
 import Alamofire
+import Toaster
 
 class UserPresenter {
     static let app = UIApplication.shared.delegate as! AppDelegate
@@ -27,19 +28,30 @@ class UserPresenter {
                         print("response:\(response)")
                         print("result:\(response.result)")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
-                        let messageEntity:MessageEntity = MessageEntity.deserialize(from: response.result.value as! String) as! MessageEntity
+                        
                         var result:MessageResult = MessageResult()
-                        if (messageEntity.code == 0) {
-                            result.code = 0
-                            result.message = messageEntity.msg
-                            result.messageList = messageEntity.data
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let messageEntity:MessageEntity = MessageEntity.deserialize(from: response.result.value as! String) as? MessageEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (messageEntity.code == 0) {
+                                result.code = 0
+                                result.message = messageEntity.msg
+                                result.messageList = messageEntity.data
+                            }else {
+                                result.code = 1
+                                result.message = messageEntity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = messageEntity.msg
+                            result.message = "网络错误"
                         }
+                        
                         observer.onNext(result)
                     }
                     return Disposables.create()
@@ -59,15 +71,28 @@ class UserPresenter {
                 if (response.result.value == nil) {
                     return
                 }
-                let codeEntity:CodeEntity = CodeEntity.deserialize(from: response.result.value as! String) as! CodeEntity
                 var result:Result = Result()
-                if (codeEntity.success!) {
+                switch response.result {
+                case .success:
+                    guard let codeEntity:CodeEntity = CodeEntity.deserialize(from: response.result.value as! String) as? CodeEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
+                        observer.onNext(result)
+                        return
+                    }
+                    
+                    if (codeEntity.success!) {
+                        result.code = 1
+                        result.message = "验证码发送成功"
+                    }else {
+                        result.code = 0
+                        result.message = codeEntity.error
+                    }
+                case .failure(let error):
                     result.code = 1
-                    result.message = "验证码发送成功"
-                }else {
-                    result.code = 0
-                    result.message = codeEntity.error
+                    result.message = "网络错误"
                 }
+                
                 observer.onNext(result)
             }
             return Disposables.create()
@@ -83,22 +108,33 @@ class UserPresenter {
                 response in
                 print("response:\(response)")
                 print("value \(response.result.value)")
-                if (response.result.value == nil) {
-                    return
-                }
-                var sidEntity = SidEntity.deserialize(from:response.result.value as! String)
+                
                 var result:Result = Result()
-                if (sidEntity != nil) {
-                    if (sidEntity?.code == 0) {
+                switch response.result {
+                case .success:
+                    guard let sidEntity = SidEntity.deserialize(from:response.result.value as! String) as? SidEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
+                        observer.onNext(result)
+                        return
+                    }
+                    
+                    
+                    if (sidEntity.code == 0) {
                         result.code = 0
-                        result.message = sidEntity?.msg
+                        result.message = sidEntity.msg
                         //                        app.globalData?.sid = sidEntity!.data!.sid!
                         //                        storeSid(sidEntity!.data!.sid!)
                     } else {
                         result.code = 1
-                        result.message = sidEntity?.msg
+                        result.message = sidEntity.msg
                     }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                
+                
                 observer.onNext(result)
             }
             return Disposables.create()
@@ -117,19 +153,32 @@ class UserPresenter {
                 if (response.result.value == nil) {
                     return
                 }
-                var sidEntity = SidEntity.deserialize(from:response.result.value as! String)
                 var result:Result = Result()
-                if (sidEntity != nil) {
-                    if (sidEntity?.code == 0) {
+                switch response.result {
+                case .success:
+                    guard let sidEntity = SidEntity.deserialize(from:response.result.value as! String) as? SidEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
+                        observer.onNext(result)
+                        return
+                    }
+                    
+                    
+                    if (sidEntity.code == 0) {
                         result.code = 0
-                        result.message = sidEntity?.msg
-                        app.globalData?.sid = sidEntity!.data!.sid!
-                        storeSid(sidEntity!.data!.sid!)
+                        result.message = sidEntity.msg
+                        app.globalData?.sid = sidEntity.data!.sid!
+                        storeSid(sidEntity.data!.sid!)
                     } else {
                         result.code = 1
-                        result.message = sidEntity?.msg
+                        result.message = sidEntity.msg
                     }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                
+                
                 observer.onNext(result)
             }
             return Disposables.create()
@@ -149,19 +198,31 @@ class UserPresenter {
                 if (response.result.value == nil) {
                     return
                 }
-                var sidEntity = SidEntity.deserialize(from:response.result.value as! String)
                 var result:Result = Result()
-                if (sidEntity != nil) {
-                    if (sidEntity?.code == 0) {
+                switch response.result {
+                case .success:
+                    guard let sidEntity = SidEntity.deserialize(from:response.result.value as! String) as? SidEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
+                        observer.onNext(result)
+                        return
+                    }
+                    
+                    if (sidEntity.code == 0) {
                         result.code = 0
-                        result.message = sidEntity?.msg
-                        app.globalData?.sid = sidEntity!.data!.sid!
-                        storeSid(sidEntity!.data!.sid!)
+                        result.message = sidEntity.msg
+                        app.globalData?.sid = sidEntity.data!.sid!
+                        storeSid(sidEntity.data!.sid!)
                     } else {
                         result.code = 1
-                        result.message = sidEntity?.msg
+                        result.message = sidEntity.msg
                     }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                
+                
                 observer.onNext(result)
             }
             return Disposables.create()

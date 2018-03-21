@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import Alamofire
 import HandyJSON
+import Toaster
 
 class DiscoverPresenter{
     
@@ -31,7 +32,7 @@ class DiscoverPresenter{
     }
     
     
-    static func getPrizeData(code:String)  -> Observable<AlertData>{
+    static func getPrizeData(code:String)  -> Observable<AlertDataResult>{
         var unionid = app.globalData!.unionid
         var headImgUrl = app.globalData!.headImgUrl
         var nickName = app.globalData!.nickName
@@ -39,7 +40,7 @@ class DiscoverPresenter{
         return Presenter.getSid()
             .flatMap{
                 sid in
-                return Observable<AlertData>.create {
+                return Observable<AlertDataResult>.create {
                     observer -> Disposable in
                     var result = "a"
                     Alamofire.request("\(BASE_URL)mobile/Redeem/doRedeem?sid=\(sid)&code=\(code)").responseString{
@@ -48,41 +49,55 @@ class DiscoverPresenter{
                         if (response.result.value == nil) {
                             return
                         }
-                        print("response.result.value : \(response.result.value as! String)")
-                        var alertData = AlertData()
-                        var message = ""
-                        var title = ""
-                        if let prizeEntity = PrizeEntity.deserialize(from: response.result.value as! String) {
-                            print("prizeEntity:\(prizeEntity)")
-                            if (prizeEntity.code != 200) {
-                                title = prizeEntity.msg!
-                            } else {
-                                let dataString = prizeEntity.data as! String
-                                print("dataString:\(dataString)")
-                                if let prizeData = PrizeData.deserialize(from: dataString){
-                                    if (prizeData.ret == "1307" || prizeData.ret == "1305") {
-                                        title = prizeData.msg as! String
-                                        var type = prizeData.content?.gameName as! String
-                                        var time = getTimeStamp(timeString:prizeData.content?.transacId as! String)
-                                        var ticketNo = prizeData.content?.ticketNo as! String
-                                        message = "兑换票种：\(type)\n扫码时间：\(time)\n兑奖单号：\(ticketNo)"
-                                    } else if (prizeData.ret == "1301") {
-                                        title = "兑奖成功，奖金\(prizeData.content!.prize)元"
-                                        var type = prizeData.content?.gameName as! String
-                                        var time = getTimeStamp(timeString:prizeData.content?.transacId as! String)
-                                        var ticketNo = prizeData.content?.ticketNo as! String
-                                        message = "兑换票种：\(type)\n扫码时间：\(time)\n兑奖单号：\(ticketNo)"
-                                    } else {
-                                        title = prizeData.msg as! String
+                        var result = AlertDataResult()
+                        switch response.result {
+                        case .success:
+                            var message = ""
+                            var title = ""
+                            if let prizeEntity = PrizeEntity.deserialize(from: response.result.value as! String) {
+                                print("prizeEntity:\(prizeEntity)")
+                                if (prizeEntity.code != 200) {
+                                    title = prizeEntity.msg!
+                                } else {
+                                    let dataString = prizeEntity.data as! String
+                                    print("dataString:\(dataString)")
+                                    if let prizeData = PrizeData.deserialize(from: dataString){
+                                        if (prizeData.ret == "1307" || prizeData.ret == "1305") {
+                                            title = prizeData.msg as! String
+                                            var type = prizeData.content?.gameName as! String
+                                            var time = getTimeStamp(timeString:prizeData.content?.transacId as! String)
+                                            var ticketNo = prizeData.content?.ticketNo as! String
+                                            message = "兑换票种：\(type)\n扫码时间：\(time)\n兑奖单号：\(ticketNo)"
+                                        } else if (prizeData.ret == "1301") {
+                                            title = "兑奖成功，奖金\(prizeData.content!.prize)元"
+                                            var type = prizeData.content?.gameName as! String
+                                            var time = getTimeStamp(timeString:prizeData.content?.transacId as! String)
+                                            var ticketNo = prizeData.content?.ticketNo as! String
+                                            message = "兑换票种：\(type)\n扫码时间：\(time)\n兑奖单号：\(ticketNo)"
+                                        } else {
+                                            title = prizeData.msg as! String
+                                        }
                                     }
                                 }
+                                result.title = title
+                                result.alertMessage = message
+                                print("result:\(result)")
+                                //result = response.result.value!
+                                
+                            } else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
                             }
-                            alertData.title = title
-                            alertData.message = message
-                            print("result:\(result)")
-                            //result = response.result.value!
-                            observer.onNext(alertData)
+                        case .failure(let error):
+                            result.code = 1
+                            result.message = "网络错误"
                         }
+                        observer.onNext(result)
+                        print("response.result.value : \(response.result.value as! String)")
+                        
+                        
                     }
                     return Disposables.create()
                 }

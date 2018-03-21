@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import Alamofire
 import HandyJSON
+import Toaster
 
 class MainPresenter {
     
@@ -24,25 +25,31 @@ class MainPresenter {
                 print("response:\(response)")
                 print("result:\(response.result)")
                 print("value: \(response.result.value)")
-                if (response.result.value == nil) {
-                    return
+                let result:ContentResult = ContentResult()
+                switch response.result {
+                case .success:
+                    guard let mainNewsEntity:MainNewsEntity = MainNewsEntity.deserialize(from: response.result.value as! String) as? MainNewsEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
+                        observer.onNext(result)
+                        return
+                    }
+                    if (mainNewsEntity.code == 0) {
+                        result.code = 0
+                        result.articles = [ArticleData]()
+                        result.articles?.append(mainNewsEntity.data!.information!)
+                        result.articles?.append(mainNewsEntity.data!.activity!)
+                        result.articles?.append(mainNewsEntity.data!.news!)
+                    } else {
+                        result.code = 1
+                        result.message = mainNewsEntity.msg
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
-                let contentResult:ContentResult = ContentResult()
-                let mainNewsEntity:MainNewsEntity = MainNewsEntity.deserialize(from: response.result.value as! String) as! MainNewsEntity
-                if (mainNewsEntity.code == 0) {
-                    contentResult.code = 0
-                    contentResult.articles = [ArticleData]()
-                    contentResult.articles?.append(mainNewsEntity.data!.information!)
-                    contentResult.articles?.append(mainNewsEntity.data!.activity!)
-                    contentResult.articles?.append(mainNewsEntity.data!.news!)
-                    observer.onNext(contentResult )
-//                    contentResult.information = mainNewsEntity.data?.information
-//                    contentResult.activity = mainNewsEntity.data?.activity
-//                    contentResult.news = mainNewsEntity.data?.news
-                } else {
-                    contentResult.code = 1
-                    contentResult.message = mainNewsEntity.msg
-                }
+                observer.onNext(result)
+                
             }
             return Disposables.create()
             }
@@ -58,19 +65,30 @@ class MainPresenter {
                 print("response:\(response)")
                 print("result:\(response.result)")
                 print("value: \(response.result.value)")
-                if (response.result.value == nil) {
-                    return
-                }
-                var imageResult = ImageResult()
-                var imageDataEntity = ImageDataEntity.deserialize(from: response.result.value as! String) as! ImageDataEntity
-                if (imageDataEntity.code == 0) {
-                    imageResult.code = 0
-                    imageResult.imageUrls = [String]()
-                    for imageData in imageDataEntity.data! {
-                        imageResult.imageUrls?.append(imageData.image!)
+                
+                var result = ImageResult()
+                switch response.result {
+                case .success:
+                    guard let imageDataEntity = ImageDataEntity.deserialize(from: response.result.value as! String) as? ImageDataEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
+                        observer.onNext(result)
+                        return
                     }
-                    observer.onNext(imageResult)
+                    if (imageDataEntity.code == 0) {
+                        result.code = 0
+                        result.imageUrls = [String]()
+                        for imageData in imageDataEntity.data! {
+                            result.imageUrls?.append(imageData.image!)
+                        }
+                        
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                
+                observer.onNext(result)
             }
             return Disposables.create()
             }
@@ -88,16 +106,29 @@ class MainPresenter {
                 if (response.result.value == nil) {
                     return
                 }
-                var articleUrlResult:ArticleUrlResult = ArticleUrlResult()
-                var articleUrlEntity:ArticleUrlEntity = ArticleUrlEntity.deserialize(from: response.result.value as! String) as! ArticleUrlEntity
-                if (articleUrlEntity.code == 0) {
-                    articleUrlResult.code = 0
-                    articleUrlResult.data = articleUrlEntity.data
-                } else {
-                    articleUrlResult.code = 1
-                    articleUrlResult.message = articleUrlEntity.msg
+                var result:ArticleUrlResult = ArticleUrlResult()
+                switch response.result {
+                case .success:
+                    guard let articleUrlEntity:ArticleUrlEntity = ArticleUrlEntity.deserialize(from: response.result.value as! String) as? ArticleUrlEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
+                        observer.onNext(result)
+                        return
+                    }
+                    if (articleUrlEntity.code == 0) {
+                        result.code = 0
+                        result.data = articleUrlEntity.data
+                    } else {
+                        result.code = 1
+                        result.message = articleUrlEntity.msg
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
-                observer.onNext(articleUrlResult)
+                
+                
+                observer.onNext(result)
             }
             return Disposables.create()
         })

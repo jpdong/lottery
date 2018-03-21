@@ -102,6 +102,7 @@
 		8E96F01C204E75E20060B612 /* BusinessStateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E96F01B204E75E20060B612 /* BusinessStateEntity.swift */; };
 		8E96F01E204E815A0060B612 /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E96F01D204E815A0060B612 /* GuideViewController.swift */; };
 		8E96F020204E9B0A0060B612 /* DiscoverPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E96F01F204E9B0A0060B612 /* DiscoverPresenter.swift */; };
+		8EB47D5F206205DC0019B05D /* AlertDataResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB47D5E206205DC0019B05D /* AlertDataResult.swift */; };
 		8EC2B5312019C4FD00C3181D /* DiscoverItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5302019C4FD00C3181D /* DiscoverItem.swift */; };
 		8EC2B5352019D08000C3181D /* DiscoverItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5342019D08000C3181D /* DiscoverItemView.swift */; };
 		8EC2B5372019E0BB00C3181D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5362019E0BB00C3181D /* DetailViewController.swift */; };
@@ -284,6 +285,7 @@
 		8E96F01B204E75E20060B612 /* BusinessStateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessStateEntity.swift; sourceTree = "<group>"; };
 		8E96F01D204E815A0060B612 /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
 		8E96F01F204E9B0A0060B612 /* DiscoverPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPresenter.swift; sourceTree = "<group>"; };
+		8EB47D5E206205DC0019B05D /* AlertDataResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDataResult.swift; sourceTree = "<group>"; };
 		8EC2B5302019C4FD00C3181D /* DiscoverItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverItem.swift; sourceTree = "<group>"; };
 		8EC2B5342019D08000C3181D /* DiscoverItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverItemView.swift; sourceTree = "<group>"; };
 		8EC2B5362019E0BB00C3181D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 				8E219E47205A7906002F0DAC /* CertificateListResult.swift */,
 				8E2C3789205BAAA50095B026 /* CertificateEntity.swift */,
 				8E2C378B205BAADB0095B026 /* CertificateResult.swift */,
+				8EB47D5E206205DC0019B05D /* AlertDataResult.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -954,6 +957,7 @@
 				8E55FFFC20182539009E2AB0 /* NewsViewController.swift in Sources */,
 				8E1A93F22053D62B001D02D7 /* ImageResult.swift in Sources */,
 				8E5DC161201745F900D421FE /* TabBarController.swift in Sources */,
+				8EB47D5F206205DC0019B05D /* AlertDataResult.swift in Sources */,
 				8EC3C2382020705C001567E9 /* BusinessDetailView.swift in Sources */,
 				8ECF7C29205294F100738D0B /* ClosableWebView.swift in Sources */,
 				8EC2B5392019EE7B00C3181D /* ScanViewController.swift in Sources */,
@@ -1180,7 +1184,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Zhongwei/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1204,7 +1208,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Zhongwei/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;

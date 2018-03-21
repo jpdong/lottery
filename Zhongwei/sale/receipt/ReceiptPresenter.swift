@@ -28,22 +28,30 @@ class ReceiptPresenter {
                     Alamofire.request("\(BASE_URL)app/Lottery_manager/receiptList",method:.post,parameters:parameters).responseString{response in
                         print("Receipt list")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
-                        guard let receiptListEntity:ReceiptListEntity = ReceiptListEntity.deserialize(from: response.result.value as! String) as? ReceiptListEntity else {
-                            Toast(text: "服务器错误").show()
-                            return
-                        }
+                        
                         var result:ReceiptListResult = ReceiptListResult()
-                        if (receiptListEntity.code == 0) {
-                            result.code = 0
-                            result.message = receiptListEntity.msg
-                            result.list = receiptListEntity.data?.list
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let entity:ReceiptListEntity = ReceiptListEntity.deserialize(from: response.result.value as! String) as? ReceiptListEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (entity.code == 0) {
+                                result.code = 0
+                                result.message = entity.msg
+                                result.list = entity.data?.list
+                            }else {
+                                result.code = 1
+                                result.message = entity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = receiptListEntity.msg
+                            result.message = "网络错误"
                         }
+                        
                         observer.onNext(result)
                     }
                     return Disposables.create()
@@ -66,17 +74,26 @@ class ReceiptPresenter {
                         if (response.result.value == nil) {
                             return
                         }
-                        guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
-                            Toast(text: "服务器错误").show()
-                            return
-                        }
                         var result:Result = Result()
-                        if (responseEntity.code == 0) {
-                            result.code = 0
-                            result.message = responseEntity.msg
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (responseEntity.code == 0) {
+                                result.code = 0
+                                result.message = responseEntity.msg
+                            }else {
+                                result.code = 1
+                                result.message = responseEntity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = responseEntity.msg
+                            result.message = "网络错误"
                         }
                         observer.onNext(result)
                     }
@@ -100,17 +117,26 @@ class ReceiptPresenter {
                         if (response.result.value == nil) {
                             return
                         }
-                        guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
-                            Toast(text: "服务器错误").show()
-                            return
-                        }
                         var result:Result = Result()
-                        if (responseEntity.code == 0) {
-                            result.code = 0
-                            result.message = responseEntity.msg
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (responseEntity.code == 0) {
+                                result.code = 0
+                                result.message = responseEntity.msg
+                            }else {
+                                result.code = 1
+                                result.message = responseEntity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = responseEntity.msg
+                            result.message = "网络错误"
                         }
                         observer.onNext(result)
                     }
@@ -131,21 +157,28 @@ class ReceiptPresenter {
                     Alamofire.request("\(BASE_URL)app/Lottery_manager/getLotteryDetail",method:.post,parameters:parameters).responseString{response in
                         print("detai id ")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
-                        guard let receiptEntity:ReceiptEntity = ReceiptEntity.deserialize(from: response.result.value as! String) as? ReceiptEntity else {
-                            Toast(text: "服务器错误").show()
-                            return
-                        }
+                        
                         var result:ReceiptResult = ReceiptResult()
-                        if (receiptEntity.code == 0) {
-                            result.code = 0
-                            result.message = receiptEntity.msg
-                            result.data = receiptEntity.data
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let entity:ReceiptEntity = ReceiptEntity.deserialize(from: response.result.value as! String) as? ReceiptEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (entity.code == 0) {
+                                result.code = 0
+                                result.message = entity.msg
+                                result.data = entity.data
+                            }else {
+                                result.code = 1
+                                result.message = entity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = receiptEntity.msg
+                            result.message = "网络错误"
                         }
                         observer.onNext(result)
                     }
@@ -166,20 +199,27 @@ class ReceiptPresenter {
                     Alamofire.request("\(BASE_URL)app/Lottery_manager/delLottery",method:.post,parameters:parameters).responseString{response in
                         print("delete id ")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
-                        guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
-                            Toast(text: "服务器错误").show()
-                            return
-                        }
+                        
                         var result:Result = Result()
-                        if (responseEntity.code == 0) {
-                            result.code = 0
-                            result.message = responseEntity.msg
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (responseEntity.code == 0) {
+                                result.code = 0
+                                result.message = responseEntity.msg
+                            }else {
+                                result.code = 1
+                                result.message = responseEntity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = responseEntity.msg
+                            result.message = "网络错误"
                         }
                         observer.onNext(result)
                     }

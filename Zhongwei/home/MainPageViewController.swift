@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import Toaster
 
 class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
@@ -38,7 +39,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkRegisterBusinessState()
+        //checkRegisterBusinessState()
         setupViews()
         setupConstrains()
         setupClickEvents()
@@ -115,21 +116,21 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         
         recentNewsView = BigboardView()
         recentNewsView.contentTitle.text = "最新资讯"
-        recentNewsView.contentMessage.text = "test"
+        recentNewsView.contentMessage.text = "离线状态，请检查网络"
         
         
         //recentNewsView.contentImage.backgroundColor = UIColor.green
         
         welfareActivity = SmallboardView()
         welfareActivity.contentTitle.text = "公益活动"
-        welfareActivity.contentMessage.text = "test"
+        welfareActivity.contentMessage.text = "离线状态，请检查网络"
         
         
         //welfareActivity.contentImage.backgroundColor = UIColor.green
         
         hotNewsView = SmallboardView()
         hotNewsView.contentTitle.text = "热点新闻"
-        hotNewsView.contentMessage.text = "test"
+        hotNewsView.contentMessage.text = "离线状态，请检查网络"
         
         //hotNewsView.contentImage.backgroundColor = UIColor.green
         
@@ -287,8 +288,8 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     override func viewDidLayoutSubviews() {
         mainScrollView.contentSize = CGSize(width:self.view.frame.width,height:recentNewsView.frame.maxY + 2 * tabBarHeight!)
-        welfareActivity.bottomBorder(width: 1, borderColor: UIColor.black)
-        recentNewsView.rightBorder(width: 1, borderColor: UIColor.black)
+        //welfareActivity.bottomBorder(width: 1, borderColor: UIColor.black)
+        //recentNewsView.rightBorder(width: 1, borderColor: UIColor.black)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -301,7 +302,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         Log("")
-        checkRegisterBusinessState()
+        //checkRegisterBusinessState()
         updateBannerView()
         updateBoardView()
     }
@@ -349,16 +350,34 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     @objc func onOwnerClick() {
         print("onOwnerClick")
-        if (!isShopRegistered){
-            let sb = UIStoryboard(name:"Business",bundle:nil)
-            let vc = sb.instantiateViewController(withIdentifier: "IDCardViewController") as! IDCardViewController
-            self.present(vc, animated: true, completion: nil)
-        } else {
-            let sb = UIStoryboard(name:"Business",bundle:nil)
-            let vc = sb.instantiateViewController(withIdentifier: "BusinessDetailView") as! BusinessDetailView
-            vc.type = BusinessItem.shop
-            self.present(vc, animated: true, completion: nil)
-        }
+        BusinessPresenter.checkBusinessRegisterState()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (result) in
+                if (result.code == 0) {
+                    self.isShopRegistered = true
+                    let sb = UIStoryboard(name:"Business",bundle:nil)
+                    let vc = sb.instantiateViewController(withIdentifier: "BusinessDetailView") as! BusinessDetailView
+                    vc.type = BusinessItem.shop
+                    self.present(vc, animated: true, completion: nil)
+                } else if (result.code == 2){
+                    self.isShopRegistered = false
+                    let sb = UIStoryboard(name:"Business",bundle:nil)
+                    let vc = sb.instantiateViewController(withIdentifier: "IDCardViewController") as! IDCardViewController
+                    self.present(vc, animated: true, completion: nil)
+                } else {
+                    Toast(text: result.message).show()
+                }
+            })
+//        if (!isShopRegistered){
+//            let sb = UIStoryboard(name:"Business",bundle:nil)
+//            let vc = sb.instantiateViewController(withIdentifier: "IDCardViewController") as! IDCardViewController
+//            self.present(vc, animated: true, completion: nil)
+//        } else {
+//            let sb = UIStoryboard(name:"Business",bundle:nil)
+//            let vc = sb.instantiateViewController(withIdentifier: "BusinessDetailView") as! BusinessDetailView
+//            vc.type = BusinessItem.shop
+//            self.present(vc, animated: true, completion: nil)
+//        }
     }
     
     @objc func onCustomerManagerButton() {
@@ -417,5 +436,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         segue.destination.hidesBottomBarWhenPushed = true
     }
+    
+    
     
 }

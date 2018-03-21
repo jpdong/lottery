@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit
+import Reachability
 
 class Size {
     static let instance = Size()
@@ -176,4 +176,13 @@ func alert(viewController:UIViewController,title:String, message:String) {
     let cancel = UIAlertAction(title:"确定", style:.cancel)
     alertView.addAction(cancel)
     viewController.present(alertView,animated: true,completion: nil)
+}
+
+func hasNetwork() -> Bool{
+    let reachability = Reachability()
+    if (reachability?.connection != .none) {
+        return true
+    } else {
+        return false
+    }
 }

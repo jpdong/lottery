@@ -28,22 +28,30 @@ class CertificatePresenter {
                     Alamofire.request("\(BASE_URL)app/Lottery_manager/lotteryList",method:.post,parameters:parameters).responseString{response in
                         print("certificate list")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
-                        guard let certificateListEntity:CertificateListEntity = CertificateListEntity.deserialize(from: response.result.value as! String) as? CertificateListEntity else {
-                            Toast(text: "服务器错误").show()
-                            return
-                        }
+                        
                         var result:CertificateListResult = CertificateListResult()
-                        if (certificateListEntity.code == 0) {
-                            result.code = 0
-                            result.message = certificateListEntity.msg
-                            result.list = certificateListEntity.data?.list
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let certificateListEntity:CertificateListEntity = CertificateListEntity.deserialize(from: response.result.value as! String) as? CertificateListEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (certificateListEntity.code == 0) {
+                                result.code = 0
+                                result.message = certificateListEntity.msg
+                                result.list = certificateListEntity.data?.list
+                            }else {
+                                result.code = 1
+                                result.message = certificateListEntity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = certificateListEntity.msg
+                            result.message = "网络错误"
                         }
+                        
                         observer.onNext(result)
                     }
                     return Disposables.create()
@@ -66,18 +74,28 @@ class CertificatePresenter {
                         if (response.result.value == nil) {
                             return
                         }
-                        guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
-                            Toast(text: "服务器错误").show()
-                            return
-                        }
                         var result:Result = Result()
-                        if (responseEntity.code == 0) {
-                            result.code = 0
-                            result.message = responseEntity.msg
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (responseEntity.code == 0) {
+                                result.code = 0
+                                result.message = responseEntity.msg
+                            }else {
+                                result.code = 1
+                                result.message = responseEntity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = responseEntity.msg
+                            result.message = "网络错误"
                         }
+                        
                         observer.onNext(result)
                     }
                     return Disposables.create()
@@ -100,18 +118,28 @@ class CertificatePresenter {
                         if (response.result.value == nil) {
                             return
                         }
-                        guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
-                            Toast(text: "服务器错误").show()
-                            return
-                        }
                         var result:Result = Result()
-                        if (responseEntity.code == 0) {
-                            result.code = 0
-                            result.message = responseEntity.msg
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (responseEntity.code == 0) {
+                                result.code = 0
+                                result.message = responseEntity.msg
+                            }else {
+                                result.code = 1
+                                result.message = responseEntity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = responseEntity.msg
+                            result.message = "网络错误"
                         }
+                        
                         observer.onNext(result)
                     }
                     return Disposables.create()
@@ -131,22 +159,30 @@ class CertificatePresenter {
                     Alamofire.request("\(BASE_URL)app/Lottery_manager/getLotteryDetail",method:.post,parameters:parameters).responseString{response in
                         print("detai id ")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
-                        guard let certificateEntity:CertificateEntity = CertificateEntity.deserialize(from: response.result.value as! String) as? CertificateEntity else {
-                            Toast(text: "服务器错误").show()
-                            return
-                        }
+                        
                         var result:CertificateResult = CertificateResult()
-                        if (certificateEntity.code == 0) {
-                            result.code = 0
-                            result.message = certificateEntity.msg
-                            result.data = certificateEntity.data
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let certificateEntity:CertificateEntity = CertificateEntity.deserialize(from: response.result.value as! String) as? CertificateEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (certificateEntity.code == 0) {
+                                result.code = 0
+                                result.message = certificateEntity.msg
+                                result.data = certificateEntity.data
+                            }else {
+                                result.code = 1
+                                result.message = certificateEntity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = certificateEntity.msg
+                            result.message = "网络错误"
                         }
+                        
                         observer.onNext(result)
                     }
                     return Disposables.create()
@@ -166,21 +202,29 @@ class CertificatePresenter {
                     Alamofire.request("\(BASE_URL)app/Lottery_manager/delLottery",method:.post,parameters:parameters).responseString{response in
                         print("delete id ")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
-                        guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
-                            Toast(text: "服务器错误").show()
-                            return
-                        }
+                        
                         var result:Result = Result()
-                        if (responseEntity.code == 0) {
-                            result.code = 0
-                            result.message = responseEntity.msg
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (responseEntity.code == 0) {
+                                result.code = 0
+                                result.message = responseEntity.msg
+                            }else {
+                                result.code = 1
+                                result.message = responseEntity.msg
+                            }
+                        case .failure(let error):
                             result.code = 1
-                            result.message = responseEntity.msg
+                            result.message = "网络错误"
                         }
+                        
                         observer.onNext(result)
                     }
                     return Disposables.create()

@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import Alamofire
 import HandyJSON
+import Toaster
 
 class BusinessPresenter {
     
@@ -28,19 +29,35 @@ class BusinessPresenter {
                         print("response:\(response)")
                         print("result:\(response.result)")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
-                        let businessStateEntity:BusinessStateEntity = BusinessStateEntity.deserialize(from: response.result.value as! String) as! BusinessStateEntity
                         var result:Result = Result()
-                        if (businessStateEntity.code == 200) {
-                            if (businessStateEntity.data!.club!){
-                                result.code = 0
-                            }else {
+                        switch response.result {
+                        case .success:
+                            print("switch case success")
+                            guard let businessStateEntity:BusinessStateEntity = BusinessStateEntity.deserialize(from: response.result.value as? String) as? BusinessStateEntity else {
+                                //Toast(text: "服务器错误").show()
                                 result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
                             }
-                            observer.onNext(result)
+                            if (businessStateEntity.code == 200) {
+                                if (businessStateEntity.data!.club!){
+                                    result.code = 0
+                                }else {
+                                    result.code = 2
+                                    result.message = "未注册"
+                                }
+                            } else {
+                                result.code = 1
+                                result.message = businessStateEntity.msg
+                            }
+                            
+                        case .failure(let error):
+                            print("switch case failure:\(error)")
+                            result.code = 1
+                            result.message = "网络错误"
                         }
+                        observer.onNext(result)
                     }
                     return Disposables.create()
                 }
@@ -56,8 +73,6 @@ class BusinessPresenter {
                 return Observable<Result>.create {
                     observer -> Disposable in
                     Alamofire.upload(multipartFormData: { (multipartFormData) in
-//                        multipartFormData.appendBodyPart(data:UIImageJPEGRepresentation(image,1.0),name:"image",fileName:"idcard.png",mimeType:"image/png")
-//                        multipartFormData.appendBodyPart(data:sid.data(using: String.Encoding.utf8),name:"sid")
                         multipartFormData.append(UIImageJPEGRepresentation(image,1.0)!,withName:"image",fileName:"idcard.png",mimeType:"image/png")
                         multipartFormData.append(sid.data(using: String.Encoding.utf8)!,withName:"sid")
                     }, to: "\(BASE_URL)mobile/Register/upload", encodingCompletion: { (encodingResult) in
@@ -69,18 +84,28 @@ class BusinessPresenter {
                                 print("response:\(response)")
                                 print("result:\(response.result)")
                                 print("value: \(response.result.value)")
-                                if (response.result.value == nil) {
-                                    return
-                                }
+                        
                                 var result:Result = Result()
-                                var imageUrlEntity:ImageUrlEntity = ImageUrlEntity.deserialize(from: response.result.value as! String) as! ImageUrlEntity
-                                if (imageUrlEntity.code != nil && imageUrlEntity.code! == 0) {
-                                    result.code = 0
-                                    result.message = imageUrlEntity.data
-                                } else {
+                                switch response.result {
+                                case .success:
+                                    guard let imageUrlEntity:ImageUrlEntity = ImageUrlEntity.deserialize(from: response.result.value as! String) as? ImageUrlEntity else {
+                                        result.code = 1
+                                        result.message = "服务器错误"
+                                        observer.onNext(result)
+                                        return
+                                    }
+                                    if (imageUrlEntity.code != nil && imageUrlEntity.code! == 0) {
+                                        result.code = 0
+                                        result.message = imageUrlEntity.data
+                                    } else {
+                                        result.code = 1
+                                        result.message = "图片上传失败"
+                                    }
+                                case .failure(let error):
                                     result.code = 1
-                                    result.message = "图片上传失败"
+                                    result.message = "网络错误"
                                 }
+                                
                                 observer.onNext(result)
                             }
                         case .failure(let encodingError):
@@ -110,14 +135,27 @@ class BusinessPresenter {
                         if (response.result.value == nil) {
                             return
                         }
-                        let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as! ResponseEntity
                         var result:Result = Result()
-                        if (responseEntity.code == 0) {
-                            result.code = 0
-                            result.message = responseEntity.msg
-                        }else {
+                        switch response.result {
+                        case .success:
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (responseEntity.code == 0) {
+                                result.code = 0
+                                result.message = responseEntity.msg
+                            }else {
+                                result.code = 1
+                            }
+                        case .failure(let error):
                             result.code = 1
+                            result.message = "网络错误"
                         }
+                        
                         observer.onNext(result)
                     }
                     return Disposables.create()
