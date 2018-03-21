@@ -83,6 +83,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
     }
     
     @IBAction func login(_ sender: Any) {
+        self.view.endEditing(true)
         var phoneNum = phoneTextField.text
         var password = passwordTextField.text
         if (phoneNum == nil || phoneNum == "" || password == nil || password == "") {
@@ -106,7 +107,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
                             //self.navigationController?.popViewController(animated: true)
                             self.dismiss(animated: true, completion: nil)
                         } else {
-                            Toast(text: "登录失败：\(result.message)").show()
+                            Toast(text: "登录失败：\(result.message ?? "")").show()
                         }
                     })
             } else {
@@ -123,7 +124,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
                             //self.navigationController?.popViewController(animated: true)
                             self.dismiss(animated: true, completion: nil)
                         } else {
-                            Toast(text: "登录失败：\(result.message)").show()
+                            Toast(text: "登录失败：\(result.message ?? "")").show()
                         }
                     })
             }
@@ -188,10 +189,10 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         if (result.code == 0) {
-                            Zhongwei.alert(viewController: self, title: "提示", message:result.message ?? "")
+                            Toast(text:"发送成功").show()
+                            self.startTiming()
                         } else {
                             Zhongwei.alert(viewController: self, title: "提示", message:result.message ?? "")
-                            self.startTiming()
                         }
                     })
             }
@@ -245,6 +246,11 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
             }
         }
         
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        super.touchesBegan(touches, with: event)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

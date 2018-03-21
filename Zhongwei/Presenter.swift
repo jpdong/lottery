@@ -67,9 +67,6 @@ class Presenter{
                 response in
                 print("response:\(response)")
                 print("value \(response.result.value)")
-                if (response.result.value == nil) {
-                    return
-                }
                 var result:Result = Result()
                 switch response.result {
                 case .success:

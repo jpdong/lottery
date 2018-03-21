@@ -10,6 +10,7 @@ import Foundation
 import WebKit
 import RxSwift
 import Toaster
+import Reachability
 
 class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
     
@@ -111,7 +112,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext:{
                     url in
-                    self.loadUrl(url: url)
+                    self.startLoad(url: url)
                 })
             break
         case BusinessItem.manager:
@@ -120,7 +121,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext:{
                     url in
-                    self.loadUrl(url: url)
+                    self.startLoad(url: url)
                 })
             break
         case BusinessItem.areaManager:
@@ -129,7 +130,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext:{
                     url in
-                    self.loadUrl(url: url)
+                    self.startLoad(url: url)
                 })
             break
         case BusinessItem.marketManager:
@@ -138,7 +139,7 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext:{
                     url in
-                    self.loadUrl(url: url)
+                    self.startLoad(url: url)
                 })
             break
         default:
@@ -153,6 +154,35 @@ class BusinessDetailView: UIViewController,WKUIDelegate,WKNavigationDelegate {
             webView.load(myRequest)
         } else {
             print("Url is nil")
+        }
+    }
+    
+    func startLoad(url:String) {
+        Log(url)
+        if(hasNetwork()) {
+            Log("should load url")
+            loadUrl(url: url)
+        } else {
+            Log("should alert")
+            let alertView = UIAlertController(title:"无网络连接", message:"请检查网络", preferredStyle:.alert)
+            let cancel = UIAlertAction(title:"取消", style:.cancel)
+            let confirm = UIAlertAction(title:"重试", style:.default){
+                action in
+                self.startLoad(url:url)
+            }
+            alertView.addAction(cancel)
+            alertView.addAction(confirm)
+            present(alertView,animated: true,completion: nil)
+        }
+    }
+    
+    func hasNetwork() -> Bool{
+        let reachability = Reachability()
+        Log(reachability!.connection)
+        if (reachability!.connection != .none) {
+            return true
+        } else {
+            return false
         }
     }
     

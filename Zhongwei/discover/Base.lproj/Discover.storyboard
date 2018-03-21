@@ -269,22 +269,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="021-54566661" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfy-Sj-eya">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="021-54566661" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfy-Sj-eya">
                                 <rect key="frame" x="150" y="87" width="116" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="联系电话：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mdw-EL-eMb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="联系电话：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mdw-EL-eMb">
                                 <rect key="frame" x="55" y="87" width="87" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xfy-Sj-eya" firstAttribute="top" secondItem="yHF-uK-zj7" secondAttribute="top" constant="23" id="IzW-Nh-n9o"/>
+                            <constraint firstItem="yHF-uK-zj7" firstAttribute="trailing" secondItem="xfy-Sj-eya" secondAttribute="trailing" constant="54" id="RWg-4g-tu0"/>
+                            <constraint firstItem="Mdw-EL-eMb" firstAttribute="leading" secondItem="yHF-uK-zj7" secondAttribute="leading" constant="55" id="W6h-HC-zSq"/>
+                            <constraint firstItem="Mdw-EL-eMb" firstAttribute="top" secondItem="yHF-uK-zj7" secondAttribute="top" constant="23" id="und-y7-qro"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="yHF-uK-zj7"/>
                     </view>
                     <navigationItem key="navigationItem" title="客服" id="h6y-Op-2UW"/>

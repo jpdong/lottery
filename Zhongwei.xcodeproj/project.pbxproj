@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8E01C7771FEA58250012E2CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E01C7751FEA58250012E2CE /* Main.storyboard */; };
-		8E093FA72057803900AC0A8A /* WeixinSDK in Resources */ = {isa = PBXBuildFile; fileRef = 8E093FA62057803900AC0A8A /* WeixinSDK */; };
 		8E121FF3204D504700C5CCD8 /* ImageUrlEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF2204D504700C5CCD8 /* ImageUrlEntity.swift */; };
 		8E121FF5204D5C3B00C5CCD8 /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF4204D5C3B00C5CCD8 /* UserPresenter.swift */; };
 		8E121FF7204D5F1300C5CCD8 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF6204D5F1300C5CCD8 /* MessageEntity.swift */; };
@@ -176,7 +175,6 @@
 		6A84856AEDD70A279EC1E75F /* Pods_Zhongwei.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zhongwei.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		878A4334FDF403A899AFB54E /* Pods-Zhongwei.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zhongwei.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Zhongwei/Pods-Zhongwei.debug.xcconfig"; sourceTree = "<group>"; };
 		8E01C7761FEA58250012E2CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8E093FA62057803900AC0A8A /* WeixinSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WeixinSDK; sourceTree = "<group>"; };
 		8E121FF2204D504700C5CCD8 /* ImageUrlEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUrlEntity.swift; sourceTree = "<group>"; };
 		8E121FF4204D5C3B00C5CCD8 /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
 		8E121FF6204D5F1300C5CCD8 /* MessageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
@@ -596,7 +594,6 @@
 				8EFE4CCD2058CFAD00C0B6E9 /* AipBase.framework */,
 				8EFE4CCC2058CFAD00C0B6E9 /* AipOcrSdk.framework */,
 				8EFE4CCE2058CFAE00C0B6E9 /* IdcardQuality.framework */,
-				8E093FA62057803900AC0A8A /* WeixinSDK */,
 				8EFA2D671FE8BE41005C890E /* Podfile */,
 				8EFA2D381FE8B37D005C890E /* Zhongwei */,
 				8EFA2D4D1FE8B37D005C890E /* ZhongweiTests */,
@@ -773,7 +770,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EFA2D441FE8B37D005C890E /* LaunchScreen.storyboard in Resources */,
-				8E093FA72057803900AC0A8A /* WeixinSDK in Resources */,
 				8E01C7771FEA58250012E2CE /* Main.storyboard in Resources */,
 				8E55000B20182CAE009E2AB0 /* Business.storyboard in Resources */,
 				8E3E92FE205FBCE100F71EF9 /* TZImagePickerController.bundle in Resources */,
@@ -1184,7 +1180,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Zhongwei/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1208,7 +1204,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = Zhongwei/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;

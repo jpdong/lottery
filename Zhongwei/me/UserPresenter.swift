@@ -68,9 +68,6 @@ class UserPresenter {
                 print("response:\(response)")
                 print("result:\(response.result)")
                 print("value: \(response.result.value)")
-                if (response.result.value == nil) {
-                    return
-                }
                 var result:Result = Result()
                 switch response.result {
                 case .success:
@@ -82,10 +79,10 @@ class UserPresenter {
                     }
                     
                     if (codeEntity.success!) {
-                        result.code = 1
+                        result.code = 0
                         result.message = "验证码发送成功"
                     }else {
-                        result.code = 0
+                        result.code = 1
                         result.message = codeEntity.error
                     }
                 case .failure(let error):
@@ -150,9 +147,6 @@ class UserPresenter {
                 response in
                 print("response:\(response)")
                 print("value \(response.result.value)")
-                if (response.result.value == nil) {
-                    return
-                }
                 var result:Result = Result()
                 switch response.result {
                 case .success:
@@ -162,8 +156,6 @@ class UserPresenter {
                         observer.onNext(result)
                         return
                     }
-                    
-                    
                     if (sidEntity.code == 0) {
                         result.code = 0
                         result.message = sidEntity.msg
@@ -177,7 +169,6 @@ class UserPresenter {
                     result.code = 1
                     result.message = "网络错误"
                 }
-                
                 
                 observer.onNext(result)
             }
@@ -195,9 +186,6 @@ class UserPresenter {
                 response in
                 print("response:\(response)")
                 print("value \(response.result.value)")
-                if (response.result.value == nil) {
-                    return
-                }
                 var result:Result = Result()
                 switch response.result {
                 case .success:

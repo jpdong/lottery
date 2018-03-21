@@ -66,7 +66,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         mainScrollView = UIScrollView(frame:self.view.bounds)
         //mainScrollView.backgroundColor = UIColor.gray
         images = [String]()
-        images?.append("http://yan.eeseetech.cn/upload/image/20171125/1511590754.jpg")
+        images?.append("http://yan.eeseetech.cn/upload/image/20180309/20180309142321.png")
         slideGallery = SliderGalleryController()
         slideGallery.delegate = self
         //slideGallery.view.backgroundColor = UIColor.red
@@ -262,20 +262,23 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     }
     
     @objc func showRecentNews() {
-        showDetailArticle(id: recentNewsView.contentId!)
+        showDetailArticle(id: recentNewsView.contentId)
     }
     
     @objc func showWelfareActivity() {
-        showDetailArticle(id: welfareActivity.contentId!)
+        showDetailArticle(id: welfareActivity.contentId)
     }
     
     @objc func showHotNews() {
-        showDetailArticle(id: hotNewsView.contentId!)
+        showDetailArticle(id: hotNewsView.contentId)
     }
     
-    func showDetailArticle(id:String) {
-        Log("")
-        MainPresenter.getArticleWithId(id)
+    func showDetailArticle(id:String?) {
+        guard let articleId = id else {
+            Toast(text: "网络错误").show()
+            return
+        }
+        MainPresenter.getArticleWithId(articleId)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -301,14 +304,12 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        Log("")
         //checkRegisterBusinessState()
         updateBannerView()
         updateBoardView()
     }
     
     func updateBannerView() {
-        Log("")
         MainPresenter.updateBannerContent()
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
@@ -382,13 +383,13 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     @objc func onCustomerManagerButton() {
         print("onCustomerManagerButton")
-//        let sb = UIStoryboard(name:"Business",bundle:nil)
-//        let vc = sb.instantiateViewController(withIdentifier: "BusinessViewController") as! BusinessViewController
-        let vc = CustomerManagerList()
-        vc.hidesBottomBarWhenPushed = true
-        //self.present(vc, animated: true, completion: nil)
-        self.navigationController?.pushViewController(vc, animated: true)
-        print("onCustomerManagerButton finish")
+//        let vc = CustomerManagerList()
+//        vc.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(vc, animated: true)
+        let sb = UIStoryboard(name:"Business",bundle:nil)
+        let vc = sb.instantiateViewController(withIdentifier: "BusinessDetailView") as! BusinessDetailView
+        vc.type = BusinessItem.manager
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func onPointMallButton() {
@@ -404,15 +405,17 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     @objc func onSaleManagerButton() {
         print("onSaleManagerButton")
-        let vc = CertificateListController()
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = CertificateListController()
+//        vc.hidesBottomBarWhenPushed = true
+//        self.navigationController?.pushViewController(vc, animated: true)
+        Toast(text: "功能暂未开放").show()
     }
     
     @objc func onCustomerButton() {
         print("onCustomerButton")
-        let vc = ReceiptListController()
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let vc = ReceiptListController()
+//        self.navigationController?.pushViewController(vc, animated: true)
+        Toast(text: "功能暂未开放").show()
     }
     
     @objc func onScanPrizeButton() {

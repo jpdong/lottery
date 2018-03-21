@@ -66,6 +66,7 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
     var timer:Timer!
     
     @IBAction func register(_ sender: Any) {
+        self.view.endEditing(true)
         if (!checkInput()) {
             return
         }
@@ -163,10 +164,10 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
                 .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         if (result.code == 0) {
-                            alert(viewController: self, title: "提示", message:result.message ?? "")
+                            Toast(text: "发送成功").show()
+                            self.startTiming()
                         } else {
                             alert(viewController: self, title: "提示", message:result.message ?? "")
-                            self.startTiming()
                         }
                     })
             }
@@ -268,5 +269,10 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
             phoneTextField.selectedTextRange = phoneTextField.textRange(from: targetPostion,to: targetPostion)
             return
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        super.touchesBegan(touches, with: event)
     }
 }
