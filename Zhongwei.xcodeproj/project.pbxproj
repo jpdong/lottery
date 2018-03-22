@@ -31,9 +31,20 @@
 		8E219E46205A776A002F0DAC /* CertificateListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E219E45205A776A002F0DAC /* CertificateListEntity.swift */; };
 		8E219E48205A7906002F0DAC /* CertificateListResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E219E47205A7906002F0DAC /* CertificateListResult.swift */; };
 		8E219E4C205A8C79002F0DAC /* TextInfoBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E219E4B205A8C79002F0DAC /* TextInfoBoxView.swift */; };
+		8E24A0E220625EE50096294A /* AipBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E24A0DF20625EE40096294A /* AipBase.framework */; };
+		8E24A0E320625EE50096294A /* IdcardQuality.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E24A0E020625EE40096294A /* IdcardQuality.framework */; };
+		8E24A0E420625EE50096294A /* AipOcrSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E24A0E120625EE50096294A /* AipOcrSdk.framework */; };
+		8E24A0E5206265410096294A /* AipBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E24A0DF20625EE40096294A /* AipBase.framework */; };
+		8E24A0E6206265410096294A /* AipBase.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8E24A0DF20625EE40096294A /* AipBase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8E24A0E7206265410096294A /* AipOcrSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E24A0E120625EE50096294A /* AipOcrSdk.framework */; };
+		8E24A0E8206265410096294A /* AipOcrSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8E24A0E120625EE50096294A /* AipOcrSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8E24A0E9206265410096294A /* IdcardQuality.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E24A0E020625EE40096294A /* IdcardQuality.framework */; };
+		8E24A0EA206265410096294A /* IdcardQuality.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8E24A0E020625EE40096294A /* IdcardQuality.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8E24A0EC20626A0A0096294A /* ReceiptImagesObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E24A0EB20626A0A0096294A /* ReceiptImagesObject.swift */; };
 		8E2C378A205BAAA50095B026 /* CertificateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2C3789205BAAA50095B026 /* CertificateEntity.swift */; };
 		8E2C378C205BAADB0095B026 /* CertificateResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2C378B205BAADB0095B026 /* CertificateResult.swift */; };
 		8E2F6A0E2022C62B000704F6 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2F6A0D2022C62B000704F6 /* UserViewController.swift */; };
+		8E353CEF2063CB4100724B58 /* SaleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E353CEE2063CB4100724B58 /* SaleViewController.swift */; };
 		8E395C38205695250026B2A1 /* AppUpdateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E395C37205695250026B2A1 /* AppUpdateEntity.swift */; };
 		8E395C3A205695D20026B2A1 /* AppUpdateResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E395C39205695D20026B2A1 /* AppUpdateResult.swift */; };
 		8E3DCDE92060BDC8000180E1 /* ReceiptImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCDE82060BDC8000180E1 /* ReceiptImageCell.swift */; };
@@ -128,12 +139,6 @@
 		8EFA2D4F1FE8B37D005C890E /* ZhongweiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA2D4E1FE8B37D005C890E /* ZhongweiTests.swift */; };
 		8EFA2D5A1FE8B37E005C890E /* ZhongweiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA2D591FE8B37E005C890E /* ZhongweiUITests.swift */; };
 		8EFA2D681FE8BE41005C890E /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 8EFA2D671FE8BE41005C890E /* Podfile */; };
-		8EFE4CCF2058CFAE00C0B6E9 /* AipOcrSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCC2058CFAD00C0B6E9 /* AipOcrSdk.framework */; };
-		8EFE4CD02058CFAE00C0B6E9 /* AipOcrSdk.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCC2058CFAD00C0B6E9 /* AipOcrSdk.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8EFE4CD12058CFAE00C0B6E9 /* AipBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCD2058CFAD00C0B6E9 /* AipBase.framework */; };
-		8EFE4CD22058CFAE00C0B6E9 /* AipBase.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCD2058CFAD00C0B6E9 /* AipBase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8EFE4CD32058CFAE00C0B6E9 /* IdcardQuality.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCE2058CFAE00C0B6E9 /* IdcardQuality.framework */; };
-		8EFE4CD42058CFAE00C0B6E9 /* IdcardQuality.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8EFE4CCE2058CFAE00C0B6E9 /* IdcardQuality.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8EFE4CD720592ED000C0B6E9 /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFE4CD620592ED000C0B6E9 /* HomeNavigationController.swift */; };
 		A5B785BA2F3CA812EFC80FD2 /* Pods_Zhongwei.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A84856AEDD70A279EC1E75F /* Pods_Zhongwei.framework */; };
 /* End PBXBuildFile section */
@@ -162,9 +167,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8EFE4CD22058CFAE00C0B6E9 /* AipBase.framework in Embed Frameworks */,
-				8EFE4CD02058CFAE00C0B6E9 /* AipOcrSdk.framework in Embed Frameworks */,
-				8EFE4CD42058CFAE00C0B6E9 /* IdcardQuality.framework in Embed Frameworks */,
+				8E24A0E6206265410096294A /* AipBase.framework in Embed Frameworks */,
+				8E24A0E8206265410096294A /* AipOcrSdk.framework in Embed Frameworks */,
+				8E24A0EA206265410096294A /* IdcardQuality.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -198,9 +203,14 @@
 		8E219E45205A776A002F0DAC /* CertificateListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateListEntity.swift; sourceTree = "<group>"; };
 		8E219E47205A7906002F0DAC /* CertificateListResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateListResult.swift; sourceTree = "<group>"; };
 		8E219E4B205A8C79002F0DAC /* TextInfoBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextInfoBoxView.swift; sourceTree = "<group>"; };
+		8E24A0DF20625EE40096294A /* AipBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AipBase.framework; sourceTree = "<group>"; };
+		8E24A0E020625EE40096294A /* IdcardQuality.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IdcardQuality.framework; sourceTree = "<group>"; };
+		8E24A0E120625EE50096294A /* AipOcrSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AipOcrSdk.framework; sourceTree = "<group>"; };
+		8E24A0EB20626A0A0096294A /* ReceiptImagesObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptImagesObject.swift; sourceTree = "<group>"; };
 		8E2C3789205BAAA50095B026 /* CertificateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateEntity.swift; sourceTree = "<group>"; };
 		8E2C378B205BAADB0095B026 /* CertificateResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateResult.swift; sourceTree = "<group>"; };
 		8E2F6A0D2022C62B000704F6 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		8E353CEE2063CB4100724B58 /* SaleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleViewController.swift; sourceTree = "<group>"; };
 		8E395C37205695250026B2A1 /* AppUpdateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateEntity.swift; sourceTree = "<group>"; };
 		8E395C39205695D20026B2A1 /* AppUpdateResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateResult.swift; sourceTree = "<group>"; };
 		8E3DCDE82060BDC8000180E1 /* ReceiptImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptImageCell.swift; sourceTree = "<group>"; };
@@ -316,9 +326,6 @@
 		8EFA2D591FE8B37E005C890E /* ZhongweiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZhongweiUITests.swift; sourceTree = "<group>"; };
 		8EFA2D5B1FE8B37E005C890E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8EFA2D671FE8BE41005C890E /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		8EFE4CCC2058CFAD00C0B6E9 /* AipOcrSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AipOcrSdk.framework; sourceTree = "<group>"; };
-		8EFE4CCD2058CFAD00C0B6E9 /* AipBase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AipBase.framework; sourceTree = "<group>"; };
-		8EFE4CCE2058CFAE00C0B6E9 /* IdcardQuality.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IdcardQuality.framework; sourceTree = "<group>"; };
 		8EFE4CD620592ED000C0B6E9 /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
 		E6A748996A2BADEEFFAE03E7 /* Pods-Zhongwei.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zhongwei.release.xcconfig"; path = "Pods/Target Support Files/Pods-Zhongwei/Pods-Zhongwei.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -329,14 +336,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E61FB781FF3475100680E19 /* SystemConfiguration.framework in Frameworks */,
+				8E24A0E220625EE50096294A /* AipBase.framework in Frameworks */,
 				8E61FB761FF3474200680E19 /* libz.tbd in Frameworks */,
-				8EFE4CD12058CFAE00C0B6E9 /* AipBase.framework in Frameworks */,
+				8E24A0E320625EE50096294A /* IdcardQuality.framework in Frameworks */,
 				8E61FB741FF3472F00680E19 /* CoreTelephony.framework in Frameworks */,
+				8E24A0E420625EE50096294A /* AipOcrSdk.framework in Frameworks */,
+				8E24A0E5206265410096294A /* AipBase.framework in Frameworks */,
+				8E24A0E7206265410096294A /* AipOcrSdk.framework in Frameworks */,
 				8E61FB721FF3472100680E19 /* libsqlite3.tbd in Frameworks */,
-				8EFE4CCF2058CFAE00C0B6E9 /* AipOcrSdk.framework in Frameworks */,
 				8E61FB701FF3470300680E19 /* libc++.tbd in Frameworks */,
 				A5B785BA2F3CA812EFC80FD2 /* Pods_Zhongwei.framework in Frameworks */,
-				8EFE4CD32058CFAE00C0B6E9 /* IdcardQuality.framework in Frameworks */,
+				8E24A0E9206265410096294A /* IdcardQuality.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +394,7 @@
 			children = (
 				8E3E9260205F9FCC00F71EF9 /* certificate */,
 				8E3E925F205F9FCC00F71EF9 /* receipt */,
+				8E353CEE2063CB4100724B58 /* SaleViewController.swift */,
 			);
 			path = sale;
 			sourceTree = "<group>";
@@ -583,17 +594,26 @@
 				8E2C3789205BAAA50095B026 /* CertificateEntity.swift */,
 				8E2C378B205BAADB0095B026 /* CertificateResult.swift */,
 				8EB47D5E206205DC0019B05D /* AlertDataResult.swift */,
+				8E24A0EB20626A0A0096294A /* ReceiptImagesObject.swift */,
 			);
 			path = entity;
+			sourceTree = "<group>";
+		};
+		8EB47D6020625E7C0019B05D /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				8E24A0DF20625EE40096294A /* AipBase.framework */,
+				8E24A0E120625EE50096294A /* AipOcrSdk.framework */,
+				8E24A0E020625EE40096294A /* IdcardQuality.framework */,
+			);
+			path = lib;
 			sourceTree = "<group>";
 		};
 		8EFA2D2D1FE8B37D005C890E = {
 			isa = PBXGroup;
 			children = (
+				8EB47D6020625E7C0019B05D /* lib */,
 				8E3E92D9205FBCE100F71EF9 /* TZImagePickerController */,
-				8EFE4CCD2058CFAD00C0B6E9 /* AipBase.framework */,
-				8EFE4CCC2058CFAD00C0B6E9 /* AipOcrSdk.framework */,
-				8EFE4CCE2058CFAE00C0B6E9 /* IdcardQuality.framework */,
 				8EFA2D671FE8BE41005C890E /* Podfile */,
 				8EFA2D381FE8B37D005C890E /* Zhongwei */,
 				8EFA2D4D1FE8B37D005C890E /* ZhongweiTests */,
@@ -927,6 +947,7 @@
 				8E92BF1E200F46C80090C646 /* Presenter.swift in Sources */,
 				8E1A93E6205391DB001D02D7 /* ContentResult.swift in Sources */,
 				8E3E9278205FA0F400F71EF9 /* ReceiptItemCell.swift in Sources */,
+				8E353CEF2063CB4100724B58 /* SaleViewController.swift in Sources */,
 				8E1A93E820539353001D02D7 /* MainNewsEntity.swift in Sources */,
 				8EC9439720464CA000EB2B05 /* Result.swift in Sources */,
 				8E1A112A20450A5300A0B6BC /* LoginViewController.swift in Sources */,
@@ -940,6 +961,7 @@
 				8ECF7C2B20529AF500738D0B /* MainPresenter.swift in Sources */,
 				8E441B2D20513BF6001D90C1 /* ImageClickView.swift in Sources */,
 				8E1A93F02053D596001D02D7 /* ImageDataEntity.swift in Sources */,
+				8E24A0EC20626A0A0096294A /* ReceiptImagesObject.swift in Sources */,
 				8E96F020204E9B0A0060B612 /* DiscoverPresenter.swift in Sources */,
 				8E3E9268205F9FCC00F71EF9 /* CertificateListController.swift in Sources */,
 				8E3E92F8205FBCE100F71EF9 /* TZAssetCell.m in Sources */,
@@ -1178,6 +1200,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/lib",
 				);
 				INFOPLIST_FILE = Zhongwei/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -1202,6 +1225,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/lib",
 				);
 				INFOPLIST_FILE = Zhongwei/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

@@ -16,8 +16,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     var submitButton:UIButton!
     var submitIndicator:UIActivityIndicatorView!
     var imageIndicator:UIActivityIndicatorView!
-    var imageUrl:String?
-    var type:Int = 2
+    var type:Int = ReceiptItem.add
     var editableItem:ReceiptItem?
     var navigationBarHeight:CGFloat?
     var statusBarHeight:CGFloat?
@@ -28,12 +27,32 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     var selectedImages:[UIImage]!
     var imageCollectionLayout:UICollectionViewFlowLayout!
     var imageCollectionView:UICollectionView!
+    var imageUrls:[String]!
     
     override func viewDidLoad() {
         setupViews()
         setupConstrains()
         setupClickEvents()
         setupData()
+        
+        //testCompleted()
+    }
+    
+    func testCompleted() {
+        Observable<String>.create({ (observer) -> Disposable in
+            observer.onNext("next")
+            observer.onNext("next 2")
+            observer.onCompleted()
+            return Disposables.create()
+            })
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (result) in
+                Log(result)
+            },onCompleted: {
+                Log("complete")
+            })
+        
     }
     
     func setupViews() {
@@ -76,15 +95,12 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         self.view.addSubview(submitButton)
         self.view.addSubview(submitIndicator)
         self.view.addSubview(imageIndicator)
-        
-        if (type == ReceiptItem.edit) {
-            
-        }
     }
     
     func setupConstrains() {
         textField.snp.makeConstraints { (maker) in
-            maker.top.left.right.equalTo(self.view)
+            maker.top.equalTo(navigationBar.snp.bottom)
+            maker.left.right.equalTo(self.view)
             maker.height.equalTo(self.view.frame.height * 0.3)
         }
         imageCollectionView.snp.makeConstraints { (maker) in
@@ -95,7 +111,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         }
         submitButton.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(self.view)
-            maker.bottom.equalTo(self.view)
+            maker.bottom.equalTo(self.view).offset(-Size.instance.tabBarHeight)
             //maker.top.equalTo(imageCollectionView.snp.bottom).offset(40)
             maker.height.equalTo(50)
             maker.width.greaterThanOrEqualTo(240)
@@ -107,6 +123,9 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
 //        }
         submitIndicator.snp.makeConstraints { (maker) in
             maker.center.equalTo(submitButton)
+        }
+        imageIndicator.snp.makeConstraints { (maker) in
+            maker.center.equalTo(self.view)
         }
     }
     
@@ -122,11 +141,15 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     
     func setupData() {
         selectedImages = [UIImage]()
+        imageUrls = [String]()
+        if (type == ReceiptItem.edit) {
+            textField.text = editableItem?.notes
+            imageUrls = editableItem?.receipt_image?.receipt_image
+            Log("count:\(imageUrls.count)")
+        }
     }
     
     func setupClickEvents() {
-        var imageInputTap = UITapGestureRecognizer(target: self, action: #selector(getReceiptPicture))
-   
         submitButton.addTarget(self, action: #selector(submitReceipt), for: .touchUpInside)
     }
     
@@ -135,35 +158,67 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectedImages.count + 1 > 6 ? 6 : selectedImages.count + 1
+//        if (type == ReceiptItem.add) {
+//        return selectedImages.count + 1 > 6 ? 6 : selectedImages.count + 1
+//        } else {
+            //if (selectedImages.count == 0) {
+            return imageUrls.count + 1 > 6 ? 6 : imageUrls.count + 1
+            //} else {
+             //   return selectedImages.count + 1 > 6 ? 6 : selectedImages.count + 1
+            //}
+        //}
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let tapAdd = UITapGestureRecognizer(target: self, action: #selector(addPictures))
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReceiptImageCell", for: indexPath) as! ReceiptImageCell
-        if (selectedImages.count < 6 && indexPath.row == selectedImages.count) {
-            cell.imageView?.image = UIImage(named:"button_add_receipt")
-            cell.deleteButton?.isHidden = true
-            cell.addGestureRecognizer(tapAdd)
-        } else {
-            cell.imageView?.image = selectedImages[indexPath.row]
-            cell.deleteButton?.isHidden = false
-            cell.removeGestureRecognizer(tapAdd)
-        }
+//        if (type == ReceiptItem.add) {
+//            if (selectedImages.count < 6 && indexPath.row == selectedImages.count) {
+//                cell.imageView?.image = UIImage(named:"button_add_receipt")
+//                cell.deleteButton?.isHidden = true
+//                cell.imageView?.isUserInteractionEnabled = true
+//                cell.imageView?.addGestureRecognizer(tapAdd)
+//            } else {
+//
+//                cell.imageView?.image = selectedImages[indexPath.row]
+//
+//                cell.deleteButton?.isHidden = false
+//                cell.imageView?.isUserInteractionEnabled = false
+//                cell.imageView?.removeGestureRecognizer(tapAdd)
+//            }
+//        } else {
+            if (imageUrls.count < 6 && indexPath.row == imageUrls.count) {
+                cell.imageView?.image = UIImage(named:"button_add_receipt")
+                cell.deleteButton?.isHidden = true
+                cell.imageView?.isUserInteractionEnabled = true
+                cell.imageView?.addGestureRecognizer(tapAdd)
+            } else {
+                cell.imageView?.kf.setImage(with: URL(string:imageUrls[indexPath.row]))
+                cell.deleteButton?.isHidden = false
+                cell.imageView?.isUserInteractionEnabled = false
+                cell.imageView?.removeGestureRecognizer(tapAdd)
+            }
+        //}
+        
         cell.deleteButton?.tag = indexPath.row
-        let tapDelete = UITapGestureRecognizer(target: self, action: #selector(deleteClick))
+        let tapDelete = UITapGestureRecognizer(target: self, action: #selector(deleteClick(sender:)))
         cell.deleteButton?.addGestureRecognizer(tapDelete)
         return cell
     }
     
-    @objc func deleteClick(sender:UIImageView) {
-        print("delete click")
-        selectedImages.remove(at: sender.tag)
-        imageCollectionView.performBatchUpdates({
-            let indexPath = NSIndexPath(row: sender.tag, section: 0)
-        }) { (finish) in
-            self.imageCollectionView.reloadData()
-        }
+    @objc func deleteClick(sender:UITapGestureRecognizer) {
+        self.imageUrls.remove(at: sender.view!.tag)
+        self.imageCollectionView.reloadData()
+//        if (selectedImages.count == 5) {
+//            self.imageCollectionView.reloadData()
+//        } else {
+//        imageCollectionView.performBatchUpdates({
+//            let indexPath = IndexPath(row: sender.view!.tag, section: 0)
+//            imageCollectionView.deleteItems(at: [indexPath])
+//        }) { (finish) in
+//            self.imageCollectionView.reloadData()
+//        }
+//        }
         
     }
     
@@ -172,27 +227,8 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         self.present(vc, animated: true, completion: nil)
     }
     
-    @objc func getReceiptPicture() {
-        let vc = AipGeneralVC.viewController { (image) in
-            DispatchQueue.main.async {
-                self.imageIndicator.startAnimating()
-                BusinessPresenter.uploadImage(image:image!)
-                    .observeOn(MainScheduler.instance)
-                    .subscribe(onNext: { (result) in
-                        self.imageIndicator.stopAnimating()
-                        if(result.code == 0) {
-                            self.imageUrl = result.message
-                        } else {
-                            Toast(text: "图片上传失败").show()
-                        }
-                    })
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
-        self.present(vc!, animated: true, completion: nil)
-    }
-    
     @objc func submitReceipt() {
+        Log("")
         var text = textField.text
         var input:String!
         if let text = textField.text {
@@ -203,48 +239,67 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         } else {
             input = "无备注信息"
         }
-        if (type == ReceiptItem.add) {
+        if(type == ReceiptItem.add) {
             submitIndicator.startAnimating()
             submitButton.isEnabled = false
-//            ReceiptPresenter.submitReceipt(name!, phone!, id!, imageUrl!)
-//                .observeOn(MainScheduler.instance)
-//                .subscribe(onNext: { (result) in
-//                    self.submitIndicator.stopAnimating()
-//                    self.submitButton.isEnabled = true
-//                    if(result.code == 0) {
-//                        Toast(text: "添加成功").show()
-//                        self.navigationController?.popViewController(animated: true)
-//                    } else {
-//                        Toast(text: result.message).show()
-//                    }
-//                })
-        } else if(type == ReceiptItem.edit) {
-//            if (name! == editableItem?.name! && phone! == editableItem?.phone! && id! == editableItem?.lottery_papers! && imageUrl! == editableItem?.lottery_papers_image!) {
-//                Toast(text: "未做任何修改").show()
-//                dismiss(animated: true, completion: nil)
-//            } else {
-//                submitIndicator.startAnimating()
-//                submitButton.isEnabled = false
-//                ReceiptPresenter.editReceipt(name!, phone!, id!, imageUrl!, editableItem!.id!)
-//                .observeOn(MainScheduler.instance)
-//                    .subscribe(onNext: { (result) in
-//                        self.submitIndicator.stopAnimating()
-//                        self.submitButton.isEnabled = true
-//                        if(result.code == 0) {
-//                            Toast(text: "修改成功").show()
-//                            self.dismiss(animated: true, completion: nil)
-//                        } else {
-//                            Toast(text: result.message).show()
-//                        }
-//                    })
-//            }
+            imageCollectionView.isUserInteractionEnabled = false
+            textField.isUserInteractionEnabled = false
+            ReceiptPresenter.submitReceipt(notes:input!,imageUrls:imageUrls)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { (result) in
+                    self.submitIndicator.stopAnimating()
+                    self.submitButton.isEnabled = true
+                    self.imageCollectionView.isUserInteractionEnabled = true
+                    self.textField.isUserInteractionEnabled = true
+                    if(result.code == 0) {
+                        Toast(text: "添加成功").show()
+                        self.navigationController?.popViewController(animated: true)
+                    } else {
+                        Toast(text: result.message).show()
+                    }
+                })
+        } else if(self.type == ReceiptItem.edit) {
+            submitIndicator.startAnimating()
+            submitButton.isEnabled = false
+            Log("count:\(selectedImages.count)")
+            ReceiptPresenter.editReceipt(notes:input!, imageUrls:imageUrls,id:editableItem!.id!)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { (result) in
+                    self.submitIndicator.stopAnimating()
+                    self.submitButton.isEnabled = true
+                    if(result.code == 0) {
+                        Toast(text: "修改成功").show()
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        Toast(text: result.message).show()
+                    }
+                })
         }
     }
-    
+
     func imagePickerController(_ picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [Any]!, isSelectOriginalPhoto: Bool) {
-        selectedImages = selectedImages + photos
-        imageCollectionView.reloadData()
+        //selectedImages = selectedImages + photos
+        for photo in photos {
+            if (selectedImages.contains(photo)) {
+                continue
+            } else {
+                
         
+                    imageIndicator.startAnimating()
+                    BusinessPresenter.uploadImage(image: photo)
+                        .observeOn(MainScheduler.instance)
+                        .subscribe(onNext: { (result) in
+                            self.imageIndicator.stopAnimating()
+                            if (result.code == 0) {
+                                self.imageUrls.append(result.message!)
+                                self.imageCollectionView.reloadData()
+                            } else {
+                                Toast(text:result.message ?? "").show()
+                            }
+                        })
+                
+            }
+        }
     }
     
     @objc func close(_ sender:UIBarButtonItem){

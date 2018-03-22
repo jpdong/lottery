@@ -104,39 +104,27 @@ class ReceiptListController:UIViewController ,UISearchBarDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "ReceiptItemCell"
         let item = receiptItems[indexPath.row]
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,for: indexPath) as? ReceiptItemCell
-        if (cell!.nameLabel == nil) {
-            cell!.nameTitle = UILabel()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,for: indexPath) as? ReceiptItemCell else {
+            return UITableViewCell()
         }
-        if (cell!.phoneTitle == nil) {
-            cell!.phoneTitle = UILabel()
+        if (cell.dateLabel == nil) {
+            cell.dateLabel = UILabel()
         }
-        if (cell!.idTitle == nil) {
-            cell!.idTitle = UILabel()
+        if (cell.noteLabel == nil) {
+            cell.noteLabel = UILabel()
         }
-        if (cell!.nameLabel == nil) {
-            cell!.nameLabel = UILabel()
+        
+        if (cell.pictureView == nil) {
+            cell.pictureView = UIImageView()
         }
-        if (cell!.phoneLabel == nil) {
-            cell!.phoneLabel = UILabel()
+        cell.dateLabel.text = item.create_date
+        cell.noteLabel.text = item.notes
+        cell.pictureView.contentMode = .scaleAspectFit
+        if (item.receipt_image!.receipt_image!.count != 0 ){
+            cell.pictureView.kf.setImage(with: URL(string:item.receipt_image!.receipt_image![0]))
         }
-        if (cell!.idLabel == nil) {
-            cell!.idLabel = UILabel()
-        }
-        if (cell!.pictureView == nil) {
-            cell!.pictureView = UIImageView()
-        }
-        cell!.nameTitle.text = "店主姓名："
-        cell!.phoneTitle.text = "手机号码："
-        cell!.idTitle.text = "代销证号："
-        cell!.nameLabel.text = item.name
-        cell!.phoneLabel.text = item.phone
-        cell!.idLabel.text = item.lottery_papers
-        cell!.pictureView.contentMode = .scaleAspectFit
-        cell!.pictureView.kf.setImage(with: URL(string:item.lottery_papers_image!))
-        cell!.selectionStyle = UITableViewCellSelectionStyle.none
-        print("------ row:\(indexPath.row), count:\(receiptItems.count)")
-        return cell!
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

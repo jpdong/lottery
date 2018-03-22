@@ -10,12 +10,9 @@ import Foundation
 
 class ReceiptItemCell:UITableViewCell {
     var pictureView: UIImageView!
-    var nameLabel:UILabel!
-    var phoneLabel:UILabel!
-    var idLabel:UILabel!
-    var nameTitle:UILabel!
-    var phoneTitle:UILabel!
-    var idTitle:UILabel!
+    var dateLabel:UILabel!
+    var noteLabel:UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,65 +39,25 @@ class ReceiptItemCell:UITableViewCell {
     }
     
     func setupViews() {
-//        nameTitle = UILabel()
-//        //nameTitle.text = "店主姓名："
-//        phoneTitle = UILabel()
-//        //phoneTitle.text = "手机号码："
-//        idTitle = UILabel()
-//        //idTitle.text = "代销证号："
-//        pictureView = UIImageView()
-//        nameLabel = UILabel()
-//        nameLabel.text = ""
-//        phoneLabel = UILabel()
-//        phoneLabel.text = ""
-//        idLabel = UILabel()
-//        idLabel.text = ""
-        
-        addSubview(nameTitle)
-        addSubview(phoneTitle)
-        addSubview(idTitle)
-        
         addSubview(pictureView)
-        addSubview(nameLabel)
-        addSubview(phoneLabel)
-        addSubview(idLabel)
+        addSubview(dateLabel)
+        addSubview(noteLabel)
     }
     
     func setupConstrains() {
         pictureView.snp.makeConstraints { (maker) in
-            maker.centerY.equalTo(self)
-            maker.left.equalTo(self)
+            maker.left.top.bottom.equalTo(self)
             maker.width.equalTo(self.frame.width * 0.3)
+            
         }
         
-        nameTitle.snp.makeConstraints { (maker) in
+        dateLabel.snp.makeConstraints { (maker) in
             maker.left.equalTo(pictureView.snp.right)
-            maker.width.equalTo(100)
             maker.top.equalTo(self)
         }
-        phoneTitle.snp.makeConstraints { (maker) in
-            maker.left.equalTo(nameTitle)
-            maker.width.equalTo(100)
-            maker.top.equalTo(nameTitle.snp.bottom)
-        }
-        idTitle.snp.makeConstraints { (maker) in
-            maker.width.equalTo(100)
-            maker.left.equalTo(nameTitle)
-            maker.top.equalTo(phoneTitle.snp.bottom)
-        }
-        
-        
-        nameLabel.snp.makeConstraints { (maker) in
-            maker.left.equalTo(nameTitle.snp.right)
-            maker.top.equalTo(self)
-        }
-        phoneLabel.snp.makeConstraints { (maker) in
-            maker.top.equalTo(nameLabel.snp.bottom)
-            maker.left.equalTo(nameLabel)
-        }
-        idLabel.snp.makeConstraints { (maker) in
-            maker.top.equalTo(phoneLabel.snp.bottom)
-            maker.left.equalTo(nameLabel)
+        noteLabel.snp.makeConstraints { (maker) in
+            maker.left.equalTo(dateLabel)
+            maker.top.equalTo(dateLabel.snp.bottom)
         }
     }
 }

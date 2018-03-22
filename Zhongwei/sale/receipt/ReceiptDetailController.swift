@@ -11,121 +11,93 @@ import RxSwift
 import Toaster
 import SnapKit
 
-class ReceiptDetailController:UIViewController {
-    var nameInputBox:TextInfoBoxView!
-    var phoneInputBox:TextInfoBoxView!
-    var idInputBox:TextInfoBoxView!
-    var imageInputBox:ImageInputBoxView!
-    var addressInfoBox:TextInfoBoxView!
-    var submitButton:UIButton!
-    var submitIndicator:UIActivityIndicatorView!
-    var imageIndicator:UIActivityIndicatorView!
-    var imageUrl:String?
+class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+    var noteLabel:UILabel!
     var receiptItem:ReceiptItem?
     var scrollView:UIScrollView!
     var preViewController:ReceiptListController?
     var rowInParent:Int?
+    var navigationBarHeight:CGFloat?
+    var statusBarHeight:CGFloat?
+    var closeButton:UIBarButtonItem!
+    var navigationBar:UINavigationBar!
+    var editNavigationItem:UINavigationItem!
+    var selectedImages:[UIImage]!
+    var imageCollectionLayout:UICollectionViewFlowLayout!
+    var imageCollectionView:UICollectionView!
+    var imageUrls:[String]!
     
     override func viewDidLoad() {
         setupViews()
         setupConstrains()
-        setupClickEvents()
     }
     
     func setupViews() {
         self.view.backgroundColor = UIColor.white
-        
-        self.navigationItem.title = "代销证详情"
+        self.navigationItem.title = "收据详情"
         let optionButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(showOptionList))
         self.navigationItem.rightBarButtonItem = optionButton
-        scrollView = UIScrollView(frame:self.view.bounds)
-
-        nameInputBox = TextInfoBoxView()
-        nameInputBox.titleLabel.text = "店主姓名"
-        nameInputBox.messageLabel.text = receiptItem?.name
-
-        phoneInputBox = TextInfoBoxView()
-        phoneInputBox.titleLabel.text = "手机号码"
-        phoneInputBox.messageLabel.text = receiptItem?.phone
-
-        idInputBox = TextInfoBoxView()
-        idInputBox.titleLabel.text = "代销证号"
-        idInputBox.messageLabel.text = receiptItem?.lottery_papers
-
-        addressInfoBox = TextInfoBoxView()
-        addressInfoBox.titleLabel.text = "店铺地址"
-        addressInfoBox.messageLabel.text = receiptItem?.address
-
-        imageInputBox = ImageInputBoxView()
-        imageInputBox.titleLabel.text = "代销证照片"
-        imageInputBox.imageView.kf.setImage(with: URL(string:receiptItem!.lottery_papers_image!))
         
-        scrollView.addSubview(nameInputBox)
-        scrollView.addSubview(phoneInputBox)
-        scrollView.addSubview(idInputBox)
-        scrollView.addSubview(addressInfoBox)
-        scrollView.addSubview(imageInputBox)
+        noteLabel = UILabel()
+        noteLabel.text = receiptItem?.notes
         
-        self.view.addSubview(scrollView)
+        imageCollectionLayout = UICollectionViewFlowLayout()
+        imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: imageCollectionLayout)
+        imageCollectionView.alwaysBounceVertical = true
+        imageCollectionView.backgroundColor = UIColor(red: 244 / 255.0, green: 244 / 255.0, blue: 244 / 255.0, alpha: 1)
+        imageCollectionView.contentInset = UIEdgeInsetsMake(4, 4, 4, 4)
+        imageCollectionView.dataSource = self
+        imageCollectionView.delegate = self
+        imageCollectionView.keyboardDismissMode = .onDrag
+        imageCollectionView.register(ReceiptImageCell.self, forCellWithReuseIdentifier: "ReceiptImageCell")
+        self.view.addSubview(imageCollectionView)
+        //imageCollectionView.backgroundColor = UIColor.green
+        imageUrls = receiptItem?.receipt_image?.receipt_image
+        self.view.addSubview(noteLabel)
     }
     
     func setupConstrains() {
-        scrollView.snp.makeConstraints { (maker) in
-            maker.top.equalTo(self.view).offset(Size.instance.statusBarHeight + Size.instance.navigationBarHeight)
+        noteLabel.snp.makeConstraints { (maker) in
+            maker.top.left.right.equalTo(self.view)
+            maker.height.equalTo(self.view.frame.height * 0.3)
+        }
+        imageCollectionView.snp.makeConstraints { (maker) in
+            maker.top.equalTo(noteLabel.snp.bottom)
             maker.left.right.equalTo(self.view)
-            maker.width.equalTo(self.view)
-            maker.height.greaterThanOrEqualTo(self.view)
-            maker.bottom.equalTo(imageInputBox)
-        }
-        nameInputBox.snp.makeConstraints { (maker) in
-            maker.height.equalTo(60)
-            maker.top.equalTo(scrollView)
-            maker.left.equalTo(scrollView).offset(16)
-            maker.width.equalTo(scrollView)
-        }
-        phoneInputBox.snp.makeConstraints { (maker) in
-            maker.height.equalTo(60)
-            maker.top.equalTo(nameInputBox.snp.bottom)
-            maker.left.equalTo(scrollView).offset(16)
-            maker.width.equalTo(scrollView)
-        }
-        idInputBox.snp.makeConstraints { (maker) in
-            maker.height.equalTo(60)
-            maker.top.equalTo(phoneInputBox.snp.bottom)
-            maker.left.equalTo(scrollView).offset(16)
-            maker.width.equalTo(scrollView)
-        }
-        addressInfoBox.snp.makeConstraints { (maker) in
-            maker.height.equalTo(60)
-            maker.top.equalTo(idInputBox.snp.bottom)
-            maker.left.equalTo(scrollView).offset(16)
-            maker.width.equalTo(scrollView)
-        }
-        imageInputBox.snp.makeConstraints { (maker) in
-            maker.height.equalTo(200)
-            maker.top.equalTo(addressInfoBox.snp.bottom)
-            maker.left.equalTo(scrollView).offset(16)
-            maker.width.equalTo(scrollView)
+            maker.bottom.equalTo(self.view)
+            
         }
         
     }
     
-    func setupClickEvents() {
-
+    override func viewDidLayoutSubviews() {
+        let margin:CGFloat = 4
+        let itemWH = (self.view.frame.width - 2 * margin - 4) / 3 - margin
+        imageCollectionLayout.itemSize = CGSize(width:itemWH, height:itemWH)
+        imageCollectionLayout.minimumInteritemSpacing = margin
+        imageCollectionLayout.minimumLineSpacing = margin
+    }
+    
+    func setupData() {
+        selectedImages = [UIImage]()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         updateData()
     }
     
-    override func viewDidLayoutSubviews() {
-        scrollView.contentSize = CGSize(width:self.view.frame.width, height:imageInputBox.frame.maxY + imageInputBox.frame.height)
-        scrollView.setNeedsLayout()
-        scrollView.layoutIfNeeded()
-        phoneInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        nameInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        idInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        addressInfoBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageUrls.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReceiptImageCell", for: indexPath) as? ReceiptImageCell else {
+            return UICollectionViewCell()
+        }
+        cell.imageView?.kf.setImage(with: URL(string:imageUrls[indexPath.row]))
+        cell.deleteButton?.isHidden = true
+        cell.imageView?.isUserInteractionEnabled = false
+        return cell
     }
     
     @objc func showOptionList() {
@@ -138,14 +110,14 @@ class ReceiptDetailController:UIViewController {
         }
         let deleteAction = UIAlertAction(title: "删除", style: .default) { (action) in
             ReceiptPresenter.deleteReceipt(id:self.receiptItem!.id!)
-            .observeOn(MainScheduler.instance)
+                .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
                         Toast(text: "删除成功").show()
                         self.preViewController?.deleleItem(row:self.rowInParent!)
                         self.navigationController?.popViewController(animated: true)
                     } else {
-                        Toast(text:"删除失败：\(result.message)")
+                        Toast(text:"删除失败：\(result.message ?? "")").show()
                     }
                 })
         }
@@ -172,11 +144,12 @@ class ReceiptDetailController:UIViewController {
     
     func updateView(data:ReceiptItem) {
         receiptItem = data
-        nameInputBox.messageLabel.text = data.name
-        phoneInputBox.messageLabel.text = data.phone
-        idInputBox.messageLabel.text = data.lottery_papers
-        addressInfoBox.messageLabel.text = data.address
-        imageInputBox.imageView.kf.setImage(with: URL(string:data.lottery_papers_image!))
+        imageUrls = receiptItem?.receipt_image?.receipt_image
+        imageCollectionView.reloadData()
+    }
+    
+    @objc func close(_ sender:UIBarButtonItem){
+        self.dismiss(animated: true, completion: nil)
     }
     
 }

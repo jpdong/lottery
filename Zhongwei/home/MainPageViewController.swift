@@ -405,17 +405,17 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     @objc func onSaleManagerButton() {
         print("onSaleManagerButton")
-//        let vc = CertificateListController()
-//        vc.hidesBottomBarWhenPushed = true
-//        self.navigationController?.pushViewController(vc, animated: true)
-        Toast(text: "功能暂未开放").show()
+        let vc = CertificateListController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
+        //Toast(text: "功能暂未开放").show()
     }
     
     @objc func onCustomerButton() {
         print("onCustomerButton")
-//        let vc = ReceiptListController()
-//        self.navigationController?.pushViewController(vc, animated: true)
-        Toast(text: "功能暂未开放").show()
+        let vc = ReceiptListController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        //Toast(text: "功能暂未开放").show()
     }
     
     @objc func onScanPrizeButton() {

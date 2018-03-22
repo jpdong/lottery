@@ -15,11 +15,9 @@ class ReceiptItem :HandyJSON{
     static let add = 2
     
     var id:String?
-    var lottery_papers:String?
-    var lottery_papers_image:String?
-    var name:String?
-    var phone:String?
-    var address:String?
+    var create_date:String?
+    var notes:String?
+    var receipt_image:ReceiptImagesObject?
     
     required init() {
         
