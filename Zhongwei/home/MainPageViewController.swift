@@ -405,7 +405,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     @objc func onSaleManagerButton() {
         print("onSaleManagerButton")
-        let vc = CertificateListController()
+        let vc = SaleViewController()
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
         //Toast(text: "功能暂未开放").show()

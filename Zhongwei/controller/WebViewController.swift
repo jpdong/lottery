@@ -84,7 +84,7 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         }
         if (keyPath == "title") {
             print("title:\(webView.title)")
-            webNavigationItem.title = webView.title
+            //webNavigationItem.title = webView.title
         }
     }
     

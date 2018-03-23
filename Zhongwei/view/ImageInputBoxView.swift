@@ -41,7 +41,7 @@ class ImageInputBoxView:UIView{
         
         imageView.snp.makeConstraints { (maker) in
             maker.top.equalTo(titleLabel.snp.bottom).offset(16)
-            maker.left.equalTo(titleLabel.snp.right)
+            maker.right.equalTo(self)
             maker.width.equalTo(231)
             maker.height.equalTo(144)
         }

@@ -39,6 +39,7 @@ class ReceiptItemCell:UITableViewCell {
     }
     
     func setupViews() {
+        pictureView.contentMode = .scaleAspectFit
         addSubview(pictureView)
         addSubview(dateLabel)
         addSubview(noteLabel)
@@ -46,18 +47,20 @@ class ReceiptItemCell:UITableViewCell {
     
     func setupConstrains() {
         pictureView.snp.makeConstraints { (maker) in
-            maker.left.top.bottom.equalTo(self)
+            maker.left.equalTo(self).offset(16)
+            maker.top.equalTo(self).offset(8)
+            maker.bottom.equalTo(self).offset(-8)
             maker.width.equalTo(self.frame.width * 0.3)
             
         }
         
         dateLabel.snp.makeConstraints { (maker) in
-            maker.left.equalTo(pictureView.snp.right)
-            maker.top.equalTo(self)
+            maker.left.equalTo(pictureView.snp.right).offset(8)
+            maker.top.equalTo(pictureView).offset(8)
         }
         noteLabel.snp.makeConstraints { (maker) in
             maker.left.equalTo(dateLabel)
-            maker.top.equalTo(dateLabel.snp.bottom)
+            maker.top.equalTo(dateLabel.snp.bottom).offset(16)
         }
     }
 }

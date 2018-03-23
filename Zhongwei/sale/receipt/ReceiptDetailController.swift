@@ -12,7 +12,7 @@ import Toaster
 import SnapKit
 
 class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    var noteLabel:UILabel!
+    var noteLabel:UITextView!
     var receiptItem:ReceiptItem?
     var scrollView:UIScrollView!
     var preViewController:ReceiptListController?
@@ -38,13 +38,15 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
         let optionButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(showOptionList))
         self.navigationItem.rightBarButtonItem = optionButton
         
-        noteLabel = UILabel()
+        noteLabel = UITextView()
+        noteLabel.font = UIFont.systemFont(ofSize:17)
         noteLabel.text = receiptItem?.notes
+        noteLabel.isEditable = false
         
         imageCollectionLayout = UICollectionViewFlowLayout()
         imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: imageCollectionLayout)
         imageCollectionView.alwaysBounceVertical = true
-        imageCollectionView.backgroundColor = UIColor(red: 244 / 255.0, green: 244 / 255.0, blue: 244 / 255.0, alpha: 1)
+         imageCollectionView.backgroundColor = UIColor.white
         imageCollectionView.contentInset = UIEdgeInsetsMake(4, 4, 4, 4)
         imageCollectionView.dataSource = self
         imageCollectionView.delegate = self
@@ -58,12 +60,15 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
     
     func setupConstrains() {
         noteLabel.snp.makeConstraints { (maker) in
-            maker.top.left.right.equalTo(self.view)
+            maker.top.equalTo(self.view).offset(Size.instance.statusBarHeight + Size.instance.navigationBarHeight)
+            maker.left.equalTo(self.view).offset(16)
+            maker.right.equalTo(self.view).offset(-8)
             maker.height.equalTo(self.view.frame.height * 0.3)
         }
         imageCollectionView.snp.makeConstraints { (maker) in
             maker.top.equalTo(noteLabel.snp.bottom)
-            maker.left.right.equalTo(self.view)
+            maker.left.equalTo(self.view).offset(16)
+            maker.right.equalTo(self.view).offset(-8)
             maker.bottom.equalTo(self.view)
             
         }
@@ -72,7 +77,7 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
     
     override func viewDidLayoutSubviews() {
         let margin:CGFloat = 4
-        let itemWH = (self.view.frame.width - 2 * margin - 4) / 3 - margin
+        let itemWH = self.view.frame.width * 0.25
         imageCollectionLayout.itemSize = CGSize(width:itemWH, height:itemWH)
         imageCollectionLayout.minimumInteritemSpacing = margin
         imageCollectionLayout.minimumLineSpacing = margin
@@ -98,6 +103,12 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
         cell.deleteButton?.isHidden = true
         cell.imageView?.isUserInteractionEnabled = false
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = PreviewImageController()
+        vc.imageUrl = imageUrls[indexPath.row]
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc func showOptionList() {
@@ -144,6 +155,7 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
     
     func updateView(data:ReceiptItem) {
         receiptItem = data
+        noteLabel.text = receiptItem?.notes
         imageUrls = receiptItem?.receipt_image?.receipt_image
         imageCollectionView.reloadData()
     }

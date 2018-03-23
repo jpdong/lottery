@@ -130,6 +130,7 @@
 		8ECF7C29205294F100738D0B /* ClosableWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF7C28205294F100738D0B /* ClosableWebView.swift */; };
 		8ECF7C2B20529AF500738D0B /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF7C2A20529AF500738D0B /* MainPresenter.swift */; };
 		8ED2425F202417CA00303DB4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED2425E202417CA00303DB4 /* AboutViewController.swift */; };
+		8EE4FFD22064FFAE0018387B /* PreviewImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */; };
 		8EF0BFD2202854A200401540 /* PrizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0BFD1202854A200401540 /* PrizeViewController.swift */; };
 		8EF0BFD42028557300401540 /* PrizeRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0BFD32028557300401540 /* PrizeRecordController.swift */; };
 		8EFA2D3A1FE8B37D005C890E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA2D391FE8B37D005C890E /* AppDelegate.swift */; };
@@ -311,6 +312,7 @@
 		8ECF7C28205294F100738D0B /* ClosableWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosableWebView.swift; sourceTree = "<group>"; };
 		8ECF7C2A20529AF500738D0B /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		8ED2425E202417CA00303DB4 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageController.swift; sourceTree = "<group>"; };
 		8EF0BFD1202854A200401540 /* PrizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrizeViewController.swift; sourceTree = "<group>"; };
 		8EF0BFD32028557300401540 /* PrizeRecordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrizeRecordController.swift; sourceTree = "<group>"; };
 		8EFA2D361FE8B37D005C890E /* Zhongwei.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zhongwei.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -409,6 +411,7 @@
 				8E3E926D205FA0F400F71EF9 /* ReceiptListController.swift */,
 				8E3E926F205FA0F400F71EF9 /* ReceiptPresenter.swift */,
 				8E3DCDE82060BDC8000180E1 /* ReceiptImageCell.swift */,
+				8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */,
 			);
 			path = receipt;
 			sourceTree = "<group>";
@@ -941,6 +944,7 @@
 				8E1A112E20453C2C00A0B6BC /* LoginViewControllerCode.swift in Sources */,
 				8E219E42205A2614002F0DAC /* TextInputBoxView.swift in Sources */,
 				8E121FF7204D5F1300C5CCD8 /* MessageEntity.swift in Sources */,
+				8EE4FFD22064FFAE0018387B /* PreviewImageController.swift in Sources */,
 				8E219E44205A44D9002F0DAC /* ImageInputBoxView.swift in Sources */,
 				8E3E9305205FBCE100F71EF9 /* TZGifPhotoPreviewController.m in Sources */,
 				8E3E9276205FA0F400F71EF9 /* AddReceiptController.swift in Sources */,

@@ -99,13 +99,13 @@ class CertificateDetailController:UIViewController {
             maker.height.equalTo(60)
             maker.top.equalTo(idInputBox.snp.bottom)
             maker.left.equalTo(scrollView).offset(16)
-            maker.width.equalTo(scrollView)
+            maker.right.equalTo(self.view).offset(-8)
         }
         imageInputBox.snp.makeConstraints { (maker) in
             maker.height.equalTo(200)
             maker.top.equalTo(addressInfoBox.snp.bottom)
             maker.left.equalTo(scrollView).offset(16)
-            maker.width.equalTo(scrollView)
+            maker.right.equalTo(self.view)
         }
         
     }

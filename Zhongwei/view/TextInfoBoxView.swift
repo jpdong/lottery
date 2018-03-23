@@ -28,6 +28,8 @@ class TextInfoBoxView:UIView {
     func setupViews() {
         titleLabel = UILabel()
         messageLabel = UILabel()
+        messageLabel.numberOfLines = 0
+        messageLabel.lineBreakMode = .byWordWrapping
         addSubview(titleLabel)
         addSubview(messageLabel)
     }
@@ -41,8 +43,8 @@ class TextInfoBoxView:UIView {
         
         messageLabel.snp.makeConstraints { (maker) in
             maker.centerY.equalTo(self)
-            maker.left.equalTo(titleLabel.snp.right).offset(10)
-            maker.right.equalTo(self)
+            maker.left.equalTo(titleLabel.snp.right).offset(16)
+            maker.right.equalTo(self).offset(-8)
         }
     }
 }

@@ -35,6 +35,7 @@ class AddCertificateController:UIViewController {
     }
     
     func setupViews() {
+        self.navigationItem.title = "添加"
         navigationBarHeight = Size.instance.navigationBarHeight
         statusBarHeight = Size.instance.statusBarHeight
         navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight!, width:self.view.frame.width, height:navigationBarHeight!))
@@ -91,6 +92,7 @@ class AddCertificateController:UIViewController {
             idInputBox.textField.text = editableItem?.lottery_papers
             imageUrl = editableItem?.lottery_papers_image
             imageInputBox.imageView.kf.setImage(with: URL(string:imageUrl!))
+            editNavigationItem.title = "编辑"
         }
     }
     
@@ -117,7 +119,7 @@ class AddCertificateController:UIViewController {
             maker.height.equalTo(200)
             maker.top.equalTo(idInputBox.snp.bottom)
             maker.left.equalTo(self.view).offset(16)
-            maker.width.equalTo(self.view)
+            maker.right.equalTo(self.view).offset(-8)
         }
         submitButton.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(self.view)

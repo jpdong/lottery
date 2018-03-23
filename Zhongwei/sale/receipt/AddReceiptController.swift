@@ -12,7 +12,7 @@ import Toaster
 
 class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollectionViewDataSource, TZImagePickerControllerDelegate {
     
-    var textField:UITextField!
+    var textField:UITextView!
     var submitButton:UIButton!
     var submitIndicator:UIActivityIndicatorView!
     var imageIndicator:UIActivityIndicatorView!
@@ -56,6 +56,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     }
     
     func setupViews() {
+        self.navigationItem.title = "添加"
         navigationBarHeight = Size.instance.navigationBarHeight
         statusBarHeight = Size.instance.statusBarHeight
         navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight!, width:self.view.frame.width, height:navigationBarHeight!))
@@ -68,13 +69,14 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         self.view.addSubview(navigationBar!)
         self.view.backgroundColor = UIColor.white
         
-        textField = UITextField()
-        textField.placeholder = "请输入备注信息"
+        textField = UITextView()
+        textField.font = UIFont.systemFont(ofSize:17)
+        textField.becomeFirstResponder()
         
         imageCollectionLayout = UICollectionViewFlowLayout()
         imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: imageCollectionLayout)
         imageCollectionView.alwaysBounceVertical = true
-        imageCollectionView.backgroundColor = UIColor(red: 244 / 255.0, green: 244 / 255.0, blue: 244 / 255.0, alpha: 1)
+        imageCollectionView.backgroundColor = UIColor.white
         imageCollectionView.contentInset = UIEdgeInsetsMake(4, 4, 4, 4)
         imageCollectionView.dataSource = self
         imageCollectionView.delegate = self
@@ -101,7 +103,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         textField.snp.makeConstraints { (maker) in
             maker.top.equalTo(navigationBar.snp.bottom)
             maker.left.right.equalTo(self.view)
-            maker.height.equalTo(self.view.frame.height * 0.3)
+            maker.height.equalTo(self.view.frame.height * 0.2)
         }
         imageCollectionView.snp.makeConstraints { (maker) in
             maker.top.equalTo(textField.snp.bottom)
@@ -131,12 +133,10 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     
     override func viewDidLayoutSubviews() {
         let margin:CGFloat = 4
-        let itemWH = (self.view.frame.width - 2 * margin - 4) / 3 - margin
+        let itemWH = self.view.frame.width * 0.25
         imageCollectionLayout.itemSize = CGSize(width:itemWH, height:itemWH)
         imageCollectionLayout.minimumInteritemSpacing = margin
         imageCollectionLayout.minimumLineSpacing = margin
-        //imageCollectionView.setCollectionViewLayout(<#T##layout: UICollectionViewLayout##UICollectionViewLayout#>, animated: <#T##Bool#>)
-        
     }
     
     func setupData() {
@@ -145,7 +145,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         if (type == ReceiptItem.edit) {
             textField.text = editableItem?.notes
             imageUrls = editableItem?.receipt_image?.receipt_image
-            Log("count:\(imageUrls.count)")
+            editNavigationItem.title = "编辑"
         }
     }
     
@@ -206,6 +206,12 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = PreviewImageController()
+        vc.imageUrl = imageUrls[indexPath.row]
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     @objc func deleteClick(sender:UITapGestureRecognizer) {
         self.imageUrls.remove(at: sender.view!.tag)
         self.imageCollectionView.reloadData()
@@ -228,7 +234,10 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     }
     
     @objc func submitReceipt() {
-        Log("")
+        if (imageUrls.count == 0) {
+            Toast(text: "未上传收据图片").show()
+            return
+        }
         var text = textField.text
         var input:String!
         if let text = textField.text {
@@ -332,5 +341,9 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         } else {
             return true
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }

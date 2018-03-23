@@ -11,9 +11,8 @@ import RxSwift
 import Toaster
 import ESPullToRefresh
 
-class ReceiptListController:UIViewController ,UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, TZImagePickerControllerDelegate {
+class ReceiptListController:UIViewController, UITableViewDataSource, UITableViewDelegate, TZImagePickerControllerDelegate {
     
-    var searchBar:UISearchBar!
     var tableView:UITableView!
     var currentPage:Int = 1
     
@@ -31,14 +30,11 @@ class ReceiptListController:UIViewController ,UISearchBarDelegate, UITableViewDa
         self.navigationItem.title = "收据管理"
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addReceipt))
         self.navigationItem.rightBarButtonItem = addButton
-        searchBar = UISearchBar()
         tableView = UITableView()
-        searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 120
         tableView.register(ReceiptItemCell.self, forCellReuseIdentifier: "ReceiptItemCell")
-        self.view.addSubview(searchBar)
         self.view.addSubview(tableView)
         
         tableView.es.addPullToRefresh {
@@ -50,13 +46,8 @@ class ReceiptListController:UIViewController ,UISearchBarDelegate, UITableViewDa
     }
     
     func setupConstrains() {
-        searchBar.snp.makeConstraints { (maker) in
-            maker.top.equalTo(self.view).offset(Size.instance.statusBarHeight + Size.instance.navigationBarHeight)
-            maker.left.right.equalTo(self.view)
-        }
-        
         tableView.snp.makeConstraints { (maker) in
-            maker.top.equalTo(searchBar.snp.bottom)
+            maker.top.equalTo(self.view).offset(Size.instance.statusBarHeight + Size.instance.navigationBarHeight)
             maker.left.right.equalTo(self.view)
             maker.bottom.equalTo(self.view)
         }
@@ -92,11 +83,6 @@ class ReceiptListController:UIViewController ,UISearchBarDelegate, UITableViewDa
             })
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        Log(searchText)
-    }
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return receiptItems.count
     }
@@ -119,7 +105,6 @@ class ReceiptListController:UIViewController ,UISearchBarDelegate, UITableViewDa
         }
         cell.dateLabel.text = item.create_date
         cell.noteLabel.text = item.notes
-        cell.pictureView.contentMode = .scaleAspectFit
         if (item.receipt_image!.receipt_image!.count != 0 ){
             cell.pictureView.kf.setImage(with: URL(string:item.receipt_image!.receipt_image![0]))
         }
