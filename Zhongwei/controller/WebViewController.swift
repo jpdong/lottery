@@ -112,8 +112,7 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
     
     func hasNetwork() -> Bool{
         let reachability = Reachability()
-        Log(reachability!.connection)
-        if (reachability!.connection != .none) {
+        if (reachability?.connection != .none) {
             return true
         } else {
             return false

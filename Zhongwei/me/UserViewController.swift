@@ -52,7 +52,6 @@ class UserViewController:UITableViewController{
             Presenter.checkSid(sid:sid!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
-                    Log(result.code)
                     if (result.code == 0) {
                         let phoneNum = self.app?.globalData?.phoneNum
                         self.userInfoCell.nickNameLabel.text = phoneNum

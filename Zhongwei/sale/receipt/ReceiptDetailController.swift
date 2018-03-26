@@ -51,7 +51,7 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
         imageCollectionView.dataSource = self
         imageCollectionView.delegate = self
         imageCollectionView.keyboardDismissMode = .onDrag
-        imageCollectionView.register(ReceiptImageCell.self, forCellWithReuseIdentifier: "ReceiptImageCell")
+        imageCollectionView.register(ImageCell.self, forCellWithReuseIdentifier: "ImageCell")
         self.view.addSubview(imageCollectionView)
         //imageCollectionView.backgroundColor = UIColor.green
         imageUrls = receiptItem?.receipt_image?.receipt_image
@@ -96,7 +96,7 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReceiptImageCell", for: indexPath) as? ReceiptImageCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCell else {
             return UICollectionViewCell()
         }
         cell.imageView?.kf.setImage(with: URL(string:imageUrls[indexPath.row]))

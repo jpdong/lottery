@@ -81,7 +81,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         imageCollectionView.dataSource = self
         imageCollectionView.delegate = self
         imageCollectionView.keyboardDismissMode = .onDrag
-        imageCollectionView.register(ReceiptImageCell.self, forCellWithReuseIdentifier: "ReceiptImageCell")
+        imageCollectionView.register(ImageCell.self, forCellWithReuseIdentifier: "ImageCell")
         self.view.addSubview(imageCollectionView)
         //imageCollectionView.backgroundColor = UIColor.green
         
@@ -158,46 +158,46 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        if (type == ReceiptItem.add) {
-//        return selectedImages.count + 1 > 6 ? 6 : selectedImages.count + 1
-//        } else {
-            //if (selectedImages.count == 0) {
-            return imageUrls.count + 1 > 6 ? 6 : imageUrls.count + 1
-            //} else {
-             //   return selectedImages.count + 1 > 6 ? 6 : selectedImages.count + 1
-            //}
+        //        if (type == ReceiptItem.add) {
+        //        return selectedImages.count + 1 > 6 ? 6 : selectedImages.count + 1
+        //        } else {
+        //if (selectedImages.count == 0) {
+        return imageUrls.count + 1 > 6 ? 6 : imageUrls.count + 1
+        //} else {
+        //   return selectedImages.count + 1 > 6 ? 6 : selectedImages.count + 1
+        //}
         //}
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let tapAdd = UITapGestureRecognizer(target: self, action: #selector(addPictures))
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReceiptImageCell", for: indexPath) as! ReceiptImageCell
-//        if (type == ReceiptItem.add) {
-//            if (selectedImages.count < 6 && indexPath.row == selectedImages.count) {
-//                cell.imageView?.image = UIImage(named:"button_add_receipt")
-//                cell.deleteButton?.isHidden = true
-//                cell.imageView?.isUserInteractionEnabled = true
-//                cell.imageView?.addGestureRecognizer(tapAdd)
-//            } else {
-//
-//                cell.imageView?.image = selectedImages[indexPath.row]
-//
-//                cell.deleteButton?.isHidden = false
-//                cell.imageView?.isUserInteractionEnabled = false
-//                cell.imageView?.removeGestureRecognizer(tapAdd)
-//            }
-//        } else {
-            if (imageUrls.count < 6 && indexPath.row == imageUrls.count) {
-                cell.imageView?.image = UIImage(named:"button_add_receipt")
-                cell.deleteButton?.isHidden = true
-                cell.imageView?.isUserInteractionEnabled = true
-                cell.imageView?.addGestureRecognizer(tapAdd)
-            } else {
-                cell.imageView?.kf.setImage(with: URL(string:imageUrls[indexPath.row]))
-                cell.deleteButton?.isHidden = false
-                cell.imageView?.isUserInteractionEnabled = false
-                cell.imageView?.removeGestureRecognizer(tapAdd)
-            }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
+        //        if (type == ReceiptItem.add) {
+        //            if (selectedImages.count < 6 && indexPath.row == selectedImages.count) {
+        //                cell.imageView?.image = UIImage(named:"button_add_receipt")
+        //                cell.deleteButton?.isHidden = true
+        //                cell.imageView?.isUserInteractionEnabled = true
+        //                cell.imageView?.addGestureRecognizer(tapAdd)
+        //            } else {
+        //
+        //                cell.imageView?.image = selectedImages[indexPath.row]
+        //
+        //                cell.deleteButton?.isHidden = false
+        //                cell.imageView?.isUserInteractionEnabled = false
+        //                cell.imageView?.removeGestureRecognizer(tapAdd)
+        //            }
+        //        } else {
+        if (imageUrls.count < 6 && indexPath.row == imageUrls.count) {
+            cell.imageView?.image = UIImage(named:"button_add_receipt")
+            cell.deleteButton?.isHidden = true
+            cell.imageView?.isUserInteractionEnabled = true
+            cell.imageView?.addGestureRecognizer(tapAdd)
+        } else {
+            cell.imageView?.kf.setImage(with: URL(string:imageUrls[indexPath.row]))
+            cell.deleteButton?.isHidden = false
+            cell.imageView?.isUserInteractionEnabled = false
+            cell.imageView?.removeGestureRecognizer(tapAdd)
+        }
         //}
         
         cell.deleteButton?.tag = indexPath.row
@@ -292,20 +292,18 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
             if (selectedImages.contains(photo)) {
                 continue
             } else {
-                
-        
-                    imageIndicator.startAnimating()
-                    BusinessPresenter.uploadImage(image: photo)
-                        .observeOn(MainScheduler.instance)
-                        .subscribe(onNext: { (result) in
-                            self.imageIndicator.stopAnimating()
-                            if (result.code == 0) {
-                                self.imageUrls.append(result.message!)
-                                self.imageCollectionView.reloadData()
-                            } else {
-                                Toast(text:result.message ?? "").show()
-                            }
-                        })
+                imageIndicator.startAnimating()
+                BusinessPresenter.uploadImage(image: photo)
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { (result) in
+                        self.imageIndicator.stopAnimating()
+                        if (result.code == 0) {
+                            self.imageUrls.append(result.message!)
+                            self.imageCollectionView.reloadData()
+                        } else {
+                            Toast(text:result.message ?? "").show()
+                        }
+                    })
                 
             }
         }

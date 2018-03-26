@@ -47,7 +47,7 @@
 		8E353CEF2063CB4100724B58 /* SaleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E353CEE2063CB4100724B58 /* SaleViewController.swift */; };
 		8E395C38205695250026B2A1 /* AppUpdateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E395C37205695250026B2A1 /* AppUpdateEntity.swift */; };
 		8E395C3A205695D20026B2A1 /* AppUpdateResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E395C39205695D20026B2A1 /* AppUpdateResult.swift */; };
-		8E3DCDE92060BDC8000180E1 /* ReceiptImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCDE82060BDC8000180E1 /* ReceiptImageCell.swift */; };
+		8E3DCDE92060BDC8000180E1 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DCDE82060BDC8000180E1 /* ImageCell.swift */; };
 		8E3E2F19201B1E28006E2206 /* MeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3E2F18201B1E28006E2206 /* MeViewController.swift */; };
 		8E3E9267205F9FCC00F71EF9 /* CertificatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3E9261205F9FCC00F71EF9 /* CertificatePresenter.swift */; };
 		8E3E9268205F9FCC00F71EF9 /* CertificateListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3E9262205F9FCC00F71EF9 /* CertificateListController.swift */; };
@@ -94,6 +94,25 @@
 		8E55001820187DA8009E2AB0 /* DiscoverItemTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E55001720187DA8009E2AB0 /* DiscoverItemTemp.swift */; };
 		8E55FFFC20182539009E2AB0 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E55FFFB20182539009E2AB0 /* NewsViewController.swift */; };
 		8E55FFFE20182592009E2AB0 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E55FFFD20182592009E2AB0 /* DiscoverViewController.swift */; };
+		8E57BBD420688E380038503E /* VisitItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBCE20688E370038503E /* VisitItem.swift */; };
+		8E57BBD520688E380038503E /* VisitListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBCF20688E370038503E /* VisitListController.swift */; };
+		8E57BBD620688E380038503E /* VisitItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBD020688E380038503E /* VisitItemCell.swift */; };
+		8E57BBD720688E380038503E /* AddVisitRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBD120688E380038503E /* AddVisitRecordController.swift */; };
+		8E57BBD820688E380038503E /* VisitPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBD220688E380038503E /* VisitPresenter.swift */; };
+		8E57BBDE206891A00038503E /* VisitResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBDA206891A00038503E /* VisitResult.swift */; };
+		8E57BBDF206891A00038503E /* VisitListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBDB206891A00038503E /* VisitListEntity.swift */; };
+		8E57BBE0206891A00038503E /* VisitListResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBDC206891A00038503E /* VisitListResult.swift */; };
+		8E57BBE1206891A00038503E /* VisitEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBDD206891A00038503E /* VisitEntity.swift */; };
+		8E57BBE3206893EE0038503E /* VisitImagesObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBE2206893EE0038503E /* VisitImagesObject.swift */; };
+		8E57BBE520689D990038503E /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBE420689D990038503E /* SearchViewController.swift */; };
+		8E57BBE82068A22A0038503E /* ShopListResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBE62068A22A0038503E /* ShopListResult.swift */; };
+		8E57BBE92068A22A0038503E /* ShopListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBE72068A22A0038503E /* ShopListEntity.swift */; };
+		8E57BBEC2068A2BE0038503E /* ShopItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBEB2068A2BE0038503E /* ShopItem.swift */; };
+		8E57BBEE2068A2E50038503E /* ShopItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBED2068A2E50038503E /* ShopItemCell.swift */; };
+		8E57BBF02068D1620038503E /* ShopPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBEF2068D1620038503E /* ShopPresenter.swift */; };
+		8E57BBF22068E66A0038503E /* ShopInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBF12068E66A0038503E /* ShopInfoView.swift */; };
+		8E57BBF42068F21D0038503E /* SignButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBF32068F21D0038503E /* SignButtonView.swift */; };
+		8E57BBF62068F22E0038503E /* SignLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E57BBF52068F22E0038503E /* SignLocationView.swift */; };
 		8E5DC161201745F900D421FE /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E5DC160201745F900D421FE /* TabBarController.swift */; };
 		8E61FB6D1FF341F400680E19 /* WeiChatLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E61FB6C1FF341F400680E19 /* WeiChatLogin.swift */; };
 		8E61FB701FF3470300680E19 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E61FB6F1FF3470300680E19 /* libc++.tbd */; };
@@ -214,7 +233,7 @@
 		8E353CEE2063CB4100724B58 /* SaleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleViewController.swift; sourceTree = "<group>"; };
 		8E395C37205695250026B2A1 /* AppUpdateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateEntity.swift; sourceTree = "<group>"; };
 		8E395C39205695D20026B2A1 /* AppUpdateResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUpdateResult.swift; sourceTree = "<group>"; };
-		8E3DCDE82060BDC8000180E1 /* ReceiptImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptImageCell.swift; sourceTree = "<group>"; };
+		8E3DCDE82060BDC8000180E1 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		8E3E2F18201B1E28006E2206 /* MeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeViewController.swift; sourceTree = "<group>"; };
 		8E3E9261205F9FCC00F71EF9 /* CertificatePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificatePresenter.swift; sourceTree = "<group>"; };
 		8E3E9262205F9FCC00F71EF9 /* CertificateListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateListController.swift; sourceTree = "<group>"; };
@@ -275,6 +294,25 @@
 		8E55001720187DA8009E2AB0 /* DiscoverItemTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverItemTemp.swift; sourceTree = "<group>"; };
 		8E55FFFB20182539009E2AB0 /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		8E55FFFD20182592009E2AB0 /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
+		8E57BBCE20688E370038503E /* VisitItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitItem.swift; sourceTree = "<group>"; };
+		8E57BBCF20688E370038503E /* VisitListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitListController.swift; sourceTree = "<group>"; };
+		8E57BBD020688E380038503E /* VisitItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitItemCell.swift; sourceTree = "<group>"; };
+		8E57BBD120688E380038503E /* AddVisitRecordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddVisitRecordController.swift; sourceTree = "<group>"; };
+		8E57BBD220688E380038503E /* VisitPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitPresenter.swift; sourceTree = "<group>"; };
+		8E57BBDA206891A00038503E /* VisitResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitResult.swift; sourceTree = "<group>"; };
+		8E57BBDB206891A00038503E /* VisitListEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitListEntity.swift; sourceTree = "<group>"; };
+		8E57BBDC206891A00038503E /* VisitListResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitListResult.swift; sourceTree = "<group>"; };
+		8E57BBDD206891A00038503E /* VisitEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitEntity.swift; sourceTree = "<group>"; };
+		8E57BBE2206893EE0038503E /* VisitImagesObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitImagesObject.swift; sourceTree = "<group>"; };
+		8E57BBE420689D990038503E /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		8E57BBE62068A22A0038503E /* ShopListResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopListResult.swift; sourceTree = "<group>"; };
+		8E57BBE72068A22A0038503E /* ShopListEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopListEntity.swift; sourceTree = "<group>"; };
+		8E57BBEB2068A2BE0038503E /* ShopItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopItem.swift; sourceTree = "<group>"; };
+		8E57BBED2068A2E50038503E /* ShopItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopItemCell.swift; sourceTree = "<group>"; };
+		8E57BBEF2068D1620038503E /* ShopPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopPresenter.swift; sourceTree = "<group>"; };
+		8E57BBF12068E66A0038503E /* ShopInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopInfoView.swift; sourceTree = "<group>"; };
+		8E57BBF32068F21D0038503E /* SignButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignButtonView.swift; sourceTree = "<group>"; };
+		8E57BBF52068F22E0038503E /* SignLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignLocationView.swift; sourceTree = "<group>"; };
 		8E5DC160201745F900D421FE /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8E61FB6C1FF341F400680E19 /* WeiChatLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeiChatLogin.swift; sourceTree = "<group>"; };
 		8E61FB6E1FF345DE00680E19 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
@@ -394,6 +432,10 @@
 		8E219E36205A1431002F0DAC /* sale */ = {
 			isa = PBXGroup;
 			children = (
+				8E57BBEA2068A2970038503E /* shop */,
+				8E3DCDE82060BDC8000180E1 /* ImageCell.swift */,
+				8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */,
+				8E57BBCD20688C110038503E /* visit */,
 				8E3E9260205F9FCC00F71EF9 /* certificate */,
 				8E3E925F205F9FCC00F71EF9 /* receipt */,
 				8E353CEE2063CB4100724B58 /* SaleViewController.swift */,
@@ -410,8 +452,6 @@
 				8E3E9272205FA0F400F71EF9 /* ReceiptItemCell.swift */,
 				8E3E926D205FA0F400F71EF9 /* ReceiptListController.swift */,
 				8E3E926F205FA0F400F71EF9 /* ReceiptPresenter.swift */,
-				8E3DCDE82060BDC8000180E1 /* ReceiptImageCell.swift */,
-				8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */,
 			);
 			path = receipt;
 			sourceTree = "<group>";
@@ -557,6 +597,32 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		8E57BBCD20688C110038503E /* visit */ = {
+			isa = PBXGroup;
+			children = (
+				8E57BBD120688E380038503E /* AddVisitRecordController.swift */,
+				8E57BBCE20688E370038503E /* VisitItem.swift */,
+				8E57BBD020688E380038503E /* VisitItemCell.swift */,
+				8E57BBCF20688E370038503E /* VisitListController.swift */,
+				8E57BBD220688E380038503E /* VisitPresenter.swift */,
+				8E57BBF32068F21D0038503E /* SignButtonView.swift */,
+				8E57BBF52068F22E0038503E /* SignLocationView.swift */,
+			);
+			path = visit;
+			sourceTree = "<group>";
+		};
+		8E57BBEA2068A2970038503E /* shop */ = {
+			isa = PBXGroup;
+			children = (
+				8E57BBE420689D990038503E /* SearchViewController.swift */,
+				8E57BBEB2068A2BE0038503E /* ShopItem.swift */,
+				8E57BBED2068A2E50038503E /* ShopItemCell.swift */,
+				8E57BBEF2068D1620038503E /* ShopPresenter.swift */,
+				8E57BBF12068E66A0038503E /* ShopInfoView.swift */,
+			);
+			path = shop;
+			sourceTree = "<group>";
+		};
 		8E5DC15F201745BE00D421FE /* controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -570,6 +636,12 @@
 		8E92BF16200EFC880090C646 /* entity */ = {
 			isa = PBXGroup;
 			children = (
+				8E57BBE72068A22A0038503E /* ShopListEntity.swift */,
+				8E57BBE62068A22A0038503E /* ShopListResult.swift */,
+				8E57BBDD206891A00038503E /* VisitEntity.swift */,
+				8E57BBDB206891A00038503E /* VisitListEntity.swift */,
+				8E57BBDC206891A00038503E /* VisitListResult.swift */,
+				8E57BBDA206891A00038503E /* VisitResult.swift */,
 				8E3E927A205FA48500F71EF9 /* ReceiptEntity.swift */,
 				8E3E927C205FA48600F71EF9 /* ReceiptListEntity.swift */,
 				8E3E9279205FA48500F71EF9 /* ReceiptListResult.swift */,
@@ -598,6 +670,7 @@
 				8E2C378B205BAADB0095B026 /* CertificateResult.swift */,
 				8EB47D5E206205DC0019B05D /* AlertDataResult.swift */,
 				8E24A0EB20626A0A0096294A /* ReceiptImagesObject.swift */,
+				8E57BBE2206893EE0038503E /* VisitImagesObject.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -903,12 +976,14 @@
 				8E3E9267205F9FCC00F71EF9 /* CertificatePresenter.swift in Sources */,
 				8E2C378A205BAAA50095B026 /* CertificateEntity.swift in Sources */,
 				8E3E9273205FA0F400F71EF9 /* ReceiptListController.swift in Sources */,
+				8E57BBE82068A22A0038503E /* ShopListResult.swift in Sources */,
 				8E3E9301205FBCE100F71EF9 /* TZPhotoPickerController.m in Sources */,
 				8E395C3A205695D20026B2A1 /* AppUpdateResult.swift in Sources */,
 				8E3E9303205FBCE100F71EF9 /* TZImagePickerController.m in Sources */,
 				8EC3C2322020680C001567E9 /* BusinessViewController.swift in Sources */,
 				8E2F6A0E2022C62B000704F6 /* UserViewController.swift in Sources */,
 				8E3E9304205FBCE100F71EF9 /* TZLocationManager.m in Sources */,
+				8E57BBEC2068A2BE0038503E /* ShopItem.swift in Sources */,
 				8E96F01C204E75E20060B612 /* BusinessStateEntity.swift in Sources */,
 				8E3E2F19201B1E28006E2206 /* MeViewController.swift in Sources */,
 				8E3E926A205F9FCC00F71EF9 /* CertificateItemCell.swift in Sources */,
@@ -920,9 +995,11 @@
 				8EC3C236202069D1001567E9 /* BusinessItem.swift in Sources */,
 				8E219E4C205A8C79002F0DAC /* TextInfoBoxView.swift in Sources */,
 				8E55001820187DA8009E2AB0 /* DiscoverItemTemp.swift in Sources */,
+				8E57BBD720688E380038503E /* AddVisitRecordController.swift in Sources */,
 				8E3E926B205F9FCC00F71EF9 /* AddCertificateController.swift in Sources */,
 				8E92BF18200EFC9B0090C646 /* ResponseEntity.swift in Sources */,
 				8E3E92FD205FBCE100F71EF9 /* TZPhotoPreviewController.m in Sources */,
+				8E57BBD520688E380038503E /* VisitListController.swift in Sources */,
 				8E20A3E52021B48C00B15AB2 /* MessageList.swift in Sources */,
 				8E2C378C205BAADB0095B026 /* CertificateResult.swift in Sources */,
 				8E66CF2120494C3900FC9E59 /* BusinessPresenter.swift in Sources */,
@@ -930,8 +1007,10 @@
 				8EF0BFD42028557300401540 /* PrizeRecordController.swift in Sources */,
 				8E55FFFE20182592009E2AB0 /* DiscoverViewController.swift in Sources */,
 				8E441B2B205137FF001D90C1 /* GridLayoutView.swift in Sources */,
+				8E57BBEE2068A2E50038503E /* ShopItemCell.swift in Sources */,
 				8E62AA9F20562349000847E3 /* ArticleUrlEntity.swift in Sources */,
 				8E92BF1A200EFDD90090C646 /* SidEntity.swift in Sources */,
+				8E57BBD620688E380038503E /* VisitItemCell.swift in Sources */,
 				8E3E9300205FBCE100F71EF9 /* TZImageManager.m in Sources */,
 				8E219E46205A776A002F0DAC /* CertificateListEntity.swift in Sources */,
 				8E3E926C205F9FCC00F71EF9 /* CertificateItem.swift in Sources */,
@@ -965,6 +1044,7 @@
 				8ECF7C2B20529AF500738D0B /* MainPresenter.swift in Sources */,
 				8E441B2D20513BF6001D90C1 /* ImageClickView.swift in Sources */,
 				8E1A93F02053D596001D02D7 /* ImageDataEntity.swift in Sources */,
+				8E57BBDF206891A00038503E /* VisitListEntity.swift in Sources */,
 				8E24A0EC20626A0A0096294A /* ReceiptImagesObject.swift in Sources */,
 				8E96F020204E9B0A0060B612 /* DiscoverPresenter.swift in Sources */,
 				8E3E9268205F9FCC00F71EF9 /* CertificateListController.swift in Sources */,
@@ -973,35 +1053,47 @@
 				8EFE4CD720592ED000C0B6E9 /* HomeNavigationController.swift in Sources */,
 				8ECF7C2720528A0A00738D0B /* BusinessItemCell.swift in Sources */,
 				8E3E92FC205FBCE100F71EF9 /* UIView+Layout.m in Sources */,
+				8E57BBE3206893EE0038503E /* VisitImagesObject.swift in Sources */,
 				8E441B232050DD19001D90C1 /* SlideGalleryView.swift in Sources */,
 				8E96F01E204E815A0060B612 /* GuideViewController.swift in Sources */,
 				8EC3C234202069BD001567E9 /* BusinessItemView.swift in Sources */,
 				8E55FFFC20182539009E2AB0 /* NewsViewController.swift in Sources */,
 				8E1A93F22053D62B001D02D7 /* ImageResult.swift in Sources */,
+				8E57BBF62068F22E0038503E /* SignLocationView.swift in Sources */,
 				8E5DC161201745F900D421FE /* TabBarController.swift in Sources */,
 				8EB47D5F206205DC0019B05D /* AlertDataResult.swift in Sources */,
+				8E57BBE92068A22A0038503E /* ShopListEntity.swift in Sources */,
 				8EC3C2382020705C001567E9 /* BusinessDetailView.swift in Sources */,
 				8ECF7C29205294F100738D0B /* ClosableWebView.swift in Sources */,
+				8E57BBD820688E380038503E /* VisitPresenter.swift in Sources */,
 				8EC2B5392019EE7B00C3181D /* ScanViewController.swift in Sources */,
 				8EC2B5372019E0BB00C3181D /* DetailViewController.swift in Sources */,
+				8E57BBE520689D990038503E /* SearchViewController.swift in Sources */,
+				8E57BBF02068D1620038503E /* ShopPresenter.swift in Sources */,
 				8E395C38205695250026B2A1 /* AppUpdateEntity.swift in Sources */,
+				8E57BBE1206891A00038503E /* VisitEntity.swift in Sources */,
+				8E57BBF42068F21D0038503E /* SignButtonView.swift in Sources */,
 				8EFA2D3C1FE8B37D005C890E /* WebViewController.swift in Sources */,
 				8E62AAA120562388000847E3 /* ArticleUrlResult.swift in Sources */,
 				8E55001320183122009E2AB0 /* ShopViewController.swift in Sources */,
+				8E57BBE0206891A00038503E /* VisitListResult.swift in Sources */,
 				8E61FB6D1FF341F400680E19 /* WeiChatLogin.swift in Sources */,
 				8ECF7C212052618400738D0B /* BigboardView.swift in Sources */,
 				8E219E48205A7906002F0DAC /* CertificateListResult.swift in Sources */,
+				8E57BBF22068E66A0038503E /* ShopInfoView.swift in Sources */,
 				8EC2B5352019D08000C3181D /* DiscoverItemView.swift in Sources */,
-				8E3DCDE92060BDC8000180E1 /* ReceiptImageCell.swift in Sources */,
+				8E3DCDE92060BDC8000180E1 /* ImageCell.swift in Sources */,
 				8E1A112C20450A6D00A0B6BC /* RegisterViewController.swift in Sources */,
 				8E3E92FA205FBCE100F71EF9 /* TZAssetModel.m in Sources */,
 				8E3E9269205F9FCC00F71EF9 /* CertificateDetailController.swift in Sources */,
+				8E57BBDE206891A00038503E /* VisitResult.swift in Sources */,
 				8E1A93EA205393E6001D02D7 /* ArticleData.swift in Sources */,
 				8E1A93EC205395E3001D02D7 /* BoardView.swift in Sources */,
 				8EC2B5312019C4FD00C3181D /* DiscoverItem.swift in Sources */,
 				8E3E92FF205FBCE100F71EF9 /* TZProgressView.m in Sources */,
 				8E3E927E205FA48600F71EF9 /* ReceiptEntity.swift in Sources */,
 				8E3E9302205FBCE100F71EF9 /* TZPhotoPreviewCell.m in Sources */,
+				8E57BBD420688E380038503E /* VisitItem.swift in Sources */,
 				8E3E9274205FA0F400F71EF9 /* ReceiptItem.swift in Sources */,
 				8E20A3E32021A40900B15AB2 /* MessageView.swift in Sources */,
 				8E121FF5204D5C3B00C5CCD8 /* UserPresenter.swift in Sources */,

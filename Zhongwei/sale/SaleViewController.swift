@@ -91,7 +91,7 @@ class SaleViewController:UIViewController {
     }
     
     @objc func showVisit() {
-        let vc = CertificateListController()
+        let vc = VisitListController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
