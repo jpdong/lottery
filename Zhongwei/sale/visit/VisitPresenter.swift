@@ -59,107 +59,21 @@ class VisitPresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func submitVisit(notes:String, imageUrls:[String]) ->Observable<Result> {
+    static func sign(longitude:Double, latitude:Double, status:Int, shopId:String) ->Observable<VisitListResult> {
         return Presenter.getSid()
             .flatMap{
                 sid in
-                return Observable<Result>.create {
+                return Observable<VisitListResult>.create {
                     observer -> Disposable in
-                    var visitImagesObject = VisitImagesObject()
-                    //visitImagesObject.visit_image = imageUrls
-                    var jsonString = visitImagesObject.toJSONString() as! String
-                    let parameters:Dictionary = ["sid":sid,"notes":notes, "Visit_image":jsonString]
+                    let parameters:Dictionary = ["sid":sid, "long":String(longitude), "lat":String(latitude), "status":String(status),"club_id":shopId]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/addVisit",method:.post,parameters:parameters).responseString{response in
-                        print("submitVisit ")
+                    Alamofire.request("\(BASE_URL)app/lottery/sign",method:.post,parameters:parameters).responseString{response in
+                        print("Visit list")
                         print("value: \(response.result.value)")
-                        var result:Result = Result()
+                        var result:VisitListResult = VisitListResult()
                         switch response.result {
                         case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                return
-                            }
-                            
-                            if (responseEntity.code == 0) {
-                                result.code = 0
-                                result.message = responseEntity.msg
-                            }else {
-                                result.code = 1
-                                result.message = responseEntity.msg
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
-                        observer.onNext(result)
-                    }
-                    return Disposables.create()
-                }
-            }
-            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
-    }
-    
-    static func editVisit(notes:String, imageUrls:[String],id:String) ->Observable<Result> {
-        return Presenter.getSid()
-            .flatMap{
-                sid in
-                return Observable<Result>.create {
-                    observer -> Disposable in
-                    var visitImagesObject = VisitImagesObject()
-                    //VisitImagesObject.Visit_image = imageUrls
-                    var jsonString = visitImagesObject.toJSONString() as! String
-                    let parameters:Dictionary = ["sid":sid,"notes":notes, "Visit_image":jsonString,"id":id]
-                    print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/modifyVisit",method:.post,parameters:parameters).responseString{response in
-                        print("edit ")
-                        print("value: \(response.result.value)")
-                        var result:Result = Result()
-                        switch response.result {
-                        case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                return
-                            }
-                            
-                            if (responseEntity.code == 0) {
-                                result.code = 0
-                                result.message = responseEntity.msg
-                            }else {
-                                result.code = 1
-                                result.message = responseEntity.msg
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
-                        observer.onNext(result)
-                    }
-                    return Disposables.create()
-                }
-            }
-            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
-    }
-    
-    static func getDetailWithId(_ id:String) ->Observable<VisitResult> {
-        return Presenter.getSid()
-            .flatMap{
-                sid in
-                return Observable<VisitResult>.create {
-                    observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid,"id":id]
-                    print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/getVisitDetail",method:.post,parameters:parameters).responseString{response in
-                        print("detai id ")
-                        print("value: \(response.result.value)")
-                        var result:VisitResult = VisitResult()
-                        switch response.result {
-                        case .success:
-                            guard let entity:VisitEntity = VisitEntity.deserialize(from: response.result.value as! String) as? VisitEntity else {
+                            guard let entity:VisitListEntity = VisitListEntity.deserialize(from: response.result.value as! String) as? VisitListEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
@@ -169,7 +83,7 @@ class VisitPresenter {
                             if (entity.code == 0) {
                                 result.code = 0
                                 result.message = entity.msg
-                                result.data = entity.data
+                                result.list = entity.data?.list
                             }else {
                                 result.code = 1
                                 result.message = entity.msg
@@ -178,46 +92,7 @@ class VisitPresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        observer.onNext(result)
-                    }
-                    return Disposables.create()
-                }
-            }
-            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
-    }
-    
-    static func deleteVisit(id:String) ->Observable<Result> {
-        return Presenter.getSid()
-            .flatMap{
-                sid in
-                return Observable<Result>.create {
-                    observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid,"id":id]
-                    print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/delVisit",method:.post,parameters:parameters).responseString{response in
-                        print("delete id ")
-                        print("value: \(response.result.value)")
-                        var result:Result = Result()
-                        switch response.result {
-                        case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                return
-                            }
-                            
-                            if (responseEntity.code == 0) {
-                                result.code = 0
-                                result.message = responseEntity.msg
-                            }else {
-                                result.code = 1
-                                result.message = responseEntity.msg
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
+                        
                         observer.onNext(result)
                     }
                     return Disposables.create()

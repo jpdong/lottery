@@ -16,4 +16,5 @@ pod 'SnapKit', '~> 4.0.0'
 pod 'Toaster'
 pod "ESPullToRefresh"
 pod 'TZImagePickerController'
+pod "PagingMenuController"
 end

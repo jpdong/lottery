@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8E01C7771FEA58250012E2CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E01C7751FEA58250012E2CE /* Main.storyboard */; };
+		8E0DEDEA2069E94B00FFD4EA /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0DEDE92069E94B00FFD4EA /* LocationTransform.swift */; };
+		8E0DEDF32069F4F200FFD4EA /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0DEDF22069F4F200FFD4EA /* GalleryViewController.swift */; };
 		8E121FF3204D504700C5CCD8 /* ImageUrlEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF2204D504700C5CCD8 /* ImageUrlEntity.swift */; };
 		8E121FF5204D5C3B00C5CCD8 /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF4204D5C3B00C5CCD8 /* UserPresenter.swift */; };
 		8E121FF7204D5F1300C5CCD8 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF6204D5F1300C5CCD8 /* MessageEntity.swift */; };
@@ -131,6 +133,16 @@
 		8E96F01C204E75E20060B612 /* BusinessStateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E96F01B204E75E20060B612 /* BusinessStateEntity.swift */; };
 		8E96F01E204E815A0060B612 /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E96F01D204E815A0060B612 /* GuideViewController.swift */; };
 		8E96F020204E9B0A0060B612 /* DiscoverPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E96F01F204E9B0A0060B612 /* DiscoverPresenter.swift */; };
+		8E9E2ED1206A405900289405 /* NoteDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9E2ECD206A405900289405 /* NoteDetailController.swift */; };
+		8E9E2ED2206A405900289405 /* AddNoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9E2ECE206A405900289405 /* AddNoteController.swift */; };
+		8E9E2ED3206A405900289405 /* NoteItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9E2ECF206A405900289405 /* NoteItem.swift */; };
+		8E9E2ED4206A405900289405 /* NoteItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9E2ED0206A405900289405 /* NoteItemCell.swift */; };
+		8E9E2ED6206A409000289405 /* NoteListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9E2ED5206A409000289405 /* NoteListController.swift */; };
+		8E9E2ED8206A431A00289405 /* NotePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9E2ED7206A431A00289405 /* NotePresenter.swift */; };
+		8E9E2EDD206A480800289405 /* NoteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9E2ED9206A480800289405 /* NoteEntity.swift */; };
+		8E9E2EDE206A480800289405 /* NoteResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9E2EDA206A480800289405 /* NoteResult.swift */; };
+		8E9E2EDF206A480800289405 /* NoteListResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9E2EDB206A480800289405 /* NoteListResult.swift */; };
+		8E9E2EE0206A480800289405 /* NoteListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9E2EDC206A480800289405 /* NoteListEntity.swift */; };
 		8EB47D5F206205DC0019B05D /* AlertDataResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB47D5E206205DC0019B05D /* AlertDataResult.swift */; };
 		8EC2B5312019C4FD00C3181D /* DiscoverItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5302019C4FD00C3181D /* DiscoverItem.swift */; };
 		8EC2B5352019D08000C3181D /* DiscoverItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC2B5342019D08000C3181D /* DiscoverItemView.swift */; };
@@ -200,6 +212,8 @@
 		6A84856AEDD70A279EC1E75F /* Pods_Zhongwei.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Zhongwei.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		878A4334FDF403A899AFB54E /* Pods-Zhongwei.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Zhongwei.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Zhongwei/Pods-Zhongwei.debug.xcconfig"; sourceTree = "<group>"; };
 		8E01C7761FEA58250012E2CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8E0DEDE92069E94B00FFD4EA /* LocationTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
+		8E0DEDF22069F4F200FFD4EA /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		8E121FF2204D504700C5CCD8 /* ImageUrlEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUrlEntity.swift; sourceTree = "<group>"; };
 		8E121FF4204D5C3B00C5CCD8 /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
 		8E121FF6204D5F1300C5CCD8 /* MessageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
@@ -332,6 +346,16 @@
 		8E96F01B204E75E20060B612 /* BusinessStateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessStateEntity.swift; sourceTree = "<group>"; };
 		8E96F01D204E815A0060B612 /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
 		8E96F01F204E9B0A0060B612 /* DiscoverPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPresenter.swift; sourceTree = "<group>"; };
+		8E9E2ECD206A405900289405 /* NoteDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteDetailController.swift; sourceTree = "<group>"; };
+		8E9E2ECE206A405900289405 /* AddNoteController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNoteController.swift; sourceTree = "<group>"; };
+		8E9E2ECF206A405900289405 /* NoteItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteItem.swift; sourceTree = "<group>"; };
+		8E9E2ED0206A405900289405 /* NoteItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteItemCell.swift; sourceTree = "<group>"; };
+		8E9E2ED5206A409000289405 /* NoteListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteListController.swift; sourceTree = "<group>"; };
+		8E9E2ED7206A431A00289405 /* NotePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePresenter.swift; sourceTree = "<group>"; };
+		8E9E2ED9206A480800289405 /* NoteEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteEntity.swift; sourceTree = "<group>"; };
+		8E9E2EDA206A480800289405 /* NoteResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteResult.swift; sourceTree = "<group>"; };
+		8E9E2EDB206A480800289405 /* NoteListResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteListResult.swift; sourceTree = "<group>"; };
+		8E9E2EDC206A480800289405 /* NoteListEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteListEntity.swift; sourceTree = "<group>"; };
 		8EB47D5E206205DC0019B05D /* AlertDataResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDataResult.swift; sourceTree = "<group>"; };
 		8EC2B5302019C4FD00C3181D /* DiscoverItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverItem.swift; sourceTree = "<group>"; };
 		8EC2B5342019D08000C3181D /* DiscoverItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverItemView.swift; sourceTree = "<group>"; };
@@ -429,9 +453,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8E0DEDED2069F4B200FFD4EA /* note */ = {
+			isa = PBXGroup;
+			children = (
+				8E9E2ED9206A480800289405 /* NoteEntity.swift */,
+				8E9E2EDC206A480800289405 /* NoteListEntity.swift */,
+				8E9E2EDB206A480800289405 /* NoteListResult.swift */,
+				8E9E2EDA206A480800289405 /* NoteResult.swift */,
+				8E9E2ED7206A431A00289405 /* NotePresenter.swift */,
+				8E9E2ED5206A409000289405 /* NoteListController.swift */,
+				8E9E2ECE206A405900289405 /* AddNoteController.swift */,
+				8E9E2ECD206A405900289405 /* NoteDetailController.swift */,
+				8E9E2ECF206A405900289405 /* NoteItem.swift */,
+				8E9E2ED0206A405900289405 /* NoteItemCell.swift */,
+			);
+			path = note;
+			sourceTree = "<group>";
+		};
+		8E0DEDEF2069F4C800FFD4EA /* gallery */ = {
+			isa = PBXGroup;
+			children = (
+				8E0DEDF22069F4F200FFD4EA /* GalleryViewController.swift */,
+			);
+			path = gallery;
+			sourceTree = "<group>";
+		};
 		8E219E36205A1431002F0DAC /* sale */ = {
 			isa = PBXGroup;
 			children = (
+				8E0DEDEF2069F4C800FFD4EA /* gallery */,
+				8E0DEDED2069F4B200FFD4EA /* note */,
 				8E57BBEA2068A2970038503E /* shop */,
 				8E3DCDE82060BDC8000180E1 /* ImageCell.swift */,
 				8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */,
@@ -446,6 +497,12 @@
 		8E3E925F205F9FCC00F71EF9 /* receipt */ = {
 			isa = PBXGroup;
 			children = (
+				8E24A0EB20626A0A0096294A /* ReceiptImagesObject.swift */,
+				8E3E927A205FA48500F71EF9 /* ReceiptEntity.swift */,
+				8E3E927C205FA48600F71EF9 /* ReceiptListEntity.swift */,
+				8E3E9279205FA48500F71EF9 /* ReceiptListResult.swift */,
+				8E3E927B205FA48600F71EF9 /* ReceiptResult.swift */,
+				8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */,
 				8E3E9270205FA0F400F71EF9 /* AddReceiptController.swift */,
 				8E3E9271205FA0F400F71EF9 /* ReceiptDetailController.swift */,
 				8E3E926E205FA0F400F71EF9 /* ReceiptItem.swift */,
@@ -462,6 +519,10 @@
 				8E3E9261205F9FCC00F71EF9 /* CertificatePresenter.swift */,
 				8E3E9262205F9FCC00F71EF9 /* CertificateListController.swift */,
 				8E3E9263205F9FCC00F71EF9 /* CertificateDetailController.swift */,
+				8E219E45205A776A002F0DAC /* CertificateListEntity.swift */,
+				8E219E47205A7906002F0DAC /* CertificateListResult.swift */,
+				8E2C3789205BAAA50095B026 /* CertificateEntity.swift */,
+				8E2C378B205BAADB0095B026 /* CertificateResult.swift */,
 				8E3E9264205F9FCC00F71EF9 /* CertificateItemCell.swift */,
 				8E3E9265205F9FCC00F71EF9 /* AddCertificateController.swift */,
 				8E3E9266205F9FCC00F71EF9 /* CertificateItem.swift */,
@@ -600,6 +661,11 @@
 		8E57BBCD20688C110038503E /* visit */ = {
 			isa = PBXGroup;
 			children = (
+				8E57BBE2206893EE0038503E /* VisitImagesObject.swift */,
+				8E57BBDD206891A00038503E /* VisitEntity.swift */,
+				8E57BBDB206891A00038503E /* VisitListEntity.swift */,
+				8E57BBDC206891A00038503E /* VisitListResult.swift */,
+				8E57BBDA206891A00038503E /* VisitResult.swift */,
 				8E57BBD120688E380038503E /* AddVisitRecordController.swift */,
 				8E57BBCE20688E370038503E /* VisitItem.swift */,
 				8E57BBD020688E380038503E /* VisitItemCell.swift */,
@@ -614,6 +680,8 @@
 		8E57BBEA2068A2970038503E /* shop */ = {
 			isa = PBXGroup;
 			children = (
+				8E57BBE72068A22A0038503E /* ShopListEntity.swift */,
+				8E57BBE62068A22A0038503E /* ShopListResult.swift */,
 				8E57BBE420689D990038503E /* SearchViewController.swift */,
 				8E57BBEB2068A2BE0038503E /* ShopItem.swift */,
 				8E57BBED2068A2E50038503E /* ShopItemCell.swift */,
@@ -636,17 +704,6 @@
 		8E92BF16200EFC880090C646 /* entity */ = {
 			isa = PBXGroup;
 			children = (
-				8E57BBE72068A22A0038503E /* ShopListEntity.swift */,
-				8E57BBE62068A22A0038503E /* ShopListResult.swift */,
-				8E57BBDD206891A00038503E /* VisitEntity.swift */,
-				8E57BBDB206891A00038503E /* VisitListEntity.swift */,
-				8E57BBDC206891A00038503E /* VisitListResult.swift */,
-				8E57BBDA206891A00038503E /* VisitResult.swift */,
-				8E3E927A205FA48500F71EF9 /* ReceiptEntity.swift */,
-				8E3E927C205FA48600F71EF9 /* ReceiptListEntity.swift */,
-				8E3E9279205FA48500F71EF9 /* ReceiptListResult.swift */,
-				8E3E927B205FA48600F71EF9 /* ReceiptResult.swift */,
-				8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */,
 				8E92BF19200EFDD90090C646 /* SidEntity.swift */,
 				8E4D9FB4202AB2D900C4BF21 /* PrizeEntity.swift */,
 				8EC9439620464CA000EB2B05 /* Result.swift */,
@@ -664,13 +721,7 @@
 				8E62AAA020562388000847E3 /* ArticleUrlResult.swift */,
 				8E395C37205695250026B2A1 /* AppUpdateEntity.swift */,
 				8E395C39205695D20026B2A1 /* AppUpdateResult.swift */,
-				8E219E45205A776A002F0DAC /* CertificateListEntity.swift */,
-				8E219E47205A7906002F0DAC /* CertificateListResult.swift */,
-				8E2C3789205BAAA50095B026 /* CertificateEntity.swift */,
-				8E2C378B205BAADB0095B026 /* CertificateResult.swift */,
 				8EB47D5E206205DC0019B05D /* AlertDataResult.swift */,
-				8E24A0EB20626A0A0096294A /* ReceiptImagesObject.swift */,
-				8E57BBE2206893EE0038503E /* VisitImagesObject.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -730,6 +781,7 @@
 				8EFA2D451FE8B37D005C890E /* Info.plist */,
 				8E61FB6E1FF345DE00680E19 /* BridgeHeader.h */,
 				8E92BF1D200F46C80090C646 /* Presenter.swift */,
+				8E0DEDE92069E94B00FFD4EA /* LocationTransform.swift */,
 			);
 			path = Zhongwei;
 			sourceTree = "<group>";
@@ -921,6 +973,7 @@
 				"${BUILT_PRODUCTS_DIR}/ESPullToRefresh/ESPullToRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/HandyJSON/HandyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/PagingMenuController/PagingMenuController.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
@@ -935,6 +988,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ESPullToRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HandyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PagingMenuController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
@@ -976,12 +1030,14 @@
 				8E3E9267205F9FCC00F71EF9 /* CertificatePresenter.swift in Sources */,
 				8E2C378A205BAAA50095B026 /* CertificateEntity.swift in Sources */,
 				8E3E9273205FA0F400F71EF9 /* ReceiptListController.swift in Sources */,
+				8E9E2ED1206A405900289405 /* NoteDetailController.swift in Sources */,
 				8E57BBE82068A22A0038503E /* ShopListResult.swift in Sources */,
 				8E3E9301205FBCE100F71EF9 /* TZPhotoPickerController.m in Sources */,
 				8E395C3A205695D20026B2A1 /* AppUpdateResult.swift in Sources */,
 				8E3E9303205FBCE100F71EF9 /* TZImagePickerController.m in Sources */,
 				8EC3C2322020680C001567E9 /* BusinessViewController.swift in Sources */,
 				8E2F6A0E2022C62B000704F6 /* UserViewController.swift in Sources */,
+				8E9E2ED3206A405900289405 /* NoteItem.swift in Sources */,
 				8E3E9304205FBCE100F71EF9 /* TZLocationManager.m in Sources */,
 				8E57BBEC2068A2BE0038503E /* ShopItem.swift in Sources */,
 				8E96F01C204E75E20060B612 /* BusinessStateEntity.swift in Sources */,
@@ -989,6 +1045,7 @@
 				8E3E926A205F9FCC00F71EF9 /* CertificateItemCell.swift in Sources */,
 				8ECF7C23205261BD00738D0B /* SmallboardView.swift in Sources */,
 				8ECF7C252052857200738D0B /* CustomerManagerList.swift in Sources */,
+				8E9E2ED2206A405900289405 /* AddNoteController.swift in Sources */,
 				8E441B27205123FB001D90C1 /* MainPageViewController.swift in Sources */,
 				8E3E9280205FA48600F71EF9 /* ReceiptListEntity.swift in Sources */,
 				8E20A3EB2021B73200B15AB2 /* MessageItem.swift in Sources */,
@@ -1007,6 +1064,7 @@
 				8EF0BFD42028557300401540 /* PrizeRecordController.swift in Sources */,
 				8E55FFFE20182592009E2AB0 /* DiscoverViewController.swift in Sources */,
 				8E441B2B205137FF001D90C1 /* GridLayoutView.swift in Sources */,
+				8E0DEDEA2069E94B00FFD4EA /* LocationTransform.swift in Sources */,
 				8E57BBEE2068A2E50038503E /* ShopItemCell.swift in Sources */,
 				8E62AA9F20562349000847E3 /* ArticleUrlEntity.swift in Sources */,
 				8E92BF1A200EFDD90090C646 /* SidEntity.swift in Sources */,
@@ -1015,6 +1073,7 @@
 				8E219E46205A776A002F0DAC /* CertificateListEntity.swift in Sources */,
 				8E3E926C205F9FCC00F71EF9 /* CertificateItem.swift in Sources */,
 				8E3E92FB205FBCE100F71EF9 /* NSBundle+TZImagePicker.m in Sources */,
+				8E9E2EDD206A480800289405 /* NoteEntity.swift in Sources */,
 				8E3E927D205FA48600F71EF9 /* ReceiptListResult.swift in Sources */,
 				8E66CF1F2049406C00FC9E59 /* IDCardViewController.swift in Sources */,
 				8EC9439920464DB700EB2B05 /* CodeEntity.swift in Sources */,
@@ -1024,11 +1083,13 @@
 				8E219E42205A2614002F0DAC /* TextInputBoxView.swift in Sources */,
 				8E121FF7204D5F1300C5CCD8 /* MessageEntity.swift in Sources */,
 				8EE4FFD22064FFAE0018387B /* PreviewImageController.swift in Sources */,
+				8E9E2EDF206A480800289405 /* NoteListResult.swift in Sources */,
 				8E219E44205A44D9002F0DAC /* ImageInputBoxView.swift in Sources */,
 				8E3E9305205FBCE100F71EF9 /* TZGifPhotoPreviewController.m in Sources */,
 				8E3E9276205FA0F400F71EF9 /* AddReceiptController.swift in Sources */,
 				8E92BF1E200F46C80090C646 /* Presenter.swift in Sources */,
 				8E1A93E6205391DB001D02D7 /* ContentResult.swift in Sources */,
+				8E0DEDF32069F4F200FFD4EA /* GalleryViewController.swift in Sources */,
 				8E3E9278205FA0F400F71EF9 /* ReceiptItemCell.swift in Sources */,
 				8E353CEF2063CB4100724B58 /* SaleViewController.swift in Sources */,
 				8E1A93E820539353001D02D7 /* MainNewsEntity.swift in Sources */,
@@ -1039,6 +1100,7 @@
 				8EF0BFD2202854A200401540 /* PrizeViewController.swift in Sources */,
 				8E4D9FB5202AB2D900C4BF21 /* PrizeEntity.swift in Sources */,
 				8E3E92F9205FBCE100F71EF9 /* TZVideoPlayerController.m in Sources */,
+				8E9E2EE0206A480800289405 /* NoteListEntity.swift in Sources */,
 				8E3E9275205FA0F400F71EF9 /* ReceiptPresenter.swift in Sources */,
 				8E3E9277205FA0F400F71EF9 /* ReceiptDetailController.swift in Sources */,
 				8ECF7C2B20529AF500738D0B /* MainPresenter.swift in Sources */,
@@ -1056,6 +1118,7 @@
 				8E57BBE3206893EE0038503E /* VisitImagesObject.swift in Sources */,
 				8E441B232050DD19001D90C1 /* SlideGalleryView.swift in Sources */,
 				8E96F01E204E815A0060B612 /* GuideViewController.swift in Sources */,
+				8E9E2ED4206A405900289405 /* NoteItemCell.swift in Sources */,
 				8EC3C234202069BD001567E9 /* BusinessItemView.swift in Sources */,
 				8E55FFFC20182539009E2AB0 /* NewsViewController.swift in Sources */,
 				8E1A93F22053D62B001D02D7 /* ImageResult.swift in Sources */,
@@ -1074,6 +1137,7 @@
 				8E57BBE1206891A00038503E /* VisitEntity.swift in Sources */,
 				8E57BBF42068F21D0038503E /* SignButtonView.swift in Sources */,
 				8EFA2D3C1FE8B37D005C890E /* WebViewController.swift in Sources */,
+				8E9E2EDE206A480800289405 /* NoteResult.swift in Sources */,
 				8E62AAA120562388000847E3 /* ArticleUrlResult.swift in Sources */,
 				8E55001320183122009E2AB0 /* ShopViewController.swift in Sources */,
 				8E57BBE0206891A00038503E /* VisitListResult.swift in Sources */,
@@ -1082,6 +1146,7 @@
 				8E219E48205A7906002F0DAC /* CertificateListResult.swift in Sources */,
 				8E57BBF22068E66A0038503E /* ShopInfoView.swift in Sources */,
 				8EC2B5352019D08000C3181D /* DiscoverItemView.swift in Sources */,
+				8E9E2ED8206A431A00289405 /* NotePresenter.swift in Sources */,
 				8E3DCDE92060BDC8000180E1 /* ImageCell.swift in Sources */,
 				8E1A112C20450A6D00A0B6BC /* RegisterViewController.swift in Sources */,
 				8E3E92FA205FBCE100F71EF9 /* TZAssetModel.m in Sources */,
@@ -1090,6 +1155,7 @@
 				8E1A93EA205393E6001D02D7 /* ArticleData.swift in Sources */,
 				8E1A93EC205395E3001D02D7 /* BoardView.swift in Sources */,
 				8EC2B5312019C4FD00C3181D /* DiscoverItem.swift in Sources */,
+				8E9E2ED6206A409000289405 /* NoteListController.swift in Sources */,
 				8E3E92FF205FBCE100F71EF9 /* TZProgressView.m in Sources */,
 				8E3E927E205FA48600F71EF9 /* ReceiptEntity.swift in Sources */,
 				8E3E9302205FBCE100F71EF9 /* TZPhotoPreviewCell.m in Sources */,
@@ -1207,7 +1273,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Zhong Wei He Zhong Business Management LLC (CQVSV2C85R)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1226,7 +1292,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1264,7 +1330,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing Zhong Wei He Zhong Business Management LLC (CQVSV2C85R)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1277,7 +1343,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1303,6 +1369,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = Zhongwei/BridgeHeader.h;
 				SWIFT_VERSION = 4.0;
@@ -1329,6 +1396,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = Zhongwei/BridgeHeader.h;
 				SWIFT_VERSION = 4.0;

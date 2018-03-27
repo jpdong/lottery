@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import Toaster
 import ESPullToRefresh
+import CoreLocation
 
 class VisitListController:UIViewController, UITableViewDataSource, UITableViewDelegate, TZImagePickerControllerDelegate {
     
@@ -167,9 +168,25 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getLocation()
+    }
     
-    
-    
+    func getLocation() {
+        let locationManager = CLLocationManager()
+        let status  = CLLocationManager.authorizationStatus()
+        if status == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+            return
+        }
+        if status == .denied || status == .restricted {
+            let alert = UIAlertController(title: "Location Services Disabled", message: "Please enable Location Services in Settings", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            present(alert, animated: true, completion: nil)
+            return
+        }
+    }
     
     
     func deleleItem(row:Int) {
