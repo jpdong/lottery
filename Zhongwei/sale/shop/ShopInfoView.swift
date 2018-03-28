@@ -31,13 +31,16 @@ class ShopInfoView:UIView {
     
     func setupViews() {
         nameLabel = UILabel()
+        nameLabel.font = UIFont.systemFont(ofSize: 15)
         phoneLabel = UILabel()
+        phoneLabel.font = UIFont.systemFont(ofSize: 15)
         addressLabel = UILabel()
-        nameIcon = UIImageView(image: UIImage(named:""))
+        addressLabel.font = UIFont.systemFont(ofSize: 15)
+        nameIcon = UIImageView(image: UIImage(named:"icon_name"))
         nameIcon.contentMode = .scaleAspectFit
-        phoneIcon = UIImageView(image: UIImage(named:""))
+        phoneIcon = UIImageView(image: UIImage(named:"icon_phone"))
         phoneIcon.contentMode = .scaleAspectFit
-        addressIcon = UIImageView(image: UIImage(named:""))
+        addressIcon = UIImageView(image: UIImage(named:"icon_address"))
         addressIcon.contentMode = .scaleAspectFit
         
         addSubview(nameIcon)
@@ -57,15 +60,15 @@ class ShopInfoView:UIView {
         phoneIcon.snp.makeConstraints { (maker) in
             maker.left.equalTo(nameIcon)
             maker.width.height.equalTo(nameIcon)
-            maker.top.equalTo(nameIcon.snp.bottom)
+            maker.top.equalTo(nameIcon.snp.bottom).offset(4)
         }
         addressIcon.snp.makeConstraints { (maker) in
             maker.left.equalTo(nameIcon)
             maker.width.height.equalTo(nameIcon)
-            maker.top.equalTo(phoneIcon.snp.bottom)
+            maker.top.equalTo(phoneIcon.snp.bottom).offset(4)
         }
         nameLabel.snp.makeConstraints { (maker) in
-            maker.left.equalTo(nameIcon)
+            maker.left.equalTo(nameIcon.snp.right).offset(8)
             maker.top.equalTo(nameIcon)
         }
         phoneLabel.snp.makeConstraints { (maker) in

@@ -17,15 +17,15 @@ class NotePresenter {
     static let app = UIApplication.shared.delegate as! AppDelegate
     static let BASE_URL = app.globalData!.baseUrl
     
-    static func getNoteList(pageIndex:Int, num:Int) ->Observable<NoteListResult> {
+    static func getNoteList(pageIndex:Int, num:Int,shopId:String) ->Observable<NoteListResult> {
         return Presenter.getSid()
             .flatMap{
                 sid in
                 return Observable<NoteListResult>.create {
                     observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num)]
+                    let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num),"club_id":shopId]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/logList ",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(BASE_URL)app/Lottery_manager/interviewLogList",method:.post,parameters:parameters).responseString{response in
                         print("Note list")
                         print("value: \(response.result.value)")
                         
@@ -60,15 +60,15 @@ class NotePresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func submitNote(_ name:String,_ phone:String,_ id:String,_ image:String) ->Observable<Result> {
+    static func submitNote(note:String,shopId:String) ->Observable<Result> {
         return Presenter.getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid,"name":name,"phone":phone, "lottery_papers":id, "lottery_papers_image":image]
+                    let parameters:Dictionary = ["sid":sid,"club_id":shopId,"question":note]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/lotteryBind",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(BASE_URL)app/Lottery_manager/addInterviewLog",method:.post,parameters:parameters).responseString{response in
                         print("submit ")
                         print("value: \(response.result.value)")
                         if (response.result.value == nil) {
@@ -104,15 +104,15 @@ class NotePresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func editNote(_ name:String,_ phone:String,_ cardId:String,_ imageUrl:String,_ itemId:String) ->Observable<Result> {
+    static func editNote(note:String, noteId:String) ->Observable<Result> {
         return Presenter.getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid,"name":name,"phone":phone, "lottery_papers":cardId, "lottery_papers_image":imageUrl,"id":itemId]
+                    let parameters:Dictionary = ["sid":sid,"id":noteId,"question":note]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/modifyLotteryBind",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(BASE_URL)app/Lottery_manager/modifyInterviewLog",method:.post,parameters:parameters).responseString{response in
                         print("edit ")
                         print("value: \(response.result.value)")
                         if (response.result.value == nil) {
@@ -156,7 +156,7 @@ class NotePresenter {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"id":id]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/getLotteryDetail",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(BASE_URL)app/Lottery_manager/getInterviewLogDetail",method:.post,parameters:parameters).responseString{response in
                         print("detai id ")
                         print("value: \(response.result.value)")
                         
@@ -199,7 +199,7 @@ class NotePresenter {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"id":id]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/delLottery",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(BASE_URL)delInterviewLog",method:.post,parameters:parameters).responseString{response in
                         print("delete id ")
                         print("value: \(response.result.value)")
                         

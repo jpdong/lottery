@@ -10,7 +10,7 @@ import Foundation
 
 class NoteItemCell:UITableViewCell {
     
-    var titleLabel:UILabel!
+    var noteLabel:UILabel!
     var dateLabel:UILabel!
     
     
@@ -37,21 +37,22 @@ class NoteItemCell:UITableViewCell {
     }
     
     func setupViews() {
-        titleLabel.font = UIFont.systemFont(ofSize:15)
+        noteLabel.font = UIFont.systemFont(ofSize:15)
         dateLabel.font = UIFont.systemFont(ofSize:15)
         
-        addSubview(titleLabel)
+        addSubview(noteLabel)
         addSubview(dateLabel)
     }
     
     func setupConstrains() {
-        titleLabel.snp.makeConstraints { (maker) in
+        noteLabel.snp.makeConstraints { (maker) in
             maker.top.equalTo(self)
             maker.left.equalTo(self)
+            maker.right.equalTo(self)
         }
         dateLabel.snp.makeConstraints { (maker) in
-            maker.left.equalTo(titleLabel)
-            maker.top.equalTo(titleLabel.snp.bottom).offset(8)
+            maker.left.right.equalTo(noteLabel)
+            maker.top.equalTo(noteLabel.snp.bottom).offset(8)
         }
     }
 }

@@ -11,13 +11,12 @@ import HandyJSON
 
 class VisitItem :HandyJSON{
     
-    static let edit = 1
-    static let add = 2
     
-    var id:String?
-    var create_date:String?
-    var notes:String?
-    var visit_image:VisitImagesObject?
+    var name:String?
+    var club_id:String?
+    var club_name:String?
+    var begin_time:String?
+    var end_time:String?
     
     required init() {
         

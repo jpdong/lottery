@@ -18,6 +18,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
     var noteItems = [NoteItem]()
     var addNoteButton:UIView!
     var buttonImageView:UIImageView!
+    var shopId:String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 60
-        tableView.register(ReceiptItemCell.self, forCellReuseIdentifier: "NoteItemCell")
+        tableView.register(NoteItemCell.self, forCellReuseIdentifier: "NoteItemCell")
         addNoteButton = UIView()
         addNoteButton.backgroundColor = UIColor.green
         buttonImageView = UIImageView(image:UIImage(named:""))
@@ -57,7 +58,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
         addNoteButton.snp.makeConstraints { (maker) in
             maker.top.equalTo(tableView.snp.bottom)
             maker.bottom.left.right.equalTo(self.view)
-            maker.height.equalTo(60)
+            maker.height.equalTo(50)
         }
     }
     
@@ -69,11 +70,10 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
     
     @objc func refreshData() {
         currentPage = 1
-        NotePresenter.getNoteList(pageIndex: currentPage, num: 10)
+        NotePresenter.getNoteList(pageIndex: currentPage, num: 10,shopId:shopId!)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 self.tableView.es.stopPullToRefresh()
-                //self.refreshControl.endRefreshing()
                 if (result.code == 0) {
                     self.noteItems.removeAll()
                     self.noteItems = self.noteItems + result.list!
@@ -85,7 +85,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func setupData(_ pageIndex:Int, _ num:Int) {
-        NotePresenter.getNoteList(pageIndex: pageIndex, num: num)
+        NotePresenter.getNoteList(pageIndex: pageIndex, num: num,shopId:shopId!)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -99,6 +99,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        Log(noteItems.count)
         return noteItems.count
     }
     
@@ -108,15 +109,15 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,for: indexPath) as? NoteItemCell else {
             return UITableViewCell()
         }
-        if (cell.titleLabel == nil) {
-            cell.titleLabel = UILabel()
+        if (cell.noteLabel == nil) {
+            cell.noteLabel = UILabel()
         }
         if (cell.dateLabel == nil) {
             cell.dateLabel = UILabel()
         }
-//        cell.dateLabel.text = item.create_date
-//        cell.noteLabel.text = item.notes
-        
+        Log(cell.dateLabel.text)
+        cell.dateLabel.text = item.update_date
+        cell.noteLabel.text = item.question
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
     }
@@ -132,7 +133,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
     func loadMore() {
         print("load more")
         currentPage = currentPage + 1
-        NotePresenter.getNoteList(pageIndex: currentPage, num: 10)
+        NotePresenter.getNoteList(pageIndex: currentPage, num: 10,shopId:shopId!)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -160,9 +161,14 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
         tableView.reloadData()
     }
     
+    func setShopId(id:String) {
+        shopId = id
+    }
+    
     @objc func addNote() {
         let vc = AddNoteController()
         vc.type = NoteItem.add
+        vc.shopId = shopId
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

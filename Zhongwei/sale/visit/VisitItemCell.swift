@@ -11,7 +11,9 @@ import Foundation
 class VisitItemCell:UITableViewCell {
     var pictureView: UIImageView!
     var dateLabel:UILabel!
-    var noteLabel:UILabel!
+    var shopNameLabel:UILabel!
+    var arriveLabel:UILabel!
+    var leaveLabel:UILabel!
     
     
     override func awakeFromNib() {
@@ -28,8 +30,6 @@ class VisitItemCell:UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        //setupViews()
-        //setupConstrains()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,28 +39,39 @@ class VisitItemCell:UITableViewCell {
     }
     
     func setupViews() {
-        pictureView.contentMode = .scaleAspectFit
+        backgroundColor = UIColor.clear
+        pictureView.contentMode = .scaleAspectFill
         addSubview(pictureView)
         addSubview(dateLabel)
-        addSubview(noteLabel)
+        addSubview(shopNameLabel)
+        addSubview(arriveLabel)
+        addSubview(leaveLabel)
     }
     
     func setupConstrains() {
+        dateLabel.snp.makeConstraints { (maker) in
+            maker.centerY.equalTo(self)
+            maker.left.equalTo(self)
+            maker.width.equalTo(100)
+        }
         pictureView.snp.makeConstraints { (maker) in
-            maker.left.equalTo(self).offset(16)
-            maker.top.equalTo(self).offset(8)
-            maker.bottom.equalTo(self).offset(-8)
-            maker.width.equalTo(self.frame.width * 0.3)
-            
+            maker.left.equalTo(dateLabel.snp.right).offset(16)
+            maker.top.equalTo(self)
+            maker.bottom.equalTo(self)
+            maker.right.equalTo(self).offset(-8)
         }
         
-        dateLabel.snp.makeConstraints { (maker) in
-            maker.left.equalTo(pictureView.snp.right).offset(8)
+        shopNameLabel.snp.makeConstraints { (maker) in
+            maker.left.equalTo(pictureView).offset(8)
             maker.top.equalTo(pictureView).offset(8)
         }
-        noteLabel.snp.makeConstraints { (maker) in
-            maker.left.equalTo(dateLabel)
-            maker.top.equalTo(dateLabel.snp.bottom).offset(16)
+        arriveLabel.snp.makeConstraints { (maker) in
+            maker.left.equalTo(shopNameLabel)
+            maker.top.equalTo(shopNameLabel.snp.bottom).offset(16)
+        }
+        leaveLabel.snp.makeConstraints { (maker) in
+            maker.left.equalTo(shopNameLabel)
+            maker.top.equalTo(arriveLabel.snp.bottom).offset(16)
         }
     }
 }

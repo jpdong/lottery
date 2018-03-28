@@ -31,10 +31,12 @@ class SignButtonView:UIView {
         backgroundImage.contentMode = .scaleAspectFit
         titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 15)
+        titleLabel.textColor = UIColor.white
         titleLabel.text = "到店打卡"
         timeLabel = UILabel()
-        timeLabel.font = UIFont.systemFont(ofSize: 15)
+        timeLabel.font = UIFont.systemFont(ofSize: 13)
         timeLabel.text = "00:00:04"
+        timeLabel.textColor = UIColor.white
         addSubview(backgroundImage)
         addSubview(titleLabel)
         addSubview(timeLabel)

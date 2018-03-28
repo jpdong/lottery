@@ -14,6 +14,7 @@ import CoreLocation
 
 class VisitListController:UIViewController, UITableViewDataSource, UITableViewDelegate, TZImagePickerControllerDelegate {
     
+    var backgroundView:UIImageView!
     var tableView:UITableView!
     var currentPage:Int = 1
     
@@ -27,7 +28,10 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func setupViews() {
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor.green
+        backgroundView = UIImageView(image:UIImage(named:"background_list_visit"))
+        backgroundView.contentMode = .scaleAspectFill
+        self.view.addSubview(backgroundView)
         self.navigationItem.title = "走访记录"
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addVisit))
         self.navigationItem.rightBarButtonItem = addButton
@@ -35,6 +39,8 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 120
+        tableView.backgroundColor = UIColor.clear
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         tableView.register(VisitItemCell.self, forCellReuseIdentifier: "VisitItemCell")
         self.view.addSubview(tableView)
         
@@ -51,6 +57,9 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
             maker.top.equalTo(self.view).offset(Size.instance.statusBarHeight + Size.instance.navigationBarHeight)
             maker.left.right.equalTo(self.view)
             maker.bottom.equalTo(self.view)
+        }
+        backgroundView.snp.makeConstraints { (maker) in
+            maker.left.right.top.bottom.equalTo(self.view)
         }
     }
     
@@ -97,18 +106,22 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
         if (cell.dateLabel == nil) {
             cell.dateLabel = UILabel()
         }
-        if (cell.noteLabel == nil) {
-            cell.noteLabel = UILabel()
+        if (cell.shopNameLabel == nil) {
+            cell.shopNameLabel = UILabel()
         }
-        
+        if (cell.arriveLabel == nil) {
+            cell.arriveLabel = UILabel()
+        }
+        if (cell.leaveLabel == nil) {
+            cell.leaveLabel = UILabel()
+        }
         if (cell.pictureView == nil) {
-            cell.pictureView = UIImageView()
+            cell.pictureView = UIImageView(image:UIImage(named:"background_item_visit"))
         }
-        cell.dateLabel.text = item.create_date
-        cell.noteLabel.text = item.notes
-//        if (item.Visit_image!.Visit_image!.count != 0 ){
-//            cell.pictureView.kf.setImage(with: URL(string:item.Visit_image!.Visit_image![0]))
-//        }
+        cell.dateLabel.text =  item.end_time
+        cell.arriveLabel.text = item.begin_time
+        cell.leaveLabel.text = item.end_time
+        cell.shopNameLabel.text = item.club_name
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
     }

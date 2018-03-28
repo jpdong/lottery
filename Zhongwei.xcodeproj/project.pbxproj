@@ -10,6 +10,9 @@
 		8E01C7771FEA58250012E2CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E01C7751FEA58250012E2CE /* Main.storyboard */; };
 		8E0DEDEA2069E94B00FFD4EA /* LocationTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0DEDE92069E94B00FFD4EA /* LocationTransform.swift */; };
 		8E0DEDF32069F4F200FFD4EA /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0DEDF22069F4F200FFD4EA /* GalleryViewController.swift */; };
+		8E104EAC206BA43500D2C63A /* GalleryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E104EAB206BA43500D2C63A /* GalleryPresenter.swift */; };
+		8E104EAF206BA50300D2C63A /* GalleryListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E104EAD206BA50300D2C63A /* GalleryListEntity.swift */; };
+		8E104EB0206BA50300D2C63A /* GalleryListResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E104EAE206BA50300D2C63A /* GalleryListResult.swift */; };
 		8E121FF3204D504700C5CCD8 /* ImageUrlEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF2204D504700C5CCD8 /* ImageUrlEntity.swift */; };
 		8E121FF5204D5C3B00C5CCD8 /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF4204D5C3B00C5CCD8 /* UserPresenter.swift */; };
 		8E121FF7204D5F1300C5CCD8 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E121FF6204D5F1300C5CCD8 /* MessageEntity.swift */; };
@@ -214,6 +217,9 @@
 		8E01C7761FEA58250012E2CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8E0DEDE92069E94B00FFD4EA /* LocationTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTransform.swift; sourceTree = "<group>"; };
 		8E0DEDF22069F4F200FFD4EA /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		8E104EAB206BA43500D2C63A /* GalleryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPresenter.swift; sourceTree = "<group>"; };
+		8E104EAD206BA50300D2C63A /* GalleryListEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryListEntity.swift; sourceTree = "<group>"; };
+		8E104EAE206BA50300D2C63A /* GalleryListResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryListResult.swift; sourceTree = "<group>"; };
 		8E121FF2204D504700C5CCD8 /* ImageUrlEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUrlEntity.swift; sourceTree = "<group>"; };
 		8E121FF4204D5C3B00C5CCD8 /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
 		8E121FF6204D5F1300C5CCD8 /* MessageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
@@ -473,7 +479,10 @@
 		8E0DEDEF2069F4C800FFD4EA /* gallery */ = {
 			isa = PBXGroup;
 			children = (
+				8E104EAD206BA50300D2C63A /* GalleryListEntity.swift */,
+				8E104EAE206BA50300D2C63A /* GalleryListResult.swift */,
 				8E0DEDF22069F4F200FFD4EA /* GalleryViewController.swift */,
+				8E104EAB206BA43500D2C63A /* GalleryPresenter.swift */,
 			);
 			path = gallery;
 			sourceTree = "<group>";
@@ -1030,6 +1039,7 @@
 				8E3E9267205F9FCC00F71EF9 /* CertificatePresenter.swift in Sources */,
 				8E2C378A205BAAA50095B026 /* CertificateEntity.swift in Sources */,
 				8E3E9273205FA0F400F71EF9 /* ReceiptListController.swift in Sources */,
+				8E104EB0206BA50300D2C63A /* GalleryListResult.swift in Sources */,
 				8E9E2ED1206A405900289405 /* NoteDetailController.swift in Sources */,
 				8E57BBE82068A22A0038503E /* ShopListResult.swift in Sources */,
 				8E3E9301205FBCE100F71EF9 /* TZPhotoPickerController.m in Sources */,
@@ -1048,6 +1058,7 @@
 				8E9E2ED2206A405900289405 /* AddNoteController.swift in Sources */,
 				8E441B27205123FB001D90C1 /* MainPageViewController.swift in Sources */,
 				8E3E9280205FA48600F71EF9 /* ReceiptListEntity.swift in Sources */,
+				8E104EAC206BA43500D2C63A /* GalleryPresenter.swift in Sources */,
 				8E20A3EB2021B73200B15AB2 /* MessageItem.swift in Sources */,
 				8EC3C236202069D1001567E9 /* BusinessItem.swift in Sources */,
 				8E219E4C205A8C79002F0DAC /* TextInfoBoxView.swift in Sources */,
@@ -1061,6 +1072,7 @@
 				8E2C378C205BAADB0095B026 /* CertificateResult.swift in Sources */,
 				8E66CF2120494C3900FC9E59 /* BusinessPresenter.swift in Sources */,
 				8E441B2920513252001D90C1 /* SliderGalleryController.swift in Sources */,
+				8E104EAF206BA50300D2C63A /* GalleryListEntity.swift in Sources */,
 				8EF0BFD42028557300401540 /* PrizeRecordController.swift in Sources */,
 				8E55FFFE20182592009E2AB0 /* DiscoverViewController.swift in Sources */,
 				8E441B2B205137FF001D90C1 /* GridLayoutView.swift in Sources */,

@@ -30,7 +30,8 @@ class SignLocationView:UIView {
         titleLable.font = UIFont.systemFont(ofSize: 15)
         titleLable.text = "打卡位置"
         updateLocationButton = UILabel()
-        updateLocationButton.font = UIFont.systemFont(ofSize: 15)
+        updateLocationButton.font = UIFont.systemFont(ofSize: 13)
+        updateLocationButton.textColor = UIColor.blue
         updateLocationButton.text = "点击重新定位"
         addSubview(titleLable)
         addSubview(updateLocationButton)
@@ -42,7 +43,8 @@ class SignLocationView:UIView {
         }
         updateLocationButton.snp.makeConstraints { (maker) in
             maker.left.equalTo(self)
-            maker.top.equalTo(titleLable.snp.bottom)
+            maker.width.equalTo(100)
+            maker.top.equalTo(titleLable.snp.bottom).offset(4)
         }
     }
 }

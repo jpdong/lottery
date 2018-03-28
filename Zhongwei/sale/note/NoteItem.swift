@@ -15,11 +15,11 @@ class NoteItem :HandyJSON{
     static let add = 2
     
     var id:String?
-    var lottery_papers:String?
-    var lottery_papers_image:String?
-    var name:String?
-    var phone:String?
-    var address:String?
+    var user_id:String?
+    var club_id:String?
+    var question:String?
+    var create_date:String?
+    var update_date:String?
     
     required init() {
         

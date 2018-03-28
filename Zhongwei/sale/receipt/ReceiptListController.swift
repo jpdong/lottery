@@ -70,19 +70,6 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
             })
     }
     
-    func setupData(_ pageIndex:Int, _ num:Int) {
-        ReceiptPresenter.getReceiptList(pageIndex: pageIndex, num: num)
-        .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (result) in
-                if (result.code == 0) {
-                    self.receiptItems = self.receiptItems + result.list!
-                    Log(result.list)
-                    Log(self.receiptItems)
-                    self.tableView.reloadData()
-                }
-            })
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return receiptItems.count
     }
