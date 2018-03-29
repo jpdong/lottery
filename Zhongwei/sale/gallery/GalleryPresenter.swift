@@ -17,34 +17,36 @@ class GalleryPresenter {
     static let app = UIApplication.shared.delegate as! AppDelegate
     static let BASE_URL = app.globalData!.baseUrl
     
-    static func getGalleryList(pageIndex:Int, num:Int,shopId:String) ->Observable<NoteListResult> {
+    static func getGalleryList(pageIndex:Int, num:Int,shopId:String) ->Observable<GalleryListResult> {
         return Presenter.getSid()
             .flatMap{
                 sid in
-                return Observable<NoteListResult>.create {
+                return Observable<GalleryListResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num),"club_id":shopId]
                     print("parameters:\(parameters)")
                     Alamofire.request("\(BASE_URL)app/Lottery_manager/interviewImagesList",method:.post,parameters:parameters).responseString{response in
                         print("gallery list")
                         print("value: \(response.result.value)")
-                        var result:NoteListResult = NoteListResult()
+                        var result:GalleryListResult = GalleryListResult()
                         switch response.result {
                         case .success:
-                            guard let noteListEntity:NoteListEntity = NoteListEntity.deserialize(from: response.result.value as! String) as? NoteListEntity else {
+                            guard let entity:GalleryListEntity = GalleryListEntity.deserialize(from: response.result.value as! String) as? GalleryListEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
                                 return
                             }
-                            
-                            if (noteListEntity.code == 0) {
+                            if (entity.code == 0) {
                                 result.code = 0
-                                result.message = noteListEntity.msg
-                                result.list = noteListEntity.data?.list
-                            }else {
+                                result.message = entity.msg
+                                var imageUrls = [String]()
+                                
+                                
+                                
+                            } else {
                                 result.code = 1
-                                result.message = noteListEntity.msg
+                                result.message = entity.msg
                             }
                         case .failure(let error):
                             result.code = 1

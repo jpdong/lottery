@@ -36,8 +36,8 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
         tableView.rowHeight = 60
         tableView.register(NoteItemCell.self, forCellReuseIdentifier: "NoteItemCell")
         addNoteButton = UIView()
-        addNoteButton.backgroundColor = UIColor.green
-        buttonImageView = UIImageView(image:UIImage(named:""))
+        addNoteButton.backgroundColor = UIColor.lightGray
+        buttonImageView = UIImageView(image:UIImage(named:"button_add_note"))
         addNoteButton.addSubview(buttonImageView)
         self.view.addSubview(addNoteButton)
         self.view.addSubview(tableView)
@@ -59,6 +59,9 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
             maker.top.equalTo(tableView.snp.bottom)
             maker.bottom.left.right.equalTo(self.view)
             maker.height.equalTo(50)
+        }
+        buttonImageView.snp.makeConstraints { (maker) in
+            maker.center.equalTo(addNoteButton)
         }
     }
     

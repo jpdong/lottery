@@ -114,7 +114,7 @@ class TabBarController:UITabBarController{
 //                            alertView.addAction(confirm)
                             self.present(alertView,animated: true,completion: nil)
                         } else {
-                            Toast(text:"检测到新版本 \(result.version!)").show()
+                            Toast(text:"检测到新版本 \(result.version ?? "")").show()
                         }
                     }
                 }

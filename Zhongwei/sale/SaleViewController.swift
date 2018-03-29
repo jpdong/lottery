@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Toaster
 
 class SaleViewController:UIViewController {
     
@@ -91,13 +92,15 @@ class SaleViewController:UIViewController {
     }
     
     @objc func showVisit() {
+        //Toast(text:"功能暂未开放").show()
         let vc = VisitListController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func showDiary() {
-        let vc = CertificateListController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        Toast(text:"功能暂未开放").show()
+//        let vc = CertificateListController()
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

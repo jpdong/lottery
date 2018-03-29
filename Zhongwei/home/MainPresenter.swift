@@ -37,6 +37,7 @@ class MainPresenter {
                     if (mainNewsEntity.code == 0) {
                         result.code = 0
                         result.articles = [ArticleData]()
+                        
                         result.articles?.append(mainNewsEntity.data!.information!)
                         result.articles?.append(mainNewsEntity.data!.activity!)
                         result.articles?.append(mainNewsEntity.data!.news!)

@@ -14,7 +14,7 @@ class GalleryListEntity:ResponseEntity {
 }
 
 class GalleryListInfo:HandyJSON {
-    
+    var length:Int?
     var list:GalleryList?
     
     required init() {
@@ -23,6 +23,9 @@ class GalleryListInfo:HandyJSON {
 }
 
 class GalleryList:HandyJSON {
+    
+    var id:String?
+    var images:String?
     
     required init() {
         
