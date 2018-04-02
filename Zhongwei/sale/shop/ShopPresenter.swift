@@ -100,4 +100,47 @@ class ShopPresenter {
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
+    
+    static func getShopWithId(id:String) ->Observable<ShopResult> {
+        return Presenter.getSid()
+            .flatMap{
+                sid in
+                return Observable<ShopResult>.create {
+                    observer -> Disposable in
+                    let parameters:Dictionary = ["sid":sid,"club_id":id]
+                    print("parameters:\(parameters)")
+                    Alamofire.request("\(BASE_URL)app/lottery/club_detail/",method:.post,parameters:parameters).responseString{response in
+                        print("shop detail id ")
+                        print("value: \(response.result.value)")
+                        
+                        var result:ShopResult = ShopResult()
+                        switch response.result {
+                        case .success:
+                            guard let entity:ShopEntity = ShopEntity.deserialize(from: response.result.value as! String) as? ShopEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            
+                            if (entity.code == 0) {
+                                result.code = 0
+                                result.message = entity.msg
+                                result.data = entity.data
+                            }else {
+                                result.code = 1
+                                result.message = entity.msg
+                            }
+                        case .failure(let error):
+                            result.code = 1
+                            result.message = "网络错误"
+                        }
+                        
+                        observer.onNext(result)
+                    }
+                    return Disposables.create()
+                }
+            }
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
 }

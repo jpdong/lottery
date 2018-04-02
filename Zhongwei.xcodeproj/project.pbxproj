@@ -164,6 +164,11 @@
 		8ECF7C29205294F100738D0B /* ClosableWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF7C28205294F100738D0B /* ClosableWebView.swift */; };
 		8ECF7C2B20529AF500738D0B /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF7C2A20529AF500738D0B /* MainPresenter.swift */; };
 		8ED2425F202417CA00303DB4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED2425E202417CA00303DB4 /* AboutViewController.swift */; };
+		8ED686EC2071D2C8003F71A6 /* ShopResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686EA2071D2C8003F71A6 /* ShopResult.swift */; };
+		8ED686ED2071D2C8003F71A6 /* ShopEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686EB2071D2C8003F71A6 /* ShopEntity.swift */; };
+		8ED686F02071DA19003F71A6 /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686EF2071DA19003F71A6 /* LRUCache.swift */; };
+		8ED686F22071DAD1003F71A6 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686F12071DAD1003F71A6 /* LinkedList.swift */; };
+		8ED686F42071DC63003F71A6 /* ShopHistoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686F32071DC63003F71A6 /* ShopHistoryCache.swift */; };
 		8EE4FFD22064FFAE0018387B /* PreviewImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */; };
 		8EF0BFD2202854A200401540 /* PrizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0BFD1202854A200401540 /* PrizeViewController.swift */; };
 		8EF0BFD42028557300401540 /* PrizeRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0BFD32028557300401540 /* PrizeRecordController.swift */; };
@@ -380,6 +385,11 @@
 		8ECF7C28205294F100738D0B /* ClosableWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosableWebView.swift; sourceTree = "<group>"; };
 		8ECF7C2A20529AF500738D0B /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		8ED2425E202417CA00303DB4 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		8ED686EA2071D2C8003F71A6 /* ShopResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopResult.swift; sourceTree = "<group>"; };
+		8ED686EB2071D2C8003F71A6 /* ShopEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopEntity.swift; sourceTree = "<group>"; };
+		8ED686EF2071DA19003F71A6 /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
+		8ED686F12071DAD1003F71A6 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
+		8ED686F32071DC63003F71A6 /* ShopHistoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopHistoryCache.swift; sourceTree = "<group>"; };
 		8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageController.swift; sourceTree = "<group>"; };
 		8EF0BFD1202854A200401540 /* PrizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrizeViewController.swift; sourceTree = "<group>"; };
 		8EF0BFD32028557300401540 /* PrizeRecordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrizeRecordController.swift; sourceTree = "<group>"; };
@@ -689,6 +699,8 @@
 		8E57BBEA2068A2970038503E /* shop */ = {
 			isa = PBXGroup;
 			children = (
+				8ED686EB2071D2C8003F71A6 /* ShopEntity.swift */,
+				8ED686EA2071D2C8003F71A6 /* ShopResult.swift */,
 				8E57BBE72068A22A0038503E /* ShopListEntity.swift */,
 				8E57BBE62068A22A0038503E /* ShopListResult.swift */,
 				8E57BBE420689D990038503E /* SearchViewController.swift */,
@@ -696,6 +708,7 @@
 				8E57BBED2068A2E50038503E /* ShopItemCell.swift */,
 				8E57BBEF2068D1620038503E /* ShopPresenter.swift */,
 				8E57BBF12068E66A0038503E /* ShopInfoView.swift */,
+				8ED686F32071DC63003F71A6 /* ShopHistoryCache.swift */,
 			);
 			path = shop;
 			sourceTree = "<group>";
@@ -745,6 +758,16 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
+		8ED686EE2071D9E4003F71A6 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				8E61FB7A1FF34C8900680E19 /* Utils.swift */,
+				8ED686EF2071DA19003F71A6 /* LRUCache.swift */,
+				8ED686F12071DAD1003F71A6 /* LinkedList.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 		8EFA2D2D1FE8B37D005C890E = {
 			isa = PBXGroup;
 			children = (
@@ -773,6 +796,7 @@
 		8EFA2D381FE8B37D005C890E /* Zhongwei */ = {
 			isa = PBXGroup;
 			children = (
+				8ED686EE2071D9E4003F71A6 /* utils */,
 				8E219E36205A1431002F0DAC /* sale */,
 				8E441B212050D5CE001D90C1 /* home */,
 				8E55001620187D91009E2AB0 /* view */,
@@ -782,7 +806,6 @@
 				8E55000C20182D21009E2AB0 /* news */,
 				8E5DC15F201745BE00D421FE /* controller */,
 				8E92BF16200EFC880090C646 /* entity */,
-				8E61FB7A1FF34C8900680E19 /* Utils.swift */,
 				8EFA2D391FE8B37D005C890E /* AppDelegate.swift */,
 				8E01C7751FEA58250012E2CE /* Main.storyboard */,
 				8EFA2D401FE8B37D005C890E /* Assets.xcassets */,
@@ -1041,12 +1064,14 @@
 				8E3E9273205FA0F400F71EF9 /* ReceiptListController.swift in Sources */,
 				8E104EB0206BA50300D2C63A /* GalleryListResult.swift in Sources */,
 				8E9E2ED1206A405900289405 /* NoteDetailController.swift in Sources */,
+				8ED686F02071DA19003F71A6 /* LRUCache.swift in Sources */,
 				8E57BBE82068A22A0038503E /* ShopListResult.swift in Sources */,
 				8E3E9301205FBCE100F71EF9 /* TZPhotoPickerController.m in Sources */,
 				8E395C3A205695D20026B2A1 /* AppUpdateResult.swift in Sources */,
 				8E3E9303205FBCE100F71EF9 /* TZImagePickerController.m in Sources */,
 				8EC3C2322020680C001567E9 /* BusinessViewController.swift in Sources */,
 				8E2F6A0E2022C62B000704F6 /* UserViewController.swift in Sources */,
+				8ED686F22071DAD1003F71A6 /* LinkedList.swift in Sources */,
 				8E9E2ED3206A405900289405 /* NoteItem.swift in Sources */,
 				8E3E9304205FBCE100F71EF9 /* TZLocationManager.m in Sources */,
 				8E57BBEC2068A2BE0038503E /* ShopItem.swift in Sources */,
@@ -1086,6 +1111,7 @@
 				8E3E926C205F9FCC00F71EF9 /* CertificateItem.swift in Sources */,
 				8E3E92FB205FBCE100F71EF9 /* NSBundle+TZImagePicker.m in Sources */,
 				8E9E2EDD206A480800289405 /* NoteEntity.swift in Sources */,
+				8ED686ED2071D2C8003F71A6 /* ShopEntity.swift in Sources */,
 				8E3E927D205FA48600F71EF9 /* ReceiptListResult.swift in Sources */,
 				8E66CF1F2049406C00FC9E59 /* IDCardViewController.swift in Sources */,
 				8EC9439920464DB700EB2B05 /* CodeEntity.swift in Sources */,
@@ -1109,6 +1135,7 @@
 				8E1A112A20450A5300A0B6BC /* LoginViewController.swift in Sources */,
 				8E20A3E72021B50000B15AB2 /* MessageDetailView.swift in Sources */,
 				8E121FF3204D504700C5CCD8 /* ImageUrlEntity.swift in Sources */,
+				8ED686EC2071D2C8003F71A6 /* ShopResult.swift in Sources */,
 				8EF0BFD2202854A200401540 /* PrizeViewController.swift in Sources */,
 				8E4D9FB5202AB2D900C4BF21 /* PrizeEntity.swift in Sources */,
 				8E3E92F9205FBCE100F71EF9 /* TZVideoPlayerController.m in Sources */,
@@ -1151,6 +1178,7 @@
 				8EFA2D3C1FE8B37D005C890E /* WebViewController.swift in Sources */,
 				8E9E2EDE206A480800289405 /* NoteResult.swift in Sources */,
 				8E62AAA120562388000847E3 /* ArticleUrlResult.swift in Sources */,
+				8ED686F42071DC63003F71A6 /* ShopHistoryCache.swift in Sources */,
 				8E55001320183122009E2AB0 /* ShopViewController.swift in Sources */,
 				8E57BBE0206891A00038503E /* VisitListResult.swift in Sources */,
 				8E61FB6D1FF341F400680E19 /* WeiChatLogin.swift in Sources */,

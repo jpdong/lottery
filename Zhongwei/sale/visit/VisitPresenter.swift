@@ -100,4 +100,6 @@ class VisitPresenter {
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
+    
+    
 }

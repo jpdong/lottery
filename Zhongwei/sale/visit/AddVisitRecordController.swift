@@ -26,6 +26,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     var onSigning = false
     
     var shopItem:ShopItem?
+    var shopId:String?
     var pageMenuController:PagingMenuController!
     
     override func viewDidLoad() {
@@ -38,8 +39,9 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     
     func setupViews() {
         self.navigationItem.title = "走访店铺"
-     
         self.view.backgroundColor = UIColor(red: 0xf1/255, green: 0xf2/255, blue: 0xf5/255, alpha: 1)
+        var chooseShopButton = UIBarButtonItem(title: "切换店铺", style: .done, target: self, action: #selector(chooseShop))
+        self.navigationItem.rightBarButtonItem = chooseShopButton
         scrollView = UIScrollView(frame:self.view.bounds)
         imageView = UIImageView(image:UIImage(named:"background_shop"))
         imageView.contentMode = .scaleAspectFill
@@ -67,7 +69,11 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         shopView.addSubview(signLocationView)
         
         let options = PagingMenuOptions()
-        options.setShopId(id:shopItem!.club_id!)
+        if let shopItem = shopItem {
+            options.setShopId(id:shopItem.club_id!)
+        } else {
+            options.setShopId(id: shopId!)
+        }
         pageMenuController = PagingMenuController(options: options)
         pageMenuController.view.frame.origin.y += 64
         pageMenuController.view.frame.size.height -= 64
@@ -120,10 +126,29 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     }
     
     func setupData() {
-        shopNameLabel.text = shopItem?.club_name
-        shopInfoView.nameLabel.text = shopItem?.name
-        shopInfoView.phoneLabel.text = shopItem?.phone
-        shopInfoView.addressLabel.text = shopItem?.address
+        if let shopItem = shopItem {
+            shopNameLabel.text = shopItem.club_name
+            shopInfoView.nameLabel.text = shopItem.name
+            shopInfoView.phoneLabel.text = shopItem.phone
+            shopInfoView.addressLabel.text = shopItem.address
+        } else {
+            ShopPresenter.getShopWithId(id:shopId!)
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { (result) in
+                    if (result.code == 0) {
+                        if let shopItem = result.data {
+                        self.shopNameLabel.text = shopItem.club_name
+                        self.shopInfoView.nameLabel.text = shopItem.name
+                        self.shopInfoView.phoneLabel.text = shopItem.phone
+                        self.shopInfoView.addressLabel.text = shopItem.address
+                        }
+                    } else {
+                        Toast(text: result.message ?? "").show()
+                    }
+                })
+        }
+        
+        
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 10
@@ -140,6 +165,26 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         signLocationView.isUserInteractionEnabled = true
         //signLocationView.updateLocationButton.isUserInteractionEnabled = true
         signLocationView.addGestureRecognizer(locationTap)
+    }
+    
+    @objc func chooseShop() {
+        if let shopItem = shopItem {
+            if (shopItem.club_id == getSigningShopId()) {
+                let vc = SearchViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else {
+                self.navigationController?.popViewController(animated: true)
+            }
+
+        } else {
+            if (shopId! == getSigningShopId()) {
+                let vc = SearchViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+
     }
     
     @objc func sign() {
@@ -162,6 +207,11 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
                         Toast(text: "到店打卡成功").show()
+                        if let shopItem  = self.shopItem {
+                            storeSigningShopId(shopId:shopItem.club_id!)
+                        } else {
+                            storeSigningShopId(shopId:self.shopId!)
+                        }
                         self.onSigning = true
                         self.signButtonView.titleLabel.text = "离开打卡"
                     } else {
@@ -193,7 +243,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
             return
         }
         locationManager.delegate = self
-        locationManager.startUpdatingLocation()
+        //locationManager.startUpdatingLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {

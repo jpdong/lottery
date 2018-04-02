@@ -170,6 +170,18 @@ func storeIDCardImageUrl(front:String, back:String) {
     userDefaults.synchronize()
 }
 
+func storeSigningShopId(shopId:String) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(shopId, forKey: "signing_shopId")
+    userDefaults.synchronize()
+}
+
+func getSigningShopId() -> String{
+    let userDefaults = UserDefaults.standard
+    let shopId:String? = userDefaults.string(forKey: "signing_shopId")
+    return shopId ?? ""
+}
+
 
 func alert(viewController:UIViewController,title:String, message:String) {
     let alertView = UIAlertController(title:title, message:message, preferredStyle:.alert)

@@ -132,6 +132,9 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
 //        vc.preViewController = self
 //        vc.rowInParent = indexPath.row
 //        self.navigationController?.pushViewController(vc, animated: true)
+        let vc = AddVisitRecordController()
+        vc.shopId = visitItems[indexPath.row].club_id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func loadMore() {

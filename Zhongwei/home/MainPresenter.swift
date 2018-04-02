@@ -23,12 +23,11 @@ class MainPresenter {
             Alamofire.request("\(BASE_URL)mobile/Contents/getContent").responseString{response in
                 print("board")
                 print("response:\(response)")
-                print("result:\(response.result)")
                 print("value: \(response.result.value)")
                 let result:ContentResult = ContentResult()
                 switch response.result {
                 case .success:
-                    guard let mainNewsEntity:MainNewsEntity = MainNewsEntity.deserialize(from: response.result.value as! String) as? MainNewsEntity else {
+                    guard let mainNewsEntity:MainNewsEntity = MainNewsEntity.deserialize(from: response.result.value as? String) as? MainNewsEntity else {
                         result.code = 1
                         result.message = "服务器错误"
                         observer.onNext(result)
@@ -37,7 +36,6 @@ class MainPresenter {
                     if (mainNewsEntity.code == 0) {
                         result.code = 0
                         result.articles = [ArticleData]()
-                        
                         result.articles?.append(mainNewsEntity.data!.information!)
                         result.articles?.append(mainNewsEntity.data!.activity!)
                         result.articles?.append(mainNewsEntity.data!.news!)
@@ -45,6 +43,7 @@ class MainPresenter {
                         result.code = 1
                         result.message = mainNewsEntity.msg
                     }
+                    //Toast(text: "board success").show()
                 case .failure(let error):
                     result.code = 1
                     result.message = "网络错误"
@@ -64,13 +63,12 @@ class MainPresenter {
             Alamofire.request("\(BASE_URL)mobile/Contents/getBanner").responseString{response in
                 print("banner")
                 print("response:\(response)")
-                print("result:\(response.result)")
                 print("value: \(response.result.value)")
                 
                 var result = ImageResult()
                 switch response.result {
                 case .success:
-                    guard let imageDataEntity = ImageDataEntity.deserialize(from: response.result.value as! String) as? ImageDataEntity else {
+                    guard let imageDataEntity = ImageDataEntity.deserialize(from: response.result.value as? String) as? ImageDataEntity else {
                         result.code = 1
                         result.message = "服务器错误"
                         observer.onNext(result)
