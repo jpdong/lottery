@@ -13,12 +13,23 @@ class VisitItem :HandyJSON{
     
     
     var name:String?
-    var club_id:String?
-    var club_name:String?
-    var begin_time:String?
-    var end_time:String?
+    var shopId:String?
+    var shopName:String?
+    var beginTime:String?
+    var endTime:String?
     
     required init() {
         
+    }
+    
+    func mapping(mapper: HelpingMapper) {
+        mapper <<<
+            self.shopId <-- "club_id"
+        mapper <<<
+            self.shopName <-- "club_name"
+        mapper <<<
+            self.beginTime <-- "begin_timestamp"
+        mapper <<<
+            self.endTime <-- "end_timestamp"
     }
 }

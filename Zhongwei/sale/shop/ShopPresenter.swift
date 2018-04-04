@@ -101,6 +101,22 @@ class ShopPresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
+    static func getDBShopHistory(pageIndex:Int, num:Int) ->Observable<ShopListResult> {
+        return Observable<ShopListResult>.create {
+            observer -> Disposable in
+            var result:ShopListResult = ShopListResult()
+            
+                result.code = 0
+                result.list = CoreDataHelper.instance.getShopHistoryList()
+                observer.onNext(result)
+            
+            return Disposables.create()
+        }
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
+    
+
+    
     static func getShopWithId(id:String) ->Observable<ShopResult> {
         return Presenter.getSid()
             .flatMap{

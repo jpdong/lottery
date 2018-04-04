@@ -28,6 +28,7 @@ class SignLocationView:UIView {
     func setupViews() {
         titleLable = UILabel()
         titleLable.font = UIFont.systemFont(ofSize: 15)
+        titleLable.textColor = UIColor.gray
         titleLable.text = "打卡位置"
         updateLocationButton = UILabel()
         updateLocationButton.font = UIFont.systemFont(ofSize: 13)

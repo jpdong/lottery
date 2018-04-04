@@ -55,15 +55,15 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
         tableView.register(ShopItemCell.self, forCellReuseIdentifier: "ShopItemCell")
         self.view.addSubview(searchBar)
         self.view.addSubview(tableView)
-        tableView.es.addInfiniteScrolling {
-            self.loadMore()
-        }
         historyHeaderView = UIView(frame:CGRect(x:0,y:0, width:self.view.frame.width, height:50))
         historyTitle = UILabel()
+        historyTitle.textColor = UIColor.gray
         historyTitle.text = "访问历史"
         deleteHistoryButton = UIImageView()
         deleteHistoryButton.contentMode = .scaleAspectFit
         deleteHistoryButton.image = UIImage(named:"button_delete_history")
+        deleteHistoryButton.isUserInteractionEnabled = true
+        deleteHistoryButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(deleteHistory)))
         historyHeaderView.addSubview(historyTitle)
         historyHeaderView.addSubview(deleteHistoryButton)
         tableView.tableHeaderView = historyHeaderView
@@ -82,11 +82,11 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
             maker.bottom.equalTo(self.view)
         }
         historyTitle.snp.makeConstraints { (maker) in
-            maker.left.equalTo(historyHeaderView)
+            maker.left.equalTo(historyHeaderView).offset(16)
             maker.centerY.equalTo(historyHeaderView)
         }
         deleteHistoryButton.snp.makeConstraints { (maker) in
-            maker.right.equalTo(historyHeaderView)
+            maker.right.equalTo(historyHeaderView).offset(-16)
             maker.centerY.equalTo(historyHeaderView)
             maker.width.height.equalTo(20)
         }
@@ -95,7 +95,12 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         Log(searchText)
         if (searchText == "") {
+            tableView.es.removeRefreshFooter()
             return
+        }
+        
+        tableView.es.addInfiniteScrolling {
+            self.loadMore()
         }
         listType = SearchViewController.search
         tableView.tableHeaderView = UIView(frame:.zero)
@@ -130,10 +135,10 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
         if (cell.shopInfoView == nil) {
             cell.shopInfoView = ShopInfoView()
         }
-        cell.shopLabel.text = item.club_name
-        cell.shopInfoView.nameLabel.text = item.name
-        cell.shopInfoView.phoneLabel.text = item.phone
-        cell.shopInfoView.addressLabel.text = item.address
+        cell.shopLabel.text = item.club_name ?? ""
+        cell.shopInfoView.nameLabel.text = item.name ?? ""
+        cell.shopInfoView.phoneLabel.text = item.phone ?? ""
+        cell.shopInfoView.addressLabel.text = item.address ?? ""
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
     }
@@ -169,35 +174,34 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
                     }
                 }
             })
-        }else {
-            currentHistoryPage = currentHistoryPage + 1
-            ShopPresenter.getShopHistoryList(pageIndex: currentHistoryPage, num: 10)
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { (result) in
-                    if (result.code == 0) {
-                        guard let list = result.list as? [CertificateItem] else {
-                            Toast(text: "无更多数据").show()
-                            self.tableView.es.stopLoadingMore()
-                            self.currentHistoryPage = self.currentHistoryPage - 1
-                            return
-                        }
-                        if (result.list!.count > 0) {
-                            self.shopItems = self.shopItems + result.list!
-                            self.tableView.reloadData()
-                            self.tableView.es.stopLoadingMore()
-                        } else {
-                            Toast(text: "无更多数据").show()
-                            self.tableView.es.stopLoadingMore()
-                            self.currentHistoryPage = self.currentHistoryPage - 1
-                        }
-                    }
-                })
+//        }else {
+//            currentHistoryPage = currentHistoryPage + 1
+//            ShopPresenter.getShopHistoryList(pageIndex: currentHistoryPage, num: 10)
+//                .observeOn(MainScheduler.instance)
+//                .subscribe(onNext: { (result) in
+//                    if (result.code == 0) {
+//                        guard let list = result.list as? [CertificateItem] else {
+//                            Toast(text: "无更多数据").show()
+//                            self.tableView.es.stopLoadingMore()
+//                            self.currentHistoryPage = self.currentHistoryPage - 1
+//                            return
+//                        }
+//                        if (result.list!.count > 0) {
+//                            self.shopItems = self.shopItems + result.list!
+//                            self.tableView.reloadData()
+//                            self.tableView.es.stopLoadingMore()
+//                        } else {
+//                            Toast(text: "无更多数据").show()
+//                            self.tableView.es.stopLoadingMore()
+//                            self.currentHistoryPage = self.currentHistoryPage - 1
+//                        }
+//                    }
+//                })
         }
     }
     
     func showHistory() {
-        currentHistoryPage = 1
-        ShopPresenter.getShopHistoryList(pageIndex: currentHistoryPage, num: 10)
+        ShopPresenter.getDBShopHistory(pageIndex: currentHistoryPage, num: 10)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -207,10 +211,29 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
                     self.tableView.reloadData()
                 }
             })
+        CoreDataHelper.instance.getShopHistoryList()
+//        currentHistoryPage = 1
+//        ShopPresenter.getShopHistoryList(pageIndex: currentHistoryPage, num: 10)
+//            .observeOn(MainScheduler.instance)
+//            .subscribe(onNext: { (result) in
+//                if (result.code == 0) {
+//                    self.shopItems.removeAll()
+//                    self.shopItems = self.shopItems + result.list!
+//                    Log(self.shopItems)
+//                    self.tableView.reloadData()
+//                }
+//            })
+        
     }
     
     func updataData(row:Int, item:ShopItem) {
         shopItems[row] = item
+        tableView.reloadData()
+    }
+    
+    @objc func deleteHistory() {
+        CoreDataHelper.instance.deleteHistory()
+        shopItems.removeAll()
         tableView.reloadData()
     }
     

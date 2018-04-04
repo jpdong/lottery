@@ -404,10 +404,27 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     }
     
     @objc func onSaleManagerButton() {
-        print("onSaleManagerButton")
-        let vc = SaleViewController()
-        vc.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(vc, animated: true)
+        VisitPresenter.checkVisitManagerState()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (result) in
+                if (result.code == 0) {
+                    if (result.data!.pass!) {
+                        let vc = SaleViewController()
+                        vc.hidesBottomBarWhenPushed = true
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    } else {
+                        let vc = ClosableWebView()
+                        vc.url = result.data!.url!
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                } else {
+                    Toast(text: result.message).show()
+                }
+            })
+        //        print("onSaleManagerButton")
+        //        let vc = SaleViewController()
+        //        vc.hidesBottomBarWhenPushed = true
+        //        self.navigationController?.pushViewController(vc, animated: true)
         //Toast(text: "功能暂未开放").show()
     }
     

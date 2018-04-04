@@ -44,11 +44,11 @@ class ShopItemCell:UITableViewCell {
     func setupConstrains() {
         
         shopLabel.snp.makeConstraints { (maker) in
-            maker.left.equalTo(self).offset(8)
+            maker.left.equalTo(self).offset(32)
             maker.top.equalTo(self).offset(8)
         }
         shopInfoView.snp.makeConstraints { (maker) in
-            maker.left.equalTo(self)
+            maker.left.equalTo(self).offset(16)
             maker.top.equalTo(shopLabel.snp.bottom).offset(16)
         }
         

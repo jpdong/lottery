@@ -118,12 +118,48 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
         if (cell.pictureView == nil) {
             cell.pictureView = UIImageView(image:UIImage(named:"background_item_visit"))
         }
-        cell.dateLabel.text =  item.end_time
-        cell.arriveLabel.text = item.begin_time
-        cell.leaveLabel.text = item.end_time
-        cell.shopNameLabel.text = item.club_name
+        if (cell.arriveTitle == nil) {
+            cell.arriveTitle = UILabel()
+            cell.arriveTitle.text = "到店时间:"
+        }
+        if (cell.leaveTitle == nil) {
+            cell.leaveTitle = UILabel()
+            cell.leaveTitle.text = "离店时间:"
+        }
+        cell.dateLabel.text =  getMonth(item.endTime!) ?? ""
+        cell.arriveLabel.text = getTime(item.beginTime!) ?? ""
+        cell.leaveLabel.text = getTime(item.endTime!) ?? ""
+        cell.shopNameLabel.text = item.shopName ?? ""
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
+    }
+    
+    func getMonth(_ time:String) -> String{
+        var timeString:String
+        if (time.count >= 10) {
+            timeString = time.subString(start: 0, length: 10)
+        } else {
+            return ""
+        }
+        let timeInterval:TimeInterval = TimeInterval(timeString)!
+        let date = Date(timeIntervalSince1970: timeInterval)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM月dd日"
+        return dateFormatter.string(from: date)
+    }
+    
+    func getTime(_ time:String) -> String{
+        var timeString:String
+        if (time.count >= 10) {
+            timeString = time.subString(start: 0, length: 10)
+        } else {
+            return ""
+        }
+        let timeInterval:TimeInterval = TimeInterval(timeString)!
+        let date = Date(timeIntervalSince1970: timeInterval)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH : mm : ss"
+        return dateFormatter.string(from: date)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -133,7 +169,7 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
 //        vc.rowInParent = indexPath.row
 //        self.navigationController?.pushViewController(vc, animated: true)
         let vc = AddVisitRecordController()
-        vc.shopId = visitItems[indexPath.row].club_id
+        vc.shopId = visitItems[indexPath.row].shopId
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

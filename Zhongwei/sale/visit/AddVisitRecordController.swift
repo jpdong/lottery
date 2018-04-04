@@ -28,6 +28,31 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     var shopItem:ShopItem?
     var shopId:String?
     var pageMenuController:PagingMenuController!
+    var timer:Timer!
+    
+    var isCounting = false {
+        willSet {
+            if newValue {
+                self.timer = Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
+                
+            } else {
+                self.timer.invalidate()
+                self.timer = nil
+            }
+            
+        }
+    }
+    
+    @objc func updateTime() {
+        let now = Date()
+        let timeInterval = now.timeIntervalSince1970
+        let timeStamp = Int(timeInterval)
+        let duration = timeStamp - Int(getSigningTime())!
+        print("\(duration/3600):\(duration/60):\(duration%60)")
+        DispatchQueue.main.async {
+            self.signButtonView.timeLabel.text = "\(duration/3600):\(duration/60):\(duration%60)"
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +73,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         shopNameLabel = UILabel()
         shopInfoView = ShopInfoView()
         signButtonView = SignButtonView()
+        
         //signButtonView.layer.masksToBounds = true
         //signButtonView.layer.cornerRadius = 50
         signLocationView = SignLocationView()
@@ -73,6 +99,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
             options.setShopId(id:shopItem.club_id!)
         } else {
             options.setShopId(id: shopId!)
+            //getShopItem()
         }
         pageMenuController = PagingMenuController(options: options)
         pageMenuController.view.frame.origin.y += 64
@@ -110,10 +137,12 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
             //maker.bottom.equalTo(shopView.snp.bottom)
             maker.left.equalTo(shopView).offset(8)
             maker.right.equalTo(shopView)
+            maker.width.equalTo(shopView)
+            maker.height.equalTo(30)
         }
         signButtonView.snp.makeConstraints { (maker) in
             maker.centerY.equalTo(shopView)
-            maker.right.equalTo(shopView)
+            maker.right.equalTo(shopView).offset(-8)
             maker.width.height.equalTo(80)
         }
         pageMenuController.view.snp.makeConstraints { (maker) in
@@ -127,20 +156,16 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     
     func setupData() {
         if let shopItem = shopItem {
-            shopNameLabel.text = shopItem.club_name
-            shopInfoView.nameLabel.text = shopItem.name
-            shopInfoView.phoneLabel.text = shopItem.phone
-            shopInfoView.addressLabel.text = shopItem.address
+            updateShopView()
+            
         } else {
             ShopPresenter.getShopWithId(id:shopId!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
                         if let shopItem = result.data {
-                        self.shopNameLabel.text = shopItem.club_name
-                        self.shopInfoView.nameLabel.text = shopItem.name
-                        self.shopInfoView.phoneLabel.text = shopItem.phone
-                        self.shopInfoView.addressLabel.text = shopItem.address
+                            self.shopItem = shopItem
+                            self.updateShopView()
                         }
                     } else {
                         Toast(text: result.message ?? "").show()
@@ -152,6 +177,13 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 10
+    }
+    
+    func updateShopView() {
+        shopNameLabel.text = shopItem!.club_name
+        shopInfoView.nameLabel.text = shopItem!.name
+        shopInfoView.phoneLabel.text = shopItem!.phone
+        shopInfoView.addressLabel.text = shopItem!.address
     }
     
     override func viewDidLayoutSubviews() {
@@ -176,44 +208,60 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                 self.navigationController?.popViewController(animated: true)
             }
 
-        } else {
-            if (shopId! == getSigningShopId()) {
-                let vc = SearchViewController()
-                self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                self.navigationController?.popViewController(animated: true)
-            }
+//        } else {
+//            if (shopId! == getSigningShopId()) {
+//                let vc = SearchViewController()
+//                self.navigationController?.pushViewController(vc, animated: true)
+//            } else {
+//                self.navigationController?.popViewController(animated: true)
+//            }
         }
 
     }
     
     @objc func sign() {
+        var shopId:String = ""
+        if let shopItem = shopItem {
+            shopId = shopItem.club_id!
+        } else {
+            shopId = self.shopId!
+        }
         if (onSigning) {
-            VisitPresenter.sign(longitude:longitude, latitude:latitude, status:2,shopId:shopItem!.club_id!)
+            VisitPresenter.sign(longitude:longitude, latitude:latitude, status:2,shopId:shopId)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
+                        self.isCounting = false
                         Toast(text:"离开打卡成功").show()
+                        storeSigningShopId(shopId:"")
                         self.onSigning = false
                         self.signButtonView.titleLabel.text = "到店打卡"
+                        self.unSignAnimation()
                     } else {
                         Toast(text: result.message ?? "").show()
                     }
                 })
             
         } else {
-            VisitPresenter.sign(longitude:longitude, latitude:latitude, status:1,shopId:shopItem!.club_id!)
+            VisitPresenter.sign(longitude:longitude, latitude:latitude, status:1,shopId:shopId)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
                         Toast(text: "到店打卡成功").show()
                         if let shopItem  = self.shopItem {
                             storeSigningShopId(shopId:shopItem.club_id!)
-                        } else {
-                            storeSigningShopId(shopId:self.shopId!)
+                            let now = Date()
+                            let timeInterval = now.timeIntervalSince1970
+                            let timeStamp = Int(timeInterval)
+                            storeSignTime(String(timeStamp))
+                            CoreDataHelper.instance.saveShopItem(shopItem: shopItem)
+                            self.isCounting = true
+//                        } else {
+//                            storeSigningShopId(shopId:self.shopId!)
                         }
                         self.onSigning = true
                         self.signButtonView.titleLabel.text = "离开打卡"
+                        self.signAnimation()
                     } else {
                         Toast(text: result.message ?? "").show()
                     }
@@ -222,8 +270,28 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         }
     }
     
+    func signAnimation() {
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(TimeInterval(1))
+        signButtonView.titleLabel.center.y = signButtonView.titleLabel.center.y - 8
+        signButtonView.timeLabel.alpha = 1
+        UIView.setAnimationCurve(.easeOut)
+        UIView.commitAnimations()
+    }
+    
+    func unSignAnimation() {
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(TimeInterval(1))
+        signButtonView.titleLabel.center.y = signButtonView.titleLabel.center.y + 8
+        signButtonView.timeLabel.alpha = 0
+        UIView.setAnimationCurve(.easeOut)
+        UIView.commitAnimations()
+    }
+    
     @objc func location() {
         Log(onSigning)
+        signLocationView.titleLable.text = "定位中..."
+        signLocationView.isUserInteractionEnabled = false
         locationManager.startUpdatingLocation()
     }
     
@@ -235,22 +303,67 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         }
         if status == .denied || status == .restricted {
             let alert = UIAlertController(title: "Location Services Disabled", message: "Please enable Location Services in Settings", preferredStyle: .alert)
-            
             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
-            
             present(alert, animated: true, completion: nil)
             return
         }
         locationManager.delegate = self
-        //locationManager.startUpdatingLocation()
+        locationManager.startUpdatingLocation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         Log("signButtonView : \(signButtonView.frame.width)")
         getLocation()
+        setupSignButtonState()
     }
     
+    func getShopItem() {
+        ShopPresenter.getShopWithId(id: shopId!)
+        .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (result) in
+                if (result.code == 0) {
+                    self.shopItem = result.data
+                    self.setupSignButtonState()
+                } else {
+                    Toast(text: result.message ?? "").show()
+                }
+            })
+    }
+    
+    func setupSignButtonState() {
+        if let shopItem = shopItem {
+            if (getSigningShopId() == "") {
+                signButtonView.isUserInteractionEnabled = true
+                signButtonView.backgroundImage.image = UIImage(named:"background_sign")
+                self.signButtonView.titleLabel.text = "到店打卡"
+                onSigning = false
+            } else if (shopItem.club_id == getSigningShopId()){
+                signButtonView.isUserInteractionEnabled = true
+                signButtonView.backgroundImage.image = UIImage(named:"background_sign")
+                onSigning = true
+                self.signButtonView.titleLabel.text = "离开打卡"
+            } else {
+                signButtonView.backgroundImage.image = UIImage(named:"background_sign_disable")
+                signButtonView.isUserInteractionEnabled = false
+            }
+//        } else {
+//            if (getSigningShopId() == "") {
+//                signButtonView.isUserInteractionEnabled = true
+//                signButtonView.backgroundImage.image = UIImage(named:"background_sign")
+//                self.signButtonView.titleLabel.text = "到店打卡"
+//                onSigning = false
+//            } else if (shopId! == getSigningShopId()) {
+//                signButtonView.isUserInteractionEnabled = true
+//                signButtonView.backgroundImage.image = UIImage(named:"background_sign")
+//                onSigning = true
+//                self.signButtonView.titleLabel.text = "离开打卡"
+//            } else {
+//                signButtonView.isUserInteractionEnabled = false
+//                signButtonView.backgroundImage.image = UIImage(named:"background_sign_disable")
+//            }
+        }
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let currLocation:CLLocation = locations.last!
@@ -308,6 +421,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                 print(address)
                 self.signLocationView.titleLable.text = address
                 self.locationManager.stopUpdatingLocation()
+                self.signLocationView.isUserInteractionEnabled = true
             }
         }
     )}

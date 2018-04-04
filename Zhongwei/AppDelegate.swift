@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import Alamofire
 import HandyJSON
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
@@ -21,6 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     var wechatAppSecret = "9904af864293deff123897d495fc3ca3"
     var tabViewController:UITabBarController?
     var globalData:GlobalData?
+    
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "Model")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error {
+                fatalError("Unresolved error, \((error as NSError).userInfo)")
+            }
+        })
+        return container
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Bugly.start(withAppId:"98d4c1d3a8")

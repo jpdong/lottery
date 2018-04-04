@@ -102,4 +102,44 @@ class VisitPresenter {
     }
     
     
+    static func checkVisitManagerState() -> Observable<VisitStateResult> {
+        return Presenter.getSid()
+            .flatMap{
+                sid in
+                return Observable<VisitStateResult>.create {
+                    observer -> Disposable in
+                    let parameters:Dictionary = ["sid":sid]
+                    print("parameters:\(parameters)")
+                    Alamofire.request("\(BASE_URL)mobile/app/lottery_manager",method:.post,parameters:parameters).responseString{response in
+                        print("Visit state")
+                        print("value: \(response.result.value)")
+                        var result:VisitStateResult = VisitStateResult()
+                        switch response.result {
+                        case .success:
+                            guard let entity:VisitStateEntity = VisitStateEntity.deserialize(from: response.result.value as! String) as? VisitStateEntity else {
+                                result.code = 1
+                                result.message = "服务器错误"
+                                observer.onNext(result)
+                                return
+                            }
+                            if (entity.code == 0) {
+                                result.code = 0
+                                result.message = entity.msg
+                                result.data = entity.data
+                            }else {
+                                result.code = 1
+                                result.message = entity.msg
+                            }
+                        case .failure(let error):
+                            result.code = 1
+                            result.message = "网络错误"
+                        }
+                        
+                        observer.onNext(result)
+                    }
+                    return Disposables.create()
+                }
+            }
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
 }

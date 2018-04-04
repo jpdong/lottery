@@ -37,6 +37,16 @@ extension String {
                                               range: NSMakeRange(0, self.count),
                                               withTemplate: with)
     }
+    
+    func subString(start:Int, length:Int = -1) -> String {
+        var len = length
+        if len == -1 {
+            len = self.count - start
+        }
+        let st = self.index(startIndex, offsetBy:start)
+        let en = self.index(st, offsetBy:len)
+        return String(self[st ..< en])
+    }
 }
 
 extension UIView {
@@ -50,7 +60,6 @@ extension UIView {
     }
     
     public func bottomBorder(width:CGFloat,borderColor:UIColor){
-        Log("------x:0,y:\(self.frame.size.height - width),width:\(self.frame.width),height:\(width)")
         let rect = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.width, height: width)
         drawBorder(rect: rect, color: borderColor)
     }
@@ -180,6 +189,18 @@ func getSigningShopId() -> String{
     let userDefaults = UserDefaults.standard
     let shopId:String? = userDefaults.string(forKey: "signing_shopId")
     return shopId ?? ""
+}
+
+func storeSignTime(_ time:String) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(time, forKey: "signing_time")
+    userDefaults.synchronize()
+}
+
+func getSigningTime() -> String{
+    let userDefaults = UserDefaults.standard
+    let time:String? = userDefaults.string(forKey: "signing_time")
+    return time ?? ""
 }
 
 

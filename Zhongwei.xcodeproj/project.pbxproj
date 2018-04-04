@@ -170,6 +170,10 @@
 		8ED686F22071DAD1003F71A6 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686F12071DAD1003F71A6 /* LinkedList.swift */; };
 		8ED686F42071DC63003F71A6 /* ShopHistoryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686F32071DC63003F71A6 /* ShopHistoryCache.swift */; };
 		8EE4FFD22064FFAE0018387B /* PreviewImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */; };
+		8EEE03EC2073660C0052A64D /* VisitStateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEE03EB2073660C0052A64D /* VisitStateEntity.swift */; };
+		8EEE03EE207366200052A64D /* VisitStateResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEE03ED207366200052A64D /* VisitStateResult.swift */; };
+		8EEE03F42073836F0052A64D /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8EEE03F22073836F0052A64D /* Model.xcdatamodeld */; };
+		8EEE03F620738B010052A64D /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEE03F520738B010052A64D /* CoreDataHelper.swift */; };
 		8EF0BFD2202854A200401540 /* PrizeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0BFD1202854A200401540 /* PrizeViewController.swift */; };
 		8EF0BFD42028557300401540 /* PrizeRecordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF0BFD32028557300401540 /* PrizeRecordController.swift */; };
 		8EFA2D3A1FE8B37D005C890E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA2D391FE8B37D005C890E /* AppDelegate.swift */; };
@@ -391,6 +395,10 @@
 		8ED686F12071DAD1003F71A6 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
 		8ED686F32071DC63003F71A6 /* ShopHistoryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopHistoryCache.swift; sourceTree = "<group>"; };
 		8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageController.swift; sourceTree = "<group>"; };
+		8EEE03EB2073660C0052A64D /* VisitStateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitStateEntity.swift; sourceTree = "<group>"; };
+		8EEE03ED207366200052A64D /* VisitStateResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitStateResult.swift; sourceTree = "<group>"; };
+		8EEE03F32073836F0052A64D /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		8EEE03F520738B010052A64D /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		8EF0BFD1202854A200401540 /* PrizeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrizeViewController.swift; sourceTree = "<group>"; };
 		8EF0BFD32028557300401540 /* PrizeRecordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrizeRecordController.swift; sourceTree = "<group>"; };
 		8EFA2D361FE8B37D005C890E /* Zhongwei.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zhongwei.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -692,6 +700,8 @@
 				8E57BBD220688E380038503E /* VisitPresenter.swift */,
 				8E57BBF32068F21D0038503E /* SignButtonView.swift */,
 				8E57BBF52068F22E0038503E /* SignLocationView.swift */,
+				8EEE03EB2073660C0052A64D /* VisitStateEntity.swift */,
+				8EEE03ED207366200052A64D /* VisitStateResult.swift */,
 			);
 			path = visit;
 			sourceTree = "<group>";
@@ -764,6 +774,7 @@
 				8E61FB7A1FF34C8900680E19 /* Utils.swift */,
 				8ED686EF2071DA19003F71A6 /* LRUCache.swift */,
 				8ED686F12071DAD1003F71A6 /* LinkedList.swift */,
+				8EEE03F520738B010052A64D /* CoreDataHelper.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -814,6 +825,7 @@
 				8E61FB6E1FF345DE00680E19 /* BridgeHeader.h */,
 				8E92BF1D200F46C80090C646 /* Presenter.swift */,
 				8E0DEDE92069E94B00FFD4EA /* LocationTransform.swift */,
+				8EEE03F22073836F0052A64D /* Model.xcdatamodeld */,
 			);
 			path = Zhongwei;
 			sourceTree = "<group>";
@@ -1089,6 +1101,7 @@
 				8E219E4C205A8C79002F0DAC /* TextInfoBoxView.swift in Sources */,
 				8E55001820187DA8009E2AB0 /* DiscoverItemTemp.swift in Sources */,
 				8E57BBD720688E380038503E /* AddVisitRecordController.swift in Sources */,
+				8EEE03EC2073660C0052A64D /* VisitStateEntity.swift in Sources */,
 				8E3E926B205F9FCC00F71EF9 /* AddCertificateController.swift in Sources */,
 				8E92BF18200EFC9B0090C646 /* ResponseEntity.swift in Sources */,
 				8E3E92FD205FBCE100F71EF9 /* TZPhotoPreviewController.m in Sources */,
@@ -1104,6 +1117,8 @@
 				8E0DEDEA2069E94B00FFD4EA /* LocationTransform.swift in Sources */,
 				8E57BBEE2068A2E50038503E /* ShopItemCell.swift in Sources */,
 				8E62AA9F20562349000847E3 /* ArticleUrlEntity.swift in Sources */,
+				8EEE03EE207366200052A64D /* VisitStateResult.swift in Sources */,
+				8EEE03F42073836F0052A64D /* Model.xcdatamodeld in Sources */,
 				8E92BF1A200EFDD90090C646 /* SidEntity.swift in Sources */,
 				8E57BBD620688E380038503E /* VisitItemCell.swift in Sources */,
 				8E3E9300205FBCE100F71EF9 /* TZImageManager.m in Sources */,
@@ -1179,6 +1194,7 @@
 				8E9E2EDE206A480800289405 /* NoteResult.swift in Sources */,
 				8E62AAA120562388000847E3 /* ArticleUrlResult.swift in Sources */,
 				8ED686F42071DC63003F71A6 /* ShopHistoryCache.swift in Sources */,
+				8EEE03F620738B010052A64D /* CoreDataHelper.swift in Sources */,
 				8E55001320183122009E2AB0 /* ShopViewController.swift in Sources */,
 				8E57BBE0206891A00038503E /* VisitListResult.swift in Sources */,
 				8E61FB6D1FF341F400680E19 /* WeiChatLogin.swift in Sources */,
@@ -1405,7 +1421,7 @@
 					"$(PROJECT_DIR)/lib",
 				);
 				INFOPLIST_FILE = Zhongwei/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1431,7 +1447,7 @@
 					"$(PROJECT_DIR)/lib",
 				);
 				INFOPLIST_FILE = Zhongwei/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.zhongwei.lottery;
@@ -1546,6 +1562,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8EEE03F22073836F0052A64D /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8EEE03F32073836F0052A64D /* Model.xcdatamodel */,
+			);
+			currentVersion = 8EEE03F32073836F0052A64D /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8EFA2D2E1FE8B37D005C890E /* Project object */;
 }

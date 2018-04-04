@@ -37,6 +37,7 @@ class SignButtonView:UIView {
         timeLabel.font = UIFont.systemFont(ofSize: 13)
         timeLabel.text = "00:00:04"
         timeLabel.textColor = UIColor.white
+        timeLabel.alpha = 0
         addSubview(backgroundImage)
         addSubview(titleLabel)
         addSubview(timeLabel)
@@ -45,12 +46,12 @@ class SignButtonView:UIView {
     
     func setupConstrains() {
         titleLabel.snp.makeConstraints { (maker) in
-            maker.centerY.equalTo(self).offset(-8)
+            maker.centerY.equalTo(self)
             maker.centerX.equalTo(self)
         }
         timeLabel.snp.makeConstraints { (maker) in
-            maker.centerY.equalTo(self).offset(8)
             maker.centerX.equalTo(self)
+            maker.top.equalTo(titleLabel).offset(16)
         }
         backgroundImage.snp.makeConstraints { (maker) in
             maker.left.right.top.bottom.equalTo(self)
