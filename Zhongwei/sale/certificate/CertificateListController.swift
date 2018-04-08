@@ -40,6 +40,7 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 120
+        tableView.tableFooterView = UIView(frame:.zero)
         tableView.register(CertificateItemCell.self, forCellReuseIdentifier: "CertificateItemCell")
         setupLoadMoreView()
         //tableView.tableFooterView = loadMoreView

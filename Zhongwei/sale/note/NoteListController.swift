@@ -35,6 +35,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 60
+        tableView.tableFooterView = UIView(frame:.zero)
         tableView.register(NoteItemCell.self, forCellReuseIdentifier: "NoteItemCell")
         addNoteButton = UIView()
         //addNoteButton.backgroundColor = UIColor.gray

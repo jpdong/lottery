@@ -34,6 +34,7 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 120
+        tableView.tableFooterView = UIView(frame:.zero)
         tableView.register(ReceiptItemCell.self, forCellReuseIdentifier: "ReceiptItemCell")
         self.view.addSubview(tableView)
         

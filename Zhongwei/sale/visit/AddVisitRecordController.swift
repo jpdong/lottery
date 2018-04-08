@@ -37,7 +37,9 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                 self.timer = Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(self.updateTime), userInfo: nil, repeats: true)
                 
             } else {
-                self.timer.invalidate()
+                if (timer != nil) {
+                    self.timer.invalidate()
+                }
                 //self.timer = nil
             }
             

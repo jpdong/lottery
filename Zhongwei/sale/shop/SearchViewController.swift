@@ -52,6 +52,7 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 120
+        tableView.tableFooterView = UIView(frame:.zero)
         tableView.register(ShopItemCell.self, forCellReuseIdentifier: "ShopItemCell")
         self.view.addSubview(searchBar)
         self.view.addSubview(tableView)

@@ -40,6 +40,7 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
         tableView.dataSource = self
         tableView.rowHeight = 120
         tableView.backgroundColor = UIColor.clear
+        tableView.tableFooterView = UIView(frame:.zero)
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         tableView.register(VisitItemCell.self, forCellReuseIdentifier: "VisitItemCell")
         self.view.addSubview(tableView)
