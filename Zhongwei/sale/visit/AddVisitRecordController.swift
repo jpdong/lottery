@@ -19,6 +19,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     var shopInfoView:ShopInfoView!
     var signButtonView:SignButtonView!
     var signLocationView:SignLocationView!
+    
     var scrollView:UIScrollView!
     var locationManager:CLLocationManager!
     var longitude:Double = 0
@@ -37,7 +38,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                 
             } else {
                 self.timer.invalidate()
-                self.timer = nil
+                //self.timer = nil
             }
             
         }
@@ -172,8 +173,6 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                     }
                 })
         }
-        
-        
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 10
@@ -235,6 +234,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                         Toast(text:"离开打卡成功").show()
                         storeSigningShopId(shopId:"")
                         self.onSigning = false
+                        self.isCounting = false
                         self.signButtonView.titleLabel.text = "到店打卡"
                         self.unSignAnimation()
                     } else {
@@ -273,7 +273,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     func signAnimation() {
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(TimeInterval(1))
-        signButtonView.titleLabel.center.y = signButtonView.titleLabel.center.y - 8
+        //signButtonView.titleLabel.center.y = signButtonView.titleLabel.center.y - 8
         signButtonView.timeLabel.alpha = 1
         UIView.setAnimationCurve(.easeOut)
         UIView.commitAnimations()
@@ -282,7 +282,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     func unSignAnimation() {
         UIView.beginAnimations(nil, context: nil)
         UIView.setAnimationDuration(TimeInterval(1))
-        signButtonView.titleLabel.center.y = signButtonView.titleLabel.center.y + 8
+        //signButtonView.titleLabel.center.y = signButtonView.titleLabel.center.y + 8
         signButtonView.timeLabel.alpha = 0
         UIView.setAnimationCurve(.easeOut)
         UIView.commitAnimations()
@@ -318,6 +318,12 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         setupSignButtonState()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        if (isCounting) {
+            isCounting = false
+        }
+    }
+    
     func getShopItem() {
         ShopPresenter.getShopWithId(id: shopId!)
         .observeOn(MainScheduler.instance)
@@ -338,11 +344,15 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                 signButtonView.backgroundImage.image = UIImage(named:"background_sign")
                 self.signButtonView.titleLabel.text = "到店打卡"
                 onSigning = false
+                isCounting = false
+                unSignAnimation()
             } else if (shopItem.club_id == getSigningShopId()){
                 signButtonView.isUserInteractionEnabled = true
                 signButtonView.backgroundImage.image = UIImage(named:"background_sign")
                 onSigning = true
+                isCounting = true
                 self.signButtonView.titleLabel.text = "离开打卡"
+                signAnimation()
             } else {
                 signButtonView.backgroundImage.image = UIImage(named:"background_sign_disable")
                 signButtonView.isUserInteractionEnabled = false

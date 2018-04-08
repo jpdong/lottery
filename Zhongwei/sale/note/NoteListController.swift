@@ -19,6 +19,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
     var addNoteButton:UIView!
     var buttonImageView:UIImageView!
     var shopId:String?
+    var addNoteLabel:UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,11 +37,17 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
         tableView.rowHeight = 60
         tableView.register(NoteItemCell.self, forCellReuseIdentifier: "NoteItemCell")
         addNoteButton = UIView()
-        addNoteButton.backgroundColor = UIColor.lightGray
+        //addNoteButton.backgroundColor = UIColor.gray
+        addNoteLabel = UILabel()
+        addNoteLabel.text = "添加备注"
+        addNoteLabel.font = UIFont.systemFont(ofSize: 10)
+        addNoteLabel.textColor = UIColor.gray
         buttonImageView = UIImageView(image:UIImage(named:"button_add_note"))
         addNoteButton.addSubview(buttonImageView)
+        addNoteButton.addSubview(addNoteLabel)
         self.view.addSubview(addNoteButton)
         self.view.addSubview(tableView)
+        
         tableView.es.addPullToRefresh {
             self.refreshData()
         }
@@ -61,7 +68,14 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
             maker.height.equalTo(50)
         }
         buttonImageView.snp.makeConstraints { (maker) in
-            maker.center.equalTo(addNoteButton)
+            maker.top.equalTo(addNoteButton).offset(8)
+            maker.centerX.equalTo(addNoteButton)
+            maker.width.height.equalTo(20)
+        }
+        addNoteLabel.snp.makeConstraints { (maker) in
+            maker.top.equalTo(buttonImageView.snp.bottom)
+            maker.centerX.equalTo(addNoteButton)
+            maker.height.equalTo(20)
         }
     }
     
@@ -119,10 +133,24 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
             cell.dateLabel = UILabel()
         }
         Log(cell.dateLabel.text)
-        cell.dateLabel.text = item.update_date
+        cell.dateLabel.text = getTime(item.create_date!) ?? ""
         cell.noteLabel.text = item.question
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
+    }
+    
+    func getTime(_ time:String) -> String {
+        var timeString:String
+        if (time.count >= 10) {
+            timeString = time.subString(start: 0, length: 10)
+        } else {
+            return ""
+        }
+        let timeInterval:TimeInterval = TimeInterval(timeString)!
+        let date = Date(timeIntervalSince1970: timeInterval)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
+        return dateFormatter.string(from: date)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

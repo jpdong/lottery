@@ -35,7 +35,7 @@ class SignButtonView:UIView {
         titleLabel.text = "到店打卡"
         timeLabel = UILabel()
         timeLabel.font = UIFont.systemFont(ofSize: 13)
-        timeLabel.text = "00:00:04"
+        timeLabel.text = ""
         timeLabel.textColor = UIColor.white
         timeLabel.alpha = 0
         addSubview(backgroundImage)

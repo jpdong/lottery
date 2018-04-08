@@ -65,6 +65,7 @@ class Presenter{
             print("parameters:\(parameters)")
             Alamofire.request("\(BASE_URL)mobile/Login/checkSidExpire",method:.post,parameters:parameters).responseString{
                 response in
+                print("check sid")
                 print("response:\(response)")
                 print("value \(response.result.value)")
                 var result:Result = Result()

@@ -18,6 +18,9 @@ class NoteDetailController:UIViewController {
     var scrollView:UIScrollView!
     var preViewController:NoteListController?
     var rowInParent:Int?
+    var dataBackground:UIImageView!
+    var textBackground:UIImageView!
+    var dateLabel:UILabel!
     
     override func viewDidLoad() {
         setupViews()
@@ -31,10 +34,20 @@ class NoteDetailController:UIViewController {
         let optionButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(showOptionList))
         self.navigationItem.rightBarButtonItem = optionButton
         scrollView = UIScrollView(frame:self.view.bounds)
+        dataBackground = UIImageView(image:UIImage(named:"background_note_date"))
+        textBackground = UIImageView(image:UIImage(named:"background_note_text"))
         noteTextView = UITextView()
         noteTextView.isEditable = false
+        noteTextView.backgroundColor = UIColor.clear
+        noteTextView.font = UIFont.systemFont(ofSize: 17)
         noteTextView.text = noteItem?.question
+        dateLabel = UILabel()
+        dateLabel.text = getTime(noteItem!.create_date ?? "")
+        
+        self.view.addSubview(dataBackground)
+        self.view.addSubview(textBackground)
         self.view.addSubview(noteTextView)
+        self.view.addSubview(dateLabel)
         //self.view.addSubview(scrollView)
     }
     
@@ -46,15 +59,46 @@ class NoteDetailController:UIViewController {
 //            maker.height.greaterThanOrEqualTo(self.view)
 //            maker.bottom.equalTo(noteTextView)
 //        }
+        dataBackground.snp.makeConstraints { (maker) in
+            maker.top.equalTo(self.view).offset(Size.instance.statusBarHeight + Size.instance.navigationBarHeight)
+            maker.left.equalTo(self.view)
+             maker.right.equalTo(self.view)
+            maker.height.equalTo(80)
+        }
+        textBackground.snp.makeConstraints { (maker) in
+            maker.top.equalTo(dataBackground.snp.bottom)
+            maker.left.equalTo(self.view)
+            maker.right.equalTo(self.view)
+            maker.bottom.equalTo(self.view).offset(-8)
+        }
         noteTextView.snp.makeConstraints { (maker) in
-            maker.left.right.top.bottom.equalTo(self.view)
-            maker.width.equalTo(self.view)
-            maker.height.equalTo(self.view)
+            maker.top.equalTo(textBackground)
+            maker.left.equalTo(textBackground).offset(20)
+            maker.right.equalTo(textBackground).offset(-20)
+            maker.bottom.equalTo(textBackground).offset(-20)
+        }
+        dateLabel.snp.makeConstraints { (maker) in
+            maker.left.equalTo(dataBackground).offset(30)
+            maker.bottom.equalTo(dataBackground).offset(-30)
         }
     }
     
     func setupClickEvents() {
 
+    }
+    
+    func getTime(_ time:String) -> String {
+        var timeString:String
+        if (time.count >= 10) {
+            timeString = time.subString(start: 0, length: 10)
+        } else {
+            return ""
+        }
+        let timeInterval:TimeInterval = TimeInterval(timeString)!
+        let date = Date(timeIntervalSince1970: timeInterval)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm yyyy/MM/dd"
+        return dateFormatter.string(from: date)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -144,7 +144,7 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
         let timeInterval:TimeInterval = TimeInterval(timeString)!
         let date = Date(timeIntervalSince1970: timeInterval)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM月dd日"
+        dateFormatter.dateFormat = "M月d日"
         return dateFormatter.string(from: date)
     }
     

@@ -199,7 +199,7 @@ class NotePresenter {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"id":id]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)delInterviewLog",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(BASE_URL)app/Lottery_manager/delInterviewLog",method:.post,parameters:parameters).responseString{response in
                         print("delete id ")
                         print("value: \(response.result.value)")
                         

@@ -24,6 +24,9 @@ class AddNoteController:UIViewController {
     var optionButton:UIBarButtonItem!
     var shopId:String?
     var noteItem:NoteItem?
+    var dataBackground:UIImageView!
+    var textBackground:UIImageView!
+    var dateLabel:UILabel!
     
     override func viewDidLoad() {
         setupViews()
@@ -51,21 +54,51 @@ class AddNoteController:UIViewController {
         submitIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.whiteLarge)
         self.view.addSubview(submitIndicator)
         noteTextView = UITextView()
-        self.view.addSubview(noteTextView)
+        noteTextView.backgroundColor = UIColor.clear
+        noteTextView.font = UIFont.systemFont(ofSize: 17)
         
+        dataBackground = UIImageView(image:UIImage(named:"background_note_date"))
+        textBackground = UIImageView(image:UIImage(named:"background_note_text"))
+        self.view.addSubview(dataBackground)
+        self.view.addSubview(textBackground)
+        self.view.addSubview(noteTextView)
+        dateLabel = UILabel()
+        let now = Date()
+        let timeInterval:TimeInterval = now.timeIntervalSince1970
+        let timeStamp = String(timeInterval)
+        dateLabel.text = getTime(timeStamp ?? "")
+        self.view.addSubview(dateLabel)
         if (type == NoteItem.edit) {
             noteTextView.text = editableItem?.question
             editNavigationItem.title = "编辑"
+            dateLabel.text = getTime(editableItem!.create_date ?? "")
+            
         }
     }
     
     func setupConstrains() {
-        noteTextView.snp.makeConstraints { (maker) in
+        dataBackground.snp.makeConstraints { (maker) in
             maker.top.equalTo(self.view).offset(Size.instance.statusBarHeight + Size.instance.navigationBarHeight)
-            maker.left.right.bottom.equalTo(self.view)
+            maker.left.equalTo(self.view)
+            maker.right.equalTo(self.view)
+            maker.height.equalTo(80)
         }
-        submitIndicator.snp.makeConstraints { (maker) in
-            maker.center.equalTo(self.view)
+        textBackground.snp.makeConstraints { (maker) in
+            maker.top.equalTo(dataBackground.snp.bottom)
+            maker.left.equalTo(self.view)
+            maker.right.equalTo(self.view)
+            maker.bottom.equalTo(self.view).offset(-8)
+        }
+        noteTextView.snp.makeConstraints { (maker) in
+            maker.top.equalTo(textBackground)
+            maker.left.equalTo(textBackground).offset(20)
+            maker.right.equalTo(textBackground).offset(-20)
+            maker.bottom.equalTo(textBackground).offset(-20)
+        }
+        
+        dateLabel.snp.makeConstraints { (maker) in
+            maker.left.equalTo(dataBackground).offset(30)
+            maker.bottom.equalTo(dataBackground).offset(-30)
         }
     }
     
@@ -80,7 +113,19 @@ class AddNoteController:UIViewController {
     override func viewDidLayoutSubviews() {
     }
     
-    
+    func getTime(_ time:String) -> String {
+        var timeString:String
+        if (time.count >= 10) {
+            timeString = time.subString(start: 0, length: 10)
+        } else {
+            return ""
+        }
+        let timeInterval:TimeInterval = TimeInterval(timeString)!
+        let date = Date(timeIntervalSince1970: timeInterval)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm yyyy/MM/dd"
+        return dateFormatter.string(from: date)
+    }
     
     @objc func submitNote() {
         var note = noteTextView.text

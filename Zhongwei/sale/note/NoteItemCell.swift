@@ -37,18 +37,18 @@ class NoteItemCell:UITableViewCell {
     }
     
     func setupViews() {
-        noteLabel.font = UIFont.systemFont(ofSize:15)
-        dateLabel.font = UIFont.systemFont(ofSize:15)
-        
+        noteLabel.font = UIFont.systemFont(ofSize:16)
+        dateLabel.font = UIFont.systemFont(ofSize:14)
+        dateLabel.textColor = UIColor.gray
         addSubview(noteLabel)
         addSubview(dateLabel)
     }
     
     func setupConstrains() {
         noteLabel.snp.makeConstraints { (maker) in
-            maker.top.equalTo(self)
-            maker.left.equalTo(self)
-            maker.right.equalTo(self)
+            maker.top.equalTo(self).offset(8)
+            maker.left.equalTo(self).offset(16)
+            maker.right.equalTo(self).offset(-8)
         }
         dateLabel.snp.makeConstraints { (maker) in
             maker.left.right.equalTo(noteLabel)
