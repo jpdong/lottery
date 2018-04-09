@@ -9,5 +9,5 @@
 import Foundation
 
 class GalleryListResult:Result {
-    
+    var data:[String]?
 }

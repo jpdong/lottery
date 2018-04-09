@@ -10,19 +10,19 @@ import Foundation
 import HandyJSON
 
 class GalleryListEntity:ResponseEntity {
-    var data:[GalleryListInfo]?
+    var data:GalleryListInfo?
 }
 
 class GalleryListInfo:HandyJSON {
     var length:Int?
-    var list:GalleryList?
+    var list:[GalleryListItem]?
     
     required init() {
         
     }
 }
 
-class GalleryList:HandyJSON {
+class GalleryListItem:HandyJSON {
     
     var id:String?
     var images:String?

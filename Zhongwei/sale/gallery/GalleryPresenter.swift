@@ -11,6 +11,7 @@ import RxSwift
 import Alamofire
 import HandyJSON
 import Toaster
+import SwiftyJSON
 
 class GalleryPresenter {
     
@@ -41,9 +42,15 @@ class GalleryPresenter {
                                 result.code = 0
                                 result.message = entity.msg
                                 var imageUrls = [String]()
-                                
-                                
-                                
+                                for item in entity.data!.list! {
+                                    do{
+                                     let jsonData = try JSON(data: item.images!.data(using: String.Encoding.utf8, allowLossyConversion: false)!)
+                                    imageUrls.append(jsonData[0][0].string!)
+                                    } catch (let error) {
+                                        Log(error)
+                                    }
+                                }
+                                result.data = imageUrls
                             } else {
                                 result.code = 1
                                 result.message = entity.msg

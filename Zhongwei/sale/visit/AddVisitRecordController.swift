@@ -76,7 +76,10 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         shopNameLabel = UILabel()
         shopInfoView = ShopInfoView()
         signButtonView = SignButtonView()
-        
+        signButtonView.layer.shadowOpacity = 1
+        signButtonView.layer.shadowColor = UIColor.black.cgColor
+        signButtonView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        signButtonView.layer.shadowRadius = 4
         //signButtonView.layer.masksToBounds = true
         //signButtonView.layer.cornerRadius = 50
         signLocationView = SignLocationView()

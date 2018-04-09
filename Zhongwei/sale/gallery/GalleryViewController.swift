@@ -65,27 +65,30 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageUrls.count + 1 > 6 ? 6 : imageUrls.count + 1
+        //return imageUrls.count + 1 > 6 ? 6 : imageUrls.count + 1
+        return imageUrls.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let tapAdd = UITapGestureRecognizer(target: self, action: #selector(addPictures))
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
-        if (imageUrls.count < 6 && indexPath.row == imageUrls.count) {
+        if (indexPath.row == imageUrls.count) {
             cell.imageView?.image = UIImage(named:"button_add_receipt")
             cell.deleteButton?.isHidden = true
             cell.imageView?.isUserInteractionEnabled = true
             cell.imageView?.addGestureRecognizer(tapAdd)
         } else {
             cell.imageView?.kf.setImage(with: URL(string:imageUrls[indexPath.row]))
-            cell.deleteButton?.isHidden = false
+            cell.deleteButton?.isHidden = true
             cell.imageView?.isUserInteractionEnabled = false
             cell.imageView?.removeGestureRecognizer(tapAdd)
         }
         //}
         
         cell.deleteButton?.tag = indexPath.row
+        let longTap = UILongPressGestureRecognizer(target: self, action: #selector(longClick(sender:)))
+        cell.addGestureRecognizer(longTap)
         let tapDelete = UITapGestureRecognizer(target: self, action: #selector(deleteClick(sender:)))
         cell.deleteButton?.addGestureRecognizer(tapDelete)
         return cell
@@ -102,9 +105,16 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
         let vc:TZImagePickerController = TZImagePickerController.init(maxImagesCount: 6, delegate: self)
         self.present(vc, animated: true, completion: nil)
     }
+    
     @objc func deleteClick(sender:UITapGestureRecognizer) {
         self.imageUrls.remove(at: sender.view!.tag)
         self.imageCollectionView.reloadData()
+    }
+    
+    @objc func longClick(sender:UILongPressGestureRecognizer) {
+        if let cell = sender.view as? ImageCell {
+            cell.deleteButton?.isHidden = false
+        }
     }
     
     func imagePickerController(_ picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [Any]!, isSelectOriginalPhoto: Bool) {
@@ -138,16 +148,16 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
     
     @objc func refreshData() {
         currentPage = 1
-        GalleryPresenter.getGalleryList(pageIndex: currentPage, num: 10, shopId: shopId!)
+        GalleryPresenter.getGalleryList(pageIndex: currentPage, num: 6, shopId: shopId!)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 self.imageCollectionView.es.stopPullToRefresh()
                 if (result.code == 0) {
-//                    self.receiptItems.removeAll()
-//                    self.receiptItems = self.receiptItems + result.list!
-//                    Log(result.list)
-//                    Log(self.receiptItems)
-//                    self.tableView.reloadData()
+                    self.imageUrls.removeAll()
+                    self.imageUrls = self.imageUrls + result.data!
+                    self.imageCollectionView.reloadData()
+                } else {
+                    Toast(text: result.message ?? "").show()
                 }
             })
     }
@@ -155,26 +165,26 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
     func loadMore() {
         print("load more")
         currentPage = currentPage + 1
-        GalleryPresenter.getGalleryList(pageIndex: currentPage, num: 10, shopId: shopId!)
+        GalleryPresenter.getGalleryList(pageIndex: currentPage, num: 6, shopId: shopId!)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
-//                    guard let list = result.list as? [ReceiptItem] else {
-//                        Toast(text: "无更多数据").show()
-//
-//                        self.tableView.es.stopLoadingMore()
-//                        self.currentPage = self.currentPage - 1
-//                        return
-//                    }
-//                    if (result.list!.count > 0) {
-//                        self.receiptItems = self.receiptItems + result.list!
-//                        self.tableView.reloadData()
-//                        self.tableView.es.stopLoadingMore()
-//                    } else {
-//                        Toast(text: "无更多数据").show()
-//                        self.tableView.es.stopLoadingMore()
-//                        self.currentPage = self.currentPage - 1
-//                    }
+                    guard let list = result.data as? [String] else {
+                        Toast(text: "无更多数据").show()
+
+                        self.imageCollectionView.es.stopLoadingMore()
+                        self.currentPage = self.currentPage - 1
+                        return
+                    }
+                    if (result.data!.count > 0) {
+                        self.imageUrls = self.imageUrls + result.data!
+                        self.imageCollectionView.reloadData()
+                        self.imageCollectionView.es.stopLoadingMore()
+                    } else {
+                        Toast(text: "无更多数据").show()
+                        self.imageCollectionView.es.stopLoadingMore()
+                        self.currentPage = self.currentPage - 1
+                    }
                 }
             })
     }

@@ -76,7 +76,7 @@ class VisitItemCell:UITableViewCell {
         
         shopNameLabel.snp.makeConstraints { (maker) in
             maker.left.equalTo(pictureView).offset(8)
-            maker.top.equalTo(pictureView).offset(8)
+            maker.top.equalTo(pictureView).offset(16)
         }
         arriveTitle.snp.makeConstraints { (maker) in
             maker.left.equalTo(shopNameLabel)
@@ -85,7 +85,7 @@ class VisitItemCell:UITableViewCell {
         }
         leaveTitle.snp.makeConstraints { (maker) in
             maker.left.equalTo(arriveTitle)
-            maker.top.equalTo(arriveTitle.snp.bottom).offset(16)
+            maker.top.equalTo(arriveTitle.snp.bottom).offset(8)
             maker.width.equalTo(100)
         }
         arriveLabel.snp.makeConstraints { (maker) in
