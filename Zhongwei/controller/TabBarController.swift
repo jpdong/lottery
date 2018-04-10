@@ -21,15 +21,11 @@ class TabBarController:UITabBarController{
         Timer.scheduledTimer(timeInterval: 3, target: self,
                              selector: #selector(checkAppUpdate),
                              userInfo: nil, repeats: false)
-        //checkAppUpdate()
     }
-    
-    
     
     override func viewDidAppear(_ animated: Bool) {
         checkMessage()
         checkUserState()
-        
     }
     
     func setUpTabs(){
@@ -104,14 +100,6 @@ class TabBarController:UITabBarController{
                     if (result.update!) {
                         if (result.forceUpdate!) {
                             let alertView = UIAlertController(title:"重要更新", message:"新版本 \(result.version!)", preferredStyle:.alert)
-//                            let confirm = UIAlertAction(title:"确定", style:.default){
-//                                action in
-//                                //self.performSegue(withIdentifier: "showMe", sender: self)
-//                                self.tabBarController?.tabBar.isHidden = false
-//                                self.tabBarController?.selectedIndex = 3
-//                            }
-//                            alertView.addAction(cancel)
-//                            alertView.addAction(confirm)
                             self.present(alertView,animated: true,completion: nil)
                         } else {
                             Toast(text:"检测到新版本 \(result.version ?? "")").show()

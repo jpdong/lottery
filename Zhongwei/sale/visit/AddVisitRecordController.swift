@@ -13,6 +13,7 @@ import CoreLocation
 import PagingMenuController
 
 class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
+    
     var imageView:UIImageView!
     var shopView:UIView!
     var shopNameLabel:UILabel!
@@ -184,10 +185,10 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     }
     
     func updateShopView() {
-        shopNameLabel.text = shopItem!.club_name
-        shopInfoView.nameLabel.text = shopItem!.name
-        shopInfoView.phoneLabel.text = shopItem!.phone
-        shopInfoView.addressLabel.text = shopItem!.address
+        shopNameLabel.text = shopItem?.club_name
+        shopInfoView.nameLabel.text = shopItem?.name
+        shopInfoView.phoneLabel.text = shopItem?.phone
+        shopInfoView.addressLabel.text = shopItem?.address
     }
     
     override func viewDidLayoutSubviews() {

@@ -86,10 +86,12 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
-                    self.visitItems = self.visitItems + result.list!
-                    Log(result.list)
-                    Log(self.visitItems)
-                    self.tableView.reloadData()
+                    if let list = result.list {
+                        self.visitItems = self.visitItems + list
+                        self.tableView.reloadData()
+                    } else {
+                        Log("list is nil")
+                    }
                 }
             })
     }
@@ -175,7 +177,6 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func loadMore() {
-        print("load more")
         currentPage = currentPage + 1
         VisitPresenter.getVisitList(pageIndex: currentPage, num: 10)
             .observeOn(MainScheduler.instance)
@@ -188,8 +189,8 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
                         self.currentPage = self.currentPage - 1
                         return
                     }
-                    if (result.list!.count > 0) {
-                        self.visitItems = self.visitItems + result.list!
+                    if (list.count > 0) {
+                        self.visitItems = self.visitItems + list
                         self.tableView.reloadData()
                         self.tableView.es.stopLoadingMore()
                     } else {

@@ -164,7 +164,7 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
                         self.currentPage = self.currentPage - 1
                         return
                     }
-                    if (result.list!.count > 0) {
+                    if (list.count > 0) {
                         self.shopItems = self.shopItems + result.list!
                         self.tableView.reloadData()
                         self.tableView.es.stopLoadingMore()
@@ -175,29 +175,6 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
                     }
                 }
             })
-//        }else {
-//            currentHistoryPage = currentHistoryPage + 1
-//            ShopPresenter.getShopHistoryList(pageIndex: currentHistoryPage, num: 10)
-//                .observeOn(MainScheduler.instance)
-//                .subscribe(onNext: { (result) in
-//                    if (result.code == 0) {
-//                        guard let list = result.list as? [CertificateItem] else {
-//                            Toast(text: "无更多数据").show()
-//                            self.tableView.es.stopLoadingMore()
-//                            self.currentHistoryPage = self.currentHistoryPage - 1
-//                            return
-//                        }
-//                        if (result.list!.count > 0) {
-//                            self.shopItems = self.shopItems + result.list!
-//                            self.tableView.reloadData()
-//                            self.tableView.es.stopLoadingMore()
-//                        } else {
-//                            Toast(text: "无更多数据").show()
-//                            self.tableView.es.stopLoadingMore()
-//                            self.currentHistoryPage = self.currentHistoryPage - 1
-//                        }
-//                    }
-//                })
         }
     }
     
@@ -211,20 +188,7 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
                     Log(self.shopItems)
                     self.tableView.reloadData()
                 }
-            })
-        CoreDataHelper.instance.getShopHistoryList()
-//        currentHistoryPage = 1
-//        ShopPresenter.getShopHistoryList(pageIndex: currentHistoryPage, num: 10)
-//            .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { (result) in
-//                if (result.code == 0) {
-//                    self.shopItems.removeAll()
-//                    self.shopItems = self.shopItems + result.list!
-//                    Log(self.shopItems)
-//                    self.tableView.reloadData()
-//                }
-//            })
-        
+            })   
     }
     
     func updataData(row:Int, item:ShopItem) {

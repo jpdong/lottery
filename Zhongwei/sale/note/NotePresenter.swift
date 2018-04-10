@@ -77,7 +77,7 @@ class NotePresenter {
                         var result:Result = Result()
                         switch response.result {
                         case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value) as? ResponseEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
@@ -121,7 +121,7 @@ class NotePresenter {
                         var result:Result = Result()
                         switch response.result {
                         case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value) as? ResponseEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
@@ -163,13 +163,12 @@ class NotePresenter {
                         var result:NoteResult = NoteResult()
                         switch response.result {
                         case .success:
-                            guard let noteEntity:NoteEntity = NoteEntity.deserialize(from: response.result.value as! String) as? NoteEntity else {
+                            guard let noteEntity:NoteEntity = NoteEntity.deserialize(from: response.result.value) as? NoteEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
                                 return
                             }
-                            
                             if (noteEntity.code == 0) {
                                 result.code = 0
                                 result.message = noteEntity.msg
@@ -206,7 +205,7 @@ class NotePresenter {
                         var result:Result = Result()
                         switch response.result {
                         case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value) as? ResponseEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)

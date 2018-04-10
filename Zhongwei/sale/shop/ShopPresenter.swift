@@ -31,7 +31,7 @@ class ShopPresenter {
                         var result:ShopListResult = ShopListResult()
                         switch response.result {
                         case .success:
-                            guard let entity:ShopListEntity = ShopListEntity.deserialize(from: response.result.value as! String) as? ShopListEntity else {
+                            guard let entity:ShopListEntity = ShopListEntity.deserialize(from: response.result.value) as? ShopListEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
@@ -73,13 +73,12 @@ class ShopPresenter {
                         var result:ShopListResult = ShopListResult()
                         switch response.result {
                         case .success:
-                            guard let entity:ShopListEntity = ShopListEntity.deserialize(from: response.result.value as! String) as? ShopListEntity else {
+                            guard let entity:ShopListEntity = ShopListEntity.deserialize(from: response.result.value) as? ShopListEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
                                 return
                             }
-                            
                             if (entity.code == 0) {
                                 result.code = 0
                                 result.message = entity.msg
@@ -92,7 +91,6 @@ class ShopPresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
                     }
                     return Disposables.create()
@@ -105,7 +103,6 @@ class ShopPresenter {
         return Observable<ShopListResult>.create {
             observer -> Disposable in
             var result:ShopListResult = ShopListResult()
-            
                 result.code = 0
                 result.list = CoreDataHelper.instance.getShopHistoryList()
                 observer.onNext(result)
@@ -132,7 +129,7 @@ class ShopPresenter {
                         var result:ShopResult = ShopResult()
                         switch response.result {
                         case .success:
-                            guard let entity:ShopEntity = ShopEntity.deserialize(from: response.result.value as! String) as? ShopEntity else {
+                            guard let entity:ShopEntity = ShopEntity.deserialize(from: response.result.value) as? ShopEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)

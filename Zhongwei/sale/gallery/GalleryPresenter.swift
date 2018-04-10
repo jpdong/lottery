@@ -42,12 +42,18 @@ class GalleryPresenter {
                                 result.code = 0
                                 result.message = entity.msg
                                 var imageUrls = [String]()
-                                for item in entity.data!.list! {
-                                    do{
-                                     let jsonData = try JSON(data: item.images!.data(using: String.Encoding.utf8, allowLossyConversion: false)!)
-                                    imageUrls.append(jsonData[0][0].string!)
-                                    } catch (let error) {
-                                        Log(error)
+                                if let list = entity.data?.list {
+                                    for item in list {
+                                        if let images = item.images {
+                                            do{
+                                                let jsonData = try JSON(data: images.data(using: String.Encoding.utf8, allowLossyConversion: false)!)
+                                                if let url = jsonData[0][0].string {
+                                                    imageUrls.append(url)
+                                                }
+                                            } catch (let error) {
+                                                Log(error)
+                                            }
+                                        }
                                     }
                                 }
                                 result.data = imageUrls
@@ -77,7 +83,7 @@ class GalleryPresenter {
                     var receiptImagesObject = ReceiptImagesObject()
                     var imageUrls = [String]()
                     imageUrls.append(imageUrl)
-                    receiptImagesObject.receipt_image = imageUrls
+                    receiptImagesObject.image = imageUrls
                     var jsonString = receiptImagesObject.toJSONString() as! String
                     let parameters:Dictionary = ["sid":sid,"club_id":shopId, "images":jsonString]
                     print("parameters:\(parameters)")

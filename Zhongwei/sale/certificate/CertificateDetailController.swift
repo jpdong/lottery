@@ -50,7 +50,7 @@ class CertificateDetailController:UIViewController {
 
         idInputBox = TextInfoBoxView()
         idInputBox.titleLabel.text = "代销证号"
-        idInputBox.messageLabel.text = certificateItem?.lottery_papers
+        idInputBox.messageLabel.text = certificateItem?.certificateId
 
         addressInfoBox = TextInfoBoxView()
         addressInfoBox.titleLabel.text = "店铺地址"
@@ -58,7 +58,7 @@ class CertificateDetailController:UIViewController {
 
         imageInputBox = ImageInputBoxView()
         imageInputBox.titleLabel.text = "代销证照片"
-        imageInputBox.imageView.kf.setImage(with: URL(string:certificateItem!.lottery_papers_image!))
+        imageInputBox.imageView.kf.setImage(with: URL(string:certificateItem?.certificateImage ?? ""))
         
         scrollView.addSubview(nameInputBox)
         scrollView.addSubview(phoneInputBox)
@@ -174,9 +174,9 @@ class CertificateDetailController:UIViewController {
         certificateItem = data
         nameInputBox.messageLabel.text = data.name
         phoneInputBox.messageLabel.text = data.phone
-        idInputBox.messageLabel.text = data.lottery_papers
+        idInputBox.messageLabel.text = data.certificateId
         addressInfoBox.messageLabel.text = data.address
-        imageInputBox.imageView.kf.setImage(with: URL(string:data.lottery_papers_image!))
+        imageInputBox.imageView.kf.setImage(with: URL(string:data.certificateImage ?? ""))
     }
     
 }

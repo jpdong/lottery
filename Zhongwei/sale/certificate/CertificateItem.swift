@@ -15,13 +15,20 @@ class CertificateItem :HandyJSON{
     static let add = 2
     
     var id:String?
-    var lottery_papers:String?
-    var lottery_papers_image:String?
+    var certificateId:String?
+    var certificateImage:String?
     var name:String?
     var phone:String?
     var address:String?
     
     required init() {
         
+    }
+    
+    func mapping(mapper: HelpingMapper) {
+        mapper <<<
+            self.certificateId <-- "lottery_papers"
+        mapper <<<
+            self.certificateImage <-- "lottery_papers_image"
     }
 }

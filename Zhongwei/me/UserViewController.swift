@@ -44,6 +44,25 @@ class UserViewController:UITableViewController{
         //checkUser()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        checkUser()
+        checkMessage()
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 20.0
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if (indexPath.section == 0 && hasLogin){
+            return nil
+        } else if(indexPath.section == 1 && indexPath.row == 0 && !hasLogin){
+            return nil
+        } else {
+            return indexPath
+        }
+    }
+    
     func checkUser() -> Bool {
         sid = app?.globalData?.sid
         var result:Bool = false
@@ -116,37 +135,6 @@ class UserViewController:UITableViewController{
         let sb = UIStoryboard(name:"Me",bundle:nil)
         let vc = sb.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         self.present(vc, animated: true, completion: nil)
-        //        let vc = LoginViewControllerCode()
-        //        self.present(vc, animated: true, completion: nil)
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 20.0
-    }
-    
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if (indexPath.section == 0 && hasLogin){
-            return nil
-        } else if(indexPath.section == 1 && indexPath.row == 0 && !hasLogin){
-            return nil
-        } else {
-            return indexPath
-        }
-    }
-    
-//    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        var view = UIView(frame:CGRect(x:0,y:0,width:UIScreen.main.bounds.width, height:20))
-//        view.backgroundColor = UIColor.
-//        return view
-//    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        //setupUserInfo()
-        //checkUser()
-        Log("user view")
-        //self.tabBarController?.childViewControllers[3].tabBarItem.badgeValue = "5"
-        //checkMessage()
-        
     }
     
     func checkMessage() {
@@ -167,31 +155,9 @@ class UserViewController:UITableViewController{
             })
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        Log("")
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        Log("")
-        checkUser()
-        checkMessage()
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         segue.destination.hidesBottomBarWhenPushed = true
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        switch segue.identifier! {
-//        case "login":
-//            var loginView = segue.destination as! WeiChatLogin
-//            loginView.isLogin = hasLogin
-//            break
-//        default:
-//            break
-//        }
-//    }
-    
 }
 
 class UserInfoCell:UITableViewCell {

@@ -15,11 +15,18 @@ class ReceiptItem :HandyJSON{
     static let add = 2
     
     var id:String?
-    var create_date:String?
+    var createDate:String?
     var notes:String?
-    var receipt_image:ReceiptImagesObject?
+    var image:ReceiptImagesObject?
     
     required init() {
         
+    }
+    
+    func mapping(mapper: HelpingMapper) {
+        mapper <<<
+            self.createDate <-- "create_date"
+        mapper <<<
+            self.image <-- "receipt_image"
     }
 }

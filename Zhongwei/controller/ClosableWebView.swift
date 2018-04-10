@@ -24,7 +24,7 @@ class ClosableWebView:WebViewController{
         //loadUrl(url: "http://yan.eeseetech.cn/mobile/wechat/caipiao/")
         //app.globalData?.baseUrl
         Log("url:\(url)")
-        startLoad(url:url!)
+        //startLoad(url:url!)
     }
     
     @objc func close(_ sender:UIBarButtonItem){

@@ -54,7 +54,7 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
         imageCollectionView.register(ImageCell.self, forCellWithReuseIdentifier: "ImageCell")
         self.view.addSubview(imageCollectionView)
         //imageCollectionView.backgroundColor = UIColor.green
-        imageUrls = receiptItem?.receipt_image?.receipt_image
+        imageUrls = receiptItem?.image?.image
         self.view.addSubview(noteLabel)
     }
     
@@ -146,7 +146,9 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
-                    self.updateView(data:result.data!)
+                    if let data = result.data {
+                        self.updateView(data:data)
+                    }
                     self.preViewController?.updataData(row: self.rowInParent!, item: self.receiptItem!)
                 }
             })
@@ -156,7 +158,7 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
     func updateView(data:ReceiptItem) {
         receiptItem = data
         noteLabel.text = receiptItem?.notes
-        imageUrls = receiptItem?.receipt_image?.receipt_image
+        imageUrls = receiptItem?.image?.image
         imageCollectionView.reloadData()
     }
     

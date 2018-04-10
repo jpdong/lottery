@@ -126,18 +126,22 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
                     .subscribe(onNext: { (result) in
                         self.imageIndicator.stopAnimating()
                         if (result.code == 0) {
-                            self.imageUrls.append(result.message!)
-                            self.imageIndicator.startAnimating()
-                            GalleryPresenter.addImageUrl(shopId:self.shopId!, imageUrl:result.message!)
-                                .observeOn(MainScheduler.instance)
-                                .subscribe(onNext: { (result) in
-                                    self.imageIndicator.stopAnimating()
-                                    if (result.code == 0) {
-                                    }else {
-                                        Toast(text:result.message ?? "").show()
-                                    }
-                            })
-                            self.imageCollectionView.reloadData()
+                            if let url = result.message {
+                                self.imageUrls.append(url)
+                                self.imageIndicator.startAnimating()
+                                GalleryPresenter.addImageUrl(shopId:self.shopId!, imageUrl:url)
+                                    .observeOn(MainScheduler.instance)
+                                    .subscribe(onNext: { (result) in
+                                        self.imageIndicator.stopAnimating()
+                                        if (result.code == 0) {
+                                        }else {
+                                            Toast(text:result.message ?? "").show()
+                                        }
+                                    })
+                                self.imageCollectionView.reloadData()
+                            } else {
+                                Log("message is nil")
+                            }
                         } else {
                             Toast(text:result.message ?? "").show()
                         }
@@ -153,9 +157,13 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
             .subscribe(onNext: { (result) in
                 self.imageCollectionView.es.stopPullToRefresh()
                 if (result.code == 0) {
-                    self.imageUrls.removeAll()
-                    self.imageUrls = self.imageUrls + result.data!
-                    self.imageCollectionView.reloadData()
+                    if let urls = result.data {
+                        self.imageUrls.removeAll()
+                        self.imageUrls = self.imageUrls + urls
+                        self.imageCollectionView.reloadData()
+                    } else {
+                        Log("data is nil")
+                    }
                 } else {
                     Toast(text: result.message ?? "").show()
                 }
@@ -163,7 +171,6 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func loadMore() {
-        print("load more")
         currentPage = currentPage + 1
         GalleryPresenter.getGalleryList(pageIndex: currentPage, num: 6, shopId: shopId!)
             .observeOn(MainScheduler.instance)
@@ -176,8 +183,8 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
                         self.currentPage = self.currentPage - 1
                         return
                     }
-                    if (result.data!.count > 0) {
-                        self.imageUrls = self.imageUrls + result.data!
+                    if (list.count > 0) {
+                        self.imageUrls = self.imageUrls + list
                         self.imageCollectionView.reloadData()
                         self.imageCollectionView.es.stopLoadingMore()
                     } else {

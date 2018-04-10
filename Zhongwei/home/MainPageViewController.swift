@@ -88,8 +88,6 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         pointMallButton.contentImage.image = UIImage(named:"main_pointMall")
         
         firstRowView = UIView()
-        //firstRowView.backgroundColor = UIColor.white
-        //firstRowView.backgroundColor = UIColor.green
         firstRowView.addSubview(shopOwnerButton)
         firstRowView.addSubview(customerManagerButton)
         firstRowView.addSubview(pointMallButton)
@@ -108,7 +106,6 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         scanPrizeButton.contentImage.image = UIImage(named:"main_scan")
         
         secondRowView = UIView()
-        //secondRowView.backgroundColor = UIColor.white
         secondRowView.addSubview(saleManagerButton)
         secondRowView.addSubview(customerButton)
         secondRowView.addSubview(scanPrizeButton)
@@ -118,21 +115,13 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         recentNewsView.contentTitle.text = "最新资讯"
         recentNewsView.contentMessage.text = "离线状态，请检查网络"
         
-        
-        //recentNewsView.contentImage.backgroundColor = UIColor.green
-        
         welfareActivity = SmallboardView()
         welfareActivity.contentTitle.text = "公益活动"
         welfareActivity.contentMessage.text = "离线状态，请检查网络"
         
-        
-        //welfareActivity.contentImage.backgroundColor = UIColor.green
-        
         hotNewsView = SmallboardView()
         hotNewsView.contentTitle.text = "热点新闻"
         hotNewsView.contentMessage.text = "离线状态，请检查网络"
-        
-        //hotNewsView.contentImage.backgroundColor = UIColor.green
         
         mainScrollView.addSubview(recentNewsView)
         mainScrollView.addSubview(welfareActivity)
@@ -284,7 +273,9 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                 if (result.code == 0) {
                     let vc = ClosableWebView()
                     vc.url = result.data
-                    self.present(vc, animated: true, completion: nil)
+                    self.present(vc, animated: true) {
+                        vc.startLoad(url: result.data ?? "")
+                    }
                 }
             })
     }
@@ -399,7 +390,9 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
             .subscribe(onNext: { (result) in
                 var vc:ClosableWebView = ClosableWebView()
                 vc.url = result
-                self.present(vc, animated: true, completion: nil)
+                self.present(vc, animated: true) {
+                    vc.startLoad(url: result)
+                }
             })
     }
     

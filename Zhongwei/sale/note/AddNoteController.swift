@@ -16,8 +16,8 @@ class AddNoteController:UIViewController {
     var submitIndicator:UIActivityIndicatorView!
     var type:Int = NoteItem.add
     var editableItem:NoteItem?
-    var navigationBarHeight:CGFloat?
-    var statusBarHeight:CGFloat?
+    var navigationBarHeight:CGFloat!
+    var statusBarHeight:CGFloat!
     var closeButton:UIBarButtonItem!
     var navigationBar:UINavigationBar!
     var editNavigationItem:UINavigationItem!
@@ -38,14 +38,14 @@ class AddNoteController:UIViewController {
         self.navigationItem.title = "添加"
         navigationBarHeight = Size.instance.navigationBarHeight
         statusBarHeight = Size.instance.statusBarHeight
-        navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight!, width:self.view.frame.width, height:navigationBarHeight!))
+        navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight, width:self.view.frame.width, height:navigationBarHeight))
         editNavigationItem = UINavigationItem()
         closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
         closeButton.image = UIImage(named:"closeButton")
         closeButton.tintColor = UIColor.black
         editNavigationItem.setRightBarButton(closeButton, animated: true)
         navigationBar?.pushItem(editNavigationItem, animated: true)
-        self.view.addSubview(navigationBar!)
+        self.view.addSubview(navigationBar)
         self.view.backgroundColor = UIColor.white
         
         self.navigationItem.title = "添加"
@@ -69,10 +69,9 @@ class AddNoteController:UIViewController {
         dateLabel.text = getTime(timeStamp ?? "")
         self.view.addSubview(dateLabel)
         if (type == NoteItem.edit) {
-            noteTextView.text = editableItem?.question
+            noteTextView.text = editableItem?.note
             editNavigationItem.title = "编辑"
-            dateLabel.text = getTime(editableItem!.create_date ?? "")
-            
+            dateLabel.text = getTime(editableItem?.createDate ?? "")
         }
     }
     
@@ -128,21 +127,20 @@ class AddNoteController:UIViewController {
     }
     
     @objc func submitNote() {
-        var note = noteTextView.text
-        
-        if (!checkNotNil(input:note)) {
+        var note = ""
+        guard let text = noteTextView.text else{
             Toast(text: "请输入完整信息").show()
             return
         }
-        note = note!.trimmingCharacters(in: .whitespaces)
-        if (!checkNotEmpty(input:note!)) {
+        note = text.trimmingCharacters(in: .whitespaces)
+        if (!checkNotEmpty(input:note)) {
             Toast(text: "请输入完整信息").show()
             return
         }
         if (type == NoteItem.add) {
             submitIndicator.startAnimating()
             optionButton.isEnabled = false
-            NotePresenter.submitNote(note:note!, shopId:shopId!)
+            NotePresenter.submitNote(note:note, shopId:shopId!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     self.submitIndicator.stopAnimating()
@@ -155,14 +153,14 @@ class AddNoteController:UIViewController {
                     }
                 })
         } else if(type == NoteItem.edit) {
-            if (note! == editableItem?.question) {
+            if (note == editableItem?.note) {
                 Toast(text: "未做任何修改").show()
                 //dismiss(animated: true, completion: nil)
                 self.navigationController?.popViewController(animated: true)
             } else {
                 submitIndicator.startAnimating()
                 optionButton.isEnabled = false
-                NotePresenter.editNote(note:note!,noteId:editableItem!.id!)
+                NotePresenter.editNote(note:note,noteId:editableItem!.id!)
                 .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.submitIndicator.stopAnimating()

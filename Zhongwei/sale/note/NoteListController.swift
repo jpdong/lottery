@@ -134,8 +134,8 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
             cell.dateLabel = UILabel()
         }
         Log(cell.dateLabel.text)
-        cell.dateLabel.text = getTime(item.create_date!) ?? ""
-        cell.noteLabel.text = item.question
+        cell.dateLabel.text = getTime(item.createDate!) ?? ""
+        cell.noteLabel.text = item.note
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
     }

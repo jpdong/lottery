@@ -15,13 +15,20 @@ class NoteItem :HandyJSON{
     static let add = 2
     
     var id:String?
-    var user_id:String?
-    var club_id:String?
-    var question:String?
-    var create_date:String?
-    var update_date:String?
+    var shopId:String?
+    var note:String?
+    var createDate:String?
     
     required init() {
         
+    }
+    
+    func mapping(mapper: HelpingMapper) {
+        mapper <<<
+            self.shopId <-- "club_id"
+        mapper <<<
+            self.note <-- "question"
+        mapper <<<
+            self.createDate <-- "create_date"
     }
 }

@@ -31,8 +31,10 @@ class Presenter{
                 switch response.result {
                 case .success:
                     if let sidEntity = SidEntity.deserialize(from:response.result.value!) as? SidEntity {
-                        if (sidEntity.data?.sid != nil) {
-                            result = sidEntity.data!.sid!
+                        if let sid = sidEntity.data?.sid{
+                            result = sid
+                        } else {
+                            result = ""
                         }
                     } else {
                         result = ""

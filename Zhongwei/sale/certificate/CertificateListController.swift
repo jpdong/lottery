@@ -128,39 +128,41 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "CertificateItemCell"
         let item = certificateItems[indexPath.row]
-        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,for: indexPath) as? CertificateItemCell
-        if (cell!.nameLabel == nil) {
-            cell!.nameTitle = UILabel()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,for: indexPath) as? CertificateItemCell else {
+            Log("cell is nil")
+            return UITableViewCell()
         }
-        if (cell!.phoneTitle == nil) {
-            cell!.phoneTitle = UILabel()
+        if (cell.nameLabel == nil) {
+            cell.nameTitle = UILabel()
         }
-        if (cell!.idTitle == nil) {
-            cell!.idTitle = UILabel()
+        if (cell.phoneTitle == nil) {
+            cell.phoneTitle = UILabel()
         }
-        if (cell!.nameLabel == nil) {
-            cell!.nameLabel = UILabel()
+        if (cell.idTitle == nil) {
+            cell.idTitle = UILabel()
         }
-        if (cell!.phoneLabel == nil) {
-            cell!.phoneLabel = UILabel()
+        if (cell.nameLabel == nil) {
+            cell.nameLabel = UILabel()
         }
-        if (cell!.idLabel == nil) {
-            cell!.idLabel = UILabel()
+        if (cell.phoneLabel == nil) {
+            cell.phoneLabel = UILabel()
         }
-        if (cell!.pictureView == nil) {
-            cell!.pictureView = UIImageView()
+        if (cell.idLabel == nil) {
+            cell.idLabel = UILabel()
         }
-        cell!.nameTitle.text = "店主姓名："
-        cell!.phoneTitle.text = "手机号码："
-        cell!.idTitle.text = "代销证号："
-        cell!.nameLabel.text = item.name
-        cell!.phoneLabel.text = item.phone
-        cell!.idLabel.text = item.lottery_papers
-        cell!.pictureView.contentMode = .scaleAspectFit
-        cell!.pictureView.kf.setImage(with: URL(string:item.lottery_papers_image!))
-        cell!.selectionStyle = UITableViewCellSelectionStyle.none
-        print("------ row:\(indexPath.row), count:\(certificateItems.count)")
-        return cell!
+        if (cell.pictureView == nil) {
+            cell.pictureView = UIImageView()
+        }
+        cell.nameTitle.text = "店主姓名："
+        cell.phoneTitle.text = "手机号码："
+        cell.idTitle.text = "代销证号："
+        cell.nameLabel.text = item.name
+        cell.phoneLabel.text = item.phone
+        cell.idLabel.text = item.certificateId
+        cell.pictureView.contentMode = .scaleAspectFit
+        cell.pictureView.kf.setImage(with: URL(string:item.certificateImage ?? ""))
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -186,8 +188,8 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
                         self.currentPage = self.currentPage - 1
                         return
                     }
-                    if (result.list!.count > 0) {
-                        self.certificateItems = self.certificateItems + result.list!
+                    if (list.count > 0) {
+                        self.certificateItems = self.certificateItems + list
                         self.tableView.reloadData()
                         self.loadMoreEnable = true
                         self.tableView.es.stopLoadingMore()

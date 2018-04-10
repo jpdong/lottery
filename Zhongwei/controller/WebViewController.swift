@@ -22,23 +22,15 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
     var navigationBarHeight:CGFloat?
     var statusBarHeight:CGFloat?
     
-    @objc func goBack(_ sender: UIBarButtonItem) {
-        webView.goBack()
-    }
-    
-    func goForward(_ sender: UIBarButtonItem) {
-        webView.goForward()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewDidLoad")
         navigationBarHeight = Size.instance.navigationBarHeight
         statusBarHeight = Size.instance.statusBarHeight
         navigationBar = UINavigationBar(frame:CGRect( x:0,y:Size.instance.statusBarHeight, width:self.view.frame.width, height:Size.instance.navigationBarHeight))
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
         webNavigationItem = UINavigationItem()
         backButton = UIBarButtonItem(title:"",style:.plain, target:self, action:#selector(goBack))
-        backButton.image = UIImage(named:"backButton")
         backButton.tintColor = UIColor.black
         webNavigationItem.setLeftBarButton(backButton, animated: true)
         navigationBar?.pushItem(webNavigationItem, animated: true)
@@ -58,18 +50,20 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         
     }
     
-    func loadUrl(url:String){
-        if (url != nil){
-            let myUrl = URL(string:url)
-            let myRequest = URLRequest(url:myUrl!)
-            webView.load(myRequest)
-        } else {
-            print("shopUrl is nil")
-        }
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        Toast(text:message).show()
+        completionHandler()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        let alert = UIAlertController(title: webView.title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) -> Void in
+            completionHandler(true)
+        }))
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) -> Void in
+            completionHandler(false)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -92,6 +86,14 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         print("webView did finish navigation")
     }
     
+    @objc func goBack(_ sender: UIBarButtonItem) {
+        webView.goBack()
+    }
+    
+    func goForward(_ sender: UIBarButtonItem) {
+        webView.goForward()
+    }
+    
     func startLoad(url:String) {
         if(hasNetwork()) {
             Log("should load url")
@@ -110,6 +112,16 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         }
     }
     
+    func loadUrl(url:String){
+        if (url != nil && url != ""){
+            let myUrl = URL(string:url)
+            let myRequest = URLRequest(url:myUrl!)
+            webView.load(myRequest)
+        } else {
+            print("shopUrl is nil")
+        }
+    }
+    
     func hasNetwork() -> Bool{
         let reachability = Reachability()
         if (reachability?.connection != .none) {
@@ -117,22 +129,6 @@ class WebViewController: UIViewController,WKUIDelegate,WKNavigationDelegate {
         } else {
             return false
         }
-    }
-    
-    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
-        Toast(text:message).show()
-        completionHandler()
-    }
-    
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
-        let alert = UIAlertController(title: webView.title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) -> Void in
-            completionHandler(true)
-        }))
-        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { (_) -> Void in
-            completionHandler(false)
-        }))
-        self.present(alert, animated: true, completion: nil)
     }
 }
 

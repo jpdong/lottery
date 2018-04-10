@@ -40,9 +40,9 @@ class NoteDetailController:UIViewController {
         noteTextView.isEditable = false
         noteTextView.backgroundColor = UIColor.clear
         noteTextView.font = UIFont.systemFont(ofSize: 17)
-        noteTextView.text = noteItem?.question
+        noteTextView.text = noteItem?.note
         dateLabel = UILabel()
-        dateLabel.text = getTime(noteItem!.create_date ?? "")
+        dateLabel.text = getTime(noteItem?.createDate ?? "")
         
         self.view.addSubview(dataBackground)
         self.view.addSubview(textBackground)
@@ -148,8 +148,10 @@ class NoteDetailController:UIViewController {
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
-                    self.updateView(data:result.data!)
-                    self.preViewController?.updataData(row: self.rowInParent!, item: self.noteItem!)
+                    if let data = result.data {
+                        self.updateView(data:data)
+                        self.preViewController?.updataData(row: self.rowInParent!, item: self.noteItem!)
+                    }
                 }
             })
         
@@ -157,7 +159,7 @@ class NoteDetailController:UIViewController {
     
     func updateView(data:NoteItem) {
         noteItem = data
-        noteTextView.text = noteItem?.question
+        noteTextView.text = noteItem?.note
         
     }
     

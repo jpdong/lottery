@@ -126,7 +126,7 @@ class ReceiptPresenter {
                 return Observable<Result>.create {
                     observer -> Disposable in
                     var receiptImagesObject = ReceiptImagesObject()
-                    receiptImagesObject.receipt_image = imageUrls
+                    receiptImagesObject.image = imageUrls
                     var jsonString = receiptImagesObject.toJSONString() as! String
                     let parameters:Dictionary = ["sid":sid,"notes":notes, "receipt_image":jsonString]
                     print("parameters:\(parameters)")
@@ -185,7 +185,7 @@ class ReceiptPresenter {
                 return Observable<Result>.create {
                     observer -> Disposable in
                     var receiptImagesObject = ReceiptImagesObject()
-                    receiptImagesObject.receipt_image = imageUrls
+                    receiptImagesObject.image = imageUrls
                     var jsonString = receiptImagesObject.toJSONString() as! String
                     let parameters:Dictionary = ["sid":sid,"notes":notes, "receipt_image":jsonString,"id":id]
                     print("parameters:\(parameters)")

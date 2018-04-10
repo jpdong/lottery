@@ -31,13 +31,12 @@ class VisitPresenter {
                         var result:VisitListResult = VisitListResult()
                         switch response.result {
                         case .success:
-                            guard let entity:VisitListEntity = VisitListEntity.deserialize(from: response.result.value as! String) as? VisitListEntity else {
+                            guard let entity:VisitListEntity = VisitListEntity.deserialize(from: response.result.value) as? VisitListEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
                                 return
                             }
-                            
                             if (entity.code == 0) {
                                 result.code = 0
                                 result.message = entity.msg
@@ -73,13 +72,12 @@ class VisitPresenter {
                         var result:VisitListResult = VisitListResult()
                         switch response.result {
                         case .success:
-                            guard let entity:VisitListEntity = VisitListEntity.deserialize(from: response.result.value as! String) as? VisitListEntity else {
+                            guard let entity:VisitListEntity = VisitListEntity.deserialize(from: response.result.value) as? VisitListEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
                                 return
                             }
-                            
                             if (entity.code == 0) {
                                 result.code = 0
                                 result.message = entity.msg
@@ -116,7 +114,7 @@ class VisitPresenter {
                         var result:VisitStateResult = VisitStateResult()
                         switch response.result {
                         case .success:
-                            guard let entity:VisitStateEntity = VisitStateEntity.deserialize(from: response.result.value as! String) as? VisitStateEntity else {
+                            guard let entity:VisitStateEntity = VisitStateEntity.deserialize(from: response.result.value) as? VisitStateEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)

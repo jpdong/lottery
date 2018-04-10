@@ -25,10 +25,9 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
     
     var registerIndicator:UIActivityIndicatorView!
     var keyboardHeight:CGFloat?
+    var timer:Timer!
     
-    @IBAction func backToLogin(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
+    
     
     var remainingTime:Int = 60 {
         willSet {
@@ -58,12 +57,103 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
         }
     }
     
+    override func viewDidLoad() {
+        setupViews()
+        setupConstrains()
+    }
+    
+    func setupViews() {
+        sendCodeButton.setTitle("获取验证码", for: .normal)
+        phoneTextField.delegate = self
+        codeTextField.delegate = self
+        passwordTextField.isSecureTextEntry = true
+        passwordTextField.delegate = self
+        confirmPasswordText.isSecureTextEntry = true
+        confirmPasswordText.delegate = self
+        registerIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.gray)
+        self.view.addSubview(registerIndicator)
+    }
+    
+    func setupConstrains() {
+        registerIndicator.snp.makeConstraints { (maker) in
+            maker.center.equalTo(registerButton)
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        phoneInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        codeInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        passwordInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        confirmInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow(note:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden(note:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onPhoneTextfieldChanged(note:)), name: NSNotification.Name.UITextFieldTextDidChange, object: self.phoneTextField)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func keyboardShow(note:Notification) {
+        guard let userInfo = note.userInfo else {
+            return
+        }
+        guard let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
+            return
+        }
+        keyboardHeight = keyboardRect.height
+        if (!Size.instance.isiPhoneX) {
+            UIView.animate(withDuration:0.5) {
+                self.view.transform = CGAffineTransform.init(translationX: 0, y: -keyboardRect.height * 0.5)
+            }
+        }
+    }
+    
+    @objc func keyboardHidden(note:Notification) {
+        if (!Size.instance.isiPhoneX) {
+            UIView.animate(withDuration:0.5) {
+                self.view.transform = CGAffineTransform.init(translationX: 0, y: 0)
+            }
+        }
+    }
+    
+    @objc func onPhoneTextfieldChanged(note:Notification) {
+        guard let _: UITextRange = phoneTextField.markedTextRange else{
+            let cursorPostion = phoneTextField.offset(from: phoneTextField.endOfDocument,
+                                                      to: phoneTextField.selectedTextRange!.end)
+            let pattern = "[^0-9]"
+            var str = phoneTextField.text!.pregReplace(pattern: pattern, with: "")
+            if str.count > 11 {
+                str = String(str.prefix(11))
+            }
+            phoneTextField.text = str
+            let targetPostion = phoneTextField.position(from: phoneTextField.endOfDocument,offset: cursorPostion)!
+            phoneTextField.selectedTextRange = phoneTextField.textRange(from: targetPostion,to: targetPostion)
+            return
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+    }
+    
     @objc func updateTime() {
         remainingTime -= 1
     }
     
+    @IBAction func backToLogin(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
-    var timer:Timer!
     
     @IBAction func register(_ sender: Any) {
         self.view.endEditing(true)
@@ -161,7 +251,7 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
             let confirm = UIAlertAction(title:"确定", style:.default){
                 action in
                 UserPresenter.sendVerificationCode(phone:phoneNum!)
-                .observeOn(MainScheduler.instance)
+                    .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         if (result.code == 0) {
                             Toast(text: "发送成功").show()
@@ -179,100 +269,5 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
     
     func startTiming(){
         isCounting = true
-    }
-    
-    override func viewDidLoad() {
-        setupViews()
-        setupConstrains()
-    }
-    
-    func setupViews() {
-        sendCodeButton.setTitle("获取验证码", for: .normal)
-        phoneTextField.delegate = self
-        codeTextField.delegate = self
-        passwordTextField.isSecureTextEntry = true
-        passwordTextField.delegate = self
-        confirmPasswordText.isSecureTextEntry = true
-        confirmPasswordText.delegate = self
-        registerIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.gray)
-        self.view.addSubview(registerIndicator)
-    }
-    
-    func setupConstrains() {
-        registerIndicator.snp.makeConstraints { (maker) in
-            maker.center.equalTo(registerButton)
-        }
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    override func viewDidLayoutSubviews() {
-        phoneInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        codeInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        passwordInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        confirmInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow(note:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden(note:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onPhoneTextfieldChanged(note:)), name: NSNotification.Name.UITextFieldTextDidChange, object: self.phoneTextField)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    @objc func keyboardShow(note:Notification) {
-        guard let userInfo = note.userInfo else {
-            return
-        }
-        guard let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
-            return
-        }
-        keyboardHeight = keyboardRect.height
-        if (!Size.instance.isiPhoneX) {
-            UIView.animate(withDuration:0.5) {
-                self.view.transform = CGAffineTransform.init(translationX: 0, y: -keyboardRect.height * 0.5)
-            }
-        }
-    }
-    
-    @objc func keyboardHidden(note:Notification) {
-        //        guard let userInfo = note.userInfo else {
-        //            return
-        //        }
-        //        guard let keyboardRect = userInfo[UIKeyboardFrameEndUserInfoKey] as? CGRect else {
-        //            return
-        //        }
-        if (!Size.instance.isiPhoneX) {
-            UIView.animate(withDuration:0.5) {
-                self.view.transform = CGAffineTransform.init(translationX: 0, y: 0)
-            }
-        }
-    }
-    
-    @objc func onPhoneTextfieldChanged(note:Notification) {
-        guard let _: UITextRange = phoneTextField.markedTextRange else{
-            let cursorPostion = phoneTextField.offset(from: phoneTextField.endOfDocument,
-                                                      to: phoneTextField.selectedTextRange!.end)
-            let pattern = "[^0-9]"
-            var str = phoneTextField.text!.pregReplace(pattern: pattern, with: "")
-            if str.count > 11 {
-                str = String(str.prefix(11))
-            }
-            phoneTextField.text = str
-            let targetPostion = phoneTextField.position(from: phoneTextField.endOfDocument,offset: cursorPostion)!
-            phoneTextField.selectedTextRange = phoneTextField.textRange(from: targetPostion,to: targetPostion)
-            return
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-        super.touchesBegan(touches, with: event)
     }
 }

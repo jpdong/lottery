@@ -18,8 +18,8 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     var imageIndicator:UIActivityIndicatorView!
     var type:Int = ReceiptItem.add
     var editableItem:ReceiptItem?
-    var navigationBarHeight:CGFloat?
-    var statusBarHeight:CGFloat?
+    var navigationBarHeight:CGFloat!
+    var statusBarHeight:CGFloat!
     var closeButton:UIBarButtonItem!
     var navigationBar:UINavigationBar!
     var editNavigationItem:UINavigationItem!
@@ -59,14 +59,14 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         self.navigationItem.title = "添加"
         navigationBarHeight = Size.instance.navigationBarHeight
         statusBarHeight = Size.instance.statusBarHeight
-        navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight!, width:self.view.frame.width, height:navigationBarHeight!))
+        navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight, width:self.view.frame.width, height:navigationBarHeight))
         editNavigationItem = UINavigationItem()
         closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
         closeButton.image = UIImage(named:"closeButton")
         closeButton.tintColor = UIColor.black
         editNavigationItem.setRightBarButton(closeButton, animated: true)
         navigationBar?.pushItem(editNavigationItem, animated: true)
-        self.view.addSubview(navigationBar!)
+        self.view.addSubview(navigationBar)
         self.view.backgroundColor = UIColor.white
         
         textField = UITextView()
@@ -144,7 +144,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         imageUrls = [String]()
         if (type == ReceiptItem.edit) {
             textField.text = editableItem?.notes
-            imageUrls = editableItem?.receipt_image?.receipt_image
+            imageUrls = editableItem?.image?.image
             editNavigationItem.title = "编辑"
         }
     }
@@ -171,22 +171,10 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let tapAdd = UITapGestureRecognizer(target: self, action: #selector(addPictures))
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCell
-        //        if (type == ReceiptItem.add) {
-        //            if (selectedImages.count < 6 && indexPath.row == selectedImages.count) {
-        //                cell.imageView?.image = UIImage(named:"button_add_receipt")
-        //                cell.deleteButton?.isHidden = true
-        //                cell.imageView?.isUserInteractionEnabled = true
-        //                cell.imageView?.addGestureRecognizer(tapAdd)
-        //            } else {
-        //
-        //                cell.imageView?.image = selectedImages[indexPath.row]
-        //
-        //                cell.deleteButton?.isHidden = false
-        //                cell.imageView?.isUserInteractionEnabled = false
-        //                cell.imageView?.removeGestureRecognizer(tapAdd)
-        //            }
-        //        } else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as? ImageCell else {
+            Log("cell is nil")
+            return UICollectionViewCell()
+        }
         if (imageUrls.count < 6 && indexPath.row == imageUrls.count) {
             cell.imageView?.image = UIImage(named:"button_add_receipt")
             cell.deleteButton?.isHidden = true
@@ -198,8 +186,6 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
             cell.imageView?.isUserInteractionEnabled = false
             cell.imageView?.removeGestureRecognizer(tapAdd)
         }
-        //}
-        
         cell.deleteButton?.tag = indexPath.row
         let tapDelete = UITapGestureRecognizer(target: self, action: #selector(deleteClick(sender:)))
         cell.deleteButton?.addGestureRecognizer(tapDelete)
@@ -215,17 +201,6 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     @objc func deleteClick(sender:UITapGestureRecognizer) {
         self.imageUrls.remove(at: sender.view!.tag)
         self.imageCollectionView.reloadData()
-//        if (selectedImages.count == 5) {
-//            self.imageCollectionView.reloadData()
-//        } else {
-//        imageCollectionView.performBatchUpdates({
-//            let indexPath = IndexPath(row: sender.view!.tag, section: 0)
-//            imageCollectionView.deleteItems(at: [indexPath])
-//        }) { (finish) in
-//            self.imageCollectionView.reloadData()
-//        }
-//        }
-        
     }
     
     @objc func addPictures() {

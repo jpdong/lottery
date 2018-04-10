@@ -10,9 +10,14 @@ import Foundation
 import HandyJSON
 
 class ReceiptImagesObject:HandyJSON {
-    var receipt_image:[String]?
+    var image:[String]?
     
     required init() {
         
+    }
+    
+    func mapping(mapper: HelpingMapper) {
+        mapper <<<
+            self.image <-- "receipt_image"
     }
 }

@@ -22,8 +22,8 @@ class AddCertificateController:UIViewController {
     var imageUrl:String?
     var type:Int = 2
     var editableItem:CertificateItem?
-    var navigationBarHeight:CGFloat?
-    var statusBarHeight:CGFloat?
+    var navigationBarHeight:CGFloat!
+    var statusBarHeight:CGFloat!
     var closeButton:UIBarButtonItem!
     var navigationBar:UINavigationBar!
     var editNavigationItem:UINavigationItem!
@@ -38,7 +38,7 @@ class AddCertificateController:UIViewController {
         self.navigationItem.title = "添加"
         navigationBarHeight = Size.instance.navigationBarHeight
         statusBarHeight = Size.instance.statusBarHeight
-        navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight!, width:self.view.frame.width, height:navigationBarHeight!))
+        navigationBar = UINavigationBar(frame:CGRect( x:0,y:statusBarHeight, width:self.view.frame.width, height:navigationBarHeight))
         editNavigationItem = UINavigationItem()
         closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
         closeButton.image = UIImage(named:"closeButton")
@@ -89,9 +89,9 @@ class AddCertificateController:UIViewController {
         if (type == CertificateItem.edit) {
             nameInputBox.textField.text = editableItem?.name
             phoneInputBox.textField.text = editableItem?.phone
-            idInputBox.textField.text = editableItem?.lottery_papers
-            imageUrl = editableItem?.lottery_papers_image
-            imageInputBox.imageView.kf.setImage(with: URL(string:imageUrl!))
+            idInputBox.textField.text = editableItem?.certificateId
+            imageUrl = editableItem?.certificateImage
+            imageInputBox.imageView.kf.setImage(with: URL(string:imageUrl ?? ""))
             editNavigationItem.title = "编辑"
         }
     }
@@ -205,7 +205,7 @@ class AddCertificateController:UIViewController {
                     }
                 })
         } else if(type == CertificateItem.edit) {
-            if (name! == editableItem?.name! && phone! == editableItem?.phone! && id! == editableItem?.lottery_papers! && imageUrl! == editableItem?.lottery_papers_image!) {
+            if (name! == editableItem?.name! && phone! == editableItem?.phone! && id! == editableItem?.certificateId! && imageUrl! == editableItem?.certificateImage!) {
                 Toast(text: "未做任何修改").show()
                 dismiss(animated: true, completion: nil)
             } else {

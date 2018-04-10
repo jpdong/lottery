@@ -32,7 +32,7 @@ class CertificatePresenter {
                         var result:CertificateListResult = CertificateListResult()
                         switch response.result {
                         case .success:
-                            guard let certificateListEntity:CertificateListEntity = CertificateListEntity.deserialize(from: response.result.value as! String) as? CertificateListEntity else {
+                            guard let certificateListEntity:CertificateListEntity = CertificateListEntity.deserialize(from: response.result.value) as? CertificateListEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
@@ -77,7 +77,7 @@ class CertificatePresenter {
                         var result:Result = Result()
                         switch response.result {
                         case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value) as? ResponseEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
@@ -121,13 +121,12 @@ class CertificatePresenter {
                         var result:Result = Result()
                         switch response.result {
                         case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value) as? ResponseEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
                                 return
                             }
-                            
                             if (responseEntity.code == 0) {
                                 result.code = 0
                                 result.message = responseEntity.msg
@@ -163,13 +162,12 @@ class CertificatePresenter {
                         var result:CertificateResult = CertificateResult()
                         switch response.result {
                         case .success:
-                            guard let certificateEntity:CertificateEntity = CertificateEntity.deserialize(from: response.result.value as! String) as? CertificateEntity else {
+                            guard let certificateEntity:CertificateEntity = CertificateEntity.deserialize(from: response.result.value) as? CertificateEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
                                 return
                             }
-                            
                             if (certificateEntity.code == 0) {
                                 result.code = 0
                                 result.message = certificateEntity.msg
@@ -182,7 +180,6 @@ class CertificatePresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
                     }
                     return Disposables.create()
@@ -206,13 +203,12 @@ class CertificatePresenter {
                         var result:Result = Result()
                         switch response.result {
                         case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
+                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value) as? ResponseEntity else {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
                                 return
                             }
-                            
                             if (responseEntity.code == 0) {
                                 result.code = 0
                                 result.message = responseEntity.msg
@@ -224,7 +220,6 @@ class CertificatePresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
                     }
                     return Disposables.create()

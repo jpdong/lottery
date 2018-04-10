@@ -60,13 +60,12 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 self.tableView.es.stopPullToRefresh()
-                //self.refreshControl.endRefreshing()
                 if (result.code == 0) {
-                    self.receiptItems.removeAll()
-                    self.receiptItems = self.receiptItems + result.list!
-                    Log(result.list)
-                    Log(self.receiptItems)
-                    self.tableView.reloadData()
+                    if let list = result.list {
+                        self.receiptItems.removeAll()
+                        self.receiptItems = self.receiptItems + list
+                        self.tableView.reloadData()
+                    }
                 }
             })
     }
@@ -79,6 +78,7 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
         let cellIdentifier = "ReceiptItemCell"
         let item = receiptItems[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,for: indexPath) as? ReceiptItemCell else {
+            Log("cell is nil")
             return UITableViewCell()
         }
         if (cell.dateLabel == nil) {
@@ -87,14 +87,13 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
         if (cell.noteLabel == nil) {
             cell.noteLabel = UILabel()
         }
-        
         if (cell.pictureView == nil) {
             cell.pictureView = UIImageView()
         }
-        cell.dateLabel.text = item.create_date
+        cell.dateLabel.text = item.createDate
         cell.noteLabel.text = item.notes
-        if (item.receipt_image!.receipt_image!.count != 0 ){
-            cell.pictureView.kf.setImage(with: URL(string:item.receipt_image!.receipt_image![0]))
+        if (item.image!.image!.count != 0 ){
+            cell.pictureView.kf.setImage(with: URL(string:item.image?.image?[0] ?? ""))
         }
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
@@ -109,7 +108,6 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
     }
     
     func loadMore() {
-        print("load more")
         currentPage = currentPage + 1
         ReceiptPresenter.getReceiptList(pageIndex: currentPage, num: 10)
             .observeOn(MainScheduler.instance)
