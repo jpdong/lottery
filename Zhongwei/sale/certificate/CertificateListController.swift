@@ -13,7 +13,7 @@ import ESPullToRefresh
 
 class CertificateListController:UIViewController ,UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate {
     
-    var searchBar:UISearchBar!
+    //var searchBar:UISearchBar!
     var tableView:UITableView!
     var refreshControl:UIRefreshControl!
     var loadMoreView:UIView!
@@ -34,9 +34,9 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
         self.navigationItem.title = "代销证管理"
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addCertificate))
         self.navigationItem.rightBarButtonItem = addButton
-        searchBar = UISearchBar()
+        //searchBar = UISearchBar()
         tableView = UITableView()
-        searchBar.delegate = self
+        //searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 120
@@ -48,7 +48,7 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
         //refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         //refreshControl.attributedTitle = NSAttributedString(string:"下拉刷新数据")
         //tableView.addSubview(refreshControl)
-        self.view.addSubview(searchBar)
+        //self.view.addSubview(searchBar)
         self.view.addSubview(tableView)
         
         tableView.es.addPullToRefresh {
@@ -73,13 +73,14 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
     }
     
     func setupConstrains() {
-        searchBar.snp.makeConstraints { (maker) in
-            maker.top.equalTo(self.view).offset(Size.instance.statusBarHeight + Size.instance.navigationBarHeight)
-            maker.left.right.equalTo(self.view)
-        }
+//        searchBar.snp.makeConstraints { (maker) in
+//            maker.top.equalTo(self.view).offset(Size.instance.statusBarHeight + Size.instance.navigationBarHeight)
+//            maker.left.right.equalTo(self.view)
+//        }
         
         tableView.snp.makeConstraints { (maker) in
-            maker.top.equalTo(searchBar.snp.bottom)
+            //maker.top.equalTo(searchBar.snp.bottom)
+            maker.top.equalTo(self.view).offset(Size.instance.statusBarHeight + Size.instance.navigationBarHeight)
             maker.left.right.equalTo(self.view)
             maker.bottom.equalTo(self.view)
         }

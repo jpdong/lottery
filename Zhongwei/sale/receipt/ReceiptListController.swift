@@ -148,11 +148,6 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    
-    
-    
-    
-    
     func deleleItem(row:Int) {
         receiptItems.remove(at: row)
         tableView.reloadData()

@@ -222,7 +222,7 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         getLocation()
     }
     
@@ -234,8 +234,8 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
             return
         }
         if status == .denied || status == .restricted {
-            let alert = UIAlertController(title: "Location Services Disabled", message: "Please enable Location Services in Settings", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let alert = UIAlertController(title: "提示", message: "请在设置中授予位置使用权限", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "确定", style: .default, handler: nil)
             alert.addAction(okAction)
             present(alert, animated: true, completion: nil)
             return

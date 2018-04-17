@@ -96,7 +96,6 @@ class SaleViewController:UIViewController {
         //Toast(text:"功能暂未开放").show()
         let vc = VisitListController()
         self.navigationController?.pushViewController(vc, animated: true)
-        
     }
     
     @objc func showDiary() {

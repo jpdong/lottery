@@ -66,7 +66,7 @@ class AddCertificateController:UIViewController {
         
         imageInputBox = ImageInputBoxView()
         imageInputBox.titleLabel.text = "代销证照片"
-        imageInputBox.imageView.image = UIImage(named:"tobacco_card")
+        imageInputBox.imageView.image = UIImage(named:"icon_certificate")
         imageInputBox.isUserInteractionEnabled = true
         
         

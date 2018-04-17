@@ -95,7 +95,6 @@ class CertificatePresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
                     }
                     return Disposables.create()
@@ -138,7 +137,6 @@ class CertificatePresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
                     }
                     return Disposables.create()

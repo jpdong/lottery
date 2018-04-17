@@ -61,9 +61,9 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        setupData()
         setupConstrains()
         setupClickEvents()
-        setupData()
     }
     
     func setupViews() {
@@ -129,7 +129,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
             maker.centerX.equalTo(self.view)
             maker.centerY.equalTo(imageView).offset(70)
             maker.width.equalTo(self.view.frame.width * 0.9)
-            maker.height.equalTo(160)
+            maker.height.equalTo(170)
         }
         shopNameLabel.snp.makeConstraints { (maker) in
             maker.top.left.equalTo(shopView).offset(8)
@@ -137,7 +137,14 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         shopInfoView.snp.makeConstraints { (maker) in
             maker.top.equalTo(shopNameLabel.snp.bottom).offset(8)
             maker.left.equalTo(shopView).offset(8)
-            maker.height.equalTo(80)
+            maker.right.equalTo(signButtonView.snp.left)
+            maker.height.equalTo(90)
+            //maker.width.equalTo(self.view.frame.width * 0.7)
+        }
+        signButtonView.snp.makeConstraints { (maker) in
+            maker.centerY.equalTo(shopView)
+            maker.right.equalTo(shopView).offset(-8)
+            maker.width.height.equalTo(80)
         }
         signLocationView.snp.makeConstraints { (maker) in
             maker.top.equalTo(shopInfoView.snp.bottom)
@@ -147,11 +154,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
             maker.width.equalTo(shopView)
             maker.height.equalTo(30)
         }
-        signButtonView.snp.makeConstraints { (maker) in
-            maker.centerY.equalTo(shopView)
-            maker.right.equalTo(shopView).offset(-8)
-            maker.width.height.equalTo(80)
-        }
+        
         pageMenuController.view.snp.makeConstraints { (maker) in
             maker.top.equalTo(shopView.snp.bottom).offset(16)
             maker.left.right.equalTo(self.view)
@@ -161,10 +164,29 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         
     }
     
+    override func updateViewConstraints() {
+        super.updateViewConstraints()
+        signButtonView.titleLabel.snp.updateConstraints { (maker) in
+            if onSigning {
+                maker.centerY.equalTo(signButtonView).offset(-8)
+            } else {
+                maker.centerY.equalTo(signButtonView)
+            }
+        }
+        
+        signButtonView.timeLabel.snp.updateConstraints { (maker) in
+            if onSigning {
+                maker.centerY.equalTo(signButtonView).offset(8)
+            } else {
+                maker.centerY.equalTo(signButtonView).offset(16)
+            }
+        }
+        
+    }
+    
     func setupData() {
         if let shopItem = shopItem {
             updateShopView()
-            
         } else {
             ShopPresenter.getShopWithId(id:shopId!)
                 .observeOn(MainScheduler.instance)
@@ -277,21 +299,31 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     }
     
     func signAnimation() {
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(TimeInterval(1))
-        //signButtonView.titleLabel.center.y = signButtonView.titleLabel.center.y - 8
-        signButtonView.timeLabel.alpha = 1
-        UIView.setAnimationCurve(.easeOut)
-        UIView.commitAnimations()
+//        UIView.beginAnimations(nil, context: nil)
+//        UIView.setAnimationDuration(TimeInterval(1))
+//        //signButtonView.titleLabel.center.y = signButtonView.titleLabel.center.y - 8
+//        signButtonView.timeLabel.alpha = 1
+//        UIView.setAnimationCurve(.easeOut)
+//        UIView.commitAnimations()
+        self.view.setNeedsUpdateConstraints()
+        UIView.animate(withDuration: 1) {
+            self.signButtonView.timeLabel.alpha = 1
+            self.view.layoutIfNeeded()
+        }
     }
     
     func unSignAnimation() {
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(TimeInterval(1))
-        //signButtonView.titleLabel.center.y = signButtonView.titleLabel.center.y + 8
-        signButtonView.timeLabel.alpha = 0
-        UIView.setAnimationCurve(.easeOut)
-        UIView.commitAnimations()
+//        UIView.beginAnimations(nil, context: nil)
+//        UIView.setAnimationDuration(TimeInterval(1))
+//        //signButtonView.titleLabel.center.y = signButtonView.titleLabel.center.y + 8
+//        signButtonView.timeLabel.alpha = 0
+//        UIView.setAnimationCurve(.easeOut)
+//        UIView.commitAnimations()
+        self.view.setNeedsUpdateConstraints()
+        UIView.animate(withDuration: 1) {
+            self.signButtonView.timeLabel.alpha = 0
+            self.view.layoutIfNeeded()
+        }
     }
     
     @objc func location() {
@@ -308,8 +340,8 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
             return
         }
         if status == .denied || status == .restricted {
-            let alert = UIAlertController(title: "Location Services Disabled", message: "Please enable Location Services in Settings", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let alert = UIAlertController(title: "提示", message: "请在设置中授予位置使用权限", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "确定", style: .default, handler: nil)
             alert.addAction(okAction)
             present(alert, animated: true, completion: nil)
             return

@@ -51,10 +51,12 @@ class SignButtonView:UIView {
         }
         timeLabel.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(self)
-            maker.top.equalTo(titleLabel).offset(16)
+            maker.centerY.equalTo(self).offset(16)
         }
         backgroundImage.snp.makeConstraints { (maker) in
             maker.left.right.top.bottom.equalTo(self)
         }
     }
+    
+    
 }

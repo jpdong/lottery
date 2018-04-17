@@ -12,6 +12,7 @@ import RxCocoa
 import Alamofire
 import HandyJSON
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
@@ -37,7 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         Bugly.start(withAppId:"98d4c1d3a8")
         print("application didFinsishLaunch")
         globalData = GlobalData()
-        globalData?.baseUrl = "http://yan.eeseetech.cn/"
+        globalData?.baseUrl = "http://app.api.bjzwhz.cn/"
+        //globalData?.baseUrl = "http://app.api.bjzwhz.cn/"
+        //globalData?.baseUrl = "http://yan.bjzwhz.cn/"
+        //globalData?.baseUrl = "http://yan.eeseetech.cn/"
         //globalData?.baseUrl = "https://yan.bjzwhz.cn/"
         globalData?.unionid = getCacheUnionid()!
         globalData?.headImgUrl = getCacheImgUrl()!
@@ -45,7 +49,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
         globalData?.sid = getCacheSid()!
         globalData?.phoneNum = getCachePhoneNum()!
         WXApi.registerApp(wechatAppID)
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (accepted, error) in
+            if !accepted {
+                Log("用户不允许消息通知")
+            }
+        }
+        UIApplication.shared.registerForRemoteNotifications()
         return true
+    }
+    
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Log("Get Push token: \(deviceToken.hexString)")
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -172,3 +187,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     }
 }
 
+extension Data {
+    //将Data转换为String
+    var hexString: String {
+        return withUnsafeBytes {(bytes: UnsafePointer<UInt8>) -> String in
+            let buffer = UnsafeBufferPointer(start: bytes, count: count)
+            return buffer.map {String(format: "%02hhx", $0)}.reduce("", { $0 + $1 })
+        }
+    }
+}

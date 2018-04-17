@@ -408,7 +408,9 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                     } else {
                         let vc = ClosableWebView()
                         vc.url = result.data!.url!
-                        self.present(vc, animated: true, completion: nil)
+                        self.present(vc, animated: true) {
+                            vc.startLoad(url: result.data!.url!)
+                        }
                     }
                 } else {
                     Toast(text: result.message).show()
@@ -423,9 +425,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     @objc func onCustomerButton() {
         print("onCustomerButton")
-        let vc = ReceiptListController()
-        self.navigationController?.pushViewController(vc, animated: true)
-        //Toast(text: "功能暂未开放").show()
+        Toast(text: "功能暂未开放").show()
     }
     
     @objc func onScanPrizeButton() {
@@ -449,7 +449,4 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         segue.destination.hidesBottomBarWhenPushed = true
     }
-    
-    
-    
 }
