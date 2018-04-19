@@ -24,6 +24,8 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
     var listType:Int = SearchViewController.history
     var historyTitle:UILabel!
     var deleteHistoryButton:UIImageView!
+    var presenter:ShopPresenter!
+    var disposeBag:DisposeBag!
     
     var currentKey:String = "" {
         willSet {
@@ -39,8 +41,14 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = ShopPresenter()
         setupViews()
         setupConstrains()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -106,7 +114,7 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
         listType = SearchViewController.search
         tableView.tableHeaderView = UIView(frame:.zero)
         currentPage = 1
-        ShopPresenter.searchShopList(pageIndex: currentPage, num: 10, key:searchText)
+        presenter.searchShopList(pageIndex: currentPage, num: 10, key:searchText)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -117,6 +125,7 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
                     self.tableView.reloadData()
                 }
             })
+        .disposed(by: disposeBag)
     }
     
     
@@ -154,7 +163,7 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
         print("load more")
         if (listType == SearchViewController.search) {
         currentPage = currentPage + 1
-        ShopPresenter.searchShopList(pageIndex: currentPage, num: 10, key:currentKey)
+        presenter.searchShopList(pageIndex: currentPage, num: 10, key:currentKey)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -175,11 +184,12 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
                     }
                 }
             })
+            .disposed(by: disposeBag)
         }
     }
     
     func showHistory() {
-        ShopPresenter.getDBShopHistory(pageIndex: currentHistoryPage, num: 10)
+        presenter.getDBShopHistory(pageIndex: currentHistoryPage, num: 10)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -188,7 +198,8 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
                     Log(self.shopItems)
                     self.tableView.reloadData()
                 }
-            })   
+            })
+        .disposed(by: disposeBag)
     }
     
     func updataData(row:Int, item:ShopItem) {

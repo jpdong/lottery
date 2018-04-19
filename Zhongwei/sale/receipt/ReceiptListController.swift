@@ -17,12 +17,20 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
     var currentPage:Int = 1
     
     var receiptItems = [ReceiptItem]()
+    var presenter:ReceiptPresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = ReceiptPresenter()
         setupViews()
         setupConstrains()
         refreshData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -56,7 +64,7 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
     
     @objc func refreshData() {
         currentPage = 1
-        ReceiptPresenter.getReceiptList(pageIndex: currentPage, num: 10)
+        presenter.getReceiptList(pageIndex: currentPage, num: 10)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 self.tableView.es.stopPullToRefresh()
@@ -67,7 +75,12 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
                         self.tableView.reloadData()
                     }
                 }
+            }, onCompleted: {
+                Log("onCompleted")
+            }, onDisposed: {
+                Log("onDisposed")
             })
+        .disposed(by: disposeBag)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -109,7 +122,7 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
     
     func loadMore() {
         currentPage = currentPage + 1
-        ReceiptPresenter.getReceiptList(pageIndex: currentPage, num: 10)
+        presenter.getReceiptList(pageIndex: currentPage, num: 10)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -132,6 +145,7 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
                     }
                 }
             })
+        .disposed(by: disposeBag)
     }
     
     func updataData(row:Int, item:ReceiptItem) {

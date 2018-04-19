@@ -39,9 +39,13 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     var tobaccoImageIndicator:UIActivityIndicatorView!
     var navigationBarHeight:CGFloat?
     var statusBarHeight:CGFloat?
+    var presenter:BusinessPresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = BusinessPresenter()
         setupViews()
         setupConstrains()
     }
@@ -218,7 +222,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             DispatchQueue.main.async {
                 self.idcardFrontImage.image = image
                 self.frontImageIndicator.startAnimating()
-                BusinessPresenter.uploadImage(image:image!)
+                self.presenter.uploadImage(image:image!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.frontImageIndicator.stopAnimating()
@@ -229,6 +233,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
                             Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
                         }
                     })
+                .disposed(by: self.disposeBag)
                 self.dismiss(animated: true, completion: nil)
             }
         }
@@ -244,7 +249,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             DispatchQueue.main.async {
                 self.idcardBackImage.image = image
                 self.backImageIndicator.startAnimating()
-                BusinessPresenter.uploadImage(image:image!)
+                self.presenter.uploadImage(image:image!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.backImageIndicator.stopAnimating()
@@ -255,6 +260,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
                             Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
                         }
                     })
+                .disposed(by: self.disposeBag)
                 self.dismiss(animated: true, completion: nil)
             }
         }
@@ -270,7 +276,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             DispatchQueue.main.async {
                 self.tobaccoCardImage.image = image
                 self.tobaccoImageIndicator.startAnimating()
-                BusinessPresenter.uploadImage(image:image!)
+                self.presenter.uploadImage(image:image!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.tobaccoImageIndicator.stopAnimating()
@@ -281,6 +287,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
                             Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
                         }
                     })
+                .disposed(by: self.disposeBag)
                 self.dismiss(animated: true, completion: nil)
             }
         }
@@ -294,7 +301,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         if (currentImage == IDCardViewController.front) {
             idcardFrontImage.image = image
             frontImageIndicator.startAnimating()
-            BusinessPresenter.uploadImage(image:image)
+            self.presenter.uploadImage(image:image)
             .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     self.frontImageIndicator.stopAnimating()
@@ -305,11 +312,12 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
                         Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
                     }
                 })
+            .disposed(by: self.disposeBag)
             
         } else if (currentImage == IDCardViewController.back) {
             idcardBackImage.image = image
             backImageIndicator.startAnimating()
-            BusinessPresenter.uploadImage(image:image)
+            presenter.uploadImage(image:image)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     self.backImageIndicator.stopAnimating()
@@ -320,10 +328,11 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
                         Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
                     }
                 })
+            .disposed(by: self.disposeBag)
         } else if (currentImage == IDCardViewController.tobacco) {
             tobaccoCardImage.image = image
             tobaccoImageIndicator.startAnimating()
-            BusinessPresenter.uploadImage(image:image)
+            presenter.uploadImage(image:image)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     self.tobaccoImageIndicator.stopAnimating()
@@ -334,6 +343,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
                         Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
                     }
                 })
+            .disposed(by: self.disposeBag)
         }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -345,7 +355,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         }
         storeIDCardImageUrl(front:frontImageUrl!, back:backImageUrl!)
         storeTobaccoCardImageUrl(cardUrl: tobaccoImageUrl!)
-        BusinessPresenter.uploadImageUrls(front:frontImageUrl!, back:backImageUrl!,tobacco: tobaccoImageUrl!)
+        presenter.uploadImageUrls(front:frontImageUrl!, back:backImageUrl!,tobacco: tobaccoImageUrl!)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -357,6 +367,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
                    Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     func checkPictures() -> Bool {

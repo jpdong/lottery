@@ -12,20 +12,18 @@ import Alamofire
 import HandyJSON
 import Toaster
 
-class CertificatePresenter {
+class CertificatePresenter:Presenter {
     
-    static let app = UIApplication.shared.delegate as! AppDelegate
-    static let BASE_URL = app.globalData!.baseUrl
-    
-    static func getCertificateList(pageIndex:Int, num:Int) ->Observable<CertificateListResult> {
-        return Presenter.getSid()
+    func getCertificateList(pageIndex:Int, num:Int) ->Observable<CertificateListResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<CertificateListResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num)]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/lotteryList",method:.post,parameters:parameters).responseString{response in
+                    print(self.baseUrl)
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/lotteryList",method:.post,parameters:parameters).responseString{response in
                         print("certificate list")
                         print("value: \(response.result.value)")
                         
@@ -36,6 +34,7 @@ class CertificatePresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                //observer.onCompleted()
                                 return
                             }
                             
@@ -53,6 +52,7 @@ class CertificatePresenter {
                         }
                         
                         observer.onNext(result)
+                        //observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -60,20 +60,17 @@ class CertificatePresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func submitCertificate(_ name:String,_ phone:String,_ id:String,_ image:String) ->Observable<Result> {
-        return Presenter.getSid()
+    func submitCertificate(_ name:String,_ phone:String,_ id:String,_ image:String) ->Observable<Result> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"name":name,"phone":phone, "lottery_papers":id, "lottery_papers_image":image]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/lotteryBind",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/lotteryBind",method:.post,parameters:parameters).responseString{response in
                         print("submit ")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
                         var result:Result = Result()
                         switch response.result {
                         case .success:
@@ -81,6 +78,7 @@ class CertificatePresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             
@@ -96,6 +94,7 @@ class CertificatePresenter {
                             result.message = "网络错误"
                         }
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -103,20 +102,17 @@ class CertificatePresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func editCertificate(_ name:String,_ phone:String,_ cardId:String,_ imageUrl:String,_ itemId:String) ->Observable<Result> {
-        return Presenter.getSid()
+    func editCertificate(_ name:String,_ phone:String,_ cardId:String,_ imageUrl:String,_ itemId:String) ->Observable<Result> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"name":name,"phone":phone, "lottery_papers":cardId, "lottery_papers_image":imageUrl,"id":itemId]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/modifyLotteryBind",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/modifyLotteryBind",method:.post,parameters:parameters).responseString{response in
                         print("edit ")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
                         var result:Result = Result()
                         switch response.result {
                         case .success:
@@ -124,6 +120,7 @@ class CertificatePresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (responseEntity.code == 0) {
@@ -138,6 +135,7 @@ class CertificatePresenter {
                             result.message = "网络错误"
                         }
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -145,18 +143,17 @@ class CertificatePresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func getDetailWithId(_ id:String) ->Observable<CertificateResult> {
-        return Presenter.getSid()
+    func getDetailWithId(_ id:String) ->Observable<CertificateResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<CertificateResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"id":id]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/getLotteryDetail",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/getLotteryDetail",method:.post,parameters:parameters).responseString{response in
                         print("detai id ")
                         print("value: \(response.result.value)")
-                        
                         var result:CertificateResult = CertificateResult()
                         switch response.result {
                         case .success:
@@ -164,6 +161,7 @@ class CertificatePresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (certificateEntity.code == 0) {
@@ -179,6 +177,7 @@ class CertificatePresenter {
                             result.message = "网络错误"
                         }
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -186,18 +185,17 @@ class CertificatePresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func deleteCertificate(id:String) ->Observable<Result> {
-        return Presenter.getSid()
+    func deleteCertificate(id:String) ->Observable<Result> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"id":id]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/delLottery",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/delLottery",method:.post,parameters:parameters).responseString{response in
                         print("delete id ")
                         print("value: \(response.result.value)")
-                        
                         var result:Result = Result()
                         switch response.result {
                         case .success:
@@ -205,6 +203,7 @@ class CertificatePresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (responseEntity.code == 0) {
@@ -219,6 +218,7 @@ class CertificatePresenter {
                             result.message = "网络错误"
                         }
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }

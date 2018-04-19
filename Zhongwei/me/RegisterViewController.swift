@@ -26,7 +26,8 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
     var registerIndicator:UIActivityIndicatorView!
     var keyboardHeight:CGFloat?
     var timer:Timer!
-    
+    var presenter:UserPresenter!
+    var disposeBag:DisposeBag!
     
     
     var remainingTime:Int = 60 {
@@ -58,8 +59,16 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = UserPresenter()
         setupViews()
         setupConstrains()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        //self.disposeBag = nil
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setupViews() {
@@ -96,10 +105,6 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow(note:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden(note:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onPhoneTextfieldChanged(note:)), name: NSNotification.Name.UITextFieldTextDidChange, object: self.phoneTextField)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self)
     }
     
     @objc func keyboardShow(note:Notification) {
@@ -167,7 +172,7 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
         password = password.trimmingCharacters(in: .whitespaces)
         registerIndicator.startAnimating()
         registerButton.isEnabled = false
-        UserPresenter.phoneNumRegister(phone:phoneNum, password:password, code:code)
+        presenter.phoneNumRegister(phone:phoneNum, password:password, code:code)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 self.registerIndicator.stopAnimating()
@@ -187,6 +192,7 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
                     Toast(text: "注册失败：\(result.message)").show()
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     func checkInput() -> Bool {
@@ -250,7 +256,7 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
             let cancel = UIAlertAction(title:"取消", style:.cancel)
             let confirm = UIAlertAction(title:"确定", style:.default){
                 action in
-                UserPresenter.sendVerificationCode(phone:phoneNum!)
+                self.presenter.sendVerificationCode(phone:phoneNum!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         if (result.code == 0) {
@@ -260,6 +266,7 @@ class RegisterViewController:UIViewController,UITextFieldDelegate{
                             alert(viewController: self, title: "提示", message:result.message ?? "")
                         }
                     })
+                .disposed(by: self.disposeBag)
             }
             alertView.addAction(cancel)
             alertView.addAction(confirm)

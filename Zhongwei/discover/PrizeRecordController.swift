@@ -13,9 +13,11 @@ class PrizeRecordController:WebViewController {
     
     var closeButton:UIBarButtonItem!
     var app:AppDelegate?
+    var presenter:DiscoverPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = DiscoverPresenter()
         app = UIApplication.shared.delegate as! AppDelegate
         closeButton = UIBarButtonItem(title:"", style:.plain, target:self, action:#selector(close))
         closeButton.image = UIImage(named:"closeButton")
@@ -23,7 +25,7 @@ class PrizeRecordController:WebViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        DiscoverPresenter.getPrizeRecordUrl()
+        presenter.getPrizeRecordUrl()
         .observeOn(MainScheduler.instance)
         .subscribe(
             onNext:{

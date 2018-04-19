@@ -17,6 +17,7 @@ class ScanViewController:UIViewController,AVCaptureMetadataOutputObjectsDelegate
     var output:AVCaptureMetadataOutput!
     var session:AVCaptureSession!
     var preview:AVCaptureVideoPreviewLayer!
+    var presenter:DiscoverPresenter!
     
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
                                       AVMetadataObject.ObjectType.code39,
@@ -34,6 +35,7 @@ class ScanViewController:UIViewController,AVCaptureMetadataOutputObjectsDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = DiscoverPresenter()
         fromCamera()
     }
     
@@ -119,7 +121,7 @@ class ScanViewController:UIViewController,AVCaptureMetadataOutputObjectsDelegate
             if metadataObj.stringValue != nil {
                 let code = metadataObj.stringValue as! String
                 session.stopRunning()
-                DiscoverPresenter.getPrizeData(code:code)
+                presenter.getPrizeData(code:code)
                 .observeOn(MainScheduler.instance)
                     .subscribe(onNext:{
                         result in

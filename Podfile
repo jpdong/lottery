@@ -17,4 +17,6 @@ pod 'Toaster'
 pod "ESPullToRefresh"
 pod 'TZImagePickerController'
 pod "PagingMenuController"
+pod 'MLeaksFinder'
+pod 'FBRetainCycleDetector'
 end

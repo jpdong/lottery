@@ -23,36 +23,25 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     var closeButton:UIBarButtonItem!
     var navigationBar:UINavigationBar!
     var editNavigationItem:UINavigationItem!
-    
     var selectedImages:[UIImage]!
     var imageCollectionLayout:UICollectionViewFlowLayout!
     var imageCollectionView:UICollectionView!
     var imageUrls:[String]!
+    var presenter:ReceiptPresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = ReceiptPresenter()
         setupViews()
         setupConstrains()
         setupClickEvents()
         setupData()
-        
-        //testCompleted()
     }
     
-    func testCompleted() {
-        Observable<String>.create({ (observer) -> Disposable in
-            observer.onNext("next")
-            observer.onNext("next 2")
-            observer.onCompleted()
-            return Disposables.create()
-            })
-            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (result) in
-                Log(result)
-            },onCompleted: {
-                Log("complete")
-            })
-        
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -158,15 +147,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //        if (type == ReceiptItem.add) {
-        //        return selectedImages.count + 1 > 6 ? 6 : selectedImages.count + 1
-        //        } else {
-        //if (selectedImages.count == 0) {
         return imageUrls.count + 1 > 6 ? 6 : imageUrls.count + 1
-        //} else {
-        //   return selectedImages.count + 1 > 6 ? 6 : selectedImages.count + 1
-        //}
-        //}
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -228,7 +209,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
             submitButton.isEnabled = false
             imageCollectionView.isUserInteractionEnabled = false
             textField.isUserInteractionEnabled = false
-            ReceiptPresenter.submitReceipt(notes:input!,imageUrls:imageUrls)
+            presenter.submitReceipt(notes:input!,imageUrls:imageUrls)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     self.submitIndicator.stopAnimating()
@@ -242,11 +223,12 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
                         Toast(text: result.message).show()
                     }
                 })
+            .disposed(by: disposeBag)
         } else if(self.type == ReceiptItem.edit) {
             submitIndicator.startAnimating()
             submitButton.isEnabled = false
             Log("count:\(selectedImages.count)")
-            ReceiptPresenter.editReceipt(notes:input!, imageUrls:imageUrls,id:editableItem!.id!)
+            presenter.editReceipt(notes:input!, imageUrls:imageUrls,id:editableItem!.id!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     self.submitIndicator.stopAnimating()
@@ -258,6 +240,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
                         Toast(text: result.message).show()
                     }
                 })
+            .disposed(by: disposeBag)
         }
     }
 
@@ -268,7 +251,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
                 continue
             } else {
                 imageIndicator.startAnimating()
-                BusinessPresenter.uploadImage(image: photo)
+                presenter.uploadImage(image: photo)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.imageIndicator.stopAnimating()
@@ -279,7 +262,7 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
                             Toast(text:result.message ?? "").show()
                         }
                     })
-                
+                .disposed(by: disposeBag)
             }
         }
     }

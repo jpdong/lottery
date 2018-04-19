@@ -19,14 +19,21 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
     var loadMoreView:UIView!
     var loadMoreEnable = true
     var currentPage:Int = 1
-    
+    var certificatePresenter:CertificatePresenter!
     var certificateItems = [CertificateItem]()
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
+        certificatePresenter = CertificatePresenter()
         setupViews()
         setupConstrains()
         refreshData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -88,7 +95,7 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
     
     @objc func refreshData() {
         currentPage = 1
-        CertificatePresenter.getCertificateList(pageIndex: currentPage, num: 10)
+        certificatePresenter.getCertificateList(pageIndex: currentPage, num: 10)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 self.tableView.es.stopPullToRefresh()
@@ -96,15 +103,20 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
                 if (result.code == 0) {
                     self.certificateItems.removeAll()
                     self.certificateItems = self.certificateItems + result.list!
-                    Log(result.list)
-                    Log(self.certificateItems)
                     self.tableView.reloadData()
                 }
+            }, onError: { (error) in
+                Log(error)
+            }, onCompleted: {
+                Log("onCompleted")
+            }, onDisposed: {
+                Log("onDisposed")
             })
+        .disposed(by: disposeBag)
     }
     
     func setupData(_ pageIndex:Int, _ num:Int) {
-        CertificatePresenter.getCertificateList(pageIndex: pageIndex, num: num)
+        certificatePresenter.getCertificateList(pageIndex: pageIndex, num: num)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 self.refreshControl.endRefreshing()
@@ -115,6 +127,7 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
                     self.tableView.reloadData()
                 }
             })
+        .disposed(by: disposeBag)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -178,7 +191,7 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
         print("load more")
         currentPage = currentPage + 1
         loadMoreEnable = false
-        CertificatePresenter.getCertificateList(pageIndex: currentPage, num: 10)
+        certificatePresenter.getCertificateList(pageIndex: currentPage, num: 10)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -203,6 +216,7 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
                     }
                 }
             })
+        .disposed(by: disposeBag)
     }
     
     func updataData(row:Int, item:CertificateItem) {

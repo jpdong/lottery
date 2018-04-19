@@ -36,6 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Bugly.start(withAppId:"98d4c1d3a8")
+//        self.window = UIWindow(frame: UIScreen.main.bounds)
+//        self.window!.backgroundColor = UIColor.white
+//        let vc = TabViewController()
+//        vc.view.backgroundColor = UIColor.white
+//        self.window!.rootViewController = vc
+//        self.window!.makeKeyAndVisible()
         print("application didFinsishLaunch")
         globalData = GlobalData()
         globalData?.baseUrl = "http://app.api.bjzwhz.cn/"

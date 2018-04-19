@@ -15,18 +15,20 @@ class UserViewController:UITableViewController{
     @IBOutlet var userInfoCell: UserInfoCell!
     @IBOutlet var messageInfoCell: MessageView!
     @IBOutlet var logoutCell: UITableViewCell!
-    
     @IBOutlet weak var aboutInfoCell: UITableViewCell!
-    
     @IBOutlet weak var messageNumLabel: UILabel!
 
     var unionid:String?
     var app:AppDelegate?
     var hasLogin:Bool = false
     var sid:String?
+    var presenter:UserPresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = UserPresenter()
         messageNumLabel.layer.cornerRadius = messageNumLabel.bounds.size.width / 2
         app = UIApplication.shared.delegate as! AppDelegate
         app?.globalData?.unionid = getCacheUnionid()!
@@ -49,6 +51,11 @@ class UserViewController:UITableViewController{
         checkMessage()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        Log("")
+        //self.disposeBag = nil
+    }
+    
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 20.0
     }
@@ -64,30 +71,30 @@ class UserViewController:UITableViewController{
     }
     
     func checkUser() -> Bool {
-        sid = app?.globalData?.sid
         var result:Bool = false
-        if (sid != nil && sid! != "" && userInfoCell != nil){
-            Log("sid:\(sid!)")
-            Presenter.checkSid(sid:sid!)
-                .observeOn(MainScheduler.instance)
-                .subscribe(onNext: { (result) in
-                    if (result.code == 0) {
-                        let phoneNum = self.app?.globalData?.phoneNum
-                        self.userInfoCell.nickNameLabel.text = phoneNum
-                    } else {
-                        Toast(text: result.message).show()
-                        self.logout()
-                    }
-                })
-            hasLogin = true
-            logoutCell.isHidden = false
-            userInfoCell.accessoryType = .none
-            return true
-        } else {
-            userInfoCell.accessoryType = .disclosureIndicator
-            logoutCell.isHidden = true
-            return false
+        if let sid = app?.globalData?.sid {
+            if (sid != "" && userInfoCell != nil) {
+                presenter.checkSid(sid:sid)
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { (result) in
+                        if (result.code == 0) {
+                            let phoneNum = self.app?.globalData?.phoneNum
+                            self.userInfoCell.nickNameLabel.text = phoneNum
+                        } else {
+                            Toast(text: result.message).show()
+                            self.logout()
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
+                hasLogin = true
+                logoutCell.isHidden = false
+                userInfoCell.accessoryType = .none
+                return true
+            }
         }
+        userInfoCell.accessoryType = .disclosureIndicator
+        logoutCell.isHidden = true
+        return false
     }
     
     func setupUserInfo() -> Bool{
@@ -138,7 +145,7 @@ class UserViewController:UITableViewController{
     }
     
     func checkMessage() {
-        UserPresenter.updateMessages()
+        presenter.updateMessages()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (messageResult) in
                 if (messageResult.code == 0) {
@@ -153,6 +160,7 @@ class UserViewController:UITableViewController{
                     }
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

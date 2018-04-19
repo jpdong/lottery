@@ -17,14 +17,22 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
     var backgroundView:UIImageView!
     var tableView:UITableView!
     var currentPage:Int = 1
+    var disposeBag:DisposeBag!
+    var visitPresenter:VisitPresenter!
     
     var visitItems = [VisitItem]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
+        visitPresenter = VisitPresenter()
         setupViews()
         setupConstrains()
         refreshData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -66,7 +74,7 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
     
     @objc func refreshData() {
         currentPage = 1
-        VisitPresenter.getVisitList(pageIndex: currentPage, num: 10)
+        visitPresenter.getVisitList(pageIndex: currentPage, num: 10)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 self.tableView.es.stopPullToRefresh()
@@ -79,10 +87,11 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
                     self.tableView.reloadData()
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     func setupData(_ pageIndex:Int, _ num:Int) {
-        VisitPresenter.getVisitList(pageIndex: pageIndex, num: num)
+        visitPresenter.getVisitList(pageIndex: pageIndex, num: num)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -94,6 +103,7 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
                     }
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -178,7 +188,7 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
     
     func loadMore() {
         currentPage = currentPage + 1
-        VisitPresenter.getVisitList(pageIndex: currentPage, num: 10)
+        visitPresenter.getVisitList(pageIndex: currentPage, num: 10)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -201,6 +211,7 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
                     }
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     func updataData(row:Int, item:VisitItem) {

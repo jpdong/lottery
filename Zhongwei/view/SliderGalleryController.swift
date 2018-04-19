@@ -68,7 +68,6 @@ class SliderGalleryController: UIViewController,UIScrollViewDelegate{
     
     //设置scrollerView
     func configureScrollerView(){
-        Log("scrollerViewWidth:\(scrollerViewWidth)")
         self.scrollerView = UIScrollView(frame: CGRect(x: 0,y: 0,
                                     width: self.scrollerViewWidth!,
                                     height: self.scrollerViewHeight!))

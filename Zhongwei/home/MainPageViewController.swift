@@ -31,6 +31,10 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     var hotNewsId:String?
     var tabBarHeight:CGFloat?
     var buttonWidth:CGFloat?
+    var presenter:MainPresenter!
+    var businessPresenter:BusinessPresenter!
+    var visitPresenter:VisitPresenter!
+    var disposeBag:DisposeBag!
     
     var shopOwnerButton,customerManagerButton,pointMallButton,saleManagerButton,customerButton, scanPrizeButton:ImageClickView!
     //var imageClickButtons:[ImageClickView] = [shopOwner,customerManager,pointMall,saleManager,customer, scanPrize]
@@ -40,6 +44,10 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         //checkRegisterBusinessState()
+        disposeBag = DisposeBag()
+        presenter = MainPresenter()
+        businessPresenter = BusinessPresenter()
+        visitPresenter = VisitPresenter()
         setupViews()
         setupConstrains()
         setupClickEvents()
@@ -60,13 +68,10 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         navigationBar.pushItem(mainNavigationItem, animated: false)
         mainNavigationItem.title = "首页"
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.navigationItem.title = "首页"
         self.navigationBar.tintColor = UIColor.black
         self.view.addSubview(navigationBar!)
         mainScrollView = UIScrollView(frame:self.view.bounds)
         //mainScrollView.backgroundColor = UIColor.gray
-        images = [String]()
-        images?.append("http://yan.eeseetech.cn/upload/image/20180309/20180309142321.png")
         slideGallery = SliderGalleryController()
         slideGallery.delegate = self
         //slideGallery.view.backgroundColor = UIColor.red
@@ -148,6 +153,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
             maker.width.equalTo(mainScrollView)
             maker.height.equalTo(buttonWidth! * 1.5)
             maker.top.equalTo(slideGallery.view.snp.bottom).offset(20)
+            //maker.top.equalTo(mainScrollView)
             maker.left.right.equalTo(mainScrollView)
         }
         
@@ -267,7 +273,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
             Toast(text: "网络错误").show()
             return
         }
-        MainPresenter.getArticleWithId(articleId)
+        presenter.getArticleWithId(articleId)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -278,6 +284,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                     }
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     override func viewDidLayoutSubviews() {
@@ -295,13 +302,12 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        //checkRegisterBusinessState()
         updateBannerView()
         updateBoardView()
     }
     
     func updateBannerView() {
-        MainPresenter.updateBannerContent()
+        presenter.updateBannerContent()
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -309,10 +315,11 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                     self.slideGallery.reloadData()
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     func updateBoardView() {
-        MainPresenter.updateBoardContent()
+        presenter.updateBoardContent()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -320,29 +327,26 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                     boardViews.append(self.recentNewsView)
                     boardViews.append(self.welfareActivity)
                     boardViews.append(self.hotNewsView)
-                    for index in 0...2 {
-                        boardViews[index].contentMessage.text = result.articles![index].title
-                        boardViews[index].contentImage.kf.setImage(with: URL(string:result.articles![index].thumb!))
-                        boardViews[index].contentId = result.articles![index].id
+                    if let articles = result.articles {
+                        for index in 0...2 {
+                            boardViews[index].contentMessage.text = articles[index].title
+                            boardViews[index].contentImage.kf.setImage(with: URL(string:articles[index].thumb ?? ""))
+                            boardViews[index].contentId = articles[index].id
+                        }
                     }
+                    
                 } else {
                     Log(result.message)
                 }
             })
-        
+        .disposed(by: self.disposeBag)
     }
     
-    func galleryDataSource() -> [String] {
-        return images!
-    }
     
-    func galleryScrollerViewSize() -> CGSize {
-        return CGSize(width:screenWidth, height: self.view.frame.width * 0.5)
-    }
     
     @objc func onOwnerClick() {
         print("onOwnerClick")
-        BusinessPresenter.checkBusinessRegisterState()
+        businessPresenter.checkBusinessRegisterState()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -360,6 +364,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                     Toast(text: result.message).show()
                 }
             })
+        .disposed(by: self.disposeBag)
 //        if (!isShopRegistered){
 //            let sb = UIStoryboard(name:"Business",bundle:nil)
 //            let vc = sb.instantiateViewController(withIdentifier: "IDCardViewController") as! IDCardViewController
@@ -385,7 +390,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     
     @objc func onPointMallButton() {
         print("onPointMallButton")
-        BusinessPresenter.getPointMallUrl()
+        businessPresenter.getPointMallUrl()
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 var vc:ClosableWebView = ClosableWebView()
@@ -394,10 +399,11 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                     vc.startLoad(url: result)
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     @objc func onSaleManagerButton() {
-        VisitPresenter.checkVisitManagerState()
+        visitPresenter.checkVisitManagerState()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -416,6 +422,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                     Toast(text: result.message).show()
                 }
             })
+        .disposed(by: self.disposeBag)
         //        print("onSaleManagerButton")
         //        let vc = SaleViewController()
         //        vc.hidesBottomBarWhenPushed = true
@@ -435,7 +442,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
     }
     
     func checkRegisterBusinessState() {
-        BusinessPresenter.checkBusinessRegisterState()
+        businessPresenter.checkBusinessRegisterState()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -444,9 +451,18 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                     self.isShopRegistered = false
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         segue.destination.hidesBottomBarWhenPushed = true
+    }
+    
+    func galleryDataSource() -> [String] {
+        return images ?? ["http://yan.eeseetech.cn/upload/image/20180309/20180309142321.png"]
+    }
+    
+    func galleryScrollerViewSize() -> CGSize {
+        return CGSize(width:self.view.frame.width, height: self.view.frame.width * 0.5)
     }
 }

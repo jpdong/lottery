@@ -13,20 +13,17 @@ import HandyJSON
 import Toaster
 import SwiftyJSON
 
-class GalleryPresenter {
+class GalleryPresenter:Presenter {
     
-    static let app = UIApplication.shared.delegate as! AppDelegate
-    static let BASE_URL = app.globalData!.baseUrl
-    
-    static func getGalleryList(pageIndex:Int, num:Int,shopId:String) ->Observable<GalleryListResult> {
-        return Presenter.getSid()
+    func getGalleryList(pageIndex:Int, num:Int,shopId:String) ->Observable<GalleryListResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<GalleryListResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num),"club_id":shopId]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/interviewImagesList",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/interviewImagesList",method:.post,parameters:parameters).responseString{response in
                         print("gallery list")
                         print("value: \(response.result.value)")
                         var result:GalleryListResult = GalleryListResult()
@@ -36,6 +33,7 @@ class GalleryPresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (entity.code == 0) {
@@ -65,8 +63,8 @@ class GalleryPresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -74,8 +72,8 @@ class GalleryPresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func addImageUrl(shopId:String, imageUrl:String) ->Observable<Result> {
-        return Presenter.getSid()
+    func addImageUrl(shopId:String, imageUrl:String) ->Observable<Result> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
@@ -87,7 +85,7 @@ class GalleryPresenter {
                     var jsonString = receiptImagesObject.toJSONString() as! String
                     let parameters:Dictionary = ["sid":sid,"club_id":shopId, "images":jsonString]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/addInterviewImages",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/addInterviewImages",method:.post,parameters:parameters).responseString{response in
                         print("submit gallery ")
                         print("value: \(response.result.value)")
                         var result:Result = Result()
@@ -97,6 +95,7 @@ class GalleryPresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (responseEntity.code == 0) {
@@ -111,6 +110,7 @@ class GalleryPresenter {
                             result.message = "网络错误"
                         }
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }

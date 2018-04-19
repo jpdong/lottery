@@ -25,11 +25,20 @@ class CertificateDetailController:UIViewController {
     var scrollView:UIScrollView!
     var preViewController:CertificateListController?
     var rowInParent:Int?
+    var certificatePresenter:CertificatePresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        disposeBag = DisposeBag()
+        certificatePresenter = CertificatePresenter()
         setupViews()
         setupConstrains()
         setupClickEvents()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -137,7 +146,7 @@ class CertificateDetailController:UIViewController {
             self.present(vc, animated: true, completion: nil)
         }
         let deleteAction = UIAlertAction(title: "删除", style: .default) { (action) in
-            CertificatePresenter.deleteCertificate(id:self.certificateItem!.id!)
+            self.certificatePresenter.deleteCertificate(id:self.certificateItem!.id!)
             .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
@@ -148,6 +157,7 @@ class CertificateDetailController:UIViewController {
                         Toast(text:"删除失败：\(result.message)")
                     }
                 })
+            .disposed(by: self.disposeBag)
         }
         let cacelAction = UIAlertAction(title: "取消", style:.cancel) { (action) in
             
@@ -159,7 +169,7 @@ class CertificateDetailController:UIViewController {
     }
     
     func updateData() {
-        CertificatePresenter.getDetailWithId(certificateItem!.id!)
+        certificatePresenter.getDetailWithId(certificateItem!.id!)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -167,6 +177,7 @@ class CertificateDetailController:UIViewController {
                     self.preViewController?.updataData(row: self.rowInParent!, item: self.certificateItem!)
                 }
             })
+        .disposed(by: disposeBag)
         
     }
     

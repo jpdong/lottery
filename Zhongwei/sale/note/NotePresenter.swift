@@ -12,23 +12,19 @@ import Alamofire
 import HandyJSON
 import Toaster
 
-class NotePresenter {
+class NotePresenter:Presenter {
     
-    static let app = UIApplication.shared.delegate as! AppDelegate
-    static let BASE_URL = app.globalData!.baseUrl
-    
-    static func getNoteList(pageIndex:Int, num:Int,shopId:String) ->Observable<NoteListResult> {
-        return Presenter.getSid()
+    func getNoteList(pageIndex:Int, num:Int,shopId:String) ->Observable<NoteListResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<NoteListResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num),"club_id":shopId]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/interviewLogList",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/interviewLogList",method:.post,parameters:parameters).responseString{response in
                         print("Note list")
                         print("value: \(response.result.value)")
-                        
                         var result:NoteListResult = NoteListResult()
                         switch response.result {
                         case .success:
@@ -36,9 +32,9 @@ class NotePresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
-                            
                             if (noteListEntity.code == 0) {
                                 result.code = 0
                                 result.message = noteListEntity.msg
@@ -51,8 +47,8 @@ class NotePresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -60,20 +56,17 @@ class NotePresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func submitNote(note:String,shopId:String) ->Observable<Result> {
-        return Presenter.getSid()
+    func submitNote(note:String,shopId:String) ->Observable<Result> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"club_id":shopId,"question":note]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/addInterviewLog",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/addInterviewLog",method:.post,parameters:parameters).responseString{response in
                         print("submit ")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
                         var result:Result = Result()
                         switch response.result {
                         case .success:
@@ -81,6 +74,7 @@ class NotePresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             
@@ -95,8 +89,8 @@ class NotePresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -104,20 +98,17 @@ class NotePresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func editNote(note:String, noteId:String) ->Observable<Result> {
-        return Presenter.getSid()
+    func editNote(note:String, noteId:String) ->Observable<Result> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"id":noteId,"question":note]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/modifyInterviewLog",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/modifyInterviewLog",method:.post,parameters:parameters).responseString{response in
                         print("edit ")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
                         var result:Result = Result()
                         switch response.result {
                         case .success:
@@ -125,6 +116,7 @@ class NotePresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             
@@ -141,6 +133,7 @@ class NotePresenter {
                         }
                         
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -148,18 +141,17 @@ class NotePresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func getDetailWithId(_ id:String) ->Observable<NoteResult> {
-        return Presenter.getSid()
+    func getDetailWithId(_ id:String) ->Observable<NoteResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<NoteResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"id":id]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/getInterviewLogDetail",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/getInterviewLogDetail",method:.post,parameters:parameters).responseString{response in
                         print("detai id ")
                         print("value: \(response.result.value)")
-                        
                         var result:NoteResult = NoteResult()
                         switch response.result {
                         case .success:
@@ -167,6 +159,7 @@ class NotePresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (noteEntity.code == 0) {
@@ -183,6 +176,7 @@ class NotePresenter {
                         }
                         
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -190,18 +184,17 @@ class NotePresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func deleteNote(id:String) ->Observable<Result> {
-        return Presenter.getSid()
+    func deleteNote(id:String) ->Observable<Result> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"id":id]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/Lottery_manager/delInterviewLog",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/delInterviewLog",method:.post,parameters:parameters).responseString{response in
                         print("delete id ")
                         print("value: \(response.result.value)")
-                        
                         var result:Result = Result()
                         switch response.result {
                         case .success:
@@ -209,9 +202,9 @@ class NotePresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
-                            
                             if (responseEntity.code == 0) {
                                 result.code = 0
                                 result.message = responseEntity.msg
@@ -223,8 +216,8 @@ class NotePresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }

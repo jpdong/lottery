@@ -1,5 +1,5 @@
 //
-//  VisitPresenter.swift
+//  Visitswift
 //  Zhongwei
 //
 //  Created by eesee on 2018/3/15.
@@ -12,20 +12,17 @@ import Alamofire
 import HandyJSON
 import Toaster
 
-class VisitPresenter {
+class VisitPresenter:Presenter {
     
-    static let app = UIApplication.shared.delegate as! AppDelegate
-    static let BASE_URL = app.globalData!.baseUrl
-    
-    static func getVisitList(pageIndex:Int, num:Int) ->Observable<VisitListResult> {
-        return Presenter.getSid()
+    func getVisitList(pageIndex:Int, num:Int) ->Observable<VisitListResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<VisitListResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num)]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/lottery/lottery_record",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/lottery/lottery_record",method:.post,parameters:parameters).responseString{response in
                         print("Visit list")
                         print("value: \(response.result.value)")
                         var result:VisitListResult = VisitListResult()
@@ -35,6 +32,7 @@ class VisitPresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (entity.code == 0) {
@@ -49,8 +47,8 @@ class VisitPresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -58,15 +56,15 @@ class VisitPresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func sign(longitude:Double, latitude:Double, status:Int, shopId:String) ->Observable<VisitListResult> {
-        return Presenter.getSid()
+    func sign(longitude:Double, latitude:Double, status:Int, shopId:String) ->Observable<VisitListResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<VisitListResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid, "long":String(longitude), "lat":String(latitude), "status":String(status),"club_id":shopId]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/lottery/sign",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/lottery/sign",method:.post,parameters:parameters).responseString{response in
                         print("Visit list")
                         print("value: \(response.result.value)")
                         var result:VisitListResult = VisitListResult()
@@ -76,6 +74,7 @@ class VisitPresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (entity.code == 0) {
@@ -92,6 +91,7 @@ class VisitPresenter {
                         }
                         
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -100,15 +100,15 @@ class VisitPresenter {
     }
     
     
-    static func checkVisitManagerState() -> Observable<VisitStateResult> {
-        return Presenter.getSid()
+    func checkVisitManagerState() -> Observable<VisitStateResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<VisitStateResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)mobile/app/lottery_manager",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)mobile/app/lottery_manager",method:.post,parameters:parameters).responseString{response in
                         print("Visit state")
                         print("value: \(response.result.value)")
                         var result:VisitStateResult = VisitStateResult()
@@ -118,6 +118,7 @@ class VisitPresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (entity.code == 0) {
@@ -132,8 +133,8 @@ class VisitPresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }

@@ -12,20 +12,17 @@ import Alamofire
 import HandyJSON
 import Toaster
 
-class ShopPresenter {
+class ShopPresenter:Presenter {
     
-    static let app = UIApplication.shared.delegate as! AppDelegate
-    static let BASE_URL = app.globalData!.baseUrl
-    
-    static func searchShopList(pageIndex:Int, num:Int, key:String) ->Observable<ShopListResult> {
-        return Presenter.getSid()
+    func searchShopList(pageIndex:Int, num:Int, key:String) ->Observable<ShopListResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<ShopListResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num), "search":key]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/lottery/sendclub",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/lottery/sendclub",method:.post,parameters:parameters).responseString{response in
                         print("shop list")
                         print("value: \(response.result.value)")
                         var result:ShopListResult = ShopListResult()
@@ -35,6 +32,7 @@ class ShopPresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             
@@ -50,8 +48,8 @@ class ShopPresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -59,15 +57,15 @@ class ShopPresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func getShopHistoryList(pageIndex:Int, num:Int) ->Observable<ShopListResult> {
-        return Presenter.getSid()
+    func getShopHistoryList(pageIndex:Int, num:Int) ->Observable<ShopListResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<ShopListResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num)]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/lottery/lottery_record",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/lottery/lottery_record",method:.post,parameters:parameters).responseString{response in
                         print("shop list")
                         print("value: \(response.result.value)")
                         var result:ShopListResult = ShopListResult()
@@ -77,6 +75,7 @@ class ShopPresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (entity.code == 0) {
@@ -92,6 +91,7 @@ class ShopPresenter {
                             result.message = "网络错误"
                         }
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -99,14 +99,14 @@ class ShopPresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func getDBShopHistory(pageIndex:Int, num:Int) ->Observable<ShopListResult> {
+    func getDBShopHistory(pageIndex:Int, num:Int) ->Observable<ShopListResult> {
         return Observable<ShopListResult>.create {
             observer -> Disposable in
             var result:ShopListResult = ShopListResult()
                 result.code = 0
                 result.list = CoreDataHelper.instance.getShopHistoryList()
                 observer.onNext(result)
-            
+                observer.onCompleted()
             return Disposables.create()
         }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
@@ -114,18 +114,17 @@ class ShopPresenter {
     
 
     
-    static func getShopWithId(id:String) ->Observable<ShopResult> {
-        return Presenter.getSid()
+    func getShopWithId(id:String) ->Observable<ShopResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<ShopResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid,"club_id":id]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)app/lottery/club_detail/",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)app/lottery/club_detail/",method:.post,parameters:parameters).responseString{response in
                         print("shop detail id ")
                         print("value: \(response.result.value)")
-                        
                         var result:ShopResult = ShopResult()
                         switch response.result {
                         case .success:
@@ -133,9 +132,9 @@ class ShopPresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
-                            
                             if (entity.code == 0) {
                                 result.code = 0
                                 result.message = entity.msg
@@ -148,8 +147,8 @@ class ShopPresenter {
                             result.code = 1
                             result.message = "网络错误"
                         }
-                        
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }

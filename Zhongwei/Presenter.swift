@@ -11,21 +11,21 @@ import RxSwift
 import Alamofire
 import Toaster
 
-enum ApiError:Error {
-    case NoSidError
-    case NoResponseError
-}
-
 class Presenter{
     
-    static let app = UIApplication.shared.delegate as! AppDelegate
-    static let BASE_URL = app.globalData!.baseUrl
+    var app:AppDelegate!
+    var baseUrl = ""
     
-    static func getSid(unionid:String,headimgurl:String, nickname:String)  -> Observable<String>{
+    public init() {
+        app = UIApplication.shared.delegate as! AppDelegate
+        self.baseUrl = app.globalData!.baseUrl
+    }
+    
+    func getSid(unionid:String,headimgurl:String, nickname:String)  -> Observable<String>{
         return Observable<String>.create {
             (observer) -> Disposable in
             let parameters:Dictionary = ["unionid":unionid,"headimgurl":headimgurl, "nickname":nickname]
-            Alamofire.request("\(BASE_URL)mobile/app/getSid",method:.post,parameters:parameters).responseString{response in
+            Alamofire.request("\(self.baseUrl)mobile/app/getSid",method:.post,parameters:parameters).responseString{response in
                 print("value \(response.result.value)")
                 var result = ""
                 switch response.result {
@@ -44,15 +44,17 @@ class Presenter{
                     result = ""
                 }
                 observer.onNext(result)
+                observer.onCompleted()
             }
             return Disposables.create ()
         }
     }
     
-    static func getSid() -> Observable<String> {
+    func getSid() -> Observable<String> {
         return Observable<String>.create({ (observer) -> Disposable in
-            let sid = app.globalData?.sid
+            let sid = self.app.globalData?.sid
             observer.onNext(sid ?? "")
+            observer.onCompleted()
             return Disposables.create()
         })
     }
@@ -61,11 +63,11 @@ class Presenter{
     
     
     
-    static func checkSid(sid:String) -> Observable<Result> {
+    func checkSid(sid:String) -> Observable<Result> {
         return Observable<Result>.create({ (observer) -> Disposable in
             let parameters:Dictionary = ["sid":sid]
             print("parameters:\(parameters)")
-            Alamofire.request("\(BASE_URL)mobile/Login/checkSidExpire",method:.post,parameters:parameters).responseString{
+            Alamofire.request("\(self.baseUrl)mobile/Login/checkSidExpire",method:.post,parameters:parameters).responseString{
                 response in
                 print("check sid")
                 print("response:\(response)")
@@ -91,20 +93,21 @@ class Presenter{
                     result.message = "网络错误"
                 }
                 observer.onNext(result)
+                observer.onCompleted()
             }
             return Disposables.create()
         })
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func checkAppUpdate() -> Observable<AppUpdateResult> {
+    func checkAppUpdate() -> Observable<AppUpdateResult> {
         return Observable<AppUpdateResult>.create({ (observer) -> Disposable in
             let infoDictionary = Bundle.main.infoDictionary!
             let majorVersion = infoDictionary["CFBundleShortVersionString"]
             let version = majorVersion as! String
             let parameters:Dictionary = ["version":version]
             print("parameters:\(parameters)")
-            Alamofire.request("\(BASE_URL)mobile/App/checkVersion",method:.post,parameters:parameters).responseString{
+            Alamofire.request("\(self.baseUrl)mobile/App/checkVersion",method:.post,parameters:parameters).responseString{
                 response in
                 print("update")
                 print("response:\(response)")
@@ -138,13 +141,66 @@ class Presenter{
                     result.code = 1
                     result.message = "网络错误"
                 }
-            
-                
-                
                 observer.onNext(result)
+                observer.onCompleted()
             }
             return Disposables.create()
         })
         .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+    }
+    
+    func uploadImage(image:UIImage) -> Observable<Result> {
+        return getSid()
+            .flatMap{
+                sid in
+                return Observable<Result>.create {
+                    observer -> Disposable in
+                    Alamofire.upload(multipartFormData: { (multipartFormData) in
+                        multipartFormData.append(UIImageJPEGRepresentation(image,1.0)!,withName:"image",fileName:"idcard.png",mimeType:"image/png")
+                        multipartFormData.append(sid.data(using: String.Encoding.utf8)!,withName:"sid")
+                    }, to: "\(self.baseUrl)mobile/Register/upload", encodingCompletion: { (encodingResult) in
+                        print("encodingResult:\(encodingResult)")
+                        switch encodingResult {
+                        case .success(let upload, _, _):
+                            upload.responseString{ response in
+                                debugPrint(response)
+                                print("response:\(response)")
+                                print("result:\(response.result)")
+                                print("value: \(response.result.value)")
+                                
+                                var result:Result = Result()
+                                switch response.result {
+                                case .success:
+                                    guard let imageUrlEntity:ImageUrlEntity = ImageUrlEntity.deserialize(from: response.result.value as! String) as? ImageUrlEntity else {
+                                        result.code = 1
+                                        result.message = "服务器错误"
+                                        observer.onNext(result)
+                                        observer.onCompleted()
+                                        return
+                                    }
+                                    if (imageUrlEntity.code != nil && imageUrlEntity.code! == 0) {
+                                        result.code = 0
+                                        result.message = imageUrlEntity.data
+                                    } else {
+                                        result.code = 1
+                                        result.message = "图片上传失败"
+                                    }
+                                case .failure(let error):
+                                    result.code = 1
+                                    result.message = "网络错误"
+                                }
+                                
+                                observer.onNext(result)
+                                observer.onCompleted()
+                            }
+                        case .failure(let encodingError):
+                            print(encodingError)
+                        }
+                        
+                    })
+                    return Disposables.create()
+                }
+            }
+            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
 }

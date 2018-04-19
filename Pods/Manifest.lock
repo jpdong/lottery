@@ -2,8 +2,11 @@ PODS:
   - Alamofire (4.6.0)
   - Bugly (2.5.0)
   - ESPullToRefresh (2.7)
+  - FBRetainCycleDetector (0.1.4)
   - HandyJSON (4.0.0-beta.1)
   - Kingfisher (4.5.0)
+  - MLeaksFinder (1.0.0):
+    - FBRetainCycleDetector
   - PagingMenuController (2.2.0)
   - ReachabilitySwift (4.1.0)
   - RxCocoa (4.0.0):
@@ -19,8 +22,10 @@ DEPENDENCIES:
   - Alamofire (~> 4.5)
   - Bugly
   - ESPullToRefresh
+  - FBRetainCycleDetector
   - HandyJSON (~> 4.0.0-beta.1)
   - Kingfisher (~> 4.0)
+  - MLeaksFinder
   - PagingMenuController
   - ReachabilitySwift
   - RxCocoa (~> 4.0)
@@ -35,8 +40,10 @@ SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
   ESPullToRefresh: 119e2710b82b75536aab2bbe4883ba119fca35c8
+  FBRetainCycleDetector: 46f8179bbb1c587deee3ea838a1a3ee02acf5015
   HandyJSON: 428bb18e2c34c2a77361accebf90cf64e4f74118
   Kingfisher: 26ae0473102b77b575da51960c932431e3745407
+  MLeaksFinder: 8c435bd2f6d070af18cff082b503b21adc130fc0
   PagingMenuController: 6176618987bb170096664f2da097313e45ed9c31
   ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   RxCocoa: d62846ca96495d862fa4c59ea7d87e5031d7340e
@@ -47,6 +54,6 @@ SPEC CHECKSUMS:
   TZImagePickerController: 9bf89512bb6de53e87897f2e17e607c126a199d6
   WechatOpenSDK: 491d965d79335070328571d3e79f714549e79a5e
 
-PODFILE CHECKSUM: 97dfb678dab28647220331debcb560db45115c31
+PODFILE CHECKSUM: e1da5147e9e4e8405f19f3875aa10b4313bdf58a
 
 COCOAPODS: 1.4.0

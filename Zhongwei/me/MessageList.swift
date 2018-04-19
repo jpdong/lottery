@@ -14,6 +14,8 @@ class MessageList:UITableViewController {
     
     var messageItems = [Message]()
     var noMessageView:UIImageView!
+    var presenter:UserPresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
 //        let now = Date()
@@ -21,6 +23,8 @@ class MessageList:UITableViewController {
 //        dateFormatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
 //        let date = dateFormatter.string(from: now)
 //        messageItems.append(MessageItem(title:"test",date:date))
+        disposeBag = DisposeBag()
+        presenter = UserPresenter()
         noMessageView = UIImageView(image:UIImage(named:"message_blank"))
         noMessageView.contentMode = .scaleAspectFit
         noMessageView.isHidden = true
@@ -34,7 +38,7 @@ class MessageList:UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        UserPresenter.updateMessages()
+        presenter.updateMessages()
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -48,6 +52,7 @@ class MessageList:UITableViewController {
                     
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

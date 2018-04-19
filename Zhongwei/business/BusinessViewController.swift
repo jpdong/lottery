@@ -20,9 +20,11 @@ class BusinessViewController:UITableViewController {
     var statusBarHeight:CGFloat?
     var navigationBar:UINavigationBar!
     var businessNavigationItem:UINavigationItem!
+    var presenter:BusinessPresenter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = BusinessPresenter()
         setupViews()
         setupConstrains()
         setupItems()
@@ -96,15 +98,15 @@ class BusinessViewController:UITableViewController {
     }
     
     func checkRegisterBusinessState() {
-        BusinessPresenter.checkBusinessRegisterState()
-        .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { (result) in
-                if (result.code == 0) {
-                    self.isShopRegistered = true
-                } else {
-                    self.isShopRegistered = false
-                }
-            })
+//        presenter.checkBusinessRegisterState()
+//        .observeOn(MainScheduler.instance)
+//            .subscribe(onNext: { (result) in
+//                if (result.code == 0) {
+//                    self.isShopRegistered = true
+//                } else {
+//                    self.isShopRegistered = false
+//                }
+//            })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

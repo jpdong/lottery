@@ -17,6 +17,8 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
     var loginIndicator:UIActivityIndicatorView!
     var keyboardHeight:CGFloat?
     var timer:Timer!
+    var presenter:UserPresenter!
+    var disposeBag:DisposeBag!
     
     @IBOutlet weak var phoneInputBox: UIView!
     @IBOutlet weak var passwordInputBox: UIView!
@@ -57,9 +59,16 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = UserPresenter()
         app = UIApplication.shared.delegate as! AppDelegate
         setupViews()
         setupConstrains()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        //self.disposeBag = nil
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setupViews() {
@@ -101,7 +110,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
             let confirm = UIAlertAction(title:"确定", style:.default){
                 action in
                 phoneNum = phoneNum?.trimmingCharacters(in: .whitespaces)
-                UserPresenter.sendVerificationCode(phone:phoneNum!)
+                self.presenter.sendVerificationCode(phone:phoneNum!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         if (result.code == 0) {
@@ -111,6 +120,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
                             Zhongwei.alert(viewController: self, title: "提示", message:result.message ?? "")
                         }
                     })
+                .disposed(by: self.disposeBag)
             }
             alertView.addAction(cancel)
             alertView.addAction(confirm)
@@ -163,10 +173,6 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
         super.touchesBegan(touches, with: event)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -209,7 +215,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
             phoneNum = phoneNum?.trimmingCharacters(in: .whitespaces)
             password = password?.trimmingCharacters(in: .whitespaces)
             if (isPasswordLogin) {
-                UserPresenter.passwordLogin(phone:phoneNum!, password:password!)
+                presenter.passwordLogin(phone:phoneNum!, password:password!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.loginIndicator.stopAnimating()
@@ -225,8 +231,9 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
                             Toast(text: "登录失败：\(result.message ?? "")").show()
                         }
                     })
+                .disposed(by: self.disposeBag)
             } else {
-                UserPresenter.codeLogin(phone:phoneNum!, code:password!)
+                presenter.codeLogin(phone:phoneNum!, code:password!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.loginIndicator.stopAnimating()
@@ -242,6 +249,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
                             Toast(text: "登录失败：\(result.message ?? "")").show()
                         }
                     })
+                .disposed(by: self.disposeBag)
             }
         }
     }

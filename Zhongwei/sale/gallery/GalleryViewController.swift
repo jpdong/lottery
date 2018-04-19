@@ -18,11 +18,19 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
     var imageUrls:[String]!
     var imageIndicator:UIActivityIndicatorView!
     var currentPage:Int = 1
+    var presenter:GalleryPresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
+        disposeBag = DisposeBag()
+        presenter = GalleryPresenter()
         setupViews()
         setupConstrains()
         refreshData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -121,7 +129,7 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
         //selectedImages = selectedImages + photos
         for photo in photos {
                 imageIndicator.startAnimating()
-                BusinessPresenter.uploadImage(image: photo)
+                presenter.uploadImage(image: photo)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.imageIndicator.stopAnimating()
@@ -129,7 +137,7 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
                             if let url = result.message {
                                 self.imageUrls.append(url)
                                 self.imageIndicator.startAnimating()
-                                GalleryPresenter.addImageUrl(shopId:self.shopId!, imageUrl:url)
+                                self.presenter.addImageUrl(shopId:self.shopId!, imageUrl:url)
                                     .observeOn(MainScheduler.instance)
                                     .subscribe(onNext: { (result) in
                                         self.imageIndicator.stopAnimating()
@@ -146,13 +154,14 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
                             Toast(text:result.message ?? "").show()
                         }
                     })
+            .disposed(by: self.disposeBag)
                 
             }
         }
     
     @objc func refreshData() {
         currentPage = 1
-        GalleryPresenter.getGalleryList(pageIndex: currentPage, num: 6, shopId: shopId!)
+        presenter.getGalleryList(pageIndex: currentPage, num: 6, shopId: shopId!)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 self.imageCollectionView.es.stopPullToRefresh()
@@ -168,11 +177,12 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
                     Toast(text: result.message ?? "").show()
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     func loadMore() {
         currentPage = currentPage + 1
-        GalleryPresenter.getGalleryList(pageIndex: currentPage, num: 6, shopId: shopId!)
+        presenter.getGalleryList(pageIndex: currentPage, num: 6, shopId: shopId!)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -194,6 +204,7 @@ class GalleryViewController:UIViewController, UICollectionViewDelegate, UICollec
                     }
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     func setShopId(id:String) {

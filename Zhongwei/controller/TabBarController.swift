@@ -13,10 +13,17 @@ import Toaster
 class TabBarController:UITabBarController{
     
     var meTab:UIViewController!
+    var presenter:Presenter!
+    var userPresenter:UserPresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = Presenter()
+        userPresenter = UserPresenter()
         var  delegate = UIApplication.shared.delegate as! AppDelegate
-        delegate.tabViewController = self
+        //delegate.tabViewController = self
         setUpTabs()
         Timer.scheduledTimer(timeInterval: 3, target: self,
                              selector: #selector(checkAppUpdate),
@@ -26,6 +33,10 @@ class TabBarController:UITabBarController{
     override func viewDidAppear(_ animated: Bool) {
         checkMessage()
         checkUserState()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setUpTabs(){
@@ -58,7 +69,7 @@ class TabBarController:UITabBarController{
     }
     
     func checkMessage() {
-        UserPresenter.updateMessages()
+        userPresenter.updateMessages()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (messageResult) in
                 if (messageResult.code == 0) {
@@ -78,7 +89,7 @@ class TabBarController:UITabBarController{
         var result:Bool = false
         if (sid != nil && sid! != ""){
             Log("sid:\(sid!)")
-            Presenter.checkSid(sid:sid!)
+            presenter.checkSid(sid:sid!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
@@ -93,7 +104,7 @@ class TabBarController:UITabBarController{
     }
     
     @objc func checkAppUpdate() {
-        Presenter.checkAppUpdate()
+        presenter.checkAppUpdate()
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {

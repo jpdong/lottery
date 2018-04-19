@@ -12,19 +12,17 @@ import HandyJSON
 import Alamofire
 import Toaster
 
-class UserPresenter {
-    static let app = UIApplication.shared.delegate as! AppDelegate
-    static let BASE_URL = app.globalData!.baseUrl
+class UserPresenter:Presenter {
     
-    static func updateMessages() -> Observable<MessageResult> {
-        return Presenter.getSid()
+    func updateMessages() -> Observable<MessageResult> {
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<MessageResult>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["sid":sid]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)mobile/msgtip/get_audit_msgtip",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)mobile/msgtip/get_audit_msgtip",method:.post,parameters:parameters).responseString{response in
                         print("response:\(response)")
                         print("result:\(response.result)")
                         print("value: \(response.result.value)")
@@ -53,6 +51,7 @@ class UserPresenter {
                         }
                         
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -60,11 +59,11 @@ class UserPresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func sendVerificationCode(phone:String) -> Observable<Result>{
+    func sendVerificationCode(phone:String) -> Observable<Result>{
         return Observable<Result>.create({ (observer) -> Disposable in
             let parameters:Dictionary = ["mobile":phone]
             print("parameters:\(parameters)")
-            Alamofire.request("\(BASE_URL)mobile/wechat/ajaxSend",method:.post,parameters:parameters).responseString{response in
+            Alamofire.request("\(self.baseUrl)mobile/wechat/ajaxSend",method:.post,parameters:parameters).responseString{response in
                 print("response:\(response)")
                 print("result:\(response.result)")
                 print("value: \(response.result.value)")
@@ -91,17 +90,18 @@ class UserPresenter {
                 }
                 
                 observer.onNext(result)
+                observer.onCompleted()
             }
             return Disposables.create()
         })
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func phoneNumRegister(phone:String, password:String, code:String) -> Observable<Result> {
+    func phoneNumRegister(phone:String, password:String, code:String) -> Observable<Result> {
         return Observable<Result>.create({ (observer) -> Disposable in
             let parameters:Dictionary = ["phone":phone, "password":password, "password2":password, "code":code]
             print("parameters:\(parameters)")
-            Alamofire.request("\(BASE_URL)mobile/Register/appUserRegister/",method:.post,parameters:parameters).responseString{
+            Alamofire.request("\(self.baseUrl)mobile/Register/appUserRegister/",method:.post,parameters:parameters).responseString{
                 response in
                 print("response:\(response)")
                 print("value \(response.result.value)")
@@ -133,17 +133,18 @@ class UserPresenter {
                 
                 
                 observer.onNext(result)
+                observer.onCompleted()
             }
             return Disposables.create()
         })
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func passwordLogin(phone:String, password:String) -> Observable<Result> {
+    func passwordLogin(phone:String, password:String) -> Observable<Result> {
         return Observable<Result>.create({ (observer) -> Disposable in
             let parameters:Dictionary = ["phone":phone, "password":password]
             print("parameters:\(parameters)")
-            Alamofire.request("\(BASE_URL)mobile/Login/doLogin",method:.post,parameters:parameters).responseString{
+            Alamofire.request("\(self.baseUrl)mobile/Login/doLogin",method:.post,parameters:parameters).responseString{
                 response in
                 print("response:\(response)")
                 print("value \(response.result.value)")
@@ -159,7 +160,7 @@ class UserPresenter {
                     if (sidEntity.code == 0) {
                         result.code = 0
                         result.message = sidEntity.msg
-                        app.globalData?.sid = sidEntity.data!.sid!
+                        self.app.globalData?.sid = sidEntity.data!.sid!
                         storeSid(sidEntity.data!.sid!)
                     } else {
                         result.code = 1
@@ -171,18 +172,19 @@ class UserPresenter {
                 }
                 
                 observer.onNext(result)
+                observer.onCompleted()
             }
             return Disposables.create()
         })
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func codeLogin(phone:String, code:String) -> Observable<Result> {
+    func codeLogin(phone:String, code:String) -> Observable<Result> {
         return Observable<Result>.create({ (observer) -> Disposable in
             
             let parameters:Dictionary = ["phone":phone, "code":code]
             print("parameters:\(parameters)")
-            Alamofire.request("\(BASE_URL)mobile/Login/doLoginByCode",method:.post,parameters:parameters).responseString{
+            Alamofire.request("\(self.baseUrl)mobile/Login/doLoginByCode",method:.post,parameters:parameters).responseString{
                 response in
                 print("response:\(response)")
                 print("value \(response.result.value)")
@@ -199,7 +201,7 @@ class UserPresenter {
                     if (sidEntity.code == 0) {
                         result.code = 0
                         result.message = sidEntity.msg
-                        app.globalData?.sid = sidEntity.data!.sid!
+                        self.app.globalData?.sid = sidEntity.data!.sid!
                         storeSid(sidEntity.data!.sid!)
                     } else {
                         result.code = 1
@@ -209,9 +211,8 @@ class UserPresenter {
                     result.code = 1
                     result.message = "网络错误"
                 }
-                
-                
                 observer.onNext(result)
+                observer.onCompleted()
             }
             return Disposables.create()
         })

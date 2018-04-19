@@ -12,22 +12,18 @@ import Alamofire
 import HandyJSON
 import Toaster
 
-class BusinessPresenter {
+class BusinessPresenter:Presenter {
     
-    static let app = UIApplication.shared.delegate as! AppDelegate
-    static let BASE_URL = app.globalData!.baseUrl
-    
-    static func checkBusinessRegisterState() -> Observable<Result> {
+    func checkBusinessRegisterState() -> Observable<Result> {
         //return Observable<Result>.create({ (observer) -> Disposable in
-        return Presenter.getSid()
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
-                    Alamofire.request("\(BASE_URL)mobile/app/judeIdent?sid=\(sid)").responseString{response in
+                    Alamofire.request("\(self.baseUrl)mobile/app/judeIdent?sid=\(sid)").responseString{response in
                         print("business state")
                         print("response:\(response)")
-                        print("result:\(response.result)")
                         print("value: \(response.result.value)")
                         var result:Result = Result()
                         switch response.result {
@@ -38,6 +34,7 @@ class BusinessPresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             if (businessStateEntity.code == 200) {
@@ -58,6 +55,7 @@ class BusinessPresenter {
                             result.message = "网络错误"
                         }
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -66,75 +64,21 @@ class BusinessPresenter {
         
     }
     
-    static func uploadImage(image:UIImage) -> Observable<Result> {
-        return Presenter.getSid()
-            .flatMap{
-                sid in
-                return Observable<Result>.create {
-                    observer -> Disposable in
-                    Alamofire.upload(multipartFormData: { (multipartFormData) in
-                        multipartFormData.append(UIImageJPEGRepresentation(image,1.0)!,withName:"image",fileName:"idcard.png",mimeType:"image/png")
-                        multipartFormData.append(sid.data(using: String.Encoding.utf8)!,withName:"sid")
-                    }, to: "\(BASE_URL)mobile/Register/upload", encodingCompletion: { (encodingResult) in
-                        print("encodingResult:\(encodingResult)")
-                        switch encodingResult {
-                        case .success(let upload, _, _):
-                            upload.responseString{ response in
-                                debugPrint(response)
-                                print("response:\(response)")
-                                print("result:\(response.result)")
-                                print("value: \(response.result.value)")
-                        
-                                var result:Result = Result()
-                                switch response.result {
-                                case .success:
-                                    guard let imageUrlEntity:ImageUrlEntity = ImageUrlEntity.deserialize(from: response.result.value as! String) as? ImageUrlEntity else {
-                                        result.code = 1
-                                        result.message = "服务器错误"
-                                        observer.onNext(result)
-                                        return
-                                    }
-                                    if (imageUrlEntity.code != nil && imageUrlEntity.code! == 0) {
-                                        result.code = 0
-                                        result.message = imageUrlEntity.data
-                                    } else {
-                                        result.code = 1
-                                        result.message = "图片上传失败"
-                                    }
-                                case .failure(let error):
-                                    result.code = 1
-                                    result.message = "网络错误"
-                                }
-                                
-                                observer.onNext(result)
-                            }
-                        case .failure(let encodingError):
-                            print(encodingError)
-                        }
-                        
-                    })
-                    return Disposables.create()
-                }
-            }
-            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
-    }
     
-    static func uploadImageUrls(front:String, back:String, tobacco:String) -> Observable<Result> {
+    
+    func uploadImageUrls(front:String, back:String, tobacco:String) -> Observable<Result> {
         //return Observable<Result>.create({ (observer) -> Disposable in
-        return Presenter.getSid()
+        return getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
                     let parameters:Dictionary = ["front":front, "back":back, "sid":sid, "yan_code":tobacco]
                     print("parameters:\(parameters)")
-                    Alamofire.request("\(BASE_URL)mobile/Register/uploadClubImage",method:.post,parameters:parameters).responseString{response in
+                    Alamofire.request("\(self.baseUrl)mobile/Register/uploadClubImage",method:.post,parameters:parameters).responseString{response in
                         print("response:\(response)")
                         print("result:\(response.result)")
                         print("value: \(response.result.value)")
-                        if (response.result.value == nil) {
-                            return
-                        }
                         var result:Result = Result()
                         switch response.result {
                         case .success:
@@ -142,6 +86,7 @@ class BusinessPresenter {
                                 result.code = 1
                                 result.message = "服务器错误"
                                 observer.onNext(result)
+                                observer.onCompleted()
                                 return
                             }
                             
@@ -157,6 +102,7 @@ class BusinessPresenter {
                         }
                         
                         observer.onNext(result)
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }
@@ -165,12 +111,12 @@ class BusinessPresenter {
         
     }
     
-    static func getUrl(unionid:String,headimgurl:String, nickname:String,urlHead:String) -> Observable<String>{
+    func getUrl(unionid:String,headimgurl:String, nickname:String,urlHead:String) -> Observable<String>{
         print("urlHead:\(urlHead)")
         //        return Observable<String>.create {
         //            (observer) -> Disposable in
         //            let parameters:Dictionary = ["unionid":unionid,"headimgurl":headimgurl, "nickname":nickname]
-        //            Alamofire.request("\(BASE_URL)mobile/wechat/getSid",method:.post,parameters:parameters).responseString{response in
+        //            Alamofire.request("\(self.baseUrl)mobile/wechat/getSid",method:.post,parameters:parameters).responseString{response in
         //                print("value \(response.result.value)")
         //                if (response.result.value == nil) {
         //                    return
@@ -184,7 +130,7 @@ class BusinessPresenter {
         //            return Disposables.create ()
         //            }
         //return getSid(unionid: unionid, headimgurl: headimgurl, nickname: nickname)
-        return Presenter.getSid()
+        return getSid()
             .map{
                 sid in
                 Log("url:\(urlHead)\(sid)")
@@ -193,27 +139,27 @@ class BusinessPresenter {
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func getShopUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
-        return getUrl(unionid:unionid,headimgurl: headimgurl, nickname: nickname, urlHead:"\(BASE_URL)mobile/app/shop?sid=")
+    func getShopUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
+        return getUrl(unionid:unionid,headimgurl: headimgurl, nickname: nickname, urlHead:"\(self.baseUrl)mobile/app/shop?sid=")
     }
     
-    static func getManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
-        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/app/manager?sid=")
+    func getManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
+        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(self.baseUrl)mobile/app/manager?sid=")
     }
     
-    static func getAreaManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
-        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/app/bazaar_manager?sid=")
+    func getAreaManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
+        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(self.baseUrl)mobile/app/bazaar_manager?sid=")
     }
     
-    static func getMarketManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
-        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(BASE_URL)mobile/app/area_manager?sid=")
+    func getMarketManagerUrl(unionid:String,headimgurl:String, nickname:String) -> Observable<String>{
+        return getUrl(unionid:unionid, headimgurl: headimgurl, nickname: nickname,urlHead:"\(self.baseUrl)mobile/app/area_manager?sid=")
     }
     
-    static func getPointMallUrl() -> Observable<String> {
-        return Presenter.getSid()
+    func getPointMallUrl() -> Observable<String> {
+        return getSid()
             .map{
                 sid in
-                return "\(BASE_URL)mobile/wechat/credits_shop?sid=\(sid)"
+                return "\(self.baseUrl)mobile/wechat/credits_shop?sid=\(sid)"
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }

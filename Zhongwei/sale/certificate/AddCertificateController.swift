@@ -27,11 +27,19 @@ class AddCertificateController:UIViewController {
     var closeButton:UIBarButtonItem!
     var navigationBar:UINavigationBar!
     var editNavigationItem:UINavigationItem!
+    var certificatePresenter:CertificatePresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
+        disposeBag = DisposeBag()
+        certificatePresenter = CertificatePresenter()
         setupViews()
         setupConstrains()
         setupClickEvents()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -158,7 +166,7 @@ class AddCertificateController:UIViewController {
             DispatchQueue.main.async {
                 self.imageInputBox.imageView.image = image
                 self.imageIndicator.startAnimating()
-                BusinessPresenter.uploadImage(image:image!)
+                self.certificatePresenter.uploadImage(image:image!)
                     .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.imageIndicator.stopAnimating()
@@ -168,6 +176,7 @@ class AddCertificateController:UIViewController {
                             Toast(text: "图片上传失败").show()
                         }
                     })
+                .disposed(by: self.disposeBag)
                 self.dismiss(animated: true, completion: nil)
             }
         }
@@ -192,7 +201,7 @@ class AddCertificateController:UIViewController {
         if (type == CertificateItem.add) {
             submitIndicator.startAnimating()
             submitButton.isEnabled = false
-            CertificatePresenter.submitCertificate(name!, phone!, id!, imageUrl!)
+            certificatePresenter.submitCertificate(name!, phone!, id!, imageUrl!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     self.submitIndicator.stopAnimating()
@@ -204,6 +213,7 @@ class AddCertificateController:UIViewController {
                         Toast(text: result.message).show()
                     }
                 })
+            .disposed(by: self.disposeBag)
         } else if(type == CertificateItem.edit) {
             if (name! == editableItem?.name! && phone! == editableItem?.phone! && id! == editableItem?.certificateId! && imageUrl! == editableItem?.certificateImage!) {
                 Toast(text: "未做任何修改").show()
@@ -211,7 +221,7 @@ class AddCertificateController:UIViewController {
             } else {
                 submitIndicator.startAnimating()
                 submitButton.isEnabled = false
-                CertificatePresenter.editCertificate(name!, phone!, id!, imageUrl!, editableItem!.id!)
+                certificatePresenter.editCertificate(name!, phone!, id!, imageUrl!, editableItem!.id!)
                 .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.submitIndicator.stopAnimating()
@@ -223,6 +233,7 @@ class AddCertificateController:UIViewController {
                             Toast(text: result.message).show()
                         }
                     })
+                .disposed(by: self.disposeBag)
             }
         }
     }

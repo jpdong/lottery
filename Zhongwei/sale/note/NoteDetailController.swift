@@ -21,11 +21,19 @@ class NoteDetailController:UIViewController {
     var dataBackground:UIImageView!
     var textBackground:UIImageView!
     var dateLabel:UILabel!
+    var presenter:NotePresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
+        disposeBag = DisposeBag()
+        presenter = NotePresenter()
         setupViews()
         setupConstrains()
         setupClickEvents()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -122,7 +130,7 @@ class NoteDetailController:UIViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         }
         let deleteAction = UIAlertAction(title: "删除", style: .default) { (action) in
-            NotePresenter.deleteNote(id:self.noteItem!.id!)
+            self.presenter.deleteNote(id:self.noteItem!.id!)
             .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
@@ -133,6 +141,7 @@ class NoteDetailController:UIViewController {
                         Toast(text:"删除失败：\(result.message)")
                     }
                 })
+            .disposed(by: self.disposeBag)
         }
         let cacelAction = UIAlertAction(title: "取消", style:.cancel) { (action) in
             
@@ -144,7 +153,7 @@ class NoteDetailController:UIViewController {
     }
     
     func updateData() {
-        NotePresenter.getDetailWithId(noteItem!.id!)
+        presenter.getDetailWithId(noteItem!.id!)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -154,6 +163,7 @@ class NoteDetailController:UIViewController {
                     }
                 }
             })
+        .disposed(by: disposeBag)
         
     }
     

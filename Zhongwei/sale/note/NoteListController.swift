@@ -20,13 +20,21 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
     var buttonImageView:UIImageView!
     var shopId:String?
     var addNoteLabel:UILabel!
+    var presenter:NotePresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = NotePresenter()
         setupViews()
         setupConstrains()
         setupEvents()
         refreshData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -88,7 +96,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
     
     @objc func refreshData() {
         currentPage = 1
-        NotePresenter.getNoteList(pageIndex: currentPage, num: 10,shopId:shopId!)
+        presenter.getNoteList(pageIndex: currentPage, num: 10,shopId:shopId!)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 self.tableView.es.stopPullToRefresh()
@@ -100,10 +108,11 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
                     self.tableView.reloadData()
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     func setupData(_ pageIndex:Int, _ num:Int) {
-        NotePresenter.getNoteList(pageIndex: pageIndex, num: num,shopId:shopId!)
+        presenter.getNoteList(pageIndex: pageIndex, num: num,shopId:shopId!)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -113,6 +122,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
                     self.tableView.reloadData()
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     
@@ -165,7 +175,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
     func loadMore() {
         print("load more")
         currentPage = currentPage + 1
-        NotePresenter.getNoteList(pageIndex: currentPage, num: 10,shopId:shopId!)
+        presenter.getNoteList(pageIndex: currentPage, num: 10,shopId:shopId!)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -186,6 +196,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
                     }
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     func updataData(row:Int, item:NoteItem) {

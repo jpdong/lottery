@@ -21,9 +21,12 @@ class CustomerManagerList:UIViewController , UITableViewDelegate, UITableViewDat
     var navigationBar:UINavigationBar!
     var businessNavigationItem:UINavigationItem!
     var tableView:UITableView!
+    var presenter:BusinessPresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = BusinessPresenter()
         setupViews()
         setupConstrains()
         setupItems()
@@ -123,7 +126,7 @@ class CustomerManagerList:UIViewController , UITableViewDelegate, UITableViewDat
     }
     
     func checkRegisterBusinessState() {
-        BusinessPresenter.checkBusinessRegisterState()
+        presenter.checkBusinessRegisterState()
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -132,6 +135,7 @@ class CustomerManagerList:UIViewController , UITableViewDelegate, UITableViewDat
                     self.isShopRegistered = false
                 }
             })
+        .disposed(by: self.disposeBag)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

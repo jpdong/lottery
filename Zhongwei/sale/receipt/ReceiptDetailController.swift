@@ -26,10 +26,19 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
     var imageCollectionLayout:UICollectionViewFlowLayout!
     var imageCollectionView:UICollectionView!
     var imageUrls:[String]!
+    var presenter:ReceiptPresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = ReceiptPresenter()
         setupViews()
         setupConstrains()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -120,7 +129,7 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
             self.present(vc, animated: true, completion: nil)
         }
         let deleteAction = UIAlertAction(title: "删除", style: .default) { (action) in
-            ReceiptPresenter.deleteReceipt(id:self.receiptItem!.id!)
+            self.presenter.deleteReceipt(id:self.receiptItem!.id!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
@@ -131,6 +140,7 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
                         Toast(text:"删除失败：\(result.message ?? "")").show()
                     }
                 })
+            .disposed(by: self.disposeBag)
         }
         let cacelAction = UIAlertAction(title: "取消", style:.cancel) { (action) in
             
@@ -142,7 +152,7 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
     }
     
     func updateData() {
-        ReceiptPresenter.getDetailWithId(receiptItem!.id!)
+        presenter.getDetailWithId(receiptItem!.id!)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -152,6 +162,7 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
                     self.preViewController?.updataData(row: self.rowInParent!, item: self.receiptItem!)
                 }
             })
+        .disposed(by: disposeBag)
         
     }
     

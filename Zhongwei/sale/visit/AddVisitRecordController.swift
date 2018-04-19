@@ -20,17 +20,18 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     var shopInfoView:ShopInfoView!
     var signButtonView:SignButtonView!
     var signLocationView:SignLocationView!
-    
     var scrollView:UIScrollView!
     var locationManager:CLLocationManager!
     var longitude:Double = 0
     var latitude:Double = 0
     var onSigning = false
-    
     var shopItem:ShopItem?
     var shopId:String?
     var pageMenuController:PagingMenuController!
     var timer:Timer!
+    var presenter:VisitPresenter!
+    var shopPresenter:ShopPresenter!
+    var disposeBag:DisposeBag!
     
     var isCounting = false {
         willSet {
@@ -60,10 +61,17 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        disposeBag = DisposeBag()
+        presenter = VisitPresenter()
+        shopPresenter = ShopPresenter()
         setupViews()
         setupData()
         setupConstrains()
         setupClickEvents()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -188,7 +196,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         if let shopItem = shopItem {
             updateShopView()
         } else {
-            ShopPresenter.getShopWithId(id:shopId!)
+            shopPresenter.getShopWithId(id:shopId!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
@@ -200,6 +208,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                         Toast(text: result.message ?? "").show()
                     }
                 })
+            .disposed(by: disposeBag)
         }
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -254,7 +263,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
             shopId = self.shopId!
         }
         if (onSigning) {
-            VisitPresenter.sign(longitude:longitude, latitude:latitude, status:2,shopId:shopId)
+            presenter.sign(longitude:longitude, latitude:latitude, status:2,shopId:shopId)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
@@ -269,9 +278,9 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                         Toast(text: result.message ?? "").show()
                     }
                 })
-            
+            .disposed(by: disposeBag)
         } else {
-            VisitPresenter.sign(longitude:longitude, latitude:latitude, status:1,shopId:shopId)
+            presenter.sign(longitude:longitude, latitude:latitude, status:1,shopId:shopId)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
@@ -294,7 +303,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                         Toast(text: result.message ?? "").show()
                     }
                 })
-            
+            .disposed(by: disposeBag)
         }
     }
     
@@ -363,7 +372,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     }
     
     func getShopItem() {
-        ShopPresenter.getShopWithId(id: shopId!)
+        shopPresenter.getShopWithId(id: shopId!)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -373,6 +382,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                     Toast(text: result.message ?? "").show()
                 }
             })
+        .disposed(by: disposeBag)
     }
     
     func setupSignButtonState() {
@@ -420,7 +430,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         longitude = currLocation.coordinate.longitude
         latitude = currLocation.coordinate.latitude
         if (onSigning) {
-            VisitPresenter.sign(longitude:longitude, latitude:latitude, status:3,shopId:shopItem!.club_id!)
+            presenter.sign(longitude:longitude, latitude:latitude, status:3,shopId:shopItem!.club_id!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {
@@ -429,6 +439,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
                         Toast(text: result.message ?? "").show()
                     }
                 })
+            .disposed(by: disposeBag)
         }
         let result = LocationTransform.wgs2gcj(wgsLat: latitude, wgsLng: longitude)
         getRealAddress(longtitude:result.gcjLng,latitude:result.gcjLat)

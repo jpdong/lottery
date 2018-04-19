@@ -27,11 +27,19 @@ class AddNoteController:UIViewController {
     var dataBackground:UIImageView!
     var textBackground:UIImageView!
     var dateLabel:UILabel!
+    var presenter:NotePresenter!
+    var disposeBag:DisposeBag!
     
     override func viewDidLoad() {
+        disposeBag = DisposeBag()
+        presenter = NotePresenter()
         setupViews()
         setupConstrains()
         setupClickEvents()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.disposeBag = nil
     }
     
     func setupViews() {
@@ -140,7 +148,7 @@ class AddNoteController:UIViewController {
         if (type == NoteItem.add) {
             submitIndicator.startAnimating()
             optionButton.isEnabled = false
-            NotePresenter.submitNote(note:note, shopId:shopId!)
+            presenter.submitNote(note:note, shopId:shopId!)
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     self.submitIndicator.stopAnimating()
@@ -152,6 +160,7 @@ class AddNoteController:UIViewController {
                         Toast(text: result.message).show()
                     }
                 })
+            .disposed(by: self.disposeBag)
         } else if(type == NoteItem.edit) {
             if (note == editableItem?.note) {
                 Toast(text: "未做任何修改").show()
@@ -160,7 +169,7 @@ class AddNoteController:UIViewController {
             } else {
                 submitIndicator.startAnimating()
                 optionButton.isEnabled = false
-                NotePresenter.editNote(note:note,noteId:editableItem!.id!)
+                presenter.editNote(note:note,noteId:editableItem!.id!)
                 .observeOn(MainScheduler.instance)
                     .subscribe(onNext: { (result) in
                         self.submitIndicator.stopAnimating()
@@ -173,6 +182,7 @@ class AddNoteController:UIViewController {
                             Toast(text: result.message).show()
                         }
                     })
+                .disposed(by: self.disposeBag)
             }
         }
     }

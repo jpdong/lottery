@@ -12,15 +12,12 @@ import Alamofire
 import HandyJSON
 import Toaster
 
-class MainPresenter {
-    
-    static let app = UIApplication.shared.delegate as! AppDelegate
-    static let BASE_URL = app.globalData!.baseUrl
+class MainPresenter:Presenter {
 
-    static func updateBoardContent() -> Observable<ContentResult>{
+    func updateBoardContent() -> Observable<ContentResult>{
         return Observable<ContentResult>.create{
             observer -> Disposable in
-            Alamofire.request("\(BASE_URL)mobile/Contents/getContent").responseString{response in
+            Alamofire.request("\(self.baseUrl)mobile/Contents/getContent").responseString{response in
                 print("board")
                 print("response:\(response)")
                 print("value: \(response.result.value)")
@@ -31,6 +28,7 @@ class MainPresenter {
                         result.code = 1
                         result.message = "服务器错误"
                         observer.onNext(result)
+                        observer.onCompleted()
                         return
                     }
                     if (mainNewsEntity.code == 0) {
@@ -49,22 +47,21 @@ class MainPresenter {
                     result.message = "网络错误"
                 }
                 observer.onNext(result)
-                
+                observer.onCompleted()
             }
             return Disposables.create()
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func updateBannerContent() -> Observable<ImageResult> {
+    func updateBannerContent() -> Observable<ImageResult> {
         
         return Observable<ImageResult>.create{
             observer -> Disposable in
-            Alamofire.request("\(BASE_URL)mobile/Contents/getBanner").responseString{response in
+            Alamofire.request("\(self.baseUrl)mobile/Contents/getBanner").responseString{response in
                 print("banner")
                 print("response:\(response)")
                 print("value: \(response.result.value)")
-                
                 var result = ImageResult()
                 switch response.result {
                 case .success:
@@ -72,6 +69,7 @@ class MainPresenter {
                         result.code = 1
                         result.message = "服务器错误"
                         observer.onNext(result)
+                        observer.onCompleted()
                         return
                     }
                     if (imageDataEntity.code == 0) {
@@ -82,23 +80,23 @@ class MainPresenter {
                         }
                         
                     }
-                case .failure(let error):
+                case .failure(_):
                     result.code = 1
                     result.message = "网络错误"
                 }
-                
                 observer.onNext(result)
+                observer.onCompleted()
             }
             return Disposables.create()
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-    static func getArticleWithId(_ id:String) ->Observable<ArticleUrlResult> {
+    func getArticleWithId(_ id:String) ->Observable<ArticleUrlResult> {
         return Observable<ArticleUrlResult>.create({ (observer) -> Disposable in
             let parameters:Dictionary = ["id":id]
             print("parameters:\(parameters)")
-            Alamofire.request("\(BASE_URL)mobile/Contents/getArticle",method:.post,parameters:parameters).responseString{
+            Alamofire.request("\(self.baseUrl)mobile/Contents/getArticle",method:.post,parameters:parameters).responseString{
                 response in
                 print("response:\(response)")
                 print("value \(response.result.value)")
@@ -112,6 +110,7 @@ class MainPresenter {
                         result.code = 1
                         result.message = "服务器错误"
                         observer.onNext(result)
+                        observer.onCompleted()
                         return
                     }
                     if (articleUrlEntity.code == 0) {
@@ -125,12 +124,13 @@ class MainPresenter {
                     result.code = 1
                     result.message = "网络错误"
                 }
-                
-                
                 observer.onNext(result)
+                observer.onCompleted()
             }
             return Disposables.create()
         })
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
+    
+    
 }
