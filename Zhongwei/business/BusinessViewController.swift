@@ -31,6 +31,28 @@ class BusinessViewController:UITableViewController {
         self.tableView.tableFooterView = UIView(frame:.zero)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        //        unionid = getCacheUnionid()
+        //        if (unionid == nil || unionid! == ""){
+        sid = getCacheSid()
+        if (sid == nil || sid! == ""){
+            //hideViews()
+            let alertView = UIAlertController(title:"未登录", message:"前往登录", preferredStyle:.alert)
+            let cancel = UIAlertAction(title:"取消", style:.cancel)
+            let confirm = UIAlertAction(title:"确定", style:.default){
+                action in
+                //self.performSegue(withIdentifier: "showMe", sender: self)
+                self.tabBarController?.tabBar.isHidden = false
+                self.tabBarController?.selectedIndex = 3
+            }
+            alertView.addAction(cancel)
+            alertView.addAction(confirm)
+            present(alertView,animated: true,completion: nil)
+        } else {
+            checkRegisterBusinessState()
+        }
+    }
+    
     func setupViews() {
         navigationBarHeight = Size.instance.navigationBarHeight
         statusBarHeight = Size.instance.statusBarHeight
@@ -78,10 +100,6 @@ class BusinessViewController:UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-    
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if (hasSid()){
             if (indexPath.row == 0 && !isShopRegistered){
@@ -98,15 +116,15 @@ class BusinessViewController:UITableViewController {
     }
     
     func checkRegisterBusinessState() {
-//        presenter.checkBusinessRegisterState()
-//        .observeOn(MainScheduler.instance)
-//            .subscribe(onNext: { (result) in
-//                if (result.code == 0) {
-//                    self.isShopRegistered = true
-//                } else {
-//                    self.isShopRegistered = false
-//                }
-//            })
+        presenter.checkBusinessRegisterState()
+        .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { (result) in
+                if (result.code == 0) {
+                    self.isShopRegistered = true
+                } else {
+                    self.isShopRegistered = false
+                }
+            })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -116,28 +134,6 @@ class BusinessViewController:UITableViewController {
         let selectedItem = businessItems[indexPath!.row]
         let detailView = segue.destination as! BusinessDetailView
         detailView.type = selectedItem.type
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-//        unionid = getCacheUnionid()
-//        if (unionid == nil || unionid! == ""){
-            sid = getCacheSid()
-            if (sid == nil || sid! == ""){
-            //hideViews()
-            let alertView = UIAlertController(title:"未登录", message:"前往登录", preferredStyle:.alert)
-            let cancel = UIAlertAction(title:"取消", style:.cancel)
-            let confirm = UIAlertAction(title:"确定", style:.default){
-                action in
-                //self.performSegue(withIdentifier: "showMe", sender: self)
-                self.tabBarController?.tabBar.isHidden = false
-                self.tabBarController?.selectedIndex = 3
-            }
-            alertView.addAction(cancel)
-            alertView.addAction(confirm)
-            present(alertView,animated: true,completion: nil)
-        } else {
-            checkRegisterBusinessState()
-        }
     }
     
     func hasSid() -> Bool{

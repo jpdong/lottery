@@ -34,11 +34,24 @@ class CertificateDetailController:UIViewController {
         certificatePresenter = CertificatePresenter()
         setupViews()
         setupConstrains()
-        setupClickEvents()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         self.disposeBag = nil
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        scrollView.contentSize = CGSize(width:self.view.frame.width, height:imageInputBox.frame.maxY + imageInputBox.frame.height)
+        scrollView.setNeedsLayout()
+        scrollView.layoutIfNeeded()
+        phoneInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        nameInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        idInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        addressInfoBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
     }
     
     func setupViews() {
@@ -118,25 +131,7 @@ class CertificateDetailController:UIViewController {
         }
         
     }
-    
-    func setupClickEvents() {
-
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        updateData()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        scrollView.contentSize = CGSize(width:self.view.frame.width, height:imageInputBox.frame.maxY + imageInputBox.frame.height)
-        scrollView.setNeedsLayout()
-        scrollView.layoutIfNeeded()
-        phoneInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        nameInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        idInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        addressInfoBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-    }
-    
+   
     @objc func showOptionList() {
         let optionView = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "编辑", style: .default) { (action) in

@@ -131,6 +131,4 @@ class MainPresenter:Presenter {
         })
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
-    
-    
 }

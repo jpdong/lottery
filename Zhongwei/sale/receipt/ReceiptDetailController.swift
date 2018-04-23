@@ -41,6 +41,18 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
         self.disposeBag = nil
     }
     
+    override func viewDidLayoutSubviews() {
+        let margin:CGFloat = 4
+        let itemWH = self.view.frame.width * 0.25
+        imageCollectionLayout.itemSize = CGSize(width:itemWH, height:itemWH)
+        imageCollectionLayout.minimumInteritemSpacing = margin
+        imageCollectionLayout.minimumLineSpacing = margin
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateData()
+    }
+    
     func setupViews() {
         self.view.backgroundColor = UIColor.white
         self.navigationItem.title = "收据详情"
@@ -81,23 +93,10 @@ class ReceiptDetailController:UIViewController, UICollectionViewDelegate, UIColl
             maker.bottom.equalTo(self.view)
             
         }
-        
-    }
-    
-    override func viewDidLayoutSubviews() {
-        let margin:CGFloat = 4
-        let itemWH = self.view.frame.width * 0.25
-        imageCollectionLayout.itemSize = CGSize(width:itemWH, height:itemWH)
-        imageCollectionLayout.minimumInteritemSpacing = margin
-        imageCollectionLayout.minimumLineSpacing = margin
     }
     
     func setupData() {
         selectedImages = [UIImage]()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        updateData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

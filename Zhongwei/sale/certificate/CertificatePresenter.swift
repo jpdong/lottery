@@ -52,7 +52,7 @@ class CertificatePresenter:Presenter {
                         }
                         
                         observer.onNext(result)
-                        //observer.onCompleted()
+                        observer.onCompleted()
                     }
                     return Disposables.create()
                 }

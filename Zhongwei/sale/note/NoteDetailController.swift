@@ -29,11 +29,21 @@ class NoteDetailController:UIViewController {
         presenter = NotePresenter()
         setupViews()
         setupConstrains()
-        setupClickEvents()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         self.disposeBag = nil
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        scrollView.contentSize = CGSize(width:self.view.frame.width, height:noteTextView.frame.maxY + noteTextView.frame.height)
+        scrollView.setNeedsLayout()
+        scrollView.layoutIfNeeded()
+        
     }
     
     func setupViews() {
@@ -91,10 +101,6 @@ class NoteDetailController:UIViewController {
         }
     }
     
-    func setupClickEvents() {
-
-    }
-    
     func getTime(_ time:String) -> String {
         var timeString:String
         if (time.count >= 10) {
@@ -107,17 +113,6 @@ class NoteDetailController:UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm yyyy/MM/dd"
         return dateFormatter.string(from: date)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        updateData()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        scrollView.contentSize = CGSize(width:self.view.frame.width, height:noteTextView.frame.maxY + noteTextView.frame.height)
-        scrollView.setNeedsLayout()
-        scrollView.layoutIfNeeded()
-        
     }
     
     @objc func showOptionList() {
@@ -164,7 +159,6 @@ class NoteDetailController:UIViewController {
                 }
             })
         .disposed(by: disposeBag)
-        
     }
     
     func updateView(data:NoteItem) {
@@ -172,5 +166,4 @@ class NoteDetailController:UIViewController {
         noteTextView.text = noteItem?.note
         
     }
-    
 }

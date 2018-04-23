@@ -23,7 +23,7 @@ class TabBarController:UITabBarController{
         presenter = Presenter()
         userPresenter = UserPresenter()
         var  delegate = UIApplication.shared.delegate as! AppDelegate
-        //delegate.tabViewController = self
+        delegate.tabViewController = self
         setUpTabs()
         Timer.scheduledTimer(timeInterval: 3, target: self,
                              selector: #selector(checkAppUpdate),

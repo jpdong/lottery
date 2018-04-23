@@ -35,7 +35,6 @@ class AddNoteController:UIViewController {
         presenter = NotePresenter()
         setupViews()
         setupConstrains()
-        setupClickEvents()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -109,29 +108,8 @@ class AddNoteController:UIViewController {
         }
     }
     
-    func setupClickEvents() {
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
-    
-    override func viewDidLayoutSubviews() {
-    }
-    
-    func getTime(_ time:String) -> String {
-        var timeString:String
-        if (time.count >= 10) {
-            timeString = time.subString(start: 0, length: 10)
-        } else {
-            return ""
-        }
-        let timeInterval:TimeInterval = TimeInterval(timeString)!
-        let date = Date(timeIntervalSince1970: timeInterval)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm yyyy/MM/dd"
-        return dateFormatter.string(from: date)
+    @objc func close(_ sender:UIBarButtonItem){
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func submitNote() {
@@ -187,8 +165,18 @@ class AddNoteController:UIViewController {
         }
     }
     
-    @objc func close(_ sender:UIBarButtonItem){
-        self.dismiss(animated: true, completion: nil)
+    func getTime(_ time:String) -> String {
+        var timeString:String
+        if (time.count >= 10) {
+            timeString = time.subString(start: 0, length: 10)
+        } else {
+            return ""
+        }
+        let timeInterval:TimeInterval = TimeInterval(timeString)!
+        let date = Date(timeIntervalSince1970: timeInterval)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm yyyy/MM/dd"
+        return dateFormatter.string(from: date)
     }
     
     func checkNotNil(input:String?...) -> Bool{

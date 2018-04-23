@@ -44,6 +44,14 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         self.disposeBag = nil
     }
     
+    override func viewDidLayoutSubviews() {
+        let margin:CGFloat = 4
+        let itemWH = self.view.frame.width * 0.25
+        imageCollectionLayout.itemSize = CGSize(width:itemWH, height:itemWH)
+        imageCollectionLayout.minimumInteritemSpacing = margin
+        imageCollectionLayout.minimumLineSpacing = margin
+    }
+    
     func setupViews() {
         self.navigationItem.title = "添加"
         navigationBarHeight = Size.instance.navigationBarHeight
@@ -120,14 +128,6 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        let margin:CGFloat = 4
-        let itemWH = self.view.frame.width * 0.25
-        imageCollectionLayout.itemSize = CGSize(width:itemWH, height:itemWH)
-        imageCollectionLayout.minimumInteritemSpacing = margin
-        imageCollectionLayout.minimumLineSpacing = margin
-    }
-    
     func setupData() {
         selectedImages = [UIImage]()
         imageUrls = [String]()
@@ -140,10 +140,6 @@ class AddReceiptController:UIViewController , UICollectionViewDelegate, UICollec
     
     func setupClickEvents() {
         submitButton.addTarget(self, action: #selector(submitReceipt), for: .touchUpInside)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -71,6 +71,17 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
         NotificationCenter.default.removeObserver(self)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow(note:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden(note:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onPhoneTextfieldChanged(note:)), name: NSNotification.Name.UITextFieldTextDidChange, object: self.phoneTextField)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        phoneInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        passwordInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+    }
+    
     func setupViews() {
         sendCodeButton.isHidden = true
         phoneTextField.delegate = self
@@ -87,17 +98,6 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
         loginIndicator.snp.makeConstraints { (maker) in
             maker.center.equalTo(loginButton)
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShow(note:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden(note:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onPhoneTextfieldChanged(note:)), name: NSNotification.Name.UITextFieldTextDidChange, object: self.phoneTextField)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        phoneInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        passwordInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
     }
     
     @objc func sendCode(_ sender: Any) {

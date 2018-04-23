@@ -57,6 +57,4 @@ class SignButtonView:UIView {
             maker.left.right.top.bottom.equalTo(self)
         }
     }
-    
-    
 }

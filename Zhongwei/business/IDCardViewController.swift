@@ -50,9 +50,6 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         setupConstrains()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-    }
-    
     override func viewDidLayoutSubviews() {
         scrollView.contentSize = CGSize(width:self.view.frame.width,height:nextStepButton.frame.maxY + 2 * Size.instance.tabBarHeight)
     }

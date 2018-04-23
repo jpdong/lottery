@@ -42,6 +42,12 @@ class AddCertificateController:UIViewController {
         self.disposeBag = nil
     }
     
+    override func viewDidLayoutSubviews() {
+        phoneInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        nameInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+        idInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
+    }
+    
     func setupViews() {
         self.navigationItem.title = "添加"
         navigationBarHeight = Size.instance.navigationBarHeight
@@ -149,16 +155,6 @@ class AddCertificateController:UIViewController {
         var imageInputTap = UITapGestureRecognizer(target: self, action: #selector(getCertificatePicture))
         imageInputBox.addGestureRecognizer(imageInputTap)
         submitButton.addTarget(self, action: #selector(submitCertificate), for: .touchUpInside)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
-    
-    override func viewDidLayoutSubviews() {
-        phoneInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        nameInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
-        idInputBox.bottomBorder(width: 0.5, borderColor: UIColor(red:0xbf/255,green:0xbf/255, blue:0xbf/255,alpha:1))
     }
     
     @objc func getCertificatePicture() {

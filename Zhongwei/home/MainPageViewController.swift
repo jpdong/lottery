@@ -54,6 +54,17 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         updateBoardView()
     }
     
+    override func viewDidLayoutSubviews() {
+        mainScrollView.contentSize = CGSize(width:self.view.frame.width,height:recentNewsView.frame.maxY + 2 * tabBarHeight!)
+        //welfareActivity.bottomBorder(width: 1, borderColor: UIColor.black)
+        //recentNewsView.rightBorder(width: 1, borderColor: UIColor.black)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateBannerView()
+        updateBoardView()
+    }
+    
     func setupViews() {
         //hidesBottomBarWhenPushed = true
         self.view.backgroundColor = UIColor.white
@@ -67,6 +78,7 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         mainNavigationItem = UINavigationItem()
         navigationBar.pushItem(mainNavigationItem, animated: false)
         mainNavigationItem.title = "首页"
+        self.navigationItem.title = "首页"
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.navigationBar.tintColor = UIColor.black
         self.view.addSubview(navigationBar!)
@@ -287,25 +299,6 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         .disposed(by: self.disposeBag)
     }
     
-    override func viewDidLayoutSubviews() {
-        mainScrollView.contentSize = CGSize(width:self.view.frame.width,height:recentNewsView.frame.maxY + 2 * tabBarHeight!)
-        //welfareActivity.bottomBorder(width: 1, borderColor: UIColor.black)
-        //recentNewsView.rightBorder(width: 1, borderColor: UIColor.black)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        Log("viewDidAppear")
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        updateBannerView()
-        updateBoardView()
-    }
-    
     func updateBannerView() {
         presenter.updateBannerContent()
         .observeOn(MainScheduler.instance)
@@ -334,7 +327,6 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
                             boardViews[index].contentId = articles[index].id
                         }
                     }
-                    
                 } else {
                     Log(result.message)
                 }

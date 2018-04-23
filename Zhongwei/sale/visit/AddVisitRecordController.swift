@@ -74,6 +74,10 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         self.disposeBag = nil
     }
     
+    override func viewDidLayoutSubviews() {
+        //scrollView.contentSize = CGSize(width:self.view.frame.width, height:self.view.frame.height)
+    }
+    
     func setupViews() {
         self.navigationItem.title = "走访店铺"
         self.view.backgroundColor = UIColor(red: 0xf1/255, green: 0xf2/255, blue: 0xf5/255, alpha: 1)
@@ -220,10 +224,6 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         shopInfoView.nameLabel.text = shopItem?.name
         shopInfoView.phoneLabel.text = shopItem?.phone
         shopInfoView.addressLabel.text = shopItem?.address
-    }
-    
-    override func viewDidLayoutSubviews() {
-        //scrollView.contentSize = CGSize(width:self.view.frame.width, height:self.view.frame.height)
     }
     
     func setupClickEvents() {
