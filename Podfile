@@ -19,4 +19,5 @@ pod 'TZImagePickerController'
 pod "PagingMenuController"
 pod 'MLeaksFinder'
 pod 'FBRetainCycleDetector'
+pod 'QIYU_iOS_SDK', '~> 4.2.1'
 end

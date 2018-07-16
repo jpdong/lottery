@@ -71,7 +71,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.disposeBag = nil
+        //self.disposeBag = nil
     }
     
     override func viewDidLayoutSubviews() {
@@ -217,6 +217,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 10
+        locationManager.delegate = self
     }
     
     func updateShopView() {
@@ -355,7 +356,6 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
             present(alert, animated: true, completion: nil)
             return
         }
-        locationManager.delegate = self
         locationManager.startUpdatingLocation()
     }
     

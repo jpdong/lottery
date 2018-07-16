@@ -48,13 +48,15 @@ class SearchViewController:UIViewController ,UISearchBarDelegate, UITableViewDat
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.disposeBag = nil
+        //self.disposeBag = nil
     }
     
     func setupViews() {
         self.view.backgroundColor = UIColor.white
         self.navigationItem.title = "选择店铺"
         searchBar = UISearchBar()
+        searchBar.searchBarStyle = .minimal
+        searchBar.placeholder = "搜索店铺信息"
         tableView = UITableView()
         searchBar.delegate = self
         tableView.delegate = self

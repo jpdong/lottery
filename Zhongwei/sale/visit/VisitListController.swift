@@ -32,7 +32,7 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.disposeBag = nil
+        //self.disposeBag = nil
     }
     
     func setupViews() {
@@ -234,7 +234,7 @@ class VisitListController:UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        getLocation()
+        //getLocation()
     }
     
     func getLocation() {

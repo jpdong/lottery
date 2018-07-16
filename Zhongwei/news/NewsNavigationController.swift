@@ -12,5 +12,8 @@ class NewsNavigationController:UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationBar.tintColor = UIColor.black
+        let vc = NewsViewController()
+        pushViewController(vc, animated: true)
     }
 }

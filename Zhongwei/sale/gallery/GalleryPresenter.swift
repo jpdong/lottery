@@ -24,8 +24,7 @@ class GalleryPresenter:Presenter {
                     let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num),"club_id":shopId]
                     print("parameters:\(parameters)")
                     Alamofire.request("\(self.baseUrl)app/Lottery_manager/interviewImagesList",method:.post,parameters:parameters).responseString{response in
-                        print("gallery list")
-                        print("value: \(response.result.value)")
+                    //HttpClient.post(url: "\(self.baseUrl)app/Lottery_manager/interviewImagesList", parameters: parameters){ response in
                         var result:GalleryListResult = GalleryListResult()
                         switch response.result {
                         case .success:

@@ -133,6 +133,8 @@
 		8E62AAA120562388000847E3 /* ArticleUrlResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E62AAA020562388000847E3 /* ArticleUrlResult.swift */; };
 		8E66CF1F2049406C00FC9E59 /* IDCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E66CF1E2049406C00FC9E59 /* IDCardViewController.swift */; };
 		8E66CF2120494C3900FC9E59 /* BusinessPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E66CF2020494C3900FC9E59 /* BusinessPresenter.swift */; };
+		8E7DA71520EE001E00A67AAD /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DA71420EE001E00A67AAD /* HttpClient.swift */; };
+		8E7DA71720EE191900A67AAD /* ResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DA71620EE191900A67AAD /* ResponseData.swift */; };
 		8E92BF18200EFC9B0090C646 /* ResponseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */; };
 		8E92BF1A200EFDD90090C646 /* SidEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92BF19200EFDD90090C646 /* SidEntity.swift */; };
 		8E92BF1E200F46C80090C646 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92BF1D200F46C80090C646 /* Presenter.swift */; };
@@ -362,6 +364,8 @@
 		8E62AAA020562388000847E3 /* ArticleUrlResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleUrlResult.swift; sourceTree = "<group>"; };
 		8E66CF1E2049406C00FC9E59 /* IDCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDCardViewController.swift; sourceTree = "<group>"; };
 		8E66CF2020494C3900FC9E59 /* BusinessPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessPresenter.swift; sourceTree = "<group>"; };
+		8E7DA71420EE001E00A67AAD /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
+		8E7DA71620EE191900A67AAD /* ResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseData.swift; sourceTree = "<group>"; };
 		8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseEntity.swift; sourceTree = "<group>"; };
 		8E92BF19200EFDD90090C646 /* SidEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidEntity.swift; sourceTree = "<group>"; };
 		8E92BF1D200F46C80090C646 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
@@ -792,6 +796,8 @@
 				8ED686EF2071DA19003F71A6 /* LRUCache.swift */,
 				8ED686F12071DAD1003F71A6 /* LinkedList.swift */,
 				8EEE03F520738B010052A64D /* CoreDataHelper.swift */,
+				8E7DA71420EE001E00A67AAD /* HttpClient.swift */,
+				8E7DA71620EE191900A67AAD /* ResponseData.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -1024,9 +1030,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Zhongwei/Pods-Zhongwei-resources.sh",
+				"${PODS_ROOT}/QIYU_iOS_SDK/SDK/QYResource.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/QYResource.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1177,6 +1186,7 @@
 				8E0DEDF32069F4F200FFD4EA /* GalleryViewController.swift in Sources */,
 				8E3E9278205FA0F400F71EF9 /* ReceiptItemCell.swift in Sources */,
 				8E353CEF2063CB4100724B58 /* SaleViewController.swift in Sources */,
+				8E7DA71520EE001E00A67AAD /* HttpClient.swift in Sources */,
 				8E1A93E820539353001D02D7 /* MainNewsEntity.swift in Sources */,
 				8EC9439720464CA000EB2B05 /* Result.swift in Sources */,
 				8E1A112A20450A5300A0B6BC /* LoginViewController.swift in Sources */,
@@ -1195,6 +1205,7 @@
 				8E57BBDF206891A00038503E /* VisitListEntity.swift in Sources */,
 				8E24A0EC20626A0A0096294A /* ReceiptImagesObject.swift in Sources */,
 				8E96F020204E9B0A0060B612 /* DiscoverPresenter.swift in Sources */,
+				8E7DA71720EE191900A67AAD /* ResponseData.swift in Sources */,
 				8E3E9268205F9FCC00F71EF9 /* CertificateListController.swift in Sources */,
 				8EE8BE51207CB0330009DC02 /* BusinessDetailView.swift in Sources */,
 				8E3E92F8205FBCE100F71EF9 /* TZAssetCell.m in Sources */,

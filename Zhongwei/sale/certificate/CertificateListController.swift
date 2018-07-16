@@ -33,7 +33,7 @@ class CertificateListController:UIViewController ,UISearchBarDelegate, UITableVi
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.disposeBag = nil
+        //self.disposeBag = nil
     }
     
     func setupViews() {

@@ -180,6 +180,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+## QIYU_iOS_SDK
+
+Copyright 2016 Netease 
+
+
 ## ReachabilitySwift
 
 Copyright (c) 2016 Ashley Mills

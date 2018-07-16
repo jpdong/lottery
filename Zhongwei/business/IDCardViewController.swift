@@ -23,6 +23,7 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     var idcardFrontImage:UIImageView!
     var idcardBackImage:UIImageView!
     var tobaccoCardImage:UIImageView!
+    var businessLicenseImage:UIImageView!
     var scrollView:UIScrollView!
     var nextStepButton:UIButton!
     var guideBackground:UIImageView!
@@ -31,12 +32,15 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     var frontImageSetup:Bool = false
     var backImageSetup:Bool = false
     var tobaccoImageSetup:Bool = false
+    var businessImageSetup:Bool = false
     var frontImageUrl:String?
     var backImageUrl:String?
     var tobaccoImageUrl:String?
+    var businessImageUrl:String?
     var frontImageIndicator:UIActivityIndicatorView!
     var backImageIndicator:UIActivityIndicatorView!
     var tobaccoImageIndicator:UIActivityIndicatorView!
+    var businessImageIndicator:UIActivityIndicatorView!
     var navigationBarHeight:CGFloat?
     var statusBarHeight:CGFloat?
     var presenter:BusinessPresenter!
@@ -130,16 +134,33 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             tobaccoCardImage.kf.setImage(with: URL(string:localTobaccoCardUrl))
             tobaccoImageSetup = true
         }
+        
+        businessLicenseImage = UIImageView()
+        businessLicenseImage.image = UIImage(named: "tobacco_card")
+        businessLicenseImage.contentMode = .scaleAspectFit
+        businessLicenseImage.isUserInteractionEnabled = true
+        var businessLicenseTap = UITapGestureRecognizer(target:self,action:#selector(getBusinessLicense))
+        businessLicenseImage.addGestureRecognizer(businessLicenseTap)
+        let localBusinessCardUrl = getCacheBusinessCardImageUrl()
+        if (localBusinessCardUrl != "") {
+            businessImageUrl = localBusinessCardUrl
+            businessLicenseImage.kf.setImage(with: URL(string:localBusinessCardUrl))
+            businessImageSetup  = true
+        }
+        
         scrollView.addSubview(tobaccoCardImage)
         scrollView.addSubview(idcardBackImage)
+        scrollView.addSubview(businessLicenseImage)
         scrollView.addSubview(nextStepButton)
         
         frontImageIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.whiteLarge)
         backImageIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.whiteLarge)
         tobaccoImageIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.whiteLarge)
+        businessImageIndicator = UIActivityIndicatorView(activityIndicatorStyle:UIActivityIndicatorViewStyle.whiteLarge)
         self.view.addSubview(frontImageIndicator)
         self.view.addSubview(backImageIndicator)
         self.view.addSubview(tobaccoImageIndicator)
+        self.view.addSubview(businessImageIndicator)
     }
     
     func setupConstrains() {
@@ -170,10 +191,17 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             maker.top.equalTo(idcardBackImage.snp.bottom).offset(8)
         }
         
+        businessLicenseImage.snp.makeConstraints{(maker) in
+            maker.centerX.equalTo(scrollView)
+            maker.width.equalTo(231)
+            maker.height.equalTo(144)
+            maker.top.equalTo(tobaccoCardImage.snp.bottom).offset(8)
+        }
+        
         idcardSecondStepImage.snp.makeConstraints { (maker) in
             maker.centerX.equalTo(scrollView)
             maker.width.equalTo(162)
-            maker.top.equalTo(tobaccoCardImage.snp.bottom).offset(40)
+            maker.top.equalTo(businessLicenseImage.snp.bottom).offset(40)
         }
         
         nextStepButton.snp.makeConstraints { (maker) in
@@ -208,6 +236,9 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
             maker.center.equalTo(tobaccoCardImage)
         }
         
+        businessImageIndicator.snp.makeConstraints { (maker) in
+            maker.center.equalTo(businessLicenseImage)
+        }
     }
     
     @objc func getFrontIDCardPicture() {
@@ -290,6 +321,30 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         }
         self.present(vc!, animated: true, completion: nil)
     }
+    
+    @objc func getBusinessLicense() {
+        var vc = AipGeneralVC.viewController { (image) in
+            DispatchQueue.main.async {
+                self.businessLicenseImage.image = image
+                self.businessImageIndicator.startAnimating()
+                self.presenter.uploadImage(image:image!)
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(onNext: { (result) in
+                        self.businessImageIndicator.stopAnimating()
+                        if(result.code == 0) {
+                            self.businessImageUrl = result.message
+                            self.businessImageSetup = true
+                        } else {
+                            Zhongwei.alert(viewController: self, title: "提示", message: "图片上传失败")
+                        }
+                    })
+                    .disposed(by: self.disposeBag)
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        self.present(vc!, animated: true, completion: nil)
+    }
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print(info)
         var image:UIImage!
@@ -352,7 +407,8 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
         }
         storeIDCardImageUrl(front:frontImageUrl!, back:backImageUrl!)
         storeTobaccoCardImageUrl(cardUrl: tobaccoImageUrl!)
-        presenter.uploadImageUrls(front:frontImageUrl!, back:backImageUrl!,tobacco: tobaccoImageUrl!)
+        storeBusinessCardImageUrl(cardUrl:businessImageUrl!)
+        presenter.uploadImageUrls(front:frontImageUrl!, back:backImageUrl!,tobacco: tobaccoImageUrl!,business:businessImageUrl!)
         .observeOn(MainScheduler.instance)
             .subscribe(onNext: { (result) in
                 if (result.code == 0) {
@@ -368,7 +424,10 @@ class IDCardViewController:UIViewController , UIImagePickerControllerDelegate,UI
     }
     
     func checkPictures() -> Bool {
-        if (frontImageSetup && backImageSetup && frontImageUrl != nil && backImageUrl != nil && tobaccoImageSetup && tobaccoImageUrl != nil) {
+        if (frontImageSetup && frontImageUrl != nil
+            && backImageSetup &&  backImageUrl != nil
+            && tobaccoImageSetup && tobaccoImageUrl != nil
+            && businessImageSetup && businessImageUrl != nil) {
             return true
         } else {
             return false

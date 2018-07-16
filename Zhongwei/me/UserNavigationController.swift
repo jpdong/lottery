@@ -12,5 +12,9 @@ class UserNavigationController:UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationBar.tintColor = UIColor.black
+        let sb = UIStoryboard(name:"Me",bundle:nil)
+        let vc = sb.instantiateViewController(withIdentifier: "UserViewController") as! UserViewController
+        pushViewController(vc, animated: true)
     }
 }

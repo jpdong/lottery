@@ -13,5 +13,6 @@
 #import <Bugly/Bugly.h>
 #import <AipOcrSdk/AipOcrSdk.h>
 #import "TZImagePickerController.h"
+#import "QYSDK.h"
 
 #endif /* BridgeHeader_h */

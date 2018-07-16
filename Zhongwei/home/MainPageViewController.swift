@@ -52,6 +52,11 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         setupConstrains()
         setupClickEvents()
         updateBoardView()
+        Observable<String>.just("test")
+            .subscribe(onNext:{
+                result in
+                print(result)
+            })
     }
     
     override func viewDidLayoutSubviews() {
@@ -130,15 +135,15 @@ class MainPageViewController:UIViewController , SliderGalleryControllerDelegate{
         
         recentNewsView = BigboardView()
         recentNewsView.contentTitle.text = "最新资讯"
-        recentNewsView.contentMessage.text = "离线状态，请检查网络"
+        recentNewsView.contentMessage.text = "加载中..."
         
         welfareActivity = SmallboardView()
         welfareActivity.contentTitle.text = "公益活动"
-        welfareActivity.contentMessage.text = "离线状态，请检查网络"
+        welfareActivity.contentMessage.text = "加载中..."
         
         hotNewsView = SmallboardView()
         hotNewsView.contentTitle.text = "热点新闻"
-        hotNewsView.contentMessage.text = "离线状态，请检查网络"
+        hotNewsView.contentMessage.text = "加载中..."
         
         mainScrollView.addSubview(recentNewsView)
         mainScrollView.addSubview(welfareActivity)

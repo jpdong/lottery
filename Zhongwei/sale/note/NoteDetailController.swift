@@ -32,7 +32,7 @@ class NoteDetailController:UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.disposeBag = nil
+        //self.disposeBag = nil
     }
     
     override func viewWillAppear(_ animated: Bool) {

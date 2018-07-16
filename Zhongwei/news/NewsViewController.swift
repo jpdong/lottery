@@ -11,7 +11,7 @@ import Reachability
 
 class NewsViewController:WebViewController{
     
-    @IBOutlet weak var reLoadButton: UILabel!
+    
     var app:AppDelegate?
     
     override func viewDidLoad() {
@@ -19,7 +19,7 @@ class NewsViewController:WebViewController{
         self.shopUrl = "\(app!.globalData!.baseUrl)mobile/wechat/news/"
         print("news url : \(self.shopUrl!)")
         super.viewDidLoad()
-        reLoadButton.addGestureRecognizer(UITapGestureRecognizer(target:self, action:#selector(reload)))
+        
     }
     
     func _hasNetwork() -> Bool{

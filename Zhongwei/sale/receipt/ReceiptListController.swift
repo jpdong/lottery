@@ -30,7 +30,7 @@ class ReceiptListController:UIViewController, UITableViewDataSource, UITableView
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.disposeBag = nil
+        //self.disposeBag = nil
     }
     
     func setupViews() {

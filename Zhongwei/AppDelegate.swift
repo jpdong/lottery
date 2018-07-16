@@ -35,32 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        Bugly.start(withAppId:"98d4c1d3a8")
-//        self.window = UIWindow(frame: UIScreen.main.bounds)
-//        self.window!.backgroundColor = UIColor.white
-//        let vc = TabViewController()
-//        vc.view.backgroundColor = UIColor.white
-//        self.window!.rootViewController = vc
-//        self.window!.makeKeyAndVisible()
-        print("application didFinsishLaunch")
-        globalData = GlobalData()
-        globalData?.baseUrl = "http://app.api.bjzwhz.cn/"
-        //globalData?.baseUrl = "http://app.api.bjzwhz.cn/"
-        //globalData?.baseUrl = "http://yan.bjzwhz.cn/"
-        //globalData?.baseUrl = "http://yan.eeseetech.cn/"
-        //globalData?.baseUrl = "https://yan.bjzwhz.cn/"
-        globalData?.unionid = getCacheUnionid()!
-        globalData?.headImgUrl = getCacheImgUrl()!
-        globalData?.nickName = getCacheName()!
-        globalData?.sid = getCacheSid()!
-        globalData?.phoneNum = getCachePhoneNum()!
-        WXApi.registerApp(wechatAppID)
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (accepted, error) in
-            if !accepted {
-                Log("用户不允许消息通知")
-            }
-        }
-        UIApplication.shared.registerForRemoteNotifications()
+        setUp()
         return true
     }
     
@@ -85,6 +60,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate,WXApiDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         Log("applicationDidBecomeActive")
+    }
+    
+    func setUp() {
+        Bugly.start(withAppId:"98d4c1d3a8")
+        QYSDK.shared().registerAppId("d5cd2a0d0071222eea09f6e864e2f029", appName: "北京中维")
+        WXApi.registerApp(wechatAppID)
+        
+        globalData = GlobalData()
+        globalData?.baseUrl = "https://app.api.bjzwhz.cn/"
+        //globalData?.baseUrl = "http://app.api.bjzwhz.cn/"
+        //globalData?.baseUrl = "http://yan.bjzwhz.cn/"
+        //globalData?.baseUrl = "http://yan.eeseetech.cn/"
+        //globalData?.baseUrl = "https://yan.bjzwhz.cn/"
+        globalData?.unionid = getCacheUnionid()!
+        globalData?.headImgUrl = getCacheImgUrl()!
+        globalData?.nickName = getCacheName()!
+        globalData?.sid = getCacheSid()!
+        globalData?.phoneNum = getCachePhoneNum()!
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window!.backgroundColor = UIColor.white
+        let vc = TabViewController()
+        vc.view.backgroundColor = UIColor.white
+        self.window!.rootViewController = vc
+        self.window!.makeKeyAndVisible()
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (accepted, error) in
+            if !accepted {
+                Log("用户不允许消息通知")
+            }
+        }
+        //if(UIApplication.shared.responds(to: #selector(registerForRemoteNotifications))) {
+            
+        //}
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     

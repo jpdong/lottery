@@ -166,9 +166,21 @@ func getCacheTobaccoCardImageUrl() -> String {
     return tobaccoUrl ?? ""
 }
 
+func getCacheBusinessCardImageUrl() -> String {
+    let userDefaults = UserDefaults.standard
+    let businessUrl:String? = userDefaults.string(forKey: "business_idcard_url")
+    return businessUrl ?? ""
+}
+
 func storeTobaccoCardImageUrl(cardUrl:String) {
     let userDefaults = UserDefaults.standard
     userDefaults.set(cardUrl, forKey: "tobacco_idcard_url")
+    userDefaults.synchronize()
+}
+
+func storeBusinessCardImageUrl(cardUrl:String) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.set(cardUrl, forKey: "business_idcard_url")
     userDefaults.synchronize()
 }
 

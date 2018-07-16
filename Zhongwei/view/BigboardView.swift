@@ -34,6 +34,7 @@ class BigboardView:BoardView{
         contentTitle.textAlignment = .center
         contentMessage = UILabel()
         contentMessage.font = UIFont.systemFont(ofSize:13)
+        contentMessage.textColor = UIColor.gray
         contentMessage.lineBreakMode = .byWordWrapping
         contentMessage.numberOfLines = 0
         addSubview(contentImage)

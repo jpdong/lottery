@@ -66,14 +66,14 @@ class BusinessPresenter:Presenter {
     
     
     
-    func uploadImageUrls(front:String, back:String, tobacco:String) -> Observable<Result> {
+    func uploadImageUrls(front:String, back:String, tobacco:String,business:String) -> Observable<Result> {
         //return Observable<Result>.create({ (observer) -> Disposable in
         return getSid()
             .flatMap{
                 sid in
                 return Observable<Result>.create {
                     observer -> Disposable in
-                    let parameters:Dictionary = ["front":front, "back":back, "sid":sid, "yan_code":tobacco]
+                    let parameters:Dictionary = ["front":front, "back":back, "sid":sid, "yan_code":tobacco,"business_license":business]
                     print("parameters:\(parameters)")
                     Alamofire.request("\(self.baseUrl)mobile/Register/uploadClubImage",method:.post,parameters:parameters).responseString{response in
                         print("response:\(response)")

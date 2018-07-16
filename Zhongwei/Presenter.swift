@@ -165,7 +165,6 @@ class Presenter{
                             upload.responseString{ response in
                                 debugPrint(response)
                                 print("response:\(response)")
-                                print("result:\(response.result)")
                                 print("value: \(response.result.value)")
                                 
                                 var result:Result = Result()
@@ -201,6 +200,6 @@ class Presenter{
                     return Disposables.create()
                 }
             }
-            .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos:.userInitiated))
     }
 }
