@@ -80,7 +80,7 @@ class UserViewController:UITableViewController{
                         if (result.code == 0) {
                             if let phoneNum = self.app?.globalData?.phoneNum {
                             self.userInfoCell.nickNameLabel.text = phoneNum
-                            self.setupCustomerServiceInfo(phoneNum)
+                            setupCustomerServiceInfo(phoneNum)
                             }
                         } else {
                             Toast(text: result.message).show()
@@ -97,26 +97,6 @@ class UserViewController:UITableViewController{
         userInfoCell.accessoryType = .disclosureIndicator
         logoutCell.isHidden = true
         return false
-    }
-    
-    func setupCustomerServiceInfo(_ phoneNum:String) {
-        let userInfo = QYUserInfo()
-        userInfo.userId = phoneNum
-        var array = Array<Dictionary<String,String>>()
-        var nameDictionary = Dictionary<String,String>()
-        nameDictionary.updateValue("real_name", forKey: "key")
-        nameDictionary.updateValue(phoneNum, forKey: "value")
-        array.append(nameDictionary)
-        var phoneDictionary = Dictionary<String,String>()
-        phoneDictionary.updateValue("mobile_phone", forKey: "key")
-        phoneDictionary.updateValue(phoneNum, forKey: "value")
-        phoneDictionary.updateValue("false", forKey: "hidden")
-        array.append(phoneDictionary)
-        if let data = try? JSONSerialization.data(withJSONObject: array, options: []) {
-            userInfo.data = String(data:data,encoding:String.Encoding.utf8)
-            QYSDK.shared().setUserInfo(userInfo)
-            print("customer service info:\(userInfo.data!)")
-        }
     }
     
     func setupUserInfo() -> Bool{

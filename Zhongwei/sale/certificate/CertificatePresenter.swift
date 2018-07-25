@@ -15,213 +15,164 @@ import Toaster
 class CertificatePresenter:Presenter {
     
     func getCertificateList(pageIndex:Int, num:Int) ->Observable<CertificateListResult> {
-        return getSid()
-            .flatMap{
-                sid in
-                return Observable<CertificateListResult>.create {
-                    observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num)]
-                    print("parameters:\(parameters)")
-                    print(self.baseUrl)
-                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/lotteryList",method:.post,parameters:parameters).responseString{response in
-                        print("certificate list")
-                        print("value: \(response.result.value)")
-                        
-                        var result:CertificateListResult = CertificateListResult()
-                        switch response.result {
-                        case .success:
-                            guard let certificateListEntity:CertificateListEntity = CertificateListEntity.deserialize(from: response.result.value) as? CertificateListEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                //observer.onCompleted()
-                                return
-                            }
-                            
-                            if (certificateListEntity.code == 0) {
-                                result.code = 0
-                                result.message = certificateListEntity.msg
-                                result.list = certificateListEntity.data?.list
-                            }else {
-                                result.code = 1
-                                result.message = certificateListEntity.msg
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
-                        
+        return Observable<CertificateListResult>.create { observer -> Disposable in
+            CertificateAPIProvicer.request(.certificates(pageIndex:pageIndex,num:num), completion: { (response) in
+                var result:CertificateListResult = CertificateListResult()
+                switch response {
+                case .success(let value):
+                    guard let certificateListEntity:CertificateListEntity = CertificateListEntity.deserialize(from: value.data.toString()) as? CertificateListEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
                         observer.onNext(result)
                         observer.onCompleted()
+                        return
                     }
-                    return Disposables.create()
+                    if (certificateListEntity.code == 0) {
+                        result.code = 0
+                        result.message = certificateListEntity.msg
+                        result.list = certificateListEntity.data?.list
+                    }else {
+                        result.code = 1
+                        result.message = certificateListEntity.msg
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                
+                observer.onNext(result)
+                observer.onCompleted()
+            })
+            return Disposables.create()
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
     func submitCertificate(_ name:String,_ phone:String,_ id:String,_ image:String) ->Observable<Result> {
-        return getSid()
-            .flatMap{
-                sid in
-                return Observable<Result>.create {
-                    observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid,"name":name,"phone":phone, "lottery_papers":id, "lottery_papers_image":image]
-                    print("parameters:\(parameters)")
-                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/lotteryBind",method:.post,parameters:parameters).responseString{response in
-                        print("submit ")
-                        print("value: \(response.result.value)")
-                        var result:Result = Result()
-                        switch response.result {
-                        case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value) as? ResponseEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                observer.onCompleted()
-                                return
-                            }
-                            
-                            if (responseEntity.code == 0) {
-                                result.code = 0
-                                result.message = responseEntity.msg
-                            }else {
-                                result.code = 1
-                                result.message = responseEntity.msg
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
+        return Observable<Result>.create { observer -> Disposable in
+            CertificateAPIProvicer.request(.addCertificate(name:name,phone:phone,id:id,image:image), completion: { (response) in
+                var result:Result = Result()
+                switch response {
+                case .success(let value):
+                    guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: value.data.toString()) as? ResponseEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
                         observer.onNext(result)
                         observer.onCompleted()
+                        return
                     }
-                    return Disposables.create()
+                    if (responseEntity.code == 0) {
+                        result.code = 0
+                        result.message = responseEntity.msg
+                    }else {
+                        result.code = 1
+                        result.message = responseEntity.msg
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                observer.onNext(result)
+                observer.onCompleted()
+            })
+            return Disposables.create()
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
     func editCertificate(_ name:String,_ phone:String,_ cardId:String,_ imageUrl:String,_ itemId:String) ->Observable<Result> {
-        return getSid()
-            .flatMap{
-                sid in
-                return Observable<Result>.create {
-                    observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid,"name":name,"phone":phone, "lottery_papers":cardId, "lottery_papers_image":imageUrl,"id":itemId]
-                    print("parameters:\(parameters)")
-                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/modifyLotteryBind",method:.post,parameters:parameters).responseString{response in
-                        print("edit ")
-                        print("value: \(response.result.value)")
-                        var result:Result = Result()
-                        switch response.result {
-                        case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value) as? ResponseEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                observer.onCompleted()
-                                return
-                            }
-                            if (responseEntity.code == 0) {
-                                result.code = 0
-                                result.message = responseEntity.msg
-                            }else {
-                                result.code = 1
-                                result.message = responseEntity.msg
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
+        return Observable<Result>.create { observer -> Disposable in
+            CertificateAPIProvicer.request(.editCertificate(name:name,phone:phone,cardId:cardId,imageUrl:imageUrl,itemId:itemId), completion: { (response) in
+                var result:Result = Result()
+                switch response {
+                case .success(let value):
+                    guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: value.data.toString()) as? ResponseEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
                         observer.onNext(result)
                         observer.onCompleted()
+                        return
                     }
-                    return Disposables.create()
+                    if (responseEntity.code == 0) {
+                        result.code = 0
+                        result.message = responseEntity.msg
+                    }else {
+                        result.code = 1
+                        result.message = responseEntity.msg
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                observer.onNext(result)
+                observer.onCompleted()
+            })
+            return Disposables.create()
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
     func getDetailWithId(_ id:String) ->Observable<CertificateResult> {
-        return getSid()
-            .flatMap{
-                sid in
-                return Observable<CertificateResult>.create {
-                    observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid,"id":id]
-                    print("parameters:\(parameters)")
-                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/getLotteryDetail",method:.post,parameters:parameters).responseString{response in
-                        print("detai id ")
-                        print("value: \(response.result.value)")
-                        var result:CertificateResult = CertificateResult()
-                        switch response.result {
-                        case .success:
-                            guard let certificateEntity:CertificateEntity = CertificateEntity.deserialize(from: response.result.value) as? CertificateEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                observer.onCompleted()
-                                return
-                            }
-                            if (certificateEntity.code == 0) {
-                                result.code = 0
-                                result.message = certificateEntity.msg
-                                result.data = certificateEntity.data
-                            }else {
-                                result.code = 1
-                                result.message = certificateEntity.msg
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
+        return Observable<CertificateResult>.create { observer -> Disposable in
+            CertificateAPIProvicer.request(.getCertificate(id:id), completion: { (response) in
+                var result:CertificateResult = CertificateResult()
+                switch response {
+                case .success(let value):
+                    guard let certificateEntity:CertificateEntity = CertificateEntity.deserialize(from: value.data.toString()) as? CertificateEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
                         observer.onNext(result)
                         observer.onCompleted()
+                        return
                     }
-                    return Disposables.create()
+                    if (certificateEntity.code == 0) {
+                        result.code = 0
+                        result.message = certificateEntity.msg
+                        result.data = certificateEntity.data
+                    }else {
+                        result.code = 1
+                        result.message = certificateEntity.msg
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                observer.onNext(result)
+                observer.onCompleted()
+            })
+            return Disposables.create()
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
     func deleteCertificate(id:String) ->Observable<Result> {
-        return getSid()
-            .flatMap{
-                sid in
-                return Observable<Result>.create {
-                    observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid,"id":id]
-                    print("parameters:\(parameters)")
-                    Alamofire.request("\(self.baseUrl)app/Lottery_manager/delLottery",method:.post,parameters:parameters).responseString{response in
-                        print("delete id ")
-                        print("value: \(response.result.value)")
-                        var result:Result = Result()
-                        switch response.result {
-                        case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value) as? ResponseEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                observer.onCompleted()
-                                return
-                            }
-                            if (responseEntity.code == 0) {
-                                result.code = 0
-                                result.message = responseEntity.msg
-                            }else {
-                                result.code = 1
-                                result.message = responseEntity.msg
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
+        return Observable<Result>.create {observer -> Disposable in
+            CertificateAPIProvicer.request(.deleteCertificate(id:id), completion: { (response) in
+                var result:Result = Result()
+                switch response {
+                case .success(let value):
+                    guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: value.data.toString()) as? ResponseEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
                         observer.onNext(result)
                         observer.onCompleted()
+                        return
                     }
-                    return Disposables.create()
+                    if (responseEntity.code == 0) {
+                        result.code = 0
+                        result.message = responseEntity.msg
+                    }else {
+                        result.code = 1
+                        result.message = responseEntity.msg
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                observer.onNext(result)
+                observer.onCompleted()
+            })
+            return Disposables.create()
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }

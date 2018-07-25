@@ -71,7 +71,7 @@ class SliderGalleryController: UIViewController,UIScrollViewDelegate{
         self.scrollerView = UIScrollView(frame: CGRect(x: 0,y: 0,
                                     width: self.scrollerViewWidth!,
                                     height: self.scrollerViewHeight!))
-        self.scrollerView?.backgroundColor = UIColor.red
+        self.scrollerView?.backgroundColor = UIColor.white
         self.scrollerView?.delegate = self
         self.scrollerView?.contentSize = CGSize(width: self.scrollerViewWidth! * 3,
                                                 height: self.scrollerViewHeight!)

@@ -34,7 +34,7 @@ class NoteListController:UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.disposeBag = nil
+        //self.disposeBag = nil
     }
     
     func setupViews() {

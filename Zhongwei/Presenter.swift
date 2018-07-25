@@ -58,11 +58,7 @@ class Presenter{
             return Disposables.create()
         })
     }
-    
-    
-    
-    
-    
+   
     func checkSid(sid:String) -> Observable<Result> {
         return Observable<Result>.create({ (observer) -> Disposable in
             let parameters:Dictionary = ["sid":sid]

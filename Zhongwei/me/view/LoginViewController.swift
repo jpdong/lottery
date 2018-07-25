@@ -224,6 +224,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate{
                             Toast(text: "登录成功").show()
                             //Zhongwei.alert(viewController: self, title: "提示", message: result.message ?? "")
                             self.app.globalData?.phoneNum = phoneNum!
+                            setupCustomerServiceInfo(phoneNum!)
                             storePhoneNum(phoneNum!)
                             //self.navigationController?.popViewController(animated: true)
                             self.dismiss(animated: true, completion: nil)

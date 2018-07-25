@@ -29,6 +29,12 @@ class Size {
     
 }
 
+extension Data {
+    func toString() -> String {
+        return String(data: self, encoding: String.Encoding.utf8) ?? ""
+    }
+}
+
 extension String {
     func pregReplace(pattern: String, with: String,
                      options: NSRegularExpression.Options = []) -> String {
@@ -229,5 +235,25 @@ func hasNetwork() -> Bool{
         return true
     } else {
         return false
+    }
+}
+
+func setupCustomerServiceInfo(_ phoneNum:String) {
+    let userInfo = QYUserInfo()
+    userInfo.userId = phoneNum
+    var array = Array<Dictionary<String,Any>>()
+    var nameDictionary = Dictionary<String,String>()
+    nameDictionary.updateValue("real_name", forKey: "key")
+    nameDictionary.updateValue(phoneNum, forKey: "value")
+    array.append(nameDictionary)
+    var phoneDictionary = Dictionary<String,Any>()
+    phoneDictionary.updateValue("mobile_phone", forKey: "key")
+    phoneDictionary.updateValue(phoneNum, forKey: "value")
+    phoneDictionary.updateValue(false, forKey: "hidden")
+    array.append(phoneDictionary)
+    if let data = try? JSONSerialization.data(withJSONObject: array, options: []) {
+        userInfo.data = String(data:data,encoding:String.Encoding.utf8)
+        QYSDK.shared().setUserInfo(userInfo)
+        print("customer service info:\(userInfo.data!)")
     }
 }
