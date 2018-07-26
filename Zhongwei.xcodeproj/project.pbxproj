@@ -96,6 +96,10 @@
 		8E41A8EA2108802500FCE7D9 /* ShopAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E41A8E92108802500FCE7D9 /* ShopAPI.swift */; };
 		8E41A8EC2108803800FCE7D9 /* NoteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E41A8EB2108803800FCE7D9 /* NoteAPI.swift */; };
 		8E41A8EE2108804900FCE7D9 /* GalleryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E41A8ED2108804900FCE7D9 /* GalleryAPI.swift */; };
+		8E42FAD1210967E3005AFCC8 /* HomeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FAD0210967E3005AFCC8 /* HomeAPI.swift */; };
+		8E42FAD321096A8A005AFCC8 /* BusinessAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FAD221096A8A005AFCC8 /* BusinessAPI.swift */; };
+		8E42FAD521096CBC005AFCC8 /* UserAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FAD421096CBC005AFCC8 /* UserAPI.swift */; };
+		8E42FAD721097160005AFCC8 /* CommonAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E42FAD621097160005AFCC8 /* CommonAPI.swift */; };
 		8E441B232050DD19001D90C1 /* SlideGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E441B222050DD19001D90C1 /* SlideGalleryView.swift */; };
 		8E441B27205123FB001D90C1 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E441B26205123FB001D90C1 /* MainPageViewController.swift */; };
 		8E441B2920513252001D90C1 /* SliderGalleryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E441B2820513252001D90C1 /* SliderGalleryController.swift */; };
@@ -330,6 +334,10 @@
 		8E41A8E92108802500FCE7D9 /* ShopAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopAPI.swift; sourceTree = "<group>"; };
 		8E41A8EB2108803800FCE7D9 /* NoteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteAPI.swift; sourceTree = "<group>"; };
 		8E41A8ED2108804900FCE7D9 /* GalleryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryAPI.swift; sourceTree = "<group>"; };
+		8E42FAD0210967E3005AFCC8 /* HomeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPI.swift; sourceTree = "<group>"; };
+		8E42FAD221096A8A005AFCC8 /* BusinessAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessAPI.swift; sourceTree = "<group>"; };
+		8E42FAD421096CBC005AFCC8 /* UserAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAPI.swift; sourceTree = "<group>"; };
+		8E42FAD621097160005AFCC8 /* CommonAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonAPI.swift; sourceTree = "<group>"; };
 		8E441B222050DD19001D90C1 /* SlideGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideGalleryView.swift; sourceTree = "<group>"; };
 		8E441B26205123FB001D90C1 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
 		8E441B2820513252001D90C1 /* SliderGalleryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderGalleryController.swift; sourceTree = "<group>"; };
@@ -605,6 +613,10 @@
 				8E41A8E92108802500FCE7D9 /* ShopAPI.swift */,
 				8E41A8EB2108803800FCE7D9 /* NoteAPI.swift */,
 				8E41A8ED2108804900FCE7D9 /* GalleryAPI.swift */,
+				8E42FAD0210967E3005AFCC8 /* HomeAPI.swift */,
+				8E42FAD221096A8A005AFCC8 /* BusinessAPI.swift */,
+				8E42FAD421096CBC005AFCC8 /* UserAPI.swift */,
+				8E42FAD621097160005AFCC8 /* CommonAPI.swift */,
 			);
 			path = service;
 			sourceTree = "<group>";
@@ -955,6 +967,7 @@
 		8E5DC15F201745BE00D421FE /* common */ = {
 			isa = PBXGroup;
 			children = (
+				8E92BF1D200F46C80090C646 /* Presenter.swift */,
 				8E41A8E62108610400FCE7D9 /* model */,
 				8E41A8E5210860FE00FCE7D9 /* view */,
 			);
@@ -1029,7 +1042,6 @@
 				8EFA2D421FE8B37D005C890E /* LaunchScreen.storyboard */,
 				8EFA2D451FE8B37D005C890E /* Info.plist */,
 				8E61FB6E1FF345DE00680E19 /* BridgeHeader.h */,
-				8E92BF1D200F46C80090C646 /* Presenter.swift */,
 				8E0DEDE92069E94B00FFD4EA /* LocationTransform.swift */,
 				8EEE03F22073836F0052A64D /* Model.xcdatamodeld */,
 			);
@@ -1300,6 +1312,7 @@
 				8E2C378A205BAAA50095B026 /* CertificateEntity.swift in Sources */,
 				8E3E9273205FA0F400F71EF9 /* ReceiptListController.swift in Sources */,
 				8E104EB0206BA50300D2C63A /* GalleryListResult.swift in Sources */,
+				8E42FAD721097160005AFCC8 /* CommonAPI.swift in Sources */,
 				8E9E2ED1206A405900289405 /* NoteDetailController.swift in Sources */,
 				8ED686F02071DA19003F71A6 /* LRUCache.swift in Sources */,
 				8E57BBE82068A22A0038503E /* ShopListResult.swift in Sources */,
@@ -1403,6 +1416,7 @@
 				8E441B232050DD19001D90C1 /* SlideGalleryView.swift in Sources */,
 				8E2C800320873B0A00397500 /* NewsNavigationController.swift in Sources */,
 				8E96F01E204E815A0060B612 /* GuideViewController.swift in Sources */,
+				8E42FAD1210967E3005AFCC8 /* HomeAPI.swift in Sources */,
 				8E41A8EA2108802500FCE7D9 /* ShopAPI.swift in Sources */,
 				8E9E2ED4206A405900289405 /* NoteItemCell.swift in Sources */,
 				8E55FFFC20182539009E2AB0 /* NewsViewController.swift in Sources */,
@@ -1438,6 +1452,7 @@
 				8E9E2ED8206A431A00289405 /* NotePresenter.swift in Sources */,
 				8E3DCDE92060BDC8000180E1 /* ImageCell.swift in Sources */,
 				8E1A112C20450A6D00A0B6BC /* RegisterViewController.swift in Sources */,
+				8E42FAD521096CBC005AFCC8 /* UserAPI.swift in Sources */,
 				8E3E92FA205FBCE100F71EF9 /* TZAssetModel.m in Sources */,
 				8E3E9269205F9FCC00F71EF9 /* CertificateDetailController.swift in Sources */,
 				8E57BBDE206891A00038503E /* VisitResult.swift in Sources */,
@@ -1455,6 +1470,7 @@
 				8E3E92F7205FBCE100F71EF9 /* TZImageCropManager.m in Sources */,
 				8EFA2D3A1FE8B37D005C890E /* AppDelegate.swift in Sources */,
 				8E61FB7B1FF34C8900680E19 /* Utils.swift in Sources */,
+				8E42FAD321096A8A005AFCC8 /* BusinessAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

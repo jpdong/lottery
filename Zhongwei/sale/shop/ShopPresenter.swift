@@ -15,45 +15,37 @@ import Toaster
 class ShopPresenter:Presenter {
     
     func searchShopList(pageIndex:Int, num:Int, key:String) ->Observable<ShopListResult> {
-        return getSid()
-            .flatMap{
-                sid in
-                return Observable<ShopListResult>.create {
-                    observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid, "pageIndex":String(pageIndex), "entryNum":String(num), "search":key]
-                    print("parameters:\(parameters)")
-                    Alamofire.request("\(self.baseUrl)app/lottery/sendclub",method:.post,parameters:parameters).responseString{response in
-                        print("shop list")
-                        print("value: \(response.result.value)")
-                        var result:ShopListResult = ShopListResult()
-                        switch response.result {
-                        case .success:
-                            guard let entity:ShopListEntity = ShopListEntity.deserialize(from: response.result.value) as? ShopListEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                observer.onCompleted()
-                                return
-                            }
-                            
-                            if (entity.code == 0) {
-                                result.code = 0
-                                result.message = entity.msg
-                                result.list = entity.data?.list
-                            }else {
-                                result.code = 1
-                                result.message = entity.msg
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
+        return Observable<ShopListResult>.create { observer -> Disposable in
+            ShopAPIProvicer.request(.shops(pageIndex:pageIndex,num:num,key:key), completion: { (response) in
+                var result:ShopListResult = ShopListResult()
+                switch response {
+                case .success(let value):
+                    guard let entity:ShopListEntity = ShopListEntity.deserialize(from: value.data.toString()) as? ShopListEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
                         observer.onNext(result)
                         observer.onCompleted()
+                        return
                     }
-                    return Disposables.create()
+                    
+                    if (entity.code == 0) {
+                        result.code = 0
+                        result.message = entity.msg
+                        result.list = entity.data?.list
+                    }else {
+                        result.code = 1
+                        result.message = entity.msg
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                observer.onNext(result)
+                observer.onCompleted()
+            })
+            return Disposables.create()
             }
+            
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
@@ -103,55 +95,46 @@ class ShopPresenter:Presenter {
         return Observable<ShopListResult>.create {
             observer -> Disposable in
             var result:ShopListResult = ShopListResult()
-                result.code = 0
-                result.list = CoreDataHelper.instance.getShopHistoryList()
-                observer.onNext(result)
-                observer.onCompleted()
+            result.code = 0
+            result.list = CoreDataHelper.instance.getShopHistoryList()
+            observer.onNext(result)
+            observer.onCompleted()
             return Disposables.create()
-        }
+            }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }
     
-
+    
     
     func getShopWithId(id:String) ->Observable<ShopResult> {
-        return getSid()
-            .flatMap{
-                sid in
-                return Observable<ShopResult>.create {
-                    observer -> Disposable in
-                    let parameters:Dictionary = ["sid":sid,"club_id":id]
-                    print("parameters:\(parameters)")
-                    Alamofire.request("\(self.baseUrl)app/lottery/club_detail/",method:.post,parameters:parameters).responseString{response in
-                        print("shop detail id ")
-                        print("value: \(response.result.value)")
-                        var result:ShopResult = ShopResult()
-                        switch response.result {
-                        case .success:
-                            guard let entity:ShopEntity = ShopEntity.deserialize(from: response.result.value) as? ShopEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                observer.onCompleted()
-                                return
-                            }
-                            if (entity.code == 0) {
-                                result.code = 0
-                                result.message = entity.msg
-                                result.data = entity.data
-                            }else {
-                                result.code = 1
-                                result.message = entity.msg
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
+        return Observable<ShopResult>.create { observer -> Disposable in
+            ShopAPIProvicer.request(.getShop(id:id), completion: { (response) in
+                var result:ShopResult = ShopResult()
+                switch response {
+                case .success(let value):
+                    guard let entity:ShopEntity = ShopEntity.deserialize(from: value.data.toString()) as? ShopEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
                         observer.onNext(result)
                         observer.onCompleted()
+                        return
                     }
-                    return Disposables.create()
+                    if (entity.code == 0) {
+                        result.code = 0
+                        result.message = entity.msg
+                        result.data = entity.data
+                    }else {
+                        result.code = 1
+                        result.message = entity.msg
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                observer.onNext(result)
+                observer.onCompleted()
+            })
+            return Disposables.create()
             }
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
     }

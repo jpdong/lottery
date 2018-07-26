@@ -15,51 +15,43 @@ import Toaster
 class BusinessPresenter:Presenter {
     
     func checkBusinessRegisterState() -> Observable<Result> {
-        //return Observable<Result>.create({ (observer) -> Disposable in
-        return getSid()
-            .flatMap{
-                sid in
-                return Observable<Result>.create {
-                    observer -> Disposable in
-                    Alamofire.request("\(self.baseUrl)mobile/app/judeIdent?sid=\(sid)").responseString{response in
-                        print("business state")
-                        print("response:\(response)")
-                        print("value: \(response.result.value)")
-                        var result:Result = Result()
-                        switch response.result {
-                        case .success:
-                            print("switch case success")
-                            guard let businessStateEntity:BusinessStateEntity = BusinessStateEntity.deserialize(from: response.result.value as? String) as? BusinessStateEntity else {
-                                //Toast(text: "服务器错误").show()
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                observer.onCompleted()
-                                return
-                            }
-                            if (businessStateEntity.code == 200) {
-                                if (businessStateEntity.data!.club!){
-                                    result.code = 0
-                                }else {
-                                    result.code = 2
-                                    result.message = "未注册"
-                                }
-                            } else {
-                                result.code = 1
-                                result.message = businessStateEntity.msg
-                            }
-                            
-                        case .failure(let error):
-                            print("switch case failure:\(error)")
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
+        return Observable<Result>.create { observer -> Disposable in
+            BusinessAPIProvicer.request(.businessState, completion: { (response) in
+                var result:Result = Result()
+                switch response {
+                case .success(let value):
+                    print("switch case success")
+                    guard let businessStateEntity:BusinessStateEntity = BusinessStateEntity.deserialize(from: value.data.toString()) as? BusinessStateEntity else {
+                        //Toast(text: "服务器错误").show()
+                        result.code = 1
+                        result.message = "服务器错误"
                         observer.onNext(result)
                         observer.onCompleted()
+                        return
                     }
-                    return Disposables.create()
+                    if (businessStateEntity.code == 200) {
+                        if (businessStateEntity.data!.club!){
+                            result.code = 0
+                        }else {
+                            result.code = 2
+                            result.message = "未注册"
+                        }
+                    } else {
+                        result.code = 1
+                        result.message = businessStateEntity.msg
+                    }
+                    
+                case .failure(let error):
+                    print("switch case failure:\(error)")
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                observer.onNext(result)
+                observer.onCompleted()
+            })
+            return Disposables.create()
             }
+            
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
         
     }
@@ -67,46 +59,36 @@ class BusinessPresenter:Presenter {
     
     
     func uploadImageUrls(front:String, back:String, tobacco:String,business:String) -> Observable<Result> {
-        //return Observable<Result>.create({ (observer) -> Disposable in
-        return getSid()
-            .flatMap{
-                sid in
-                return Observable<Result>.create {
-                    observer -> Disposable in
-                    let parameters:Dictionary = ["front":front, "back":back, "sid":sid, "yan_code":tobacco,"business_license":business]
-                    print("parameters:\(parameters)")
-                    Alamofire.request("\(self.baseUrl)mobile/Register/uploadClubImage",method:.post,parameters:parameters).responseString{response in
-                        print("response:\(response)")
-                        print("result:\(response.result)")
-                        print("value: \(response.result.value)")
-                        var result:Result = Result()
-                        switch response.result {
-                        case .success:
-                            guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: response.result.value as! String) as? ResponseEntity else {
-                                result.code = 1
-                                result.message = "服务器错误"
-                                observer.onNext(result)
-                                observer.onCompleted()
-                                return
-                            }
-                            
-                            if (responseEntity.code == 0) {
-                                result.code = 0
-                                result.message = responseEntity.msg
-                            }else {
-                                result.code = 1
-                            }
-                        case .failure(let error):
-                            result.code = 1
-                            result.message = "网络错误"
-                        }
-                        
+        return Observable<Result>.create { observer -> Disposable in
+            BusinessAPIProvicer.request(.addLicense(front:front,back:back,tobacco:tobacco,business:business), completion: { (response) in
+                var result:Result = Result()
+                switch response {
+                case .success(let value):
+                    guard let responseEntity:ResponseEntity = ResponseEntity.deserialize(from: value.data.toString()) as? ResponseEntity else {
+                        result.code = 1
+                        result.message = "服务器错误"
                         observer.onNext(result)
                         observer.onCompleted()
+                        return
                     }
-                    return Disposables.create()
+                    
+                    if (responseEntity.code == 0) {
+                        result.code = 0
+                        result.message = responseEntity.msg
+                    }else {
+                        result.code = 1
+                    }
+                case .failure(let error):
+                    result.code = 1
+                    result.message = "网络错误"
                 }
+                
+                observer.onNext(result)
+                observer.onCompleted()
+            })
+            return Disposables.create()
             }
+            
             .subscribeOn(SerialDispatchQueueScheduler(qos:.userInitiated))
         
     }
