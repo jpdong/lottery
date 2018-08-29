@@ -143,8 +143,6 @@
 		8E62AAA120562388000847E3 /* ArticleUrlResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E62AAA020562388000847E3 /* ArticleUrlResult.swift */; };
 		8E66CF1F2049406C00FC9E59 /* IDCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E66CF1E2049406C00FC9E59 /* IDCardViewController.swift */; };
 		8E66CF2120494C3900FC9E59 /* BusinessPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E66CF2020494C3900FC9E59 /* BusinessPresenter.swift */; };
-		8E7DA71520EE001E00A67AAD /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DA71420EE001E00A67AAD /* HttpClient.swift */; };
-		8E7DA71720EE191900A67AAD /* ResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7DA71620EE191900A67AAD /* ResponseData.swift */; };
 		8E92BF18200EFC9B0090C646 /* ResponseEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */; };
 		8E92BF1A200EFDD90090C646 /* SidEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92BF19200EFDD90090C646 /* SidEntity.swift */; };
 		8E92BF1E200F46C80090C646 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E92BF1D200F46C80090C646 /* Presenter.swift */; };
@@ -179,8 +177,6 @@
 		8ED2425F202417CA00303DB4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED2425E202417CA00303DB4 /* AboutViewController.swift */; };
 		8ED686EC2071D2C8003F71A6 /* ShopResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686EA2071D2C8003F71A6 /* ShopResult.swift */; };
 		8ED686ED2071D2C8003F71A6 /* ShopEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686EB2071D2C8003F71A6 /* ShopEntity.swift */; };
-		8ED686F02071DA19003F71A6 /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686EF2071DA19003F71A6 /* LRUCache.swift */; };
-		8ED686F22071DAD1003F71A6 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED686F12071DAD1003F71A6 /* LinkedList.swift */; };
 		8EE4FFD22064FFAE0018387B /* PreviewImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */; };
 		8EE8BE51207CB0330009DC02 /* BusinessDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE8BE50207CB0330009DC02 /* BusinessDetailView.swift */; };
 		8EEE03EC2073660C0052A64D /* VisitStateEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEE03EB2073660C0052A64D /* VisitStateEntity.swift */; };
@@ -382,8 +378,6 @@
 		8E62AAA020562388000847E3 /* ArticleUrlResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleUrlResult.swift; sourceTree = "<group>"; };
 		8E66CF1E2049406C00FC9E59 /* IDCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDCardViewController.swift; sourceTree = "<group>"; };
 		8E66CF2020494C3900FC9E59 /* BusinessPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessPresenter.swift; sourceTree = "<group>"; };
-		8E7DA71420EE001E00A67AAD /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
-		8E7DA71620EE191900A67AAD /* ResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseData.swift; sourceTree = "<group>"; };
 		8E92BF17200EFC9B0090C646 /* ResponseEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseEntity.swift; sourceTree = "<group>"; };
 		8E92BF19200EFDD90090C646 /* SidEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidEntity.swift; sourceTree = "<group>"; };
 		8E92BF1D200F46C80090C646 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
@@ -418,8 +412,6 @@
 		8ED2425E202417CA00303DB4 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		8ED686EA2071D2C8003F71A6 /* ShopResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopResult.swift; sourceTree = "<group>"; };
 		8ED686EB2071D2C8003F71A6 /* ShopEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopEntity.swift; sourceTree = "<group>"; };
-		8ED686EF2071DA19003F71A6 /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
-		8ED686F12071DAD1003F71A6 /* LinkedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
 		8EE4FFD12064FFAE0018387B /* PreviewImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageController.swift; sourceTree = "<group>"; };
 		8EE8BE50207CB0330009DC02 /* BusinessDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetailView.swift; sourceTree = "<group>"; };
 		8EEE03EB2073660C0052A64D /* VisitStateEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitStateEntity.swift; sourceTree = "<group>"; };
@@ -987,12 +979,9 @@
 		8ED686EE2071D9E4003F71A6 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				8E0DEDE92069E94B00FFD4EA /* LocationTransform.swift */,
 				8E61FB7A1FF34C8900680E19 /* Utils.swift */,
-				8ED686EF2071DA19003F71A6 /* LRUCache.swift */,
-				8ED686F12071DAD1003F71A6 /* LinkedList.swift */,
 				8EEE03F520738B010052A64D /* CoreDataHelper.swift */,
-				8E7DA71420EE001E00A67AAD /* HttpClient.swift */,
-				8E7DA71620EE191900A67AAD /* ResponseData.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -1042,7 +1031,6 @@
 				8EFA2D421FE8B37D005C890E /* LaunchScreen.storyboard */,
 				8EFA2D451FE8B37D005C890E /* Info.plist */,
 				8E61FB6E1FF345DE00680E19 /* BridgeHeader.h */,
-				8E0DEDE92069E94B00FFD4EA /* LocationTransform.swift */,
 				8EEE03F22073836F0052A64D /* Model.xcdatamodeld */,
 			);
 			path = Zhongwei;
@@ -1314,14 +1302,12 @@
 				8E104EB0206BA50300D2C63A /* GalleryListResult.swift in Sources */,
 				8E42FAD721097160005AFCC8 /* CommonAPI.swift in Sources */,
 				8E9E2ED1206A405900289405 /* NoteDetailController.swift in Sources */,
-				8ED686F02071DA19003F71A6 /* LRUCache.swift in Sources */,
 				8E57BBE82068A22A0038503E /* ShopListResult.swift in Sources */,
 				8E3E9301205FBCE100F71EF9 /* TZPhotoPickerController.m in Sources */,
 				8E395C3A205695D20026B2A1 /* AppUpdateResult.swift in Sources */,
 				8E3E9303205FBCE100F71EF9 /* TZImagePickerController.m in Sources */,
 				8EC3C2322020680C001567E9 /* BusinessViewController.swift in Sources */,
 				8E2F6A0E2022C62B000704F6 /* UserViewController.swift in Sources */,
-				8ED686F22071DAD1003F71A6 /* LinkedList.swift in Sources */,
 				8E9E2ED3206A405900289405 /* NoteItem.swift in Sources */,
 				8E3E9304205FBCE100F71EF9 /* TZLocationManager.m in Sources */,
 				8E57BBEC2068A2BE0038503E /* ShopItem.swift in Sources */,
@@ -1384,7 +1370,6 @@
 				8E0DEDF32069F4F200FFD4EA /* GalleryViewController.swift in Sources */,
 				8E3E9278205FA0F400F71EF9 /* ReceiptItemCell.swift in Sources */,
 				8E353CEF2063CB4100724B58 /* SaleViewController.swift in Sources */,
-				8E7DA71520EE001E00A67AAD /* HttpClient.swift in Sources */,
 				8E1A93E820539353001D02D7 /* MainNewsEntity.swift in Sources */,
 				8EC9439720464CA000EB2B05 /* Result.swift in Sources */,
 				8E1A112A20450A5300A0B6BC /* LoginViewController.swift in Sources */,
@@ -1404,7 +1389,6 @@
 				8E57BBDF206891A00038503E /* VisitListEntity.swift in Sources */,
 				8E24A0EC20626A0A0096294A /* ReceiptImagesObject.swift in Sources */,
 				8E96F020204E9B0A0060B612 /* DiscoverPresenter.swift in Sources */,
-				8E7DA71720EE191900A67AAD /* ResponseData.swift in Sources */,
 				8E3E9268205F9FCC00F71EF9 /* CertificateListController.swift in Sources */,
 				8EE8BE51207CB0330009DC02 /* BusinessDetailView.swift in Sources */,
 				8E3E92F8205FBCE100F71EF9 /* TZAssetCell.m in Sources */,

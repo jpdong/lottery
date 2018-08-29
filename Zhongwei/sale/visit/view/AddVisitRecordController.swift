@@ -282,6 +282,7 @@ class AddVisitRecordController:UIViewController,CLLocationManagerDelegate {
             .disposed(by: disposeBag)
         } else {
             presenter.sign(longitude:longitude, latitude:latitude, status:1,shopId:shopId)
+                
                 .observeOn(MainScheduler.instance)
                 .subscribe(onNext: { (result) in
                     if (result.code == 0) {

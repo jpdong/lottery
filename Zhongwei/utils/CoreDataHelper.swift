@@ -51,7 +51,6 @@ class CoreDataHelper {
         } catch(let error) {
             Log(error)
         }
-        
     }
     
     public func getShopHistoryList() -> [ShopItem]{
